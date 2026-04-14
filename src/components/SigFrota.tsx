@@ -35,10 +35,10 @@ interface Geofence {
 }
 
 const GEOFENCES: Geofence[] = [
-  { x: 200, y: 180, radius: 60, label: "SEDE CENTRAL" },
-  { x: 500, y: 280, radius: 50, label: "POSTO 01" },
-  { x: 350, y: 400, radius: 45, label: "GARAGEM" },
-  { x: 650, y: 150, radius: 55, label: "ALMOXARIFADO" },
+  { x: 200, y: 126, radius: 42, label: "SEDE CENTRAL" },
+  { x: 500, y: 196, radius: 35, label: "POSTO 01" },
+  { x: 350, y: 280, radius: 32, label: "GARAGEM" },
+  { x: 650, y: 105, radius: 39, label: "ALMOXARIFADO" },
 ];
 
 function generateGPSLog() {
@@ -68,7 +68,7 @@ export default function SigFrota() {
     const vehicles: Vehicle[] = Array.from({ length: 6 }, (_, i) => ({
       id: `VEH-${String(i + 1).padStart(3, "0")}`,
       x: Math.random() * 700 + 50,
-      y: Math.random() * 400 + 50,
+      y: Math.random() * 280 + 35,
       angle: Math.random() * Math.PI * 2,
       speed: 0.5 + Math.random() * 1.5,
       trail: [],
@@ -91,7 +91,7 @@ export default function SigFrota() {
     if (!ctx) return;
 
     const W = 800;
-    const H = 500;
+    const H = 350;
     canvas.width = W;
     canvas.height = H;
 
@@ -269,7 +269,7 @@ export default function SigFrota() {
           <canvas
             ref={canvasRef}
             className="w-full rounded-xl"
-            style={{ aspectRatio: "8/5" }}
+            style={{ aspectRatio: "16/7" }}
           />
           <div className="mt-3 flex flex-wrap gap-4 text-[9px] font-mono text-white/30">
             <span>
