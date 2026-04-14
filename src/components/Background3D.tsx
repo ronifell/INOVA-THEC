@@ -5,9 +5,9 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useStore } from "@/store/useStore";
 
-const PARTICLE_COUNT = 520;
-const GRID_SEGMENTS_X = 200;
-const GRID_SEGMENTS_Y = 100;
+const PARTICLE_COUNT = 200;
+const GRID_SEGMENTS_X = 300;
+const GRID_SEGMENTS_Y = 150;
 
 const mouseNDC = new THREE.Vector2(0, 0);
 
@@ -21,6 +21,7 @@ if (typeof window !== "undefined") {
 function SnowFrostParticles() {
   const pointsRef = useRef<THREE.Points>(null);
   const themeColor = useStore((s) => s.themeColor);
+  const moduleView = useStore((s) => (s.activeModule != null ? 1 : 0));
 
   const [positions, opacities, seeds, sizeMults] = useMemo(() => {
     const pos = new Float32Array(PARTICLE_COUNT * 3);
@@ -62,6 +63,7 @@ function SnowFrostParticles() {
         uAccent: { value: new THREE.Color(themeColor) },
         uTime: { value: 0 },
         uMouse: { value: new THREE.Vector2(0, 0) },
+        uModuleView: { value: 0 },
       },
       vertexShader: `
         attribute float aOpacity;
@@ -73,6 +75,7 @@ function SnowFrostParticles() {
         varying float vSizeMult;
         uniform float uTime;
         uniform vec2 uMouse;
+        uniform float uModuleView;
 
         void main() {
           vec3 pos = position;
@@ -82,8 +85,9 @@ function SnowFrostParticles() {
           vDistToMouse = dist;
 
           float repulse = max(0.0, 1.0 - dist / 0.6) * 1.5;
+          float repMul = mix(1.0, 0.42, uModuleView);
           vec2 dir = normalize(screenPos - uMouse + 0.001);
-          pos.xy += dir * repulse;
+          pos.xy += dir * repulse * repMul;
 
           pos.x += sin(uTime * 0.55 + aSeed * 0.01 + pos.y * 0.12) * 0.12;
           pos.z += sin(uTime * 0.3 + pos.x * 0.5) * 0.25;
@@ -92,7 +96,7 @@ function SnowFrostParticles() {
           vSeed = aSeed;
           vSizeMult = aSizeMult;
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          float rep = repulse;
+          float rep = repulse * repMul;
           float basePx = (2.8 + rep * 3.2) * (110.0 / -mvPosition.z);
           gl_PointSize = clamp(basePx * aSizeMult, 1.2, 220.0);
           gl_Position = projectionMatrix * mvPosition;
@@ -101,6 +105,7 @@ function SnowFrostParticles() {
       fragmentShader: `
         uniform vec3 uAccent;
         uniform float uTime;
+        uniform float uModuleView;
         varying float vOpacity;
         varying float vDistToMouse;
         varying float vSeed;
@@ -212,7 +217,8 @@ function SnowFrostParticles() {
           col += twinkleHue * sp * shape * sparkW * (0.52 + 0.48 * smoothstep(1.5, 16.0, vSizeMult));
 
           vec3 acc = uAccent;
-          col = mix(col, mix(col, acc * 0.42 + vec3(0.58, 0.72, 0.9), 0.28), nearMouse * 0.45);
+          float accNear = mix(0.45, 0.14, uModuleView);
+          col = mix(col, mix(col, acc * 0.42 + vec3(0.58, 0.72, 0.9), 0.28), nearMouse * accNear);
 
           float a = shape * vOpacity;
           a *= 0.42 + 0.38 * shape;
@@ -229,6 +235,10 @@ function SnowFrostParticles() {
   useEffect(() => {
     shaderMaterial.uniforms.uAccent.value.set(themeColor);
   }, [themeColor, shaderMaterial]);
+
+  useEffect(() => {
+    shaderMaterial.uniforms.uModuleView.value = moduleView;
+  }, [moduleView, shaderMaterial]);
 
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
@@ -286,6 +296,7 @@ function SnowFrostParticles() {
 function ReactiveGrid() {
   const meshRef = useRef<THREE.Mesh>(null);
   const themeColor = useStore((s) => s.themeColor);
+  const moduleView = useStore((s) => (s.activeModule != null ? 1 : 0));
 
   const { geometry } = useMemo(() => {
     const geo = new THREE.PlaneGeometry(
@@ -306,10 +317,12 @@ function ReactiveGrid() {
         uColor: { value: new THREE.Color(themeColor) },
         uMouse: { value: new THREE.Vector2(0, 0) },
         uTime: { value: 0 },
+        uModuleView: { value: 0 },
       },
       vertexShader: `
         uniform vec2 uMouse;
         uniform float uTime;
+        uniform float uModuleView;
         varying float vDistToMouse;
         varying float vElevation;
 
@@ -324,7 +337,8 @@ function ReactiveGrid() {
                      + sin(pos.y * 0.4 + uTime * 0.3) * 0.15;
 
           float repulse = max(0.0, 1.0 - dist / 0.5);
-          float elevation = repulse * repulse * 4.0 + wave;
+          float peak = mix(4.0, 1.85, uModuleView);
+          float elevation = repulse * repulse * peak + wave;
           pos.z += elevation;
           vElevation = elevation;
 
@@ -333,16 +347,20 @@ function ReactiveGrid() {
       `,
       fragmentShader: `
         uniform vec3 uColor;
+        uniform float uModuleView;
         varying float vDistToMouse;
         varying float vElevation;
 
         void main() {
           float nearMouse = smoothstep(1.0, 0.0, vDistToMouse);
-          float baseAlpha = 0.07;
-          float alpha = baseAlpha + nearMouse * 0.4 + vElevation * 0.05;
+          float baseAlpha = mix(0.07, 0.055, uModuleView);
+          float pulseW = mix(0.4, 0.11, uModuleView);
+          float elevW = mix(0.05, 0.022, uModuleView);
+          float alpha = baseAlpha + nearMouse * pulseW + vElevation * elevW;
 
-          vec3 col = mix(uColor * 0.6, uColor * 1.4, nearMouse);
-          col += vec3(1.0) * vElevation * 0.06;
+          vec3 bright = mix(uColor * 1.4, uColor * 1.08, uModuleView);
+          vec3 col = mix(uColor * 0.6, bright, nearMouse);
+          col += vec3(1.0) * vElevation * mix(0.06, 0.02, uModuleView);
 
           gl_FragColor = vec4(col, alpha);
         }
@@ -353,6 +371,10 @@ function ReactiveGrid() {
   useEffect(() => {
     gridMaterial.uniforms.uColor.value.set(themeColor);
   }, [themeColor, gridMaterial]);
+
+  useEffect(() => {
+    gridMaterial.uniforms.uModuleView.value = moduleView;
+  }, [moduleView, gridMaterial]);
 
   useFrame(({ clock }) => {
     gridMaterial.uniforms.uTime.value = clock.getElapsedTime();
