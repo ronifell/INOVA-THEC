@@ -3,6 +3,19 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
+import ModuleActionButton from "./ModuleActionButton";
+import ModuleFooterTicker from "./ModuleFooterTicker";
+
+const FROTA_ACTIONS = [
+  "ROTAS",
+  "GEOFENCE",
+  "ALERTAS",
+  "COMBUSTÍVEL",
+  "MANUTENÇÃO",
+  "MOTORISTA",
+  "INTEGRAÇÃO",
+  "API SIG",
+] as const;
 
 interface Vehicle {
   id: string;
@@ -48,6 +61,7 @@ export default function SigFrota() {
   const vehiclesRef = useRef<Vehicle[]>([]);
   const animRef = useRef<number>(0);
   const openReport = useStore((s) => s.openReport);
+  const triggerHashValidation = useStore((s) => s.triggerHashValidation);
   const [logs, setLogs] = useState<ReturnType<typeof generateGPSLog>[]>([]);
 
   useEffect(() => {
@@ -211,17 +225,19 @@ export default function SigFrota() {
   }, []);
 
   const handleOpenReport = useCallback(() => {
+    triggerHashValidation();
     openReport("frota");
-  }, [openReport]);
+  }, [openReport, triggerHashValidation]);
 
   return (
     <motion.div
-      className="min-h-full flex flex-col lg:flex-row gap-4 px-4 md:px-8 py-24"
+      className="min-h-full flex flex-col gap-4 px-4 md:px-8 py-24"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <div className="flex flex-col lg:flex-row gap-4 flex-1">
       {/* Map Area */}
       <div className="flex-1">
         <div className="glass rounded-2xl p-4 h-full">
@@ -267,6 +283,17 @@ export default function SigFrota() {
             <span>Veículos ativos: {vehiclesRef.current.length}</span>
             <span>Geofences: {GEOFENCES.length}</span>
           </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {FROTA_ACTIONS.map((label, i) => (
+              <ModuleActionButton
+                key={label}
+                label={label}
+                index={i}
+                accent="#10B981"
+                accentRgb="16, 185, 129"
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -284,9 +311,9 @@ export default function SigFrota() {
               <motion.div
                 key={log.id}
                 className="glass rounded-lg px-3 py-2"
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 36 }}
                 animate={{ opacity: 1 - i * 0.04, x: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="flex justify-between items-center">
                   <span className="text-[10px] font-mono text-green-400/60">
@@ -304,6 +331,14 @@ export default function SigFrota() {
           </div>
         </div>
       </div>
+      </div>
+
+      <ModuleFooterTicker
+        text="SIG-FROTA | GPS TEMPO REAL | GEOFENCE ATIVO | PROTOCOLO AP-04 | AUDITORIA VEICULAR | "
+        speedPx={80}
+        flicker
+        className="w-full shrink-0"
+      />
     </motion.div>
   );
 }

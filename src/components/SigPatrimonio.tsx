@@ -4,6 +4,18 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
 import { generateMockHash } from "@/lib/crypto";
+import ModuleActionButton from "./ModuleActionButton";
+import ModuleFooterTicker from "./ModuleFooterTicker";
+
+const PAT_ACTIONS = [
+  "INVENTÁRIO",
+  "VISTORIA",
+  "BAIXA",
+  "TRANSFERÊNCIA",
+  "QR TRACE",
+  "HASH LOCAL",
+  "AUDITORIA",
+] as const;
 
 interface Asset {
   id: string;
@@ -81,6 +93,7 @@ const MOCK_ASSETS: Asset[] = [
 
 export default function SigPatrimonio() {
   const openReport = useStore((s) => s.openReport);
+  const triggerHashValidation = useStore((s) => s.triggerHashValidation);
   const [mousePos, setMousePos] = useState<{
     x: number;
     y: number;
@@ -107,8 +120,9 @@ export default function SigPatrimonio() {
   }, []);
 
   const handleOpenReport = useCallback(() => {
+    triggerHashValidation();
     openReport("patrimonio");
-  }, [openReport]);
+  }, [openReport, triggerHashValidation]);
 
   const setCardRef = useCallback(
     (id: string) => (el: HTMLDivElement | null) => {
@@ -120,7 +134,7 @@ export default function SigPatrimonio() {
 
   return (
     <motion.div
-      className="min-h-full px-4 md:px-8 py-24 cursor-crosshair"
+      className="min-h-full flex flex-col px-4 md:px-8 py-24 cursor-crosshair"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -153,16 +167,28 @@ export default function SigPatrimonio() {
         </motion.button>
       </div>
 
+      <div className="max-w-7xl mx-auto mb-5 flex flex-wrap gap-2">
+        {PAT_ACTIONS.map((label, i) => (
+          <ModuleActionButton
+            key={label}
+            label={label}
+            index={i}
+            accent="#3B82F6"
+            accentRgb="59, 130, 246"
+          />
+        ))}
+      </div>
+
       {/* Asset Gallery */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto flex-1">
         {MOCK_ASSETS.map((asset, i) => (
           <motion.div
             key={asset.id}
             ref={setCardRef(asset.id)}
             className="relative overflow-hidden rounded-2xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.1 }}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
             onMouseMove={(e) => handleMouseMove(e, asset.id)}
             onMouseLeave={handleMouseLeave}
           >
@@ -261,6 +287,12 @@ export default function SigPatrimonio() {
           </motion.div>
         ))}
       </div>
+
+      <ModuleFooterTicker
+        text="SIG-PATRIMÔNIO | INSPEÇÃO RAIO-X | SHA-256 | PROTOCOLO AP-04 | CADEIA DE CUSTÓDIA | "
+        speedPx={50}
+        className="max-w-7xl mx-auto w-full mt-8 shrink-0"
+      />
     </motion.div>
   );
 }

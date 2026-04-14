@@ -302,6 +302,48 @@ body {
   }
 }
 
+/* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
+@keyframes module-card-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.module-card-float-0 {
+  animation: module-card-float 2s ease-in-out infinite;
+}
+.module-card-float-1 {
+  animation: module-card-float 2.5s ease-in-out infinite;
+}
+.module-card-float-2 {
+  animation: module-card-float 3s ease-in-out infinite;
+}
+
+/* SIG-FROTA ticker — leve brilho estilo radar */
+@keyframes ticker-radar-flicker {
+  0%,
+  100% {
+    opacity: 0.82;
+    filter: brightness(1);
+  }
+  33% {
+    opacity: 1;
+    filter: brightness(1.12);
+  }
+  66% {
+    opacity: 0.9;
+    filter: brightness(1.06);
+  }
+}
+
+.ticker-radar-flicker {
+  animation: ticker-radar-flicker 2.4s ease-in-out infinite;
+}
+
 /* ===== MODULE CARDS: border glow — gradual dim → 5s dark → gradual brighten (ease-in-out) ===== */
 @keyframes moduleCardBorderBlink {
   0%,

@@ -5,7 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useStore } from "@/store/useStore";
 
-const PARTICLE_COUNT = 1200;
+const PARTICLE_COUNT = 500;
 const GRID_SEGMENTS_X = 200;
 const GRID_SEGMENTS_Y = 100;
 

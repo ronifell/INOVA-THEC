@@ -7,7 +7,7 @@ import { useVoice } from "@/hooks/useVoice";
 import { generateSHA256 } from "@/lib/crypto";
 
 export default function FaithButtons() {
-  const { triggerGlitch, incrementIntegrity } = useStore();
+  const { triggerGlitch, incrementIntegrity, triggerHashValidation } = useStore();
   const { speak } = useVoice();
   const [hash, setHash] = useState<string | null>(null);
   const [isValidating, setIsValidating] = useState(false);
@@ -20,6 +20,7 @@ export default function FaithButtons() {
   const handleGerarProva = useCallback(
     async (e: React.MouseEvent) => {
       if (isValidating) return;
+      triggerHashValidation();
       setIsValidating(true);
       setHash(null);
       setDisplayedHash("");
@@ -47,15 +48,16 @@ export default function FaithButtons() {
       setIsValidating(false);
       setTimeout(() => setRipplePos(null), 600);
     },
-    [isValidating, speak, incrementIntegrity]
+    [isValidating, speak, incrementIntegrity, triggerHashValidation]
   );
 
   const handleSimularFraude = useCallback(() => {
+    triggerHashValidation();
     triggerGlitch();
     speak(
       "Alerta crítico! Quebra de integridade detectada. Cadeia de custódia comprometida."
     );
-  }, [triggerGlitch, speak]);
+  }, [triggerGlitch, speak, triggerHashValidation]);
 
   return (
     <div ref={containerRef} className="flex flex-col items-center gap-6">
@@ -101,7 +103,7 @@ export default function FaithButtons() {
                 initial={{ scale: 0, opacity: 0.6 }}
                 animate={{ scale: 20, opacity: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
               />
             )}
           </AnimatePresence>

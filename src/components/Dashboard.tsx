@@ -4,24 +4,19 @@ import { motion } from "framer-motion";
 import { MODULES } from "@/lib/modules";
 import ModuleCard from "./ModuleCard";
 import FaithButtons from "./FaithButtons";
+import FooterMarquee from "./FooterMarquee";
 import { useVoice } from "@/hooks/useVoice";
 
 export default function Dashboard() {
   const { speak } = useVoice();
   return (
-    <motion.div
-      className="min-h-full flex flex-col items-center justify-center px-4 md:px-8 py-24"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.6 }}
-    >
+    <div className="min-h-full flex flex-col items-center justify-center px-4 md:px-8 py-24">
       {/* Title Section */}
       <motion.div
         className="text-center mb-10"
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
       >
         <h2 className="text-2xl md:text-3xl font-bold tracking-wider text-white/90 mb-2">
           PAINEL DE COMANDO
@@ -42,18 +37,18 @@ export default function Dashboard() {
       {/* Faith Buttons Section */}
       <motion.div
         className="w-full max-w-3xl"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
+        transition={{ duration: 0.5, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
       >
         <FaithButtons />
       </motion.div>
 
       <motion.div
         className="w-full max-w-3xl mt-6 glass rounded-2xl p-4 md:p-5"
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.0 }}
+        transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <div>
@@ -83,18 +78,27 @@ export default function Dashboard() {
         </div>
       </motion.div>
 
-      {/* Bottom Tech Info */}
       <motion.div
-        className="mt-12 text-center"
+        className="mt-10 w-full max-w-7xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
+        transition={{ duration: 0.45, delay: 0.52, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <FooterMarquee />
+      </motion.div>
+
+      {/* Bottom Tech Info */}
+      <motion.div
+        className="mt-6 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.45, delay: 0.62, ease: [0.22, 1, 0.36, 1] }}
       >
         <p className="text-[9px] font-mono tracking-widest text-white/15">
           INOVA THEC © {new Date().getFullYear()} — CRIPTOGRAFIA SHA-256 |
           CADEIA DE CUSTÓDIA IMUTÁVEL | FÉ PÚBLICA DIGITAL
         </p>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }

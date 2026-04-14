@@ -12,20 +12,24 @@ function HolographicSeal() {
   return (
     <motion.div
       className="relative inline-flex flex-col items-center cursor-pointer"
+      style={{ perspective: 500 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       whileHover={{ scale: 1.05 }}
     >
-      {/* Metallic seal outer */}
-      <div
-        className="relative w-24 h-24 rounded-full flex items-center justify-center"
+      {/* Memorial: selo 3D — 1 rotação / 4s no eixo Y */}
+      <motion.div
+        className="relative w-24 h-24 rounded-full flex items-center justify-center will-change-transform antialiased"
         style={{
+          transformStyle: "preserve-3d",
           background:
             "conic-gradient(from 0deg, #c0c0c0, #ffd700, #c0c0c0, #b8860b, #c0c0c0, #ffd700, #c0c0c0)",
           boxShadow: isHovered
             ? "0 0 30px rgba(255, 215, 0, 0.4), inset 0 0 15px rgba(255, 215, 0, 0.2)"
             : "0 0 10px rgba(192, 192, 192, 0.2)",
         }}
+        animate={{ rotateY: 360 }}
+        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
       >
         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
           <div className="text-center">
@@ -40,7 +44,7 @@ function HolographicSeal() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* QR Code (visible on hover) */}
       <AnimatePresence>
@@ -208,11 +212,11 @@ export default function ReportModal() {
 
           {/* Document */}
           <motion.div
-            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl"
-            initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl antialiased"
+            initial={{ scale: 0.92, opacity: 0, filter: "blur(14px)" }}
             animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-            exit={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ scale: 0.92, opacity: 0, filter: "blur(14px)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="bg-white text-gray-900 p-8 md:p-12 relative overflow-hidden">
               <RotatingWatermark org={reportData.org} />

@@ -13,6 +13,7 @@ import Dashboard from "@/components/Dashboard";
 import BackButton from "@/components/BackButton";
 import ReportModal from "@/components/ReportModal";
 import { getModuleById } from "@/lib/modules";
+import { appShellContainer, appShellFadeUp } from "@/lib/motionVariants";
 
 const Background3D = dynamic(() => import("@/components/Background3D"), {
   ssr: false,
@@ -30,6 +31,10 @@ const ModulePlaceholder = dynamic(
   () => import("@/components/ModulePlaceholder"),
   { ssr: false }
 );
+
+const BootScreen = dynamic(() => import("@/components/BootScreen"), {
+  ssr: false,
+});
 
 function ActiveModuleView() {
   const activeModule = useStore((s) => s.activeModule);
@@ -62,6 +67,7 @@ export default function Home() {
   const activeModule = useStore((s) => s.activeModule);
   const isGlitching = useStore((s) => s.isGlitching);
   const [mounted, setMounted] = useState(false);
+  const [bootDone, setBootDone] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -88,41 +94,62 @@ export default function Home() {
 
       <Background3D />
 
-      <ScanLine />
-      <CursorTrail />
-      <LiquidTransition />
-      <GlitchOverlay />
-      <Header />
+      {!bootDone && (
+        <BootScreen onComplete={() => setBootDone(true)} />
+      )}
 
-      {/* Main Content */}
-      <main className="relative z-10 min-h-full">
-        <AnimatePresence mode="wait">
-          {activeModule ? (
-            <motion.div
-              key={activeModule}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5 }}
-            >
-              <ActiveModuleView />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="dashboard"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Dashboard />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </main>
+      {bootDone && (
+        <motion.div
+          className="flex min-h-full flex-col"
+          variants={appShellContainer}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div className="pointer-events-none" variants={appShellFadeUp}>
+            <ScanLine />
+            <CursorTrail />
+            <LiquidTransition />
+            <GlitchOverlay />
+          </motion.div>
 
-      <BackButton />
-      <ReportModal />
+          <Header />
+
+          <motion.main
+            className="relative z-10 min-h-full flex-1"
+            variants={appShellFadeUp}
+          >
+            <AnimatePresence mode="wait">
+              {activeModule ? (
+                <motion.div
+                  key={activeModule}
+                  initial={{ opacity: 0, x: 36 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -28 }}
+                  transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <ActiveModuleView />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="dashboard"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Dashboard />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.main>
+
+          <motion.div variants={appShellFadeUp}>
+            <BackButton />
+          </motion.div>
+
+          <ReportModal />
+        </motion.div>
+      )}
     </div>
   );
 }

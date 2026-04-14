@@ -14,6 +14,7 @@ interface ModuleCardProps {
 export default function ModuleCard({ module, index }: ModuleCardProps) {
   const setActiveModule = useStore((s) => s.setActiveModule);
   const triggerLiquidTransition = useStore((s) => s.triggerLiquidTransition);
+  const triggerHashValidation = useStore((s) => s.triggerHashValidation);
   const { speak } = useVoice();
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
   const cardRef = useRef<HTMLButtonElement | null>(null);
@@ -21,10 +22,11 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
   const rotateY = useMotionValue(0);
   const iconX = useMotionValue(0);
   const iconY = useMotionValue(0);
-  const iconXSpring = useSpring(iconX, { stiffness: 180, damping: 18 });
-  const iconYSpring = useSpring(iconY, { stiffness: 180, damping: 18 });
-  const rotateXSpring = useSpring(rotateX, { stiffness: 150, damping: 20 });
-  const rotateYSpring = useSpring(rotateY, { stiffness: 150, damping: 20 });
+  /* Atraso ~100ms no tilt: mola mais “pesada” */
+  const iconXSpring = useSpring(iconX, { stiffness: 130, damping: 22, mass: 0.55 });
+  const iconYSpring = useSpring(iconY, { stiffness: 130, damping: 22, mass: 0.55 });
+  const rotateXSpring = useSpring(rotateX, { stiffness: 115, damping: 22, mass: 0.55 });
+  const rotateYSpring = useSpring(rotateY, { stiffness: 115, damping: 22, mass: 0.55 });
 
   const handleHover = useCallback(() => {
     hoverTimeout.current = setTimeout(() => {
@@ -33,10 +35,11 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
   }, [speak, module.voiceText]);
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    triggerHashValidation();
     triggerLiquidTransition(e.clientX, e.clientY, module.color);
     setActiveModule(module.id, module.color, module.colorRgb);
     speak(module.voiceText);
-  }, [setActiveModule, module, speak, triggerLiquidTransition]);
+  }, [setActiveModule, module, speak, triggerHashValidation, triggerLiquidTransition]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -70,7 +73,7 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
         delay: index * 0.1,
         ease: [0.22, 1, 0.36, 1],
       }}
-      whileHover={{ scale: 1.08, y: -5 }}
+      whileHover={{ scale: 1.06, y: -4 }}
       whileTap={{ scale: 0.98 }}
       onHoverStart={handleHover}
       onHoverEnd={resetParallax}
@@ -79,7 +82,7 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
       onClick={handleClick}
     >
       <div
-        className="relative rounded-2xl p-6 h-full transition-all duration-500"
+        className={`relative rounded-2xl p-6 h-full transition-all duration-500 module-card-float-${index % 3}`}
         style={
           {
             "--card-rgb": module.colorRgb,

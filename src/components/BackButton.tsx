@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
 
 export default function BackButton() {
-  const { activeModule, goHome, themeColor } = useStore();
+  const { activeModule, goHome, themeColor, triggerHashValidation } = useStore();
 
   if (!activeModule) return null;
 
@@ -19,7 +19,10 @@ export default function BackButton() {
         boxShadow: `0 0 20px ${themeColor}30`,
       }}
       whileTap={{ scale: 0.95 }}
-      onClick={goHome}
+      onClick={() => {
+        triggerHashValidation();
+        goHome();
+      }}
     >
       <motion.span
         className="text-sm"

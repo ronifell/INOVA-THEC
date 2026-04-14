@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+export type HashDisplayPhase = "idle" | "flash" | "validated";
+
 interface AppState {
   activeModule: string | null;
   themeColor: string;
@@ -11,6 +13,8 @@ interface AppState {
   audioEnabled: boolean;
   hashDisplay: string | null;
   isValidating: boolean;
+  /** Memorial AP-04: parada + flash + [HASH VALIDADO] */
+  hashDisplayPhase: HashDisplayPhase;
   liquidTransition: {
     active: boolean;
     x: number;
@@ -26,6 +30,7 @@ interface AppState {
   toggleAudio: () => void;
   setHashDisplay: (hash: string | null) => void;
   setIsValidating: (v: boolean) => void;
+  triggerHashValidation: () => void;
   triggerLiquidTransition: (x: number, y: number, color: string) => void;
   goHome: () => void;
 }
@@ -41,6 +46,7 @@ export const useStore = create<AppState>((set) => ({
   audioEnabled: true,
   hashDisplay: null,
   isValidating: false,
+  hashDisplayPhase: "idle",
   liquidTransition: {
     active: false,
     x: 0,
@@ -66,16 +72,21 @@ export const useStore = create<AppState>((set) => ({
 
   setHashDisplay: (hash) => set({ hashDisplay: hash }),
   setIsValidating: (v) => set({ isValidating: v }),
+  triggerHashValidation: () => {
+    set({ hashDisplayPhase: "flash" });
+    window.setTimeout(() => set({ hashDisplayPhase: "validated" }), 200);
+    window.setTimeout(() => set({ hashDisplayPhase: "idle" }), 700);
+  },
   triggerLiquidTransition: (x, y, color) => {
     set({
       liquidTransition: { active: true, x, y, color },
     });
-    setTimeout(
+    window.setTimeout(
       () =>
         set({
           liquidTransition: { active: false, x: 0, y: 0, color: "#0F172A" },
         }),
-      850
+      800
     );
   },
 
