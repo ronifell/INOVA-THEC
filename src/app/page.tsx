@@ -7,6 +7,8 @@ import { useStore } from "@/store/useStore";
 import Header from "@/components/Header";
 import ScanLine from "@/components/ScanLine";
 import GlitchOverlay from "@/components/GlitchOverlay";
+import CursorTrail from "@/components/CursorTrail";
+import LiquidTransition from "@/components/LiquidTransition";
 import Dashboard from "@/components/Dashboard";
 import BackButton from "@/components/BackButton";
 import ReportModal from "@/components/ReportModal";
@@ -87,6 +89,8 @@ export default function Home() {
       <Background3D />
 
       <ScanLine />
+      <CursorTrail />
+      <LiquidTransition />
       <GlitchOverlay />
       <Header />
 

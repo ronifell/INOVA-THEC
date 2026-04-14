@@ -192,15 +192,14 @@ function ReactiveGrid() {
   const meshRef = useRef<THREE.Mesh>(null);
   const themeColor = useStore((s) => s.themeColor);
 
-  const { geometry, originalPositions } = useMemo(() => {
+  const { geometry } = useMemo(() => {
     const geo = new THREE.PlaneGeometry(
       60,
       36,
       GRID_SEGMENTS_X,
       GRID_SEGMENTS_Y
     );
-    const orig = new Float32Array(geo.attributes.position.array);
-    return { geometry: geo, originalPositions: orig };
+    return { geometry: geo };
   }, []);
 
   const gridMaterial = useMemo(() => {

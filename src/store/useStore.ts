@@ -11,6 +11,12 @@ interface AppState {
   audioEnabled: boolean;
   hashDisplay: string | null;
   isValidating: boolean;
+  liquidTransition: {
+    active: boolean;
+    x: number;
+    y: number;
+    color: string;
+  };
 
   setActiveModule: (id: string | null, color?: string, rgb?: string) => void;
   triggerGlitch: () => void;
@@ -20,6 +26,7 @@ interface AppState {
   toggleAudio: () => void;
   setHashDisplay: (hash: string | null) => void;
   setIsValidating: (v: boolean) => void;
+  triggerLiquidTransition: (x: number, y: number, color: string) => void;
   goHome: () => void;
 }
 
@@ -34,6 +41,12 @@ export const useStore = create<AppState>((set) => ({
   audioEnabled: true,
   hashDisplay: null,
   isValidating: false,
+  liquidTransition: {
+    active: false,
+    x: 0,
+    y: 0,
+    color: "#0F172A",
+  },
 
   setActiveModule: (id, color = "#0F172A", rgb = "15, 23, 42") =>
     set({ activeModule: id, themeColor: color, themeColorRgb: rgb }),
@@ -53,6 +66,18 @@ export const useStore = create<AppState>((set) => ({
 
   setHashDisplay: (hash) => set({ hashDisplay: hash }),
   setIsValidating: (v) => set({ isValidating: v }),
+  triggerLiquidTransition: (x, y, color) => {
+    set({
+      liquidTransition: { active: true, x, y, color },
+    });
+    setTimeout(
+      () =>
+        set({
+          liquidTransition: { active: false, x: 0, y: 0, color: "#0F172A" },
+        }),
+      850
+    );
+  },
 
   goHome: () =>
     set({

@@ -1,7 +1,28 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
+
+function OdometerDigit({ digit, color }: { digit: string; color: string }) {
+  const target = Number.isNaN(Number(digit)) ? 0 : Number(digit);
+  return (
+    <span className="relative inline-flex h-4 w-[10px] overflow-hidden font-mono">
+      <motion.span
+        className="absolute left-0 top-0 flex flex-col leading-4"
+        style={{ color }}
+        animate={{ y: `-${target * 16}px` }}
+        transition={{ duration: 0.45, ease: [0.19, 1, 0.22, 1] }}
+      >
+        {Array.from({ length: 10 }).map((_, i) => (
+          <span key={i} className="h-4">
+            {i}
+          </span>
+        ))}
+      </motion.span>
+    </span>
+  );
+}
 
 export default function Header() {
   const {
@@ -13,6 +34,20 @@ export default function Header() {
     goHome,
     activeModule,
   } = useStore();
+  const [liveCount, setLiveCount] = useState(integrityCount);
+
+  useEffect(() => {
+    setLiveCount((prev) => Math.max(prev, integrityCount));
+  }, [integrityCount]);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setLiveCount((prev) => prev + Math.floor(Math.random() * 3 + 1));
+    }, 420);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const formatted = useMemo(() => liveCount.toLocaleString("pt-BR"), [liveCount]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 glass">
@@ -89,14 +124,21 @@ export default function Header() {
               INTEGRIDADE
             </span>
             <motion.span
-              className="text-sm font-mono font-bold"
+              className="text-sm font-mono font-bold inline-flex gap-[1px]"
               style={{ color: themeColor }}
-              key={integrityCount}
               initial={{ scale: 1.2, color: "#fff" }}
               animate={{ scale: 1, color: themeColor }}
               transition={{ duration: 0.3 }}
             >
-              {integrityCount.toLocaleString("pt-BR")}
+              {formatted.split("").map((ch, idx) =>
+                ch === "." || ch === "," ? (
+                  <span key={`${ch}-${idx}`} className="w-[4px] text-white/70">
+                    {ch}
+                  </span>
+                ) : (
+                  <OdometerDigit key={`${ch}-${idx}`} digit={ch} color={themeColor} />
+                )
+              )}
             </motion.span>
           </motion.div>
 

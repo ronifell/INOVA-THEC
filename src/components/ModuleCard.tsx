@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Module } from "@/lib/modules";
 import { useStore } from "@/store/useStore";
 import { useVoice } from "@/hooks/useVoice";
@@ -13,8 +13,18 @@ interface ModuleCardProps {
 
 export default function ModuleCard({ module, index }: ModuleCardProps) {
   const setActiveModule = useStore((s) => s.setActiveModule);
+  const triggerLiquidTransition = useStore((s) => s.triggerLiquidTransition);
   const { speak } = useVoice();
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
+  const cardRef = useRef<HTMLButtonElement | null>(null);
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const iconX = useMotionValue(0);
+  const iconY = useMotionValue(0);
+  const iconXSpring = useSpring(iconX, { stiffness: 180, damping: 18 });
+  const iconYSpring = useSpring(iconY, { stiffness: 180, damping: 18 });
+  const rotateXSpring = useSpring(rotateX, { stiffness: 150, damping: 20 });
+  const rotateYSpring = useSpring(rotateY, { stiffness: 150, damping: 20 });
 
   const handleHover = useCallback(() => {
     hoverTimeout.current = setTimeout(() => {
@@ -22,20 +32,39 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
     }, 400);
   }, [speak, module.voiceText]);
 
-  const handleHoverEnd = useCallback(() => {
-    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
-  }, []);
-
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    triggerLiquidTransition(e.clientX, e.clientY, module.color);
     setActiveModule(module.id, module.color, module.colorRgb);
     speak(module.voiceText);
-  }, [setActiveModule, module, speak]);
+  }, [setActiveModule, module, speak, triggerLiquidTransition]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const px = (x / rect.width - 0.5) * 2;
+    const py = (y / rect.height - 0.5) * 2;
+    rotateX.set(-py * 7);
+    rotateY.set(px * 7);
+    iconX.set(px * 14);
+    iconY.set(py * 10);
+  }, [iconX, iconY, rotateX, rotateY]);
+
+  const resetParallax = useCallback(() => {
+    rotateX.set(0);
+    rotateY.set(0);
+    iconX.set(0);
+    iconY.set(0);
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+  }, [iconX, iconY, rotateX, rotateY]);
 
   return (
     <motion.button
-      className="relative group cursor-pointer"
+      ref={cardRef}
+      className="relative group cursor-pointer [transform-style:preserve-3d]"
       initial={{ opacity: 0, y: 40, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
+      style={{ rotateX: rotateXSpring, rotateY: rotateYSpring, transformPerspective: 700 }}
       transition={{
         duration: 0.6,
         delay: index * 0.1,
@@ -44,7 +73,9 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
       whileHover={{ scale: 1.08, y: -5 }}
       whileTap={{ scale: 0.98 }}
       onHoverStart={handleHover}
-      onHoverEnd={handleHoverEnd}
+      onHoverEnd={resetParallax}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={resetParallax}
       onClick={handleClick}
     >
       <div
@@ -74,7 +105,10 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
         />
 
         {/* Icon sphere */}
-        <div className="relative mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center">
+        <motion.div
+          className="relative mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center"
+          style={{ x: iconXSpring, y: iconYSpring }}
+        >
           <div
             className="absolute inset-0 rounded-full transition-all duration-500"
             style={{
@@ -89,8 +123,13 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
               boxShadow: `0 0 30px rgba(${module.colorRgb}, 0.4)`,
             }}
           />
-          <span className="relative text-2xl z-10">{module.icon}</span>
-        </div>
+          <motion.span
+            className="relative text-2xl z-10"
+            style={{ textShadow: `0 0 20px rgba(${module.colorRgb},0.45)` }}
+          >
+            {module.icon}
+          </motion.span>
+        </motion.div>
 
         {/* Title */}
         <h3

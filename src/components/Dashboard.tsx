@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { MODULES } from "@/lib/modules";
 import ModuleCard from "./ModuleCard";
 import FaithButtons from "./FaithButtons";
+import { useVoice } from "@/hooks/useVoice";
 
 export default function Dashboard() {
+  const { speak } = useVoice();
   return (
     <motion.div
       className="min-h-full flex flex-col items-center justify-center px-4 md:px-8 py-24"
@@ -45,6 +47,40 @@ export default function Dashboard() {
         transition={{ duration: 0.6, delay: 0.8 }}
       >
         <FaithButtons />
+      </motion.div>
+
+      <motion.div
+        className="w-full max-w-3xl mt-6 glass rounded-2xl p-4 md:p-5"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.0 }}
+      >
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-mono tracking-[0.2em] text-white/35 uppercase">
+              Vitrine de Demonstração
+            </p>
+            <p className="text-xs text-white/55 mt-1">
+              Acesso restrito leva da Vitrine para o Sistema Operacional de Auditoria.
+            </p>
+          </div>
+          <div className="flex gap-2 w-full md:w-auto">
+            <a
+              href="/acesso-restrito"
+              onMouseEnter={() => speak("Acesso restrito ao sistema operacional de auditoria.")}
+              className="flex-1 md:flex-none text-center px-4 py-2 rounded-xl border border-cyan-400/30 text-cyan-300 text-xs font-mono tracking-wider hover:bg-cyan-400/10 transition-colors"
+            >
+              ACESSO RESTRITO
+            </a>
+            <a
+              href="/login"
+              onMouseEnter={() => speak("Login da fábrica de dados e protocolo de fé pública.")}
+              className="flex-1 md:flex-none text-center px-4 py-2 rounded-xl border border-emerald-400/30 text-emerald-300 text-xs font-mono tracking-wider hover:bg-emerald-400/10 transition-colors"
+            >
+              LOGIN OPERACIONAL
+            </a>
+          </div>
+        </div>
       </motion.div>
 
       {/* Bottom Tech Info */}
