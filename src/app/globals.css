@@ -1,26 +1,327 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --base-bg: #0f172a;
+  --theme-color: #0f172a;
+  --theme-rgb: 15, 23, 42;
+  --foreground: #e2e8f0;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-background: var(--base-bg);
   --color-foreground: var(--foreground);
+  --color-petroleo: #0f172a;
+  --color-frota: #10b981;
+  --color-patrimonio: #3b82f6;
+  --color-obras: #f59e0b;
+  --color-medicamentos: #d946ef;
+  --color-merenda: #facc15;
+  --color-social: #06b6d4;
+  --color-ambiental: #15803d;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
-  background: var(--background);
+  background: var(--base-bg);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* ===== SCAN LINE ===== */
+@keyframes scanLine {
+  0% {
+    top: -2px;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    top: 100vh;
+    opacity: 0;
+  }
+}
+
+.scan-line {
+  animation: scanLine 5s linear infinite;
+}
+
+/* ===== PULSE ===== */
+@keyframes pulse-neon {
+  0%,
+  100% {
+    box-shadow:
+      0 0 5px rgba(var(--theme-rgb), 0.3),
+      0 0 20px rgba(var(--theme-rgb), 0.15);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 15px rgba(var(--theme-rgb), 0.5),
+      0 0 40px rgba(var(--theme-rgb), 0.25);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes pulse-logo {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(var(--theme-rgb), 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(var(--theme-rgb), 0.7));
+  }
+}
+
+/* ===== GLITCH ===== */
+@keyframes glitch-1 {
+  0%,
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-5px, 3px);
+  }
+  40% {
+    clip-path: inset(50% 0 20% 0);
+    transform: translate(5px, -3px);
+  }
+  60% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(-3px, 5px);
+  }
+  80% {
+    clip-path: inset(70% 0 5% 0);
+    transform: translate(3px, -5px);
+  }
+}
+
+@keyframes glitch-2 {
+  0%,
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(5px, -3px);
+  }
+  40% {
+    clip-path: inset(10% 0 50% 0);
+    transform: translate(-5px, 3px);
+  }
+  60% {
+    clip-path: inset(70% 0 10% 0);
+    transform: translate(3px, 5px);
+  }
+  80% {
+    clip-path: inset(5% 0 60% 0);
+    transform: translate(-3px, -5px);
+  }
+}
+
+@keyframes glitch-skew {
+  0%,
+  100% {
+    transform: skewX(0deg);
+  }
+  25% {
+    transform: skewX(2deg);
+  }
+  50% {
+    transform: skewX(-1deg);
+  }
+  75% {
+    transform: skewX(3deg);
+  }
+}
+
+.glitch-active {
+  animation: glitch-skew 0.3s ease-in-out infinite;
+}
+
+.glitch-active::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: inherit;
+  animation: glitch-1 0.4s ease-in-out infinite;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  filter: hue-rotate(-30deg);
+}
+
+.glitch-active::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: inherit;
+  animation: glitch-2 0.4s ease-in-out infinite reverse;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  filter: hue-rotate(30deg);
+}
+
+/* ===== TYPEWRITER ===== */
+@keyframes typewriter-cursor {
+  0%,
+  100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: rgba(var(--theme-rgb), 0.8);
+  }
+}
+
+/* ===== FLOATING ===== */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ===== RIPPLE ===== */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ===== RADAR SWEEP ===== */
+@keyframes radar-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== GEOFENCE PULSE ===== */
+@keyframes geofence-pulse {
+  0%,
+  100% {
+    r: 40;
+    opacity: 0.6;
+  }
+  50% {
+    r: 48;
+    opacity: 0.3;
+  }
+}
+
+/* ===== HOLOGRAPHIC SEAL ===== */
+@keyframes holo-shine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.holo-seal {
+  background: linear-gradient(
+    90deg,
+    #c0c0c0 0%,
+    #ffd700 25%,
+    #c0c0c0 50%,
+    #ffd700 75%,
+    #c0c0c0 100%
+  );
+  background-size: 200% 100%;
+  animation: holo-shine 3s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ===== WATERMARK ROTATION ===== */
+@keyframes watermark-rotate {
+  from {
+    transform: translate(-50%, -50%) rotateY(0deg) rotateX(15deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotateY(360deg) rotateX(15deg);
+  }
+}
+
+/* ===== GPS LOG RAIN ===== */
+@keyframes log-rain {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+/* ===== GLASSMORPHISM ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ===== CUSTOM CURSOR STATES ===== */
+.cursor-crosshair {
+  cursor: crosshair;
+}
+
+.cursor-validating {
+  cursor: wait;
 }
