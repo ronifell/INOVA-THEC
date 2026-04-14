@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, Suspense } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
@@ -28,35 +28,6 @@ const ModulePlaceholder = dynamic(
   () => import("@/components/ModulePlaceholder"),
   { ssr: false }
 );
-
-function LoadingScreen() {
-  return (
-    <div className="fixed inset-0 bg-[#0F172A] flex items-center justify-center z-50">
-      <motion.div
-        className="text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        <motion.div
-          className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-emerald-500/20 to-blue-500/20 border border-white/10 flex items-center justify-center"
-          animate={{
-            boxShadow: [
-              "0 0 10px rgba(16, 185, 129, 0.2)",
-              "0 0 30px rgba(16, 185, 129, 0.4)",
-              "0 0 10px rgba(16, 185, 129, 0.2)",
-            ],
-          }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <span className="text-white font-bold text-lg">IT</span>
-        </motion.div>
-        <p className="text-[10px] font-mono tracking-[0.3em] text-white/30">
-          INICIALIZANDO SISTEMA
-        </p>
-      </motion.div>
-    </div>
-  );
-}
 
 function ActiveModuleView() {
   const activeModule = useStore((s) => s.activeModule);
@@ -113,16 +84,14 @@ export default function Home() {
     <div className={`h-full overflow-y-auto ${isGlitching ? "glitch-active" : ""}`}>
       <ThemeColorUpdater />
 
-      <Suspense fallback={<LoadingScreen />}>
-        <Background3D />
-      </Suspense>
+      <Background3D />
 
       <ScanLine />
       <GlitchOverlay />
       <Header />
 
       {/* Main Content */}
-      <main className="relative z-20 min-h-full">
+      <main className="relative z-10 min-h-full">
         <AnimatePresence mode="wait">
           {activeModule ? (
             <motion.div
