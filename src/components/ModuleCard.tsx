@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, type CSSProperties } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Module } from "@/lib/modules";
 import { useStore } from "@/store/useStore";
@@ -80,13 +80,23 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
     >
       <div
         className="relative rounded-2xl p-6 h-full transition-all duration-500"
-        style={{
-          background: `rgba(255, 255, 255, 0.04)`,
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-          border: `1px solid rgba(${module.colorRgb}, 0.15)`,
-        }}
+        style={
+          {
+            "--card-rgb": module.colorRgb,
+            background: `rgba(255, 255, 255, 0.04)`,
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            border: `1px solid rgba(${module.colorRgb}, 0.15)`,
+          } as CSSProperties
+        }
       >
+        {/* Blinking neon border glow (module color) — --card-rgb repeated here so animation always resolves */}
+        <div
+          className="module-card-border-blink absolute inset-0 rounded-2xl pointer-events-none z-[1]"
+          style={{ "--card-rgb": module.colorRgb } as CSSProperties}
+          aria-hidden
+        />
+
         {/* Neon glow core */}
         <div
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -104,20 +114,29 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
           }}
         />
 
-        {/* Icon sphere */}
+        {/* Icon sphere + outward color waves */}
         <motion.div
-          className="relative mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center"
+          className="relative mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center z-[2]"
           style={{ x: iconXSpring, y: iconYSpring }}
         >
-          <div
-            className="absolute inset-0 rounded-full transition-all duration-500"
+          {/* Single expanding ring; next wave after ~3s idle (see globals.css) */}
+          <span
+            className="module-icon-wave-ring z-0"
             style={{
-              background: `radial-gradient(circle, rgba(${module.colorRgb}, 0.2) 0%, transparent 70%)`,
-              boxShadow: `0 0 15px rgba(${module.colorRgb}, 0.15)`,
+              borderColor: `rgba(${module.colorRgb}, 0.55)`,
+              boxShadow: `0 0 14px rgba(${module.colorRgb}, 0.35), inset 0 0 10px rgba(${module.colorRgb}, 0.12)`,
+            }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 rounded-full transition-all duration-500 z-[1]"
+            style={{
+              background: `radial-gradient(circle, rgba(${module.colorRgb}, 0.22) 0%, transparent 70%)`,
+              boxShadow: `0 0 15px rgba(${module.colorRgb}, 0.2)`,
             }}
           />
           <div
-            className="absolute inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"
+            className="absolute inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 z-[1]"
             style={{
               background: `radial-gradient(circle, rgba(${module.colorRgb}, 0.4) 0%, transparent 70%)`,
               boxShadow: `0 0 30px rgba(${module.colorRgb}, 0.4)`,
