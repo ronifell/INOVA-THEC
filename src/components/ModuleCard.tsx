@@ -61,17 +61,33 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
     if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
   }, [iconX, iconY, rotateX, rotateY]);
 
+  /* Queda em sequência + efeito “bola” — mola mais lenta (menos rigidez, mais massa) */
+  const dropDelay = 0.1 + index * 0.26;
+  const bounceSpring = {
+    type: "spring" as const,
+    stiffness: 200,
+    damping: 15.5,
+    mass: 1.15,
+    restDelta: 0.15,
+    restSpeed: 0.15,
+  };
+
   return (
     <motion.button
       ref={cardRef}
       className="relative group cursor-pointer [transform-style:preserve-3d]"
-      initial={{ opacity: 0, y: 40, scale: 0.9 }}
+      initial={{ opacity: 0, y: -260, scale: 0.78 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       style={{ rotateX: rotateXSpring, rotateY: rotateYSpring, transformPerspective: 700 }}
       transition={{
-        duration: 0.6,
-        delay: index * 0.1,
-        ease: [0.22, 1, 0.36, 1],
+        delay: dropDelay,
+        opacity: {
+          duration: 0.55,
+          delay: dropDelay,
+          ease: [0.22, 1, 0.36, 1],
+        },
+        y: { ...bounceSpring, delay: dropDelay },
+        scale: { ...bounceSpring, delay: dropDelay },
       }}
       whileHover={{ scale: 1.06, y: -4 }}
       whileTap={{ scale: 0.98 }}

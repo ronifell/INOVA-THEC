@@ -59,13 +59,45 @@ export default function FaithButtons() {
     );
   }, [triggerGlitch, speak, triggerHashValidation]);
 
-  return (
-    <div ref={containerRef} className="flex flex-col items-center gap-6">
-      <h2 className="text-xs font-mono tracking-[0.3em] text-white/30 uppercase">
-        Simulador de Fé Pública
-      </h2>
+  const easeOut = [0.22, 1, 0.36, 1] as const;
 
-      <div className="flex flex-wrap justify-center gap-4">
+  return (
+    <motion.div
+      ref={containerRef}
+      className="flex flex-col items-center gap-6"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: { staggerChildren: 0.14, delayChildren: 0.06 },
+        },
+      }}
+    >
+      <motion.h2
+        className="text-xs font-mono tracking-[0.3em] text-white/30 uppercase"
+        variants={{
+          hidden: { opacity: 0, y: 10 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.55, ease: easeOut },
+          },
+        }}
+      >
+        Simulador de Fé Pública
+      </motion.h2>
+
+      <motion.div
+        className="flex flex-wrap justify-center gap-4"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+          },
+        }}
+      >
         {/* Gerar Prova Button */}
         <motion.button
           className={`relative overflow-hidden rounded-xl px-8 py-3.5 font-mono text-sm font-bold tracking-wider cursor-pointer ${isValidating ? "cursor-validating" : ""}`}
@@ -74,6 +106,15 @@ export default function FaithButtons() {
               "linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05))",
             border: "1px solid rgba(16, 185, 129, 0.3)",
             color: "#10B981",
+          }}
+          variants={{
+            hidden: { opacity: 0, y: 16, scale: 0.96 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              transition: { duration: 0.52, ease: easeOut },
+            },
           }}
           whileHover={{
             boxShadow:
@@ -118,6 +159,15 @@ export default function FaithButtons() {
             border: "1px solid rgba(239, 68, 68, 0.3)",
             color: "#EF4444",
           }}
+          variants={{
+            hidden: { opacity: 0, y: 16, scale: 0.96 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              transition: { duration: 0.52, ease: easeOut },
+            },
+          }}
           whileHover={{
             boxShadow:
               "0 0 30px rgba(239, 68, 68, 0.3), inset 0 0 30px rgba(239, 68, 68, 0.05)",
@@ -128,7 +178,7 @@ export default function FaithButtons() {
         >
           🔓 SIMULAR FRAUDE
         </motion.button>
-      </div>
+      </motion.div>
 
       {/* Hash Display */}
       <AnimatePresence>
@@ -177,6 +227,6 @@ export default function FaithButtons() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
