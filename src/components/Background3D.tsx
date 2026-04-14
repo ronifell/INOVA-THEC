@@ -6,8 +6,8 @@ import * as THREE from "three";
 import { useStore } from "@/store/useStore";
 
 const PARTICLE_COUNT = 1200;
-const GRID_SEGMENTS_X = 100;
-const GRID_SEGMENTS_Y = 60;
+const GRID_SEGMENTS_X = 200;
+const GRID_SEGMENTS_Y = 100;
 
 const mouseNDC = new THREE.Vector2(0, 0);
 
@@ -18,14 +18,14 @@ if (typeof window !== "undefined") {
   });
 }
 
-function FloatingParticles() {
+function SnowFrostParticles() {
   const pointsRef = useRef<THREE.Points>(null);
   const themeColor = useStore((s) => s.themeColor);
 
-  const [positions, opacities, basePositions] = useMemo(() => {
+  const [positions, opacities, seeds] = useMemo(() => {
     const pos = new Float32Array(PARTICLE_COUNT * 3);
     const opa = new Float32Array(PARTICLE_COUNT);
-    const base = new Float32Array(PARTICLE_COUNT * 3);
+    const sd = new Float32Array(PARTICLE_COUNT);
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const x = (Math.random() - 0.5) * 50;
       const y = (Math.random() - 0.5) * 30;
@@ -33,12 +33,10 @@ function FloatingParticles() {
       pos[i * 3] = x;
       pos[i * 3 + 1] = y;
       pos[i * 3 + 2] = z;
-      base[i * 3] = x;
-      base[i * 3 + 1] = y;
-      base[i * 3 + 2] = z;
-      opa[i] = Math.random() * 0.5 + 0.2;
+      opa[i] = Math.random() * 0.45 + 0.15;
+      sd[i] = Math.random() * 1000.0;
     }
-    return [pos, opa, base];
+    return [pos, opa, sd];
   }, []);
 
   const shaderMaterial = useMemo(() => {
@@ -47,14 +45,15 @@ function FloatingParticles() {
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       uniforms: {
-        uColor: { value: new THREE.Color("#ffffff") },
         uAccent: { value: new THREE.Color(themeColor) },
         uTime: { value: 0 },
         uMouse: { value: new THREE.Vector2(0, 0) },
       },
       vertexShader: `
         attribute float aOpacity;
+        attribute float aSeed;
         varying float vOpacity;
+        varying float vSeed;
         varying float vDistToMouse;
         uniform float uTime;
         uniform vec2 uMouse;
@@ -70,29 +69,68 @@ function FloatingParticles() {
           vec2 dir = normalize(screenPos - uMouse + 0.001);
           pos.xy += dir * repulse;
 
-          pos.z += sin(uTime * 0.3 + pos.x * 0.5) * 0.3;
+          pos.x += sin(uTime * 0.55 + aSeed * 0.01 + pos.y * 0.12) * 0.12;
+          pos.z += sin(uTime * 0.3 + pos.x * 0.5) * 0.25;
 
           vOpacity = aOpacity;
+          vSeed = aSeed;
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          gl_PointSize = max(1.5, (2.0 + repulse * 3.0) * (100.0 / -mvPosition.z));
+          float rep = repulse;
+          gl_PointSize = max(2.5, (3.2 + rep * 3.5) * (110.0 / -mvPosition.z));
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
       fragmentShader: `
-        uniform vec3 uColor;
         uniform vec3 uAccent;
+        uniform float uTime;
         varying float vOpacity;
         varying float vDistToMouse;
+        varying float vSeed;
+
+        float snowflakeShape(vec2 uv, float detail) {
+          float ang = atan(uv.y, uv.x);
+          float r = length(uv) * 2.0;
+
+          float arms = abs(cos(ang * 3.0));
+          float dendrite = smoothstep(0.52, 0.0, r) * (0.15 + 0.85 * pow(arms, 0.65));
+
+          float inner = smoothstep(0.12, 0.04, r);
+          float branches = abs(sin(ang * 6.0 + detail)) * smoothstep(0.38, 0.12, r) * smoothstep(0.1, 0.22, r);
+
+          float core = smoothstep(0.14, 0.02, r);
+
+          float flake = clamp(dendrite * 0.85 + branches * 0.45 + core * 0.9, 0.0, 1.0);
+          float soft = smoothstep(0.55, 0.0, r) * 0.35;
+          return flake + soft;
+        }
 
         void main() {
-          float d = distance(gl_PointCoord, vec2(0.5));
-          if (d > 0.5) discard;
-          float alpha = smoothstep(0.5, 0.05, d);
+          vec2 p = gl_PointCoord - vec2(0.5);
+          float rot = vSeed * 0.00628318 + uTime * (0.15 + fract(vSeed * 0.001) * 0.2);
+          float c = cos(rot);
+          float s = sin(rot);
+          p = mat2(c, -s, s, c) * p;
 
-          float nearMouse = smoothstep(0.7, 0.0, vDistToMouse);
-          vec3 col = mix(uColor * 0.8, uAccent, nearMouse * 0.7 + 0.25);
+          float detail = uTime * 0.4 + vSeed * 0.02;
+          float shape = snowflakeShape(p, detail);
 
-          gl_FragColor = vec4(col, alpha * vOpacity * (0.3 + nearMouse * 0.5));
+          if (shape < 0.02) discard;
+
+          float nearMouse = smoothstep(0.75, 0.0, vDistToMouse);
+
+          vec3 frostCore = vec3(0.93, 0.97, 1.0);
+          vec3 frostMid = vec3(0.78, 0.9, 0.98);
+          vec3 frostEdge = vec3(0.62, 0.82, 0.95);
+          vec3 col = mix(frostEdge, frostMid, shape);
+          col = mix(col, frostCore, pow(shape, 0.5));
+
+          vec3 acc = uAccent;
+          col = mix(col, mix(col, acc * 0.55 + vec3(0.5), 0.35), nearMouse * 0.55);
+
+          float a = shape * vOpacity * (0.28 + nearMouse * 0.42);
+          a *= 0.85 + 0.15 * sin(uTime * 2.0 + vSeed * 0.01);
+
+          gl_FragColor = vec4(col, a);
         }
       `,
     });
@@ -114,7 +152,10 @@ function FloatingParticles() {
     const arr = posAttr.array as Float32Array;
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      arr[i * 3 + 1] -= 0.008;
+      arr[i * 3 + 1] -= 0.0065;
+      arr[i * 3] +=
+        Math.sin(t * 0.5 + i * 0.07) * 0.004 +
+        Math.cos(t * 0.31 + arr[i * 3 + 2] * 0.2) * 0.003;
       if (arr[i * 3 + 1] < -15) {
         arr[i * 3 + 1] = 15;
         arr[i * 3] = (Math.random() - 0.5) * 50;
@@ -135,6 +176,11 @@ function FloatingParticles() {
         <bufferAttribute
           attach="attributes-aOpacity"
           args={[opacities, 1]}
+          count={PARTICLE_COUNT}
+        />
+        <bufferAttribute
+          attach="attributes-aSeed"
+          args={[seeds, 1]}
           count={PARTICLE_COUNT}
         />
       </bufferGeometry>
@@ -295,7 +341,7 @@ function Scene() {
 
   return (
     <>
-      <FloatingParticles />
+      <SnowFrostParticles />
       <ReactiveGrid />
       <HexagonalAccents />
     </>
