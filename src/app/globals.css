@@ -322,6 +322,65 @@ body {
   animation: ticker-radar-flicker 2.4s ease-in-out infinite;
 }
 
+@keyframes protocol-scroll-loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.protocol-scroll-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: protocol-scroll-loop 11s linear infinite;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.75),
+    0 0 22px rgba(255, 255, 255, 0.35);
+}
+
+@keyframes logo-vertical-sweep {
+  0% {
+    transform: translateY(-140%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  88% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(140%);
+    opacity: 0;
+  }
+}
+
+.logo-sweep-cross::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -10%;
+  width: 100%;
+  height: 120%;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 26%,
+    rgba(255, 255, 255, 0.62) 50%,
+    rgba(255, 255, 255, 0.1) 74%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  animation: logo-vertical-sweep 2.8s ease-in-out infinite;
+}
+
 /* ===== MODULE CARDS: border glow — gradual dim → 5s dark → gradual brighten (ease-in-out) ===== */
 @keyframes moduleCardBorderBlink {
   0%,
