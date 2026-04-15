@@ -156,7 +156,7 @@ export default function Dashboard() {
         <div className="mt-[1.2vh] grid grid-cols-2 gap-[0.55vw]">
           <Link
             href="/milestone1"
-            className="block rounded-[0.7vw] border border-cyan-400/40 bg-cyan-500/10 px-[0.9vw] py-[0.85vh] text-center font-mono text-[1.05vh] tracking-[0.16em] text-cyan-200 transition-all hover:border-cyan-300/70 hover:bg-cyan-500/15"
+            className="block w-[70%] justify-self-center rounded-[0.7vw] border border-cyan-400/40 bg-cyan-500/10 px-[0.9vw] py-[0.85vh] text-center font-mono text-[1.05vh] tracking-[0.16em] text-cyan-200 transition-all hover:border-cyan-300/70 hover:bg-cyan-500/15"
           >
             IR PARA MILESTONE 1
           </Link>

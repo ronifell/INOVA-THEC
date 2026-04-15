@@ -736,13 +736,13 @@ export default function Milestone1Client() {
         ? auditTickerAssets
         : auditTickerFuel;
 
-  const shellClass = `min-h-full pb-28 ${darkMode ? "text-slate-100" : "text-slate-900"}`;
+  const shellClass = `flex h-full min-h-0 w-full flex-col overflow-hidden pb-[clamp(6.5rem,11vh,9.5rem)] ${darkMode ? "text-slate-100" : "text-slate-900"}`;
 
   if (loading || !demoData) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6">
-        <div className="h-12 w-12 animate-pulse rounded-xl border border-emerald-500/30 bg-emerald-500/10" />
-        <p className="text-[10px] font-mono tracking-[0.3em] text-white/40">
+      <div className="flex h-full min-h-0 flex-col items-center justify-center gap-[1.2vh] px-[2%]">
+        <div className="h-[6vh] w-[6vh] max-h-14 max-w-14 animate-pulse rounded-xl border border-emerald-500/30 bg-emerald-500/10" />
+        <p className="text-[1vh] font-mono tracking-[0.3em] text-white/40">
           CARREGANDO DEMONSTRAÇÃO…
         </p>
       </div>
@@ -752,114 +752,124 @@ export default function Milestone1Client() {
   return (
     <div className={shellClass}>
       {activeView === "hub" && (
-        <header className="mb-10 text-center">
-          <div className="mb-3 inline-flex flex-col items-center">
-            <span className="bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-2xl font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)]">
-              INOVA THEC
-            </span>
-            <span className="text-[10px] font-mono tracking-[0.35em] text-white/45">
-              Soluções Ltda
-            </span>
-          </div>
-          <p className="text-xs font-mono tracking-[0.2em] text-white/35">
-            Centro de Governança — identidade visual por módulo
-          </p>
-        </header>
-      )}
-
-      {activeView === "hub" && (
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 overflow-visible px-1">
-          <section className="space-y-4">
-            <h2 className="text-center text-[11px] font-mono tracking-[0.25em] text-emerald-400/90">
-              SIG-FROTA — GESTÃO DE COMBUSTÍVEL
-            </h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4 md:gap-4">
-              {MILESTONE1_FUEL_TILES.map((item, i) => (
-                <PortalModuleCard
-                  key={item.view}
-                  index={i}
-                  color={M1_FROTA.color}
-                  colorRgb={M1_FROTA.colorRgb}
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                  isFullModule
-                  voiceText={item.voiceText}
-                  onClick={() => {
-                    triggerHashValidation();
-                    setView(item.view);
-                  }}
-                />
-              ))}
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          <header className="shrink-0 text-center">
+            <div className="inline-flex flex-col items-center">
+              <span className="bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-[2.4vh] font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)]">
+                INOVA THEC
+              </span>
+              <span className="text-[1vh] font-mono tracking-[0.32em] text-white/55">
+                Soluções Ltda
+              </span>
             </div>
-          </section>
+            <p className="mt-[0.6vh] text-[1.05vh] font-mono tracking-[0.18em] text-white/45">
+              Centro de Governança — identidade visual por módulo
+            </p>
+          </header>
 
-          <section className="space-y-4">
-            <h2 className="text-center text-[11px] font-mono tracking-[0.25em] text-blue-400/90">
-              SIG-PATRIMÔNIO — GESTÃO DE ATIVOS
-            </h2>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 md:gap-4">
-              {MILESTONE1_PAT_TILES.map((item, i) => (
-                <PortalModuleCard
-                  key={item.view}
-                  index={i + 4}
-                  color={M1_PAT.color}
-                  colorRgb={M1_PAT.colorRgb}
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                  isFullModule
-                  voiceText={item.voiceText}
-                  onClick={() => {
-                    triggerHashValidation();
-                    setView(item.view);
-                  }}
-                />
-              ))}
+          <div className="mt-[1vh] flex min-h-0 flex-1 flex-col gap-[1vh] overflow-hidden">
+            <section className="flex min-h-0 flex-1 flex-col gap-[0.7vh] overflow-hidden">
+              <h2 className="shrink-0 text-center text-[1.05vh] font-mono tracking-[0.22em] text-emerald-400/95">
+                SIG-FROTA — GESTÃO DE COMBUSTÍVEL
+              </h2>
+              <div className="mx-auto grid h-full min-h-0 w-[67.2%] max-w-[96%] flex-1 auto-rows-fr grid-cols-2 gap-[0.9vw] lg:grid-cols-4">
+                {MILESTONE1_FUEL_TILES.map((item, i) => (
+                  <PortalModuleCard
+                    key={item.view}
+                    className="m1-hub-tile-height h-full min-h-0"
+                    index={i}
+                    color={M1_FROTA.color}
+                    colorRgb={M1_FROTA.colorRgb}
+                    icon={item.icon}
+                    title={item.title}
+                    description={item.description}
+                    isFullModule
+                    voiceText={item.voiceText}
+                    onClick={() => {
+                      triggerHashValidation();
+                      setView(item.view);
+                    }}
+                  />
+                ))}
+              </div>
+            </section>
+
+            <section className="flex min-h-0 flex-1 flex-col gap-[0.7vh] overflow-hidden">
+              <h2 className="shrink-0 text-center text-[1.05vh] font-mono tracking-[0.22em] text-blue-400/95">
+                SIG-PATRIMÔNIO — GESTÃO DE ATIVOS
+              </h2>
+              {/*
+                Same cell width as SIG-FROTA: (100% − 3×gap) / 4 inside the 67.2% row (0.7× prior 96% cap).
+                Three cards centered (symmetric).
+              */}
+              <div className="mx-auto flex h-full min-h-0 w-[67.2%] max-w-[96%] flex-1 flex-col items-stretch justify-center gap-[0.9vw] sm:flex-row sm:flex-wrap sm:justify-center sm:items-stretch lg:flex-nowrap">
+                {MILESTONE1_PAT_TILES.map((item, i) => (
+                  <div
+                    key={item.view}
+                    className="mx-auto flex h-full min-h-0 w-full min-w-0 flex-col max-sm:max-w-[min(100%,22rem)] sm:mx-0 sm:w-[calc((100%-3*0.9vw)/4)] sm:max-w-none sm:flex-[0_0_calc((100%-3*0.9vw)/4)]"
+                  >
+                    <PortalModuleCard
+                      className="m1-hub-tile-height h-full min-h-0 w-full"
+                      index={i + 4}
+                      color={M1_PAT.color}
+                      colorRgb={M1_PAT.colorRgb}
+                      icon={item.icon}
+                      title={item.title}
+                      description={item.description}
+                      isFullModule
+                      voiceText={item.voiceText}
+                      onClick={() => {
+                        triggerHashValidation();
+                        setView(item.view);
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <div className="flex shrink-0 justify-center py-[0.5vh]">
+              <button
+                type="button"
+                onClick={() => setDarkMode((d) => !d)}
+                className="glass rounded-full border border-white/15 px-[1.2vw] py-[0.6vh] text-[1.05vh] font-mono tracking-[0.15em] text-white/80 hover:border-white/30"
+              >
+                {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
+              </button>
             </div>
-          </section>
-
-          <div className="flex justify-center">
-            <button
-              type="button"
-              onClick={() => setDarkMode((d) => !d)}
-              className="glass rounded-full border border-white/15 px-5 py-2 text-[11px] font-mono tracking-wider text-white/70 hover:border-white/30"
-            >
-              {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
-            </button>
           </div>
         </div>
       )}
 
       {activeView !== "hub" && (
-        <>
-          <div className="mx-auto mb-6 flex max-w-6xl flex-wrap items-center justify-between gap-3">
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          <div className="mx-auto mb-[1vh] flex max-w-[min(96%,72rem)] shrink-0 flex-wrap items-center justify-between gap-[1vw]">
             <button
               type="button"
               onClick={goToHub}
-              className="glass inline-flex items-center gap-2 rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono tracking-wider text-white/75 hover:border-emerald-500/40"
+              className="glass inline-flex items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[1.05vh] font-mono tracking-[0.12em] text-white/80 hover:border-emerald-500/40"
             >
               ← Menu principal
             </button>
             <button
               type="button"
               onClick={() => setDarkMode((d) => !d)}
-              className="glass rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono text-white/65"
+              className="glass rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[1.05vh] font-mono text-white/70"
             >
               {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
             </button>
           </div>
 
-          <header className="mx-auto mb-8 max-w-6xl text-center">
-            <p className="text-[10px] font-mono tracking-[0.2em] text-white/40">
+          <header className="mx-auto mb-[1vh] max-w-[min(96%,72rem)] shrink-0 text-center">
+            <p className="text-[1vh] font-mono tracking-[0.18em] text-white/50">
               {isFuelModuleView
                 ? "SIG-FROTA — GESTÃO DE COMBUSTÍVEL"
                 : "SIG-PATRIMÔNIO — GESTÃO DE ATIVOS"}
             </p>
-            <h1 className="mt-2 text-xl font-bold tracking-wide text-white/95 md:text-2xl">
+            <h1 className="mt-[0.4vh] text-[2vh] font-bold tracking-wide text-white/95 md:text-[2.2vh]">
               {moduleTitleLine(activeView)}
             </h1>
-            <p className="mx-auto mt-2 max-w-2xl text-sm text-white/55">
+            <p className="mx-auto mt-[0.5vh] max-w-[min(96%,42rem)] text-[1.15vh] leading-snug text-white/60">
               {moduleSubtitle(
                 activeView,
                 isFuelModuleView,
@@ -868,6 +878,7 @@ export default function Milestone1Client() {
             </p>
           </header>
 
+          <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-gutter:stable]">
           {activeView === "governance" && (
             <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
               <div className="glass rounded-2xl border border-emerald-500/20 p-5">
@@ -1462,7 +1473,8 @@ export default function Milestone1Client() {
               </div>
             </div>
           )}
-        </>
+          </div>
+        </div>
       )}
 
       <footer

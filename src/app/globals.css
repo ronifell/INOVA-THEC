@@ -322,13 +322,19 @@ body {
   animation: ticker-radar-flicker 2.4s ease-in-out infinite;
 }
 
+/* Ticker: start flush to the right edge of the viewport, then loop seamlessly (duplicate spans). */
 @keyframes protocol-scroll-loop {
   0% {
-    transform: translateX(0);
+    transform: translateX(100cqi);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(100cqi - 50%));
   }
+}
+
+.protocol-ticker-viewport {
+  container-type: inline-size;
+  container-name: protocol-ticker;
 }
 
 .protocol-scroll-track {
@@ -475,6 +481,13 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Milestone 1 hub — shared vertical size for green (SIG-FROTA) and blue (SIG-PATRIMÔNIO) tiles */
+.m1-hub-tile-height {
+  box-sizing: border-box;
+  align-self: stretch;
+  min-height: clamp(10.5rem, 15vh, 18rem);
 }
 
 /* ===== CUSTOM CURSOR STATES ===== */

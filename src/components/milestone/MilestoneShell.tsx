@@ -21,7 +21,7 @@ export default function MilestoneShell({
   children,
 }: Props) {
   return (
-    <div className="relative h-full min-h-[100dvh] overflow-y-auto overflow-x-hidden">
+    <div className="relative flex h-full min-h-[100dvh] w-full flex-col overflow-hidden">
       {/* Same stack as the company home: 3D background + cursor trail (no extra opaque layer). */}
       <Background3D />
       <div className="pointer-events-none">
@@ -57,7 +57,9 @@ export default function MilestoneShell({
         </div>
       </header>
 
-      <div className="relative z-10 pt-[4.5rem] pointer-events-auto">{children}</div>
+      <div className="pointer-events-auto relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden pt-[4.5rem]">
+        {children}
+      </div>
     </div>
   );
 }

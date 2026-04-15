@@ -209,7 +209,7 @@ export default function Milestone2Client() {
   const trailRows = integrityRows.slice(0, 12);
 
   return (
-    <div className="mx-auto w-full max-w-7xl overflow-visible px-4 pb-16 pt-4 md:px-6">
+    <div className="mx-auto flex h-full min-h-0 w-full max-w-7xl flex-col overflow-x-hidden overflow-y-auto px-4 pb-16 pt-4 md:px-6">
       <AnimatePresence mode="wait">
         {!activeMenu ? (
           <motion.div
