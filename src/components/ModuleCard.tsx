@@ -61,33 +61,35 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
     if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
   }, [iconX, iconY, rotateX, rotateY]);
 
-  /* Queda em sequência + efeito “bola” — mola mais lenta (menos rigidez, mais massa) */
-  const dropDelay = 0.1 + index * 0.26;
-  const bounceSpring = {
-    type: "spring" as const,
-    stiffness: 200,
-    damping: 15.5,
-    mass: 1.15,
-    restDelta: 0.15,
-    restSpeed: 0.15,
-  };
+  /* Queda em keyframes: 1º trecho ease-in (gravidade); 2º trecho impacto + assento — sem mola stiff. */
+  const dropOffset = -200;
+  const dropDelay = index * 0.11;
+  const dropDuration = 1.08;
+  const impactY = 12;
+  const easeFall: [number, number, number, number] = [0.55, 0, 1, 0.45];
+  const easeSettle: [number, number, number, number] = [0.33, 1.15, 0.56, 1];
 
   return (
     <motion.button
       ref={cardRef}
-      className="relative group cursor-pointer [transform-style:preserve-3d]"
-      initial={{ opacity: 0, y: -260, scale: 0.78 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      style={{ rotateX: rotateXSpring, rotateY: rotateYSpring, transformPerspective: 700 }}
+      className="relative z-[1] group cursor-pointer [transform-style:preserve-3d] will-change-transform"
+      initial={{ opacity: 1, y: dropOffset, scale: 0.9 }}
+      animate={{
+        opacity: 1,
+        y: [dropOffset, impactY, 0],
+        scale: [0.9, 1.035, 1],
+      }}
+      style={{
+        rotateX: rotateXSpring,
+        rotateY: rotateYSpring,
+        transformPerspective: 700,
+        transformOrigin: "center bottom",
+      }}
       transition={{
         delay: dropDelay,
-        opacity: {
-          duration: 0.55,
-          delay: dropDelay,
-          ease: [0.22, 1, 0.36, 1],
-        },
-        y: { ...bounceSpring, delay: dropDelay },
-        scale: { ...bounceSpring, delay: dropDelay },
+        duration: dropDuration,
+        times: [0, 0.73, 1],
+        ease: [easeFall, easeSettle],
       }}
       whileHover={{ scale: 1.06, y: -4 }}
       whileTap={{ scale: 0.98 }}

@@ -1,30 +1,35 @@
-/** Entrada pós-boot: cascata suave (sem “pop” simultâneo) */
+import { BOOT_HANDOFF_EASE, BOOT_HANDOFF_S } from "@/lib/bootTransition";
+
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+/** Opacidade do painel vem só do container (sync com fade do boot). Filhos só deslizam levemente. */
 export const appShellContainer = {
-  hidden: {},
+  hidden: { opacity: 0 },
   visible: {
+    opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.22,
+      duration: BOOT_HANDOFF_S,
+      ease: BOOT_HANDOFF_EASE,
+      staggerChildren: 0,
+      delayChildren: 0,
     },
   },
 };
 
 export const appShellFadeUp = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 1, y: 14 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.58, ease: easeOut },
+    transition: { duration: 0.45, ease: easeOut },
   },
 };
 
 export const appShellHeader = {
-  hidden: { opacity: 0, y: -16 },
+  hidden: { opacity: 1, y: -10 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.52, ease: easeOut },
+    transition: { duration: 0.45, ease: easeOut },
   },
 };

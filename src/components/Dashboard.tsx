@@ -9,14 +9,14 @@ import { useVoice } from "@/hooks/useVoice";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-/** Após última carta + mola mais lenta — evita texto/botões antes do fim da cascata */
-const AFTER_CARDS = 2.45;
+/** Após última carta + mola — evita texto/botões antes do fim da cascata */
+const AFTER_CARDS = 1.82;
 
 export default function Dashboard() {
   const { speak } = useVoice();
 
   return (
-    <div className="min-h-full flex flex-col items-center justify-center px-4 md:px-8 py-24">
+    <div className="min-h-full flex flex-col items-center justify-center px-4 md:px-8 py-24 overflow-visible">
       {/* Título — cascata suave linha a linha */}
       <motion.div
         className="text-center mb-10 w-full max-w-2xl"
@@ -69,8 +69,8 @@ export default function Dashboard() {
         />
       </motion.div>
 
-      {/* Cartões — animação de queda no ModuleCard */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-4 w-full max-w-7xl mb-12">
+      {/* Cartões — queda visível (overflow visível evita clip da transformação) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-4 w-full max-w-7xl mb-12 overflow-visible">
         {MODULES.map((mod, i) => (
           <ModuleCard key={mod.id} module={mod} index={i} />
         ))}

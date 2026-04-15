@@ -52,28 +52,6 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* ===== SCAN LINE ===== */
-@keyframes scanLine {
-  0% {
-    top: -2px;
-    opacity: 0;
-  }
-  5% {
-    opacity: 1;
-  }
-  95% {
-    opacity: 1;
-  }
-  100% {
-    top: 100vh;
-    opacity: 0;
-  }
-}
-
-.scan-line {
-  animation: scanLine 5s linear infinite;
-}
-
 /* ===== PULSE ===== */
 @keyframes pulse-neon {
   0%,

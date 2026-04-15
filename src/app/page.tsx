@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "framer-motion";
 import { useStore } from "@/store/useStore";
 import Header from "@/components/Header";
-import ScanLine from "@/components/ScanLine";
 import GlitchOverlay from "@/components/GlitchOverlay";
 import CursorTrail from "@/components/CursorTrail";
 import LiquidTransition from "@/components/LiquidTransition";
@@ -14,6 +13,7 @@ import BackButton from "@/components/BackButton";
 import ReportModal from "@/components/ReportModal";
 import { getModuleById } from "@/lib/modules";
 import { appShellContainer, appShellFadeUp } from "@/lib/motionVariants";
+import BootScreen from "@/components/BootScreen";
 
 const Background3D = dynamic(() => import("@/components/Background3D"), {
   ssr: false,
@@ -31,10 +31,6 @@ const ModulePlaceholder = dynamic(
   () => import("@/components/ModulePlaceholder"),
   { ssr: false }
 );
-
-const BootScreen = dynamic(() => import("@/components/BootScreen"), {
-  ssr: false,
-});
 
 function ActiveModuleView() {
   const activeModule = useStore((s) => s.activeModule);
@@ -67,7 +63,17 @@ export default function Home() {
   const activeModule = useStore((s) => s.activeModule);
   const isGlitching = useStore((s) => s.isGlitching);
   const [mounted, setMounted] = useState(false);
-  const [bootDone, setBootDone] = useState(false);
+  /** Painel montado ao atingir 100% (cartões); overlay do boot some por cima com fade. */
+  const [appRevealed, setAppRevealed] = useState(false);
+  const [bootOverlay, setBootOverlay] = useState(true);
+
+  const handleRevealMain = useCallback(() => {
+    setAppRevealed(true);
+  }, []);
+
+  const handleBootExitComplete = useCallback(() => {
+    setBootOverlay(false);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -94,19 +100,21 @@ export default function Home() {
 
       <Background3D />
 
-      {!bootDone && (
-        <BootScreen onComplete={() => setBootDone(true)} />
+      {bootOverlay && (
+        <BootScreen
+          onRevealMain={handleRevealMain}
+          onExitComplete={handleBootExitComplete}
+        />
       )}
 
-      {bootDone && (
+      {appRevealed && (
         <motion.div
-          className="flex min-h-full flex-col"
+          className="relative z-20 flex min-h-full flex-col"
           variants={appShellContainer}
           initial="hidden"
           animate="visible"
         >
           <motion.div className="pointer-events-none" variants={appShellFadeUp}>
-            <ScanLine />
             <CursorTrail />
             <LiquidTransition />
             <GlitchOverlay />
@@ -114,10 +122,7 @@ export default function Home() {
 
           <Header />
 
-          <motion.main
-            className="relative z-10 min-h-full flex-1"
-            variants={appShellFadeUp}
-          >
+          <main className="relative z-10 min-h-full flex-1 overflow-visible">
             <AnimatePresence mode="wait">
               {activeModule ? (
                 <motion.div
@@ -132,16 +137,16 @@ export default function Home() {
               ) : (
                 <motion.div
                   key="dashboard"
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 1, y: 0 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <Dashboard />
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.main>
+          </main>
 
           <motion.div variants={appShellFadeUp}>
             <BackButton />
