@@ -155,10 +155,10 @@ export default function SigPatrimonio() {
           </span>
         </div>
         <motion.button
-          className="glass rounded-lg px-4 py-1.5 text-[10px] font-mono tracking-wider text-blue-400/70 cursor-pointer"
+          className="rounded-lg px-4 py-1.5 text-[10px] font-mono tracking-wider text-blue-300 cursor-pointer border border-blue-500/45 bg-slate-950/90 backdrop-blur-xl shadow-[0_6px_24px_rgba(0,0,0,0.5)] ring-1 ring-blue-400/20"
           whileHover={{
             scale: 1.05,
-            boxShadow: "0 0 15px rgba(59, 130, 246, 0.2)",
+            boxShadow: "0 0 18px rgba(59, 130, 246, 0.35), 0 8px 28px rgba(0,0,0,0.45)",
           }}
           whileTap={{ scale: 0.95 }}
           onClick={handleOpenReport}
@@ -175,6 +175,7 @@ export default function SigPatrimonio() {
             index={i}
             accent="#3B82F6"
             accentRgb="59, 130, 246"
+            highContrast
           />
         ))}
       </div>
@@ -193,23 +194,36 @@ export default function SigPatrimonio() {
             onMouseLeave={handleMouseLeave}
           >
             <div
-              className={`glass rounded-2xl p-5 h-full bg-gradient-to-br ${asset.gradient} relative`}
+              className={`relative overflow-hidden rounded-2xl border border-blue-500/40 bg-slate-950/90 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.55)] ring-1 ring-blue-400/15 p-5 h-full`}
             >
+              <div
+                className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${asset.gradient}`}
+                aria-hidden
+              />
+              <div className="relative z-[1]">
               {/* Simulated photo area */}
-              <div className="relative h-36 rounded-xl overflow-hidden mb-4 bg-black/30">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-4xl opacity-20">
-                    {asset.category === "VEÍCULOS"
-                      ? "🚗"
-                      : asset.category === "INFORMÁTICA"
-                        ? "💻"
-                        : asset.category === "MOBILIÁRIO"
-                          ? "🪑"
-                          : asset.category === "CLIMATIZAÇÃO"
-                            ? "❄️"
-                            : asset.category === "EQUIPAMENTO"
-                              ? "⚡"
-                              : "📦"}
+              <div className="relative h-36 rounded-xl overflow-hidden mb-4 bg-black/45 ring-1 ring-white/10">
+                <div className="absolute inset-0 flex items-center justify-center p-3">
+                  <div
+                    className="flex h-[5.25rem] w-[5.25rem] shrink-0 items-center justify-center rounded-2xl border border-white/25 bg-gradient-to-b from-slate-800/90 to-slate-950/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_8px_24px_rgba(0,0,0,0.45)] ring-1 ring-blue-500/20"
+                    aria-hidden
+                  >
+                    <span
+                      className="select-none text-[2.75rem] leading-none opacity-[0.92] [filter:drop-shadow(0_2px_10px_rgba(0,0,0,0.9))]"
+                      style={{ textShadow: "0 0 28px rgba(59, 130, 246, 0.35)" }}
+                    >
+                      {asset.category === "VEÍCULOS"
+                        ? "🚗"
+                        : asset.category === "INFORMÁTICA"
+                          ? "💻"
+                          : asset.category === "MOBILIÁRIO"
+                            ? "🪑"
+                            : asset.category === "CLIMATIZAÇÃO"
+                              ? "❄️"
+                              : asset.category === "EQUIPAMENTO"
+                                ? "⚡"
+                                : "📦"}
+                    </span>
                   </div>
                 </div>
 
@@ -263,11 +277,11 @@ export default function SigPatrimonio() {
               </div>
 
               {/* Asset Info */}
-              <h3 className="text-sm font-bold text-white/80 mb-1">
+              <h3 className="text-sm font-bold text-white/95 mb-1 drop-shadow-sm">
                 {asset.name}
               </h3>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono text-blue-400/50">
+                <span className="text-[10px] font-mono text-blue-300/75">
                   {asset.tombo}
                 </span>
                 <span
@@ -280,8 +294,9 @@ export default function SigPatrimonio() {
                   {asset.situation}
                 </span>
               </div>
-              <div className="mt-2 text-[8px] font-mono text-white/15 break-all">
+              <div className="mt-2 text-[8px] font-mono text-white/25 break-all">
                 SHA-256: {asset.hash.substring(0, 32)}...
+              </div>
               </div>
             </div>
           </motion.div>
