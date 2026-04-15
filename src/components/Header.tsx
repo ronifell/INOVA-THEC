@@ -12,7 +12,11 @@ function randomHex(len: number) {
   return s;
 }
 
-export default function Header() {
+type HeaderProps = {
+  dashboardHero?: boolean;
+};
+
+export default function Header({ dashboardHero: _dashboardHero }: HeaderProps) {
   const {
     themeColor,
     themeColorRgb,
