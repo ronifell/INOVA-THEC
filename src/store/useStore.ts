@@ -15,12 +15,6 @@ interface AppState {
   isValidating: boolean;
   /** Memorial AP-04: parada + flash + [HASH VALIDADO] */
   hashDisplayPhase: HashDisplayPhase;
-  liquidTransition: {
-    active: boolean;
-    x: number;
-    y: number;
-    color: string;
-  };
 
   setActiveModule: (id: string | null, color?: string, rgb?: string) => void;
   triggerGlitch: () => void;
@@ -31,7 +25,6 @@ interface AppState {
   setHashDisplay: (hash: string | null) => void;
   setIsValidating: (v: boolean) => void;
   triggerHashValidation: () => void;
-  triggerLiquidTransition: (x: number, y: number, color: string) => void;
   goHome: () => void;
 }
 
@@ -47,12 +40,6 @@ export const useStore = create<AppState>((set) => ({
   hashDisplay: null,
   isValidating: false,
   hashDisplayPhase: "idle",
-  liquidTransition: {
-    active: false,
-    x: 0,
-    y: 0,
-    color: "#0F172A",
-  },
 
   setActiveModule: (id, color = "#0F172A", rgb = "15, 23, 42") =>
     set({ activeModule: id, themeColor: color, themeColorRgb: rgb }),
@@ -76,18 +63,6 @@ export const useStore = create<AppState>((set) => ({
     set({ hashDisplayPhase: "flash" });
     window.setTimeout(() => set({ hashDisplayPhase: "validated" }), 200);
     window.setTimeout(() => set({ hashDisplayPhase: "idle" }), 700);
-  },
-  triggerLiquidTransition: (x, y, color) => {
-    set({
-      liquidTransition: { active: true, x, y, color },
-    });
-    window.setTimeout(
-      () =>
-        set({
-          liquidTransition: { active: false, x: 0, y: 0, color: "#0F172A" },
-        }),
-      800
-    );
   },
 
   goHome: () =>

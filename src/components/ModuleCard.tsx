@@ -13,7 +13,6 @@ interface ModuleCardProps {
 
 export default function ModuleCard({ module, index }: ModuleCardProps) {
   const setActiveModule = useStore((s) => s.setActiveModule);
-  const triggerLiquidTransition = useStore((s) => s.triggerLiquidTransition);
   const triggerHashValidation = useStore((s) => s.triggerHashValidation);
   const { speak } = useVoice();
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -34,12 +33,11 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
     }, 400);
   }, [speak, module.voiceText]);
 
-  const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = useCallback(() => {
     triggerHashValidation();
-    triggerLiquidTransition(e.clientX, e.clientY, module.color);
     setActiveModule(module.id, module.color, module.colorRgb);
     speak(module.voiceText);
-  }, [setActiveModule, module, speak, triggerHashValidation, triggerLiquidTransition]);
+  }, [setActiveModule, module, speak, triggerHashValidation]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -91,7 +89,6 @@ export default function ModuleCard({ module, index }: ModuleCardProps) {
         times: [0, 0.73, 1],
         ease: [easeFall, easeSettle],
       }}
-      whileHover={{ scale: 1.06, y: -4 }}
       whileTap={{ scale: 0.98 }}
       onHoverStart={handleHover}
       onHoverEnd={resetParallax}

@@ -359,7 +359,14 @@ function ReactiveGrid() {
           float alpha = baseAlpha + nearMouse * pulseW + vElevation * elevW;
 
           vec3 bright = mix(uColor * 1.4, uColor * 1.08, uModuleView);
-          vec3 col = mix(uColor * 0.6, bright, nearMouse);
+
+          /* Painel: malha longe do cursor — tom vidro + leve cor do módulo (mais claro que o cartão). */
+          vec3 dashboardFar = uColor * 0.6;
+          vec3 moduleFar = vec3(0.13, 0.15, 0.19) + uColor * 0.44;
+          moduleFar = min(moduleFar, vec3(0.5));
+          vec3 far = mix(dashboardFar, moduleFar, uModuleView);
+
+          vec3 col = mix(far, bright, nearMouse);
           col += vec3(1.0) * vElevation * mix(0.06, 0.02, uModuleView);
 
           gl_FragColor = vec4(col, alpha);

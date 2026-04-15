@@ -7,7 +7,6 @@ import { useStore } from "@/store/useStore";
 import Header from "@/components/Header";
 import GlitchOverlay from "@/components/GlitchOverlay";
 import CursorTrail from "@/components/CursorTrail";
-import LiquidTransition from "@/components/LiquidTransition";
 import Dashboard from "@/components/Dashboard";
 import BackButton from "@/components/BackButton";
 import ReportModal from "@/components/ReportModal";
@@ -116,7 +115,6 @@ export default function Home() {
         >
           <motion.div className="pointer-events-none" variants={appShellFadeUp}>
             <CursorTrail />
-            <LiquidTransition />
             <GlitchOverlay />
           </motion.div>
 
