@@ -12,10 +12,13 @@ import {
 const FILL_RATE = 0.073;
 
 /** Segundos de ejeção contínua pelo orifício; depois fade do splash. */
-const SPRAY_EJECT_S = 14;
+const SPRAY_EJECT_S = 17;
 const SPRAY_MS = SPRAY_EJECT_S * 1000;
 
-const DROPLET_N = 160;
+/** Início do jato (~90% do reservatório). */
+const SPRAY_START_FILL = 0.9;
+
+const DROPLET_N = 192;
 
 const TANK_W = 200;
 const TANK_H = 120;
@@ -24,8 +27,8 @@ const TANK_HOLE_CX = TANK_W - 19;
 const TANK_HOLE_CY = 15;
 const BUBBLE_N = 20;
 
-/** Gotas que começam logo ao atingir 100% (resto escalonado no período de ejeção). */
-const BUBBLE_IMMEDIATE_N = 88;
+/** Lote inicial quase imediato ao atingir ~90% (resto escalonado no período de ejeção). */
+const BUBBLE_IMMEDIATE_N = 106;
 
 /** Últimos segundos: tanque esmaece quando a ejeção termina. */
 const TANK_TAIL_FADE_S = 1.95;
@@ -225,6 +228,7 @@ export default function BootScreen({
   const rafFillRef = useRef<number>(0);
   const rafWaveRef = useRef<number>(0);
   const reachedRef = useRef(false);
+  const sprayStartedRef = useRef(false);
   const exitCalledRef = useRef(false);
   const exitingRef = useRef(false);
   const fillRef = useRef(0);
@@ -251,15 +255,9 @@ export default function BootScreen({
       const next = Math.min(1, elapsed * FILL_RATE);
       setFill(next);
       fillRef.current = next;
-      if (next < 1) {
-        rafFillRef.current = requestAnimationFrame(tick);
-      } else if (!reachedRef.current) {
-        reachedRef.current = true;
-        setFill(1);
-        fillRef.current = 1;
-        flushSync(() => {
-          onRevealRef.current();
-        });
+
+      if (next >= SPRAY_START_FILL && !sprayStartedRef.current) {
+        sprayStartedRef.current = true;
         const el = tankRef.current;
         if (el && typeof window !== "undefined") {
           const r = el.getBoundingClientRect();
@@ -270,8 +268,21 @@ export default function BootScreen({
             setPhase("spray");
           });
         } else {
-          setPhase("spray");
+          flushSync(() => {
+            setPhase("spray");
+          });
         }
+      }
+
+      if (next < 1) {
+        rafFillRef.current = requestAnimationFrame(tick);
+      } else if (!reachedRef.current) {
+        reachedRef.current = true;
+        setFill(1);
+        fillRef.current = 1;
+        flushSync(() => {
+          onRevealRef.current();
+        });
       }
     };
     rafFillRef.current = requestAnimationFrame(tick);
