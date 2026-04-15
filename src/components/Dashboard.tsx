@@ -5,7 +5,6 @@ import { MODULES } from "@/lib/modules";
 import ModuleCard from "./ModuleCard";
 import FaithButtons from "./FaithButtons";
 import FooterMarquee from "./FooterMarquee";
-import { useVoice } from "@/hooks/useVoice";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -13,8 +12,6 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 const AFTER_CARDS = 1.82;
 
 export default function Dashboard() {
-  const { speak } = useVoice();
-
   return (
     <div className="min-h-full flex flex-col items-center justify-center px-4 md:px-8 py-24 overflow-visible">
       {/* Título — cascata suave linha a linha */}
@@ -117,12 +114,11 @@ export default function Dashboard() {
             </p>
           </motion.div>
           <div className="flex gap-2 w-full md:w-auto">
-            <motion.a
-              href="/acesso-restrito"
-              onMouseEnter={() =>
-                speak("Acesso restrito ao sistema operacional de auditoria.")
-              }
-              className="flex-1 md:flex-none text-center px-4 py-2 rounded-xl border border-cyan-400/30 text-cyan-300 text-xs font-mono tracking-wider hover:bg-cyan-400/10 transition-colors"
+            <motion.button
+              type="button"
+              tabIndex={-1}
+              aria-disabled="true"
+              className="flex-1 md:flex-none text-center px-4 py-2 rounded-xl border border-cyan-400/30 text-cyan-300 text-xs font-mono tracking-wider pointer-events-none select-none cursor-default"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -132,13 +128,12 @@ export default function Dashboard() {
               }}
             >
               ACESSO RESTRITO
-            </motion.a>
-            <motion.a
-              href="/login"
-              onMouseEnter={() =>
-                speak("Login da fábrica de dados e protocolo de fé pública.")
-              }
-              className="flex-1 md:flex-none text-center px-4 py-2 rounded-xl border border-emerald-400/30 text-emerald-300 text-xs font-mono tracking-wider hover:bg-emerald-400/10 transition-colors"
+            </motion.button>
+            <motion.button
+              type="button"
+              tabIndex={-1}
+              aria-disabled="true"
+              className="flex-1 md:flex-none text-center px-4 py-2 rounded-xl border border-emerald-400/30 text-emerald-300 text-xs font-mono tracking-wider pointer-events-none select-none cursor-default"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -148,7 +143,7 @@ export default function Dashboard() {
               }}
             >
               LOGIN OPERACIONAL
-            </motion.a>
+            </motion.button>
           </div>
         </div>
       </motion.div>
