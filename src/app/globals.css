@@ -375,6 +375,15 @@ body {
   }
 }
 
+@keyframes milestone2Ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .module-card-border-blink {
   /* 12s cycle: dim 0→8%, off 8→49.667% (5s), brighten 49.667→58%, on 58→100% */
   animation: moduleCardBorderBlink 12s ease-in-out infinite;

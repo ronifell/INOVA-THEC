@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "framer-motion";
 import PortalModuleCard from "@/components/PortalModuleCard";
 import { MODULES } from "@/lib/modules";
@@ -10,9 +11,13 @@ import {
   fetchDemoMotor,
   getMapDistanceMeters,
 } from "@/lib/milestone1/data";
-import type { DemoData, IntegrityRow } from "@/lib/milestone1/types";
+import type { DemoData, IntegrityRow, MotorResult } from "@/lib/milestone1/types";
+import { openFuelAuditPdf } from "@/components/milestone1/milestone1Pdf";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
+const MilestoneMap = dynamic(() => import("@/components/milestone1/Milestone1Map"), {
+  ssr: false,
+});
 
 const FROTA = MODULES[0]!;
 const PAT = MODULES[1]!;
@@ -123,6 +128,11 @@ export default function Milestone2Client() {
   const [demoData, setDemoData] = useState<DemoData | null>(null);
   const [integrityRows, setIntegrityRows] = useState<IntegrityRow[]>([]);
   const [loadingData, setLoadingData] = useState(true);
+  const [selectedMapRecord, setSelectedMapRecord] = useState<MotorResult | undefined>();
+  const [economicidadeAlert, setEconomicidadeAlert] = useState(false);
+  const [uploadedEvidence, setUploadedEvidence] = useState<
+    Record<string, { name: string; preview: string }>
+  >({});
 
   const openMenu = useCallback((menu: MenuKind) => {
     triggerHashValidation();
@@ -147,6 +157,18 @@ export default function Milestone2Client() {
     setActiveTile(null);
   }, []);
 
+  const handleEvidenceUpload = useCallback(
+    (tileId: string, file: File | undefined) => {
+      if (!file) return;
+      const preview = URL.createObjectURL(file);
+      setUploadedEvidence((prev) => ({
+        ...prev,
+        [tileId]: { name: file.name, preview },
+      }));
+    },
+    []
+  );
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -156,6 +178,7 @@ export default function Milestone2Client() {
       if (cancelled) return;
       setDemoData(data);
       setIntegrityRows(rows);
+      setSelectedMapRecord(data.resultados_motor_glosa[0]);
       setLoadingData(false);
     })();
     return () => {
@@ -183,6 +206,7 @@ export default function Milestone2Client() {
     if (net <= 0) return 0;
     return (gross / net) * 100;
   }, [demoData]);
+  const trailRows = integrityRows.slice(0, 12);
 
   return (
     <div className="mx-auto w-full max-w-7xl overflow-visible px-4 pb-16 pt-4 md:px-6">
@@ -330,34 +354,219 @@ export default function Milestone2Client() {
                   )}
 
                   {activeTile.id === "vetoracao" && (
-                    <div className="space-y-3">
-                      {demoData?.resultados_motor_glosa.slice(0, 6).map((row) => (
-                        <div key={row.id} className="rounded-xl border border-white/10 bg-white/5 p-4">
-                          <div className="flex flex-wrap items-center justify-between gap-2">
-                            <p className="text-sm font-semibold text-white">{row.placa} · {row.transacaoId}</p>
-                            <p className="text-xs text-white/60">{Math.round(getMapDistanceMeters(row))} m do posto</p>
-                          </div>
-                          <p className="mt-2 text-xs text-white/70">{row.observacao || "Rota vetorizada para perícia geográfica."}</p>
-                        </div>
-                      ))}
+                    <div className="space-y-4">
+                      {demoData && selectedMapRecord && (
+                        <MilestoneMap
+                          mode="fuel"
+                          demoData={demoData}
+                          selected={selectedMapRecord}
+                          onSelect={setSelectedMapRecord}
+                          onMarkerClick={setSelectedMapRecord}
+                          mapKey={`m2-vetoracao-${activeTile.id}`}
+                        />
+                      )}
+                      <div className="space-y-2">
+                        {demoData?.resultados_motor_glosa.slice(0, 6).map((row) => (
+                          <button
+                            key={row.id}
+                            type="button"
+                            onClick={() => setSelectedMapRecord(row)}
+                            className={`w-full rounded-xl border p-3 text-left text-xs transition-colors ${
+                              selectedMapRecord?.id === row.id
+                                ? "border-cyan-400/60 bg-cyan-500/10 text-white"
+                                : "border-white/10 bg-white/5 text-white/75 hover:border-cyan-400/30"
+                            }`}
+                          >
+                            <p className="font-semibold">{row.placa} · {row.transacaoId}</p>
+                            <p className="mt-1 text-[11px] text-white/65">
+                              Distância: {Math.round(getMapDistanceMeters(row))} m · {row.observacao || "Rota vetorizada para perícia geográfica."}
+                            </p>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   )}
 
                   {activeTile.id === "pericia" && firstFuel && (
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                      <p className="text-sm font-semibold text-white">Registro pericial ativo: {firstFuel.placa}</p>
-                      <p className="mt-2 text-xs text-white/70">Transação {firstFuel.transacaoId} · {new Date(firstFuel.transacaoTimestamp).toLocaleString("pt-BR")}</p>
-                      <p className="mt-2 break-all text-[11px] text-white/60">Hash: {firstFuel.integrityHash}</p>
+                    <div className="space-y-4">
+                      <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                        <p className="text-sm font-semibold text-white">Registro pericial ativo: {firstFuel.placa}</p>
+                        <p className="mt-2 text-xs text-white/70">Transação {firstFuel.transacaoId} · {new Date(firstFuel.transacaoTimestamp).toLocaleString("pt-BR")}</p>
+                        <p className="mt-2 break-all text-[11px] text-white/60">Hash: {firstFuel.integrityHash}</p>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/85">
+                          📤 Enviar imagem pericial
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) =>
+                              handleEvidenceUpload(activeTile.id, e.target.files?.[0])
+                            }
+                          />
+                        </label>
+                        <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-cyan-400/30 bg-cyan-500/10 px-3 py-2 text-xs text-cyan-100">
+                          📸 Abrir câmera
+                          <input
+                            type="file"
+                            accept="image/*"
+                            capture="environment"
+                            className="hidden"
+                            onChange={(e) =>
+                              handleEvidenceUpload(activeTile.id, e.target.files?.[0])
+                            }
+                          />
+                        </label>
+                      </div>
+                      {uploadedEvidence[activeTile.id] && (
+                        <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                          <p className="text-xs text-white/70">
+                            Arquivo: {uploadedEvidence[activeTile.id]?.name}
+                          </p>
+                          <img
+                            src={uploadedEvidence[activeTile.id]?.preview}
+                            alt="Prévia pericial"
+                            className="mt-2 max-h-52 rounded-lg border border-white/10 object-contain"
+                          />
+                        </div>
+                      )}
                     </div>
                   )}
 
                   {activeTile.id === "trilha" && (
-                    <div className="space-y-2">
-                      {integrityRows.slice(0, 7).map((row) => (
-                        <div key={row.id} className="rounded-lg border border-white/10 bg-white/5 p-3 text-xs text-white/75">
-                          <span className="font-semibold text-white">{row.plate}</span> · {row.date} · {row.department}
+                    <div className="space-y-4">
+                      <div className="hidden items-center justify-between md:flex">
+                        <p className="text-xs text-white/60">
+                          Trilha de auditoria SHA-256 (SIG-FROTA)
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openFuelAuditPdf({
+                              filteredRows: trailRows,
+                              grossSpending:
+                                (demoData?.resumo_dashboard?.valor_total_transacoes ?? 0) +
+                                (demoData?.resumo_dashboard?.valor_glosado ?? 0),
+                              actualSpending:
+                                demoData?.resumo_dashboard?.valor_total_transacoes ?? 0,
+                              savingsPercent:
+                                ((demoData?.resumo_dashboard?.economia_gerada ?? 0) /
+                                  Math.max(
+                                    (demoData?.resumo_dashboard?.valor_total_transacoes ?? 0) +
+                                      (demoData?.resumo_dashboard?.valor_glosado ?? 0),
+                                    1
+                                  )) *
+                                100,
+                              origin:
+                                typeof window !== "undefined"
+                                  ? window.location.origin
+                                  : "",
+                            })
+                          }
+                          className="rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-xs font-mono text-cyan-200"
+                        >
+                          Extrair PDF (padrão timbrado)
+                        </button>
+                      </div>
+
+                      {/* Mobile-first style: vertical timeline cards like the original milestone mobile UI */}
+                      <div className="md:hidden">
+                        <div className="mb-3 overflow-hidden rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+                          <div className="whitespace-nowrap text-[10px] text-white/65 [animation:milestone2Ticker_16s_linear_infinite]">
+                            <span className="pr-6">
+                              trânsito • [ABC1D23] TXN-00101 · APROVADO • [XYZ9K87] TXN-00102 ·
+                            </span>
+                            <span className="pr-6" aria-hidden>
+                              trânsito • [ABC1D23] TXN-00101 · APROVADO • [XYZ9K87] TXN-00102 ·
+                            </span>
+                          </div>
                         </div>
-                      ))}
+
+                        <div className="space-y-4">
+                          {trailRows.slice(0, 6).map((row, idx) => (
+                            <div key={row.id} className="relative pl-9">
+                              <div
+                                className="absolute left-[14px] top-0 h-full w-px bg-cyan-300/55"
+                                aria-hidden
+                              />
+                              <div className="absolute left-0 top-2 flex h-7 w-7 items-center justify-center rounded-full border border-cyan-300/70 bg-cyan-400/20">
+                                <span className="absolute inline-flex h-7 w-7 rounded-full bg-cyan-300/30 animate-ping" />
+                                <span className="absolute inline-flex h-5 w-5 rounded-full border border-cyan-200/60 bg-cyan-300/20" />
+                                <span className="relative h-3 w-3 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.7)]" />
+                              </div>
+                              <div className="rounded-2xl border border-cyan-500/30 bg-slate-900/75 p-4 text-slate-200 shadow-[0_10px_20px_rgba(2,6,23,0.32)] backdrop-blur">
+                                <p className="text-sm font-semibold text-white">{row.department}</p>
+                                <p className="mt-1 text-xs text-slate-300/75">{row.date}</p>
+                                <p className="mt-2 text-sm text-slate-200/90">
+                                  Placa {row.plate} — registro na trilha SHA-256 do SIG-FROTA.
+                                </p>
+                                <p className="mt-2 text-xs font-semibold text-cyan-300">SHA-256</p>
+                                <code className="mt-1 block break-all rounded-md border border-cyan-400/40 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
+                                  {row.calculatedHash}
+                                </code>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openFuelAuditPdf({
+                              filteredRows: trailRows,
+                              grossSpending:
+                                (demoData?.resumo_dashboard?.valor_total_transacoes ?? 0) +
+                                (demoData?.resumo_dashboard?.valor_glosado ?? 0),
+                              actualSpending:
+                                demoData?.resumo_dashboard?.valor_total_transacoes ?? 0,
+                              savingsPercent:
+                                ((demoData?.resumo_dashboard?.economia_gerada ?? 0) /
+                                  Math.max(
+                                    (demoData?.resumo_dashboard?.valor_total_transacoes ?? 0) +
+                                      (demoData?.resumo_dashboard?.valor_glosado ?? 0),
+                                    1
+                                  )) *
+                                100,
+                              origin:
+                                typeof window !== "undefined"
+                                  ? window.location.origin
+                                  : "",
+                            })
+                          }
+                          className="mt-5 w-full rounded-xl border border-slate-600/70 bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-[0_12px_24px_rgba(2,6,23,0.35)]"
+                        >
+                          Extrair PDF (padrão timbrado)
+                        </button>
+                      </div>
+
+                      <div className="hidden overflow-x-auto md:block">
+                        <table className="w-full min-w-[720px] border-collapse text-left text-[11px]">
+                          <thead>
+                            <tr className="border-b border-white/10 text-white/45">
+                              <th className="p-2">Data</th>
+                              <th className="p-2">Órgão</th>
+                              <th className="p-2">Placa</th>
+                              <th className="p-2">SHA-256</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {trailRows.map((row) => (
+                              <tr
+                                key={row.id}
+                                className="border-b border-white/5 text-white/75"
+                              >
+                                <td className="p-2 whitespace-nowrap">{row.date}</td>
+                                <td className="p-2">{row.department}</td>
+                                <td className="p-2">{row.plate}</td>
+                                <td className="max-w-[220px] break-all font-mono text-[9px] text-cyan-300/90">
+                                  {row.calculatedHash}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   )}
 
@@ -372,22 +581,74 @@ export default function Milestone2Client() {
                   )}
 
                   {activeTile.id === "economicidade" && (
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                        <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Índice de economicidade</p>
-                        <p className="mt-2 text-2xl font-semibold text-emerald-300">{economicityPct.toFixed(2)}%</p>
+                    <div className="space-y-4">
+                      <button
+                        type="button"
+                        onClick={() => setEconomicidadeAlert((v) => !v)}
+                        className="rounded-lg border border-amber-400/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-100"
+                      >
+                        Simular alerta de desvio
+                      </button>
+                      <div
+                        className={`rounded-xl border p-4 ${
+                          economicidadeAlert
+                            ? "border-red-400/40 bg-red-500/10"
+                            : "border-white/10 bg-white/5"
+                        }`}
+                      >
+                        <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">
+                          Curva de consumo (meta x observado)
+                        </p>
+                        <svg
+                          className="mt-3 h-[180px] w-full"
+                          viewBox="0 0 480 210"
+                          preserveAspectRatio="xMidYMid meet"
+                          aria-hidden
+                        >
+                          <line x1="0" y1="88" x2="480" y2="88" stroke="rgba(125,211,252,0.45)" strokeDasharray="8 8" />
+                          <polyline
+                            fill={economicidadeAlert ? "rgba(239,68,68,0.18)" : "rgba(16,185,129,0.18)"}
+                            stroke={economicidadeAlert ? "#ef4444" : "#10b981"}
+                            strokeWidth="3"
+                            points={economicidadeAlert ? "0,120 60,118 120,123 180,132 240,148 300,162 360,171 420,178 480,186 480,210 0,210" : "0,128 60,122 120,118 180,112 240,106 300,103 360,101 420,98 480,94 480,210 0,210"}
+                          />
+                        </svg>
+                        {economicidadeAlert && (
+                          <p className="mt-2 text-xs text-red-200">
+                            Alerta: consumo observado acima da meta econômica.
+                          </p>
+                        )}
                       </div>
-                      <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                      <div className="grid gap-4 md:grid-cols-2">
+                        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                          <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Índice de economicidade</p>
+                          <p className="mt-2 text-2xl font-semibold text-emerald-300">{economicityPct.toFixed(2)}%</p>
+                        </div>
+                        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
                         <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Valor glosado</p>
                         <p className="mt-2 text-2xl font-semibold text-white">R$ {(demoData?.resumo_dashboard.valor_glosado ?? 0).toLocaleString("pt-BR")}</p>
+                        </div>
                       </div>
                     </div>
                   )}
 
                   {activeTile.id === "certificacao" && (
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                      <p className="text-xs text-white/70">Certificado de fé pública emitido com assinatura SHA-256.</p>
-                      <p className="mt-2 break-all text-[11px] text-white/60">{firstFuel?.integrityHash ?? "Sem hash disponível"}</p>
+                    <div className="space-y-4">
+                      <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                        <p className="text-xs text-white/70">Certificado de fé pública emitido com assinatura SHA-256.</p>
+                        <p className="mt-2 break-all text-[11px] text-white/60">{firstFuel?.integrityHash ?? "Sem hash disponível"}</p>
+                      </div>
+                      <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/85">
+                        📷 Carregar imagem para certificação
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) =>
+                            handleEvidenceUpload(activeTile.id, e.target.files?.[0])
+                          }
+                        />
+                      </label>
                     </div>
                   )}
 
@@ -395,16 +656,18 @@ export default function Milestone2Client() {
                     <div className="space-y-4">
                       <div className="grid gap-4 md:grid-cols-3">
                         <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                          <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Bens catalogados</p>
-                          <p className="mt-2 text-xl font-semibold text-white">{patrimonyAssets.length}</p>
+                          <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Bens sob custódia</p>
+                          <p className="mt-2 text-xl font-semibold text-white">
+                            {patrimonyAssets.length || 6}
+                          </p>
                         </div>
                         <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                          <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Valor patrimonial</p>
-                          <p className="mt-2 text-xl font-semibold text-white">R$ {totalPatrimony.toLocaleString("pt-BR")}</p>
+                          <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Auditorias ativas</p>
+                          <p className="mt-2 text-xl font-semibold text-white">4</p>
                         </div>
                         <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                          <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Conservação média</p>
-                          <p className="mt-2 text-xl font-semibold text-blue-300">{avgConservation.toFixed(1)}%</p>
+                          <p className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">Integridade</p>
+                          <p className="mt-2 text-xl font-semibold text-blue-300">SHA-256</p>
                         </div>
                       </div>
                     </div>
@@ -488,10 +751,40 @@ export default function Milestone2Client() {
                           </div>
                         ))}
                       </div>
+                      <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/85">
+                        📤 Upload de prova (imagem)
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) =>
+                            handleEvidenceUpload(activeTile.id, e.target.files?.[0])
+                          }
+                        />
+                      </label>
+                      {uploadedEvidence[activeTile.id] && (
+                        <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                          <p className="text-xs text-white/70">
+                            Prova anexada: {uploadedEvidence[activeTile.id]?.name}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </>
               )}
+            </div>
+            <div className="mt-5 overflow-hidden rounded-xl border border-cyan-500/20 bg-[#071330]/80">
+              <div className="whitespace-nowrap py-2 text-[11px] font-mono text-cyan-200/80 [animation:milestone2Ticker_20s_linear_infinite]">
+                <span className="px-6">
+                  SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
+                  Vistoria AO VIVO · Conservação sincronizada · Acre ·
+                </span>
+                <span className="px-6" aria-hidden>
+                  SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
+                  Vistoria AO VIVO · Conservação sincronizada · Acre ·
+                </span>
+              </div>
             </div>
           </motion.div>
         ) : (
