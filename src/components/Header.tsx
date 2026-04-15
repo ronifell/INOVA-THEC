@@ -76,7 +76,7 @@ export default function Header() {
     >
       <div className="mx-auto grid h-[8.5vh] w-full max-w-7xl grid-cols-3 items-center gap-[1.2vw] overflow-hidden px-[1.6vw]">
         <motion.div
-          className="col-start-2 flex justify-center"
+          className="col-start-2 flex translate-y-[1.5vh] justify-center"
           initial={{ opacity: 0, y: -34 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.72, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
