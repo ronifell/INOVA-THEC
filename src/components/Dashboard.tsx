@@ -125,12 +125,13 @@ export default function Dashboard() {
                 ease: easeOut,
               }}
             >
-              <Link
-                href="/milestone1"
-                className="block text-center px-4 py-2 rounded-xl border border-cyan-400/35 text-cyan-300 text-xs font-mono tracking-wider cursor-pointer select-none transition-all hover:border-cyan-300/60 hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]"
+              <button
+                type="button"
+                aria-disabled
+                className="block w-full text-center px-4 py-2 rounded-xl border border-cyan-500/20 text-cyan-300/45 text-xs font-mono tracking-wider cursor-not-allowed select-none opacity-70"
               >
                 ACESSO RESTRITO
-              </Link>
+              </button>
             </motion.div>
             <motion.div
               className="flex-1 md:flex-none"
@@ -142,14 +143,29 @@ export default function Dashboard() {
                 ease: easeOut,
               }}
             >
-              <Link
-                href="/milestone2"
-                className="block text-center px-4 py-2 rounded-xl border border-emerald-400/35 text-emerald-300 text-xs font-mono tracking-wider cursor-pointer select-none transition-all hover:border-emerald-300/55 hover:bg-emerald-500/10 hover:shadow-[0_0_20px_rgba(16,185,129,0.18)]"
+              <button
+                type="button"
+                aria-disabled
+                className="block w-full text-center px-4 py-2 rounded-xl border border-emerald-500/20 text-emerald-300/45 text-xs font-mono tracking-wider cursor-not-allowed select-none opacity-70"
               >
                 LOGIN OPERACIONAL
-              </Link>
+              </button>
             </motion.div>
           </div>
+        </div>
+        <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
+          <Link
+            href="/milestone1"
+            className="block text-center rounded-xl border border-cyan-400/40 bg-cyan-500/10 px-4 py-2 text-xs font-mono tracking-wider text-cyan-200 transition-all hover:border-cyan-300/70 hover:bg-cyan-500/15"
+          >
+            IR PARA MILESTONE 1
+          </Link>
+          <Link
+            href="/milestone2"
+            className="block text-center rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-2 text-xs font-mono tracking-wider text-emerald-200 transition-all hover:border-emerald-300/70 hover:bg-emerald-500/15"
+          >
+            IR PARA MILESTONE 2
+          </Link>
         </div>
       </motion.div>
 
