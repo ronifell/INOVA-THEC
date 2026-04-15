@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { MODULES } from "@/lib/modules";
 import ModuleCard from "./ModuleCard";
@@ -114,11 +115,8 @@ export default function Dashboard() {
             </p>
           </motion.div>
           <div className="flex gap-2 w-full md:w-auto">
-            <motion.button
-              type="button"
-              tabIndex={-1}
-              aria-disabled="true"
-              className="flex-1 md:flex-none text-center px-4 py-2 rounded-xl border border-cyan-400/30 text-cyan-300 text-xs font-mono tracking-wider pointer-events-none select-none cursor-default"
+            <motion.div
+              className="flex-1 md:flex-none"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -127,13 +125,15 @@ export default function Dashboard() {
                 ease: easeOut,
               }}
             >
-              ACESSO RESTRITO
-            </motion.button>
-            <motion.button
-              type="button"
-              tabIndex={-1}
-              aria-disabled="true"
-              className="flex-1 md:flex-none text-center px-4 py-2 rounded-xl border border-emerald-400/30 text-emerald-300 text-xs font-mono tracking-wider pointer-events-none select-none cursor-default"
+              <Link
+                href="/milestone1"
+                className="block text-center px-4 py-2 rounded-xl border border-cyan-400/35 text-cyan-300 text-xs font-mono tracking-wider cursor-pointer select-none transition-all hover:border-cyan-300/60 hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]"
+              >
+                ACESSO RESTRITO
+              </Link>
+            </motion.div>
+            <motion.div
+              className="flex-1 md:flex-none"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -142,8 +142,13 @@ export default function Dashboard() {
                 ease: easeOut,
               }}
             >
-              LOGIN OPERACIONAL
-            </motion.button>
+              <Link
+                href="/milestone2"
+                className="block text-center px-4 py-2 rounded-xl border border-emerald-400/35 text-emerald-300 text-xs font-mono tracking-wider cursor-pointer select-none transition-all hover:border-emerald-300/55 hover:bg-emerald-500/10 hover:shadow-[0_0_20px_rgba(16,185,129,0.18)]"
+              >
+                LOGIN OPERACIONAL
+              </Link>
+            </motion.div>
           </div>
         </div>
       </motion.div>

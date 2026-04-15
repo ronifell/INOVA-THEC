@@ -1,200 +1,51 @@
 "use client";
 
-import { useCallback, useRef, type CSSProperties } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useCallback } from "react";
 import { Module } from "@/lib/modules";
 import { useStore } from "@/store/useStore";
 import { useVoice } from "@/hooks/useVoice";
+import PortalModuleCard from "@/components/PortalModuleCard";
 
 interface ModuleCardProps {
   module: Module;
   index: number;
+  /** Runs after module is activated (e.g. navigate away from a milestone hub). */
+  afterActivate?: () => void;
 }
 
-export default function ModuleCard({ module, index }: ModuleCardProps) {
+export default function ModuleCard({
+  module,
+  index,
+  afterActivate,
+}: ModuleCardProps) {
   const setActiveModule = useStore((s) => s.setActiveModule);
   const triggerHashValidation = useStore((s) => s.triggerHashValidation);
   const { speak } = useVoice();
-  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
-  const cardRef = useRef<HTMLButtonElement | null>(null);
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const iconX = useMotionValue(0);
-  const iconY = useMotionValue(0);
-  /* Atraso ~100ms no tilt: mola mais “pesada” */
-  const iconXSpring = useSpring(iconX, { stiffness: 130, damping: 22, mass: 0.55 });
-  const iconYSpring = useSpring(iconY, { stiffness: 130, damping: 22, mass: 0.55 });
-  const rotateXSpring = useSpring(rotateX, { stiffness: 115, damping: 22, mass: 0.55 });
-  const rotateYSpring = useSpring(rotateY, { stiffness: 115, damping: 22, mass: 0.55 });
-
-  const handleHover = useCallback(() => {
-    hoverTimeout.current = setTimeout(() => {
-      speak(module.voiceText);
-    }, 400);
-  }, [speak, module.voiceText]);
 
   const handleClick = useCallback(() => {
     triggerHashValidation();
     setActiveModule(module.id, module.color, module.colorRgb);
     speak(module.voiceText);
-  }, [setActiveModule, module, speak, triggerHashValidation]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const px = (x / rect.width - 0.5) * 2;
-    const py = (y / rect.height - 0.5) * 2;
-    rotateX.set(-py * 7);
-    rotateY.set(px * 7);
-    iconX.set(px * 14);
-    iconY.set(py * 10);
-  }, [iconX, iconY, rotateX, rotateY]);
-
-  const resetParallax = useCallback(() => {
-    rotateX.set(0);
-    rotateY.set(0);
-    iconX.set(0);
-    iconY.set(0);
-    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
-  }, [iconX, iconY, rotateX, rotateY]);
-
-  /* Queda em keyframes: 1º trecho ease-in (gravidade); 2º trecho impacto + assento — sem mola stiff. */
-  const dropOffset = -200;
-  const dropDelay = index * 0.11;
-  const dropDuration = 1.08;
-  const impactY = 12;
-  const easeFall: [number, number, number, number] = [0.55, 0, 1, 0.45];
-  const easeSettle: [number, number, number, number] = [0.33, 1.15, 0.56, 1];
+    afterActivate?.();
+  }, [
+    setActiveModule,
+    module,
+    speak,
+    triggerHashValidation,
+    afterActivate,
+  ]);
 
   return (
-    <motion.button
-      ref={cardRef}
-      className="relative z-[1] group cursor-pointer [transform-style:preserve-3d] will-change-transform"
-      initial={{ opacity: 1, y: dropOffset, scale: 0.9 }}
-      animate={{
-        opacity: 1,
-        y: [dropOffset, impactY, 0],
-        scale: [0.9, 1.035, 1],
-      }}
-      style={{
-        rotateX: rotateXSpring,
-        rotateY: rotateYSpring,
-        transformPerspective: 700,
-        transformOrigin: "center bottom",
-      }}
-      transition={{
-        delay: dropDelay,
-        duration: dropDuration,
-        times: [0, 0.73, 1],
-        ease: [easeFall, easeSettle],
-      }}
-      whileTap={{ scale: 0.98 }}
-      onHoverStart={handleHover}
-      onHoverEnd={resetParallax}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={resetParallax}
+    <PortalModuleCard
+      index={index}
+      color={module.color}
+      colorRgb={module.colorRgb}
+      icon={module.icon}
+      title={module.name}
+      description={module.description}
+      isFullModule={module.isFullModule}
+      voiceText={module.voiceText}
       onClick={handleClick}
-    >
-      <div
-        className={`relative rounded-2xl p-6 h-full transition-all duration-500 module-card-float-${index % 3}`}
-        style={
-          {
-            "--card-rgb": module.colorRgb,
-            background: `rgba(255, 255, 255, 0.04)`,
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            border: `1px solid rgba(${module.colorRgb}, 0.15)`,
-          } as CSSProperties
-        }
-      >
-        {/* Blinking neon border glow (module color) — --card-rgb repeated here so animation always resolves */}
-        <div
-          className="module-card-border-blink absolute inset-0 rounded-2xl pointer-events-none z-[1]"
-          style={{ "--card-rgb": module.colorRgb } as CSSProperties}
-          aria-hidden
-        />
-
-        {/* Neon glow core */}
-        <div
-          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{
-            boxShadow: `inset 0 0 30px rgba(${module.colorRgb}, 0.1), 0 0 40px rgba(${module.colorRgb}, 0.15), 0 0 80px rgba(${module.colorRgb}, 0.05)`,
-          }}
-        />
-
-        {/* Top glow bar */}
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${module.color}, transparent)`,
-            boxShadow: `0 0 10px ${module.color}`,
-          }}
-        />
-
-        {/* Icon sphere + outward color waves */}
-        <motion.div
-          className="relative mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center z-[2]"
-          style={{ x: iconXSpring, y: iconYSpring }}
-        >
-          {/* Single expanding ring; next wave after ~3s idle (see globals.css) */}
-          <span
-            className="module-icon-wave-ring z-0"
-            style={{
-              borderColor: `rgba(${module.colorRgb}, 0.55)`,
-              boxShadow: `0 0 14px rgba(${module.colorRgb}, 0.35), inset 0 0 10px rgba(${module.colorRgb}, 0.12)`,
-            }}
-            aria-hidden
-          />
-          <div
-            className="absolute inset-0 rounded-full transition-all duration-500 z-[1]"
-            style={{
-              background: `radial-gradient(circle, rgba(${module.colorRgb}, 0.22) 0%, transparent 70%)`,
-              boxShadow: `0 0 15px rgba(${module.colorRgb}, 0.2)`,
-            }}
-          />
-          <div
-            className="absolute inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 z-[1]"
-            style={{
-              background: `radial-gradient(circle, rgba(${module.colorRgb}, 0.4) 0%, transparent 70%)`,
-              boxShadow: `0 0 30px rgba(${module.colorRgb}, 0.4)`,
-            }}
-          />
-          <motion.span
-            className="relative text-2xl z-10"
-            style={{ textShadow: `0 0 20px rgba(${module.colorRgb},0.45)` }}
-          >
-            {module.icon}
-          </motion.span>
-        </motion.div>
-
-        {/* Title */}
-        <h3
-          className="text-sm font-bold tracking-wider text-center transition-colors duration-500 group-hover:text-white"
-          style={{ color: `rgba(${module.colorRgb}, 0.9)` }}
-        >
-          {module.name}
-        </h3>
-
-        {/* Description */}
-        <p className="mt-2 text-[11px] text-white/30 text-center leading-relaxed group-hover:text-white/50 transition-colors duration-500">
-          {module.description}
-        </p>
-
-        {/* Status */}
-        <div className="mt-3 flex items-center justify-center gap-1.5">
-          <div
-            className="w-1.5 h-1.5 rounded-full"
-            style={{
-              background: module.isFullModule ? module.color : "#FCD34D",
-              boxShadow: `0 0 4px ${module.isFullModule ? module.color : "#FCD34D"}`,
-            }}
-          />
-          <span className="text-[9px] font-mono tracking-wider text-white/25">
-            {module.isFullModule ? "OPERACIONAL" : "HOMOLOGAÇÃO"}
-          </span>
-        </div>
-      </div>
-    </motion.button>
+    />
   );
 }
