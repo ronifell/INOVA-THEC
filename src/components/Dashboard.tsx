@@ -14,10 +14,10 @@ const AFTER_CARDS = 1.82;
 
 export default function Dashboard() {
   return (
-    <div className="min-h-full flex flex-col items-center justify-center px-4 md:px-8 py-24 overflow-visible">
+    <div className="h-full w-full overflow-hidden px-[2.5%] pb-[2.5vh] pt-[10vh]">
       {/* Título — cascata suave linha a linha */}
       <motion.div
-        className="text-center mb-10 w-full max-w-2xl"
+        className="mx-auto flex h-[13%] w-full max-w-[72%] shrink-0 flex-col items-center justify-center text-center"
         initial="hidden"
         animate="visible"
         variants={{
@@ -28,7 +28,7 @@ export default function Dashboard() {
         }}
       >
         <motion.h2
-          className="text-2xl md:text-3xl font-bold tracking-wider text-white/90 mb-2"
+          className="mb-[0.9vh] text-[2.35vh] font-bold tracking-[0.18em] text-white/90"
           variants={{
             hidden: { opacity: 0, y: -10, filter: "blur(6px)" },
             visible: {
@@ -42,7 +42,7 @@ export default function Dashboard() {
           PAINEL DE COMANDO
         </motion.h2>
         <motion.p
-          className="text-xs font-mono tracking-[0.25em] text-white/25 uppercase"
+          className="text-[1.1vh] font-mono tracking-[0.24em] text-white/25 uppercase"
           variants={{
             hidden: { opacity: 0, y: 6 },
             visible: {
@@ -55,7 +55,7 @@ export default function Dashboard() {
           Sistema Integrado de Gestão — Protocolo AP-04
         </motion.p>
         <motion.div
-          className="mt-4 h-[1px] w-32 mx-auto bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          className="mx-auto mt-[1.1vh] h-[0.15vh] w-[24%] bg-gradient-to-r from-transparent via-white/20 to-transparent"
           variants={{
             hidden: { opacity: 0, scaleX: 0.3 },
             visible: {
@@ -68,14 +68,14 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Cartões — queda visível (overflow visível evita clip da transformação) */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-4 w-full max-w-7xl mb-12 overflow-visible">
+      <div className="mx-auto grid h-[34%] w-full max-w-[96%] shrink-0 auto-rows-fr grid-cols-2 gap-[1.1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
         {MODULES.map((mod, i) => (
           <ModuleCard key={mod.id} module={mod} index={i} />
         ))}
       </div>
 
       <motion.div
-        className="w-full max-w-3xl"
+        className="mx-auto mt-[2vh] w-full max-w-[60%] shrink-0"
         initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{
@@ -88,7 +88,7 @@ export default function Dashboard() {
       </motion.div>
 
       <motion.div
-        className="w-full max-w-3xl mt-6 glass rounded-2xl p-4 md:p-5"
+        className="mx-auto mt-[2vh] w-full max-w-[60%] shrink-0 rounded-[1.2vw] glass p-[1.6vh]"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
@@ -97,7 +97,7 @@ export default function Dashboard() {
           ease: easeOut,
         }}
       >
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <div className="flex items-start justify-between gap-[1.1vh] md:items-center">
           <motion.div
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
@@ -107,14 +107,14 @@ export default function Dashboard() {
               ease: easeOut,
             }}
           >
-            <p className="text-[10px] font-mono tracking-[0.2em] text-white/35 uppercase">
+            <p className="text-[1vh] font-mono tracking-[0.2em] text-white/35 uppercase">
               Vitrine de Demonstração
             </p>
-            <p className="text-xs text-white/55 mt-1">
+            <p className="mt-[0.45vh] text-[1.15vh] text-white/55">
               Acesso restrito leva da Vitrine para o Sistema Operacional de Auditoria.
             </p>
           </motion.div>
-          <div className="flex gap-2 w-full md:w-auto">
+          <div className="flex w-[47%] gap-[0.55vw]">
             <motion.div
               className="flex-1 md:flex-none"
               initial={{ opacity: 0, y: 12 }}
@@ -128,7 +128,7 @@ export default function Dashboard() {
               <button
                 type="button"
                 aria-disabled
-                className="block w-full text-center px-4 py-2 rounded-xl border border-cyan-500/20 text-cyan-300/45 text-xs font-mono tracking-wider cursor-not-allowed select-none opacity-70"
+                className="block w-full cursor-not-allowed select-none rounded-[0.7vw] border border-cyan-500/20 px-[0.9vw] py-[0.85vh] text-center font-mono text-[1.05vh] tracking-[0.16em] text-cyan-300/45 opacity-70"
               >
                 ACESSO RESTRITO
               </button>
@@ -146,23 +146,23 @@ export default function Dashboard() {
               <button
                 type="button"
                 aria-disabled
-                className="block w-full text-center px-4 py-2 rounded-xl border border-emerald-500/20 text-emerald-300/45 text-xs font-mono tracking-wider cursor-not-allowed select-none opacity-70"
+                className="block w-full cursor-not-allowed select-none rounded-[0.7vw] border border-emerald-500/20 px-[0.9vw] py-[0.85vh] text-center font-mono text-[1.05vh] tracking-[0.16em] text-emerald-300/45 opacity-70"
               >
                 LOGIN OPERACIONAL
               </button>
             </motion.div>
           </div>
         </div>
-        <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
+        <div className="mt-[1.2vh] grid grid-cols-2 gap-[0.55vw]">
           <Link
             href="/milestone1"
-            className="block text-center rounded-xl border border-cyan-400/40 bg-cyan-500/10 px-4 py-2 text-xs font-mono tracking-wider text-cyan-200 transition-all hover:border-cyan-300/70 hover:bg-cyan-500/15"
+            className="block rounded-[0.7vw] border border-cyan-400/40 bg-cyan-500/10 px-[0.9vw] py-[0.85vh] text-center font-mono text-[1.05vh] tracking-[0.16em] text-cyan-200 transition-all hover:border-cyan-300/70 hover:bg-cyan-500/15"
           >
             IR PARA MILESTONE 1
           </Link>
           <Link
             href="/milestone2"
-            className="block text-center rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-2 text-xs font-mono tracking-wider text-emerald-200 transition-all hover:border-emerald-300/70 hover:bg-emerald-500/15"
+            className="block rounded-[0.7vw] border border-emerald-400/40 bg-emerald-500/10 px-[0.9vw] py-[0.85vh] text-center font-mono text-[1.05vh] tracking-[0.16em] text-emerald-200 transition-all hover:border-emerald-300/70 hover:bg-emerald-500/15"
           >
             IR PARA MILESTONE 2
           </Link>
@@ -170,7 +170,7 @@ export default function Dashboard() {
       </motion.div>
 
       <motion.div
-        className="mt-10 w-full max-w-7xl"
+        className="mx-auto mt-[2vh] w-full max-w-[96%] shrink-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{
@@ -183,7 +183,7 @@ export default function Dashboard() {
       </motion.div>
 
       <motion.div
-        className="mt-6 text-center max-w-3xl"
+        className="mx-auto mt-[1.4vh] max-w-[72%] text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{
@@ -192,7 +192,7 @@ export default function Dashboard() {
           ease: easeOut,
         }}
       >
-        <p className="text-[9px] font-mono tracking-widest text-white/15">
+        <p className="text-[0.92vh] font-mono tracking-[0.26em] text-white/15">
           INOVA THEC © {new Date().getFullYear()} — CRIPTOGRAFIA SHA-256 |
           CADEIA DE CUSTÓDIA IMUTÁVEL | FÉ PÚBLICA DIGITAL
         </p>

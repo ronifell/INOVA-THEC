@@ -50,7 +50,7 @@ export default function FooterMarquee() {
   return (
     <div className="w-full overflow-hidden border-y border-white/[0.06] bg-black/20 py-2 select-none">
       <div
-        className="flex whitespace-nowrap font-mono text-[10px] tracking-wider text-white/35 will-change-transform antialiased"
+        className="flex whitespace-nowrap font-mono text-[10px] tracking-wider text-white will-change-transform antialiased"
         style={{ transform: `translateX(${offset}px)` }}
       >
         <span ref={spanRef} className="inline-block pr-12">

@@ -104,7 +104,9 @@ export default function Home() {
   }
 
   return (
-    <div className={`h-full overflow-y-auto ${isGlitching ? "glitch-active" : ""}`}>
+    <div
+      className={`h-full ${activeModule ? "overflow-y-auto" : "overflow-hidden"} ${isGlitching ? "glitch-active" : ""}`}
+    >
       <ThemeColorUpdater />
 
       <Background3D />
@@ -118,7 +120,7 @@ export default function Home() {
 
       {appRevealed && (
         <motion.div
-          className="relative z-20 flex min-h-full flex-col"
+          className={`relative z-20 flex flex-col min-h-0 ${activeModule ? "min-h-full" : "h-full"}`}
           variants={appShellContainer}
           initial="hidden"
           animate="visible"
@@ -128,9 +130,15 @@ export default function Home() {
             <GlitchOverlay />
           </motion.div>
 
-          <Header />
+          <Header dashboardHero={!activeModule} />
 
-          <main className="relative z-10 min-h-full flex-1 overflow-visible">
+          <main
+            className={`relative z-10 flex-1 flex flex-col min-h-0 ${
+              activeModule
+                ? "pt-16 min-h-full overflow-visible"
+                : "pt-[5.75rem] overflow-hidden min-h-0"
+            }`}
+          >
             <AnimatePresence mode="wait">
               {activeModule ? (
                 <motion.div
@@ -145,6 +153,7 @@ export default function Home() {
               ) : (
                 <motion.div
                   key="dashboard"
+                  className="flex h-full min-h-0 flex-1 flex-col"
                   initial={{ opacity: 1, y: 0 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
