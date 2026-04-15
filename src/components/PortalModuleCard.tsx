@@ -97,7 +97,7 @@ export default function PortalModuleCard({
   const cardInner = (
     <>
       <div
-        className={`relative h-full min-h-0 rounded-[1vw] p-[6%] transition-all duration-500 module-card-float-${index % 3}`}
+        className={`relative flex h-full min-h-0 flex-col rounded-[1vw] p-[6%] transition-all duration-500 module-card-float-${index % 3}`}
         style={
           {
             "--card-rgb": colorRgb,
@@ -130,7 +130,7 @@ export default function PortalModuleCard({
         />
 
         <motion.div
-          className="relative z-[2] mx-auto mb-[6%] flex aspect-square w-[32%] items-center justify-center rounded-full"
+          className="relative z-[2] mx-auto mb-[7%] flex aspect-square w-[36%] items-center justify-center rounded-full"
           style={{ x: iconXSpring, y: iconYSpring }}
         >
           <span
@@ -156,7 +156,7 @@ export default function PortalModuleCard({
             }}
           />
           <motion.span
-            className="relative z-10 text-[2.6vh]"
+            className="relative z-10 text-[3vh]"
             style={{ textShadow: `0 0 20px rgba(${colorRgb},0.45)` }}
           >
             {icon}
@@ -164,17 +164,17 @@ export default function PortalModuleCard({
         </motion.div>
 
         <h3
-          className="text-center text-[1.2vh] font-bold tracking-[0.17em] transition-colors duration-500 group-hover:text-white"
+          className="text-center text-[1.45vh] font-bold tracking-[0.17em] transition-colors duration-500 group-hover:text-white"
           style={{ color: `rgba(${colorRgb}, 0.9)` }}
         >
           {title}
         </h3>
 
-        <p className="mt-[4%] text-center text-[1.02vh] leading-[1.28] text-white transition-colors duration-500 group-hover:text-white">
+        <p className="mt-[5%] flex-1 text-center text-[1.22vh] leading-[1.35] text-white transition-colors duration-500 group-hover:text-white">
           {description}
         </p>
 
-        <div className="mt-[5%] flex items-center justify-center gap-[4%]">
+        <div className="mt-[4%] flex items-center justify-center gap-[4%]">
           <div
             className="h-[0.52vh] w-[0.52vh] rounded-full"
             style={{
@@ -182,7 +182,7 @@ export default function PortalModuleCard({
               boxShadow: `0 0 4px ${isFullModule ? color : "#FCD34D"}`,
             }}
           />
-          <span className="text-[0.92vh] font-mono tracking-[0.13em] text-white/25">
+          <span className="text-[1.04vh] font-mono tracking-[0.13em] text-white/30">
             {isFullModule ? "OPERACIONAL" : "HOMOLOGAÇÃO"}
           </span>
         </div>

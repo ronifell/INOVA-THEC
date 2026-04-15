@@ -8,8 +8,8 @@ import {
   BOOT_EXIT_TOTAL_S,
 } from "@/lib/bootTransition";
 
-/** Fração do tanque por segundo (~0,033 ≈ 30 s até 100%) */
-const FILL_RATE = 0.073;
+/** Fração do tanque por segundo (3x do ritmo anterior). */
+const FILL_RATE = 0.219;
 
 /** Segundos de ejeção contínua pelo orifício; depois fade do splash. */
 const SPRAY_EJECT_S = 17;
