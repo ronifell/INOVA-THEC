@@ -1182,7 +1182,7 @@ export default function Milestone1Client() {
                             : "",
                       })
                     }
-                    className="ml-auto rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-xs font-mono text-cyan-200"
+                    className="w-full rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-xs font-mono text-cyan-200 sm:ml-auto sm:w-auto"
                   >
                     Exportar PDF oficial
                   </button>
@@ -1193,52 +1193,80 @@ export default function Milestone1Client() {
                 )}
 
                 {!integrityFilterLoading && (
-                  <div
-                    key={integrityScanGen}
-                    className="mt-4 overflow-x-auto"
-                  >
-                    <table className="w-full min-w-[720px] border-collapse text-left text-[11px]">
-                      <thead>
-                        <tr className="border-b border-white/10 text-white/45">
-                          <th className="p-2">Int.</th>
-                          <th className="p-2">Data</th>
-                          <th className="p-2">Depto</th>
-                          <th className="p-2">Placa</th>
-                          <th className="p-2">L</th>
-                          <th className="p-2">Valor</th>
-                          <th className="p-2">SHA-256</th>
-                          <th className="p-2">Situação</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredIntegrityRows.map((row, ri) => (
-                          <tr
-                            key={row.id}
-                            className="border-b border-white/5 text-white/75"
-                          >
-                            <td className="p-2">
-                              {integrityShieldOk[row.id] ? "✓" : "…"}
-                            </td>
-                            <td className="p-2 whitespace-nowrap">{row.date}</td>
-                            <td className="p-2">{row.department}</td>
-                            <td className="p-2">{row.plate}</td>
-                            <td className="p-2">{row.liters}</td>
-                            <td className="p-2">
-                              R$ {row.amount.toFixed(2)}
-                            </td>
-                            <td className="max-w-[200px] break-all font-mono text-[9px] text-cyan-300/90">
+                  <>
+                    <div className="mt-4 space-y-4 sm:hidden">
+                      {filteredIntegrityRows.slice(0, 8).map((row, ri) => (
+                        <div key={row.id} className="relative pl-9">
+                          <div className="absolute left-[14px] top-0 h-full w-px bg-cyan-300/55" aria-hidden />
+                          <div className="absolute left-0 top-2 flex h-7 w-7 items-center justify-center rounded-full border border-cyan-300/70 bg-cyan-400/20">
+                            <span className="absolute inline-flex h-7 w-7 rounded-full bg-cyan-300/30 animate-ping" />
+                            <span className="relative h-3 w-3 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.7)]" />
+                          </div>
+                          <div className="rounded-2xl border border-cyan-500/30 bg-slate-900/75 p-4 text-slate-200 shadow-[0_10px_20px_rgba(2,6,23,0.32)] backdrop-blur">
+                            <p className="text-sm font-semibold text-white">{row.department}</p>
+                            <p className="mt-1 text-xs text-slate-300/75">{row.date}</p>
+                            <p className="mt-2 text-sm text-slate-200/90">
+                              Placa {row.plate} — registro na trilha SHA-256 do SIG-FROTA.
+                            </p>
+                            <p className="mt-2 text-xs font-semibold text-cyan-300">SHA-256</p>
+                            <code className="mt-1 block break-all rounded-md border border-cyan-400/40 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
                               {getHashDisplay(row, ri)}
-                            </td>
-                            <td className="p-2">
-                              {row.verified
-                                ? "Verificado / imutável"
-                                : "Em revisão"}
-                            </td>
+                            </code>
+                            <p className="mt-2 text-[11px] text-slate-300/80">
+                              {row.verified ? "Verificado / imutável" : "Em revisão"}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div
+                      key={integrityScanGen}
+                      className="mt-4 hidden overflow-x-auto rounded-2xl border border-slate-700/60 bg-slate-900/65 p-2 shadow-[0_10px_24px_rgba(2,6,23,0.35)] backdrop-blur sm:block"
+                    >
+                      <table className="w-full min-w-[720px] border-collapse text-left text-[11px]">
+                        <thead>
+                          <tr className="border-b border-slate-600/70 bg-slate-950/55 text-slate-300/85">
+                            <th className="p-2">Int.</th>
+                            <th className="p-2">Data</th>
+                            <th className="p-2">Depto</th>
+                            <th className="p-2">Placa</th>
+                            <th className="p-2">L</th>
+                            <th className="p-2">Valor</th>
+                            <th className="p-2">SHA-256</th>
+                            <th className="p-2">Situação</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                        </thead>
+                        <tbody>
+                          {filteredIntegrityRows.map((row, ri) => (
+                            <tr
+                              key={row.id}
+                              className="border-b border-slate-700/55 text-slate-200/85 odd:bg-slate-900/35 even:bg-slate-950/25"
+                            >
+                              <td className="p-2">
+                                {integrityShieldOk[row.id] ? "✓" : "…"}
+                              </td>
+                              <td className="p-2 whitespace-nowrap">{row.date}</td>
+                              <td className="p-2">{row.department}</td>
+                              <td className="p-2">{row.plate}</td>
+                              <td className="p-2">{row.liters}</td>
+                              <td className="p-2">
+                                R$ {row.amount.toFixed(2)}
+                              </td>
+                              <td className="max-w-[200px] break-all font-mono text-[9px] text-cyan-300/90">
+                                {getHashDisplay(row, ri)}
+                              </td>
+                              <td className="p-2">
+                                {row.verified
+                                  ? "Verificado / imutável"
+                                  : "Em revisão"}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
@@ -1280,11 +1308,34 @@ export default function Milestone1Client() {
                     <button
                       type="button"
                       onClick={() => openPatrimonyPdf(patrimonyChainRows)}
-                      className="mt-6 rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-xs text-cyan-200"
+                      className="mt-6 w-full rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-xs text-cyan-200 sm:w-auto"
                     >
                       Exportar PDF oficial
                     </button>
-                    <div className="mt-6 overflow-x-auto">
+                    <div className="mt-6 space-y-3 sm:hidden">
+                      {patrimonyChainRows.map((row) => (
+                        <div
+                          key={`m1-assets-mobile-${row.tombo}-${row.integrityHash}`}
+                          className="rounded-2xl border border-cyan-500/30 bg-slate-900/75 p-4 text-slate-200 shadow-[0_10px_20px_rgba(2,6,23,0.32)] backdrop-blur"
+                        >
+                          <p className="text-[11px] text-slate-300/80">Tombamento</p>
+                          <p className="text-sm font-semibold text-white">{row.tombo}</p>
+                          <p className="mt-3 text-[11px] text-slate-300/80">Descrição</p>
+                          <p className="text-sm text-slate-200/90">{row.descricao}</p>
+                          <p className="mt-3 text-[11px] text-slate-300/80">INPI</p>
+                          <code className="block rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
+                            {row.inpiRegistro}
+                          </code>
+                          <p className="mt-3 text-[11px] text-slate-300/80">SHA-256</p>
+                          <code className="block break-all rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
+                            {row.integrityHash}
+                          </code>
+                          <p className="mt-3 text-[11px] text-slate-300/80">Situação</p>
+                          <p className="text-sm text-slate-100">{row.situacao}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-6 hidden overflow-x-auto sm:block">
                       <table className="w-full min-w-[640px] text-left text-[11px]">
                         <thead>
                           <tr className="text-white/45">
@@ -1331,11 +1382,53 @@ export default function Milestone1Client() {
                   type="button"
                   disabled={timelineCompare !== "idle"}
                   onClick={compareTimelineHashes}
-                  className="mt-4 rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-4 py-2 text-xs text-emerald-200 disabled:opacity-40"
+                  className="mt-4 w-full rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-4 py-2 text-xs text-emerald-200 disabled:opacity-40 sm:w-auto"
                 >
                   Comparar Hashes
                 </button>
-                <div className="relative mt-8 space-y-6 border-l border-white/15 pl-6">
+                <div className="mt-8 space-y-4 sm:hidden">
+                  {timelineEvents.map((ev, i) => {
+                    const isLatest = i === timelineEvents.length - 1;
+                    const compareClass =
+                      timelineCompare !== "idle"
+                        ? ev.tampered && timelineCompare === "fail"
+                          ? "border-red-500/50 bg-red-500/10"
+                          : "border-emerald-500/40 bg-emerald-500/10"
+                        : "border-cyan-500/30 bg-slate-900/75";
+                    return (
+                      <motion.div
+                        key={`mobile-${ev.id}`}
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={
+                          timelineReveal
+                            ? { opacity: 1, x: 0 }
+                            : { opacity: 0, x: -8 }
+                        }
+                        transition={{ delay: i * 0.12 }}
+                        className="relative pl-9"
+                      >
+                        <div className="absolute left-[14px] top-0 h-full w-px bg-cyan-300/55" aria-hidden />
+                        <div className="absolute left-0 top-2 flex h-7 w-7 items-center justify-center rounded-full border border-cyan-300/70 bg-cyan-400/20">
+                          {isLatest && (
+                            <span className="absolute inline-flex h-7 w-7 rounded-full bg-cyan-300/30 animate-ping" />
+                          )}
+                          <span className="relative h-3 w-3 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.7)]" />
+                        </div>
+                        <div className={`rounded-2xl border p-4 text-slate-200 shadow-[0_10px_20px_rgba(2,6,23,0.32)] backdrop-blur ${compareClass}`}>
+                          <p className="text-[11px] font-semibold text-cyan-200/90">{ev.title}</p>
+                          <time className="mt-1 block text-[10px] text-slate-300/75">{ev.at}</time>
+                          <p className="mt-2 text-sm text-slate-200/90">{ev.detail}</p>
+                          <p className="mt-2 text-xs font-semibold text-cyan-300">SHA-256</p>
+                          <code className="mt-1 block break-all rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
+                            {ev.integrityHash}
+                          </code>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                <div className="relative mt-8 hidden space-y-6 border-l border-white/15 pl-6 sm:block">
                   {timelineEvents.map((ev, i) => (
                     <motion.div
                       key={ev.id}
