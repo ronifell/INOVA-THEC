@@ -7,6 +7,7 @@ import CursorTrail from "@/components/CursorTrail";
 const Background3D = dynamic(() => import("@/components/Background3D"), {
   ssr: false,
 });
+const SKIP_BOOT_ONCE_KEY = "skip-home-boot-once";
 
 type Props = {
   eyebrow?: string;
@@ -31,6 +32,11 @@ export default function MilestoneShell({
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
           <Link
             href="/"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                sessionStorage.setItem(SKIP_BOOT_ONCE_KEY, "1");
+              }
+            }}
             className="inline-flex items-center gap-2 rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white pointer-events-auto"
           >
             ← Painel principal

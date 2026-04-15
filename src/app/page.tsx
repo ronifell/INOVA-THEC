@@ -14,6 +14,8 @@ import { getModuleById } from "@/lib/modules";
 import { appShellContainer, appShellFadeUp } from "@/lib/motionVariants";
 import BootScreen from "@/components/BootScreen";
 
+const SKIP_BOOT_ONCE_KEY = "skip-home-boot-once";
+
 const Background3D = dynamic(() => import("@/components/Background3D"), {
   ssr: false,
 });
@@ -75,6 +77,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const shouldSkipBoot = sessionStorage.getItem(SKIP_BOOT_ONCE_KEY) === "1";
+      if (shouldSkipBoot) {
+        sessionStorage.removeItem(SKIP_BOOT_ONCE_KEY);
+        setAppRevealed(true);
+        setBootOverlay(false);
+      }
+    }
     setMounted(true);
   }, []);
 
