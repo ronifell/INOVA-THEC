@@ -8,7 +8,7 @@ import { generateSHA256 } from "@/lib/crypto";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-/** Três pilares do Protocolo AP-04: alinhados às zonas do cabeçalho (logo | comando | SHA). */
+/** Três pilares do Protocolo AP-04: mesma largura que a grelha de cartas (borda esquerda da 1ª → direita da 7ª). */
 export default function AuditPublicCenter({ className = "" }: { className?: string }) {
   const {
     triggerGlitch,
@@ -102,7 +102,7 @@ export default function AuditPublicCenter({ className = "" }: { className?: stri
 
   return (
     <motion.div
-      className={`mx-auto w-full max-w-7xl px-4 md:px-8 ${className}`}
+      className={`w-full ${className}`}
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.65, delay: 1.75, ease: easeOut }}
