@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MODULES } from "@/lib/modules";
+import { useStore } from "@/store/useStore";
 import ModuleCard from "./ModuleCard";
 import FooterMarquee from "./FooterMarquee";
 import AuditPublicCenter from "./AuditPublicCenter";
@@ -9,6 +10,8 @@ import AuditPublicCenter from "./AuditPublicCenter";
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 export default function Dashboard() {
+  const { audioEnabled, toggleAudio, triggerHashValidation } = useStore();
+
   return (
     <div className="flex h-full min-h-0 w-full flex-col overflow-x-hidden overflow-y-auto px-[2.5%] pb-[1vh] pt-[4.5vh]">
       <div className="flex min-h-0 flex-1 flex-col">
@@ -24,8 +27,8 @@ export default function Dashboard() {
             },
           }}
         >
-          <motion.h2
-            className="mb-[0.6vh] text-[clamp(1rem,2.2vh,1.35rem)] font-bold tracking-[0.18em] text-white"
+          <motion.div
+            className="mb-[0.6vh] flex flex-wrap items-center justify-center gap-3 gap-y-2"
             variants={{
               hidden: { opacity: 0, y: -10, filter: "blur(6px)" },
               visible: {
@@ -36,8 +39,23 @@ export default function Dashboard() {
               },
             }}
           >
-            PAINEL DE COMANDO
-          </motion.h2>
+            <h2 className="text-[clamp(1rem,2.2vh,1.35rem)] font-bold tracking-[0.18em] text-white">
+              PAINEL DE COMANDO
+            </h2>
+            <motion.button
+              type="button"
+              onClick={() => {
+                triggerHashValidation();
+                toggleAudio();
+              }}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/[0.08] text-lg text-white backdrop-blur-sm transition hover:bg-white/15"
+              aria-label={audioEnabled ? "Desativar áudio" : "Ativar áudio"}
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.94 }}
+            >
+              {audioEnabled ? "🔊" : "🔇"}
+            </motion.button>
+          </motion.div>
           <motion.p
             className="text-[clamp(0.65rem,1.05vh,0.85rem)] font-mono tracking-[0.22em] text-white/85 uppercase"
             variants={{
