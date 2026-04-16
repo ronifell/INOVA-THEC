@@ -284,9 +284,9 @@ body {
 .module-cards-glow-gutter {
   box-sizing: border-box;
   overflow: visible;
-  /* Respiro ≥ halos (32–96px) + levitação 10px; evita corte pelo header / carrossel */
-  padding-top: min(10vmin, 8.5vh);
-  padding-bottom: min(8vmin, 7vh);
+  /* Respiro para halos (metade do valor anterior) */
+  padding-top: min(5vmin, 4.25vh);
+  padding-bottom: min(4vmin, 3.5vh);
 }
 
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
