@@ -9,10 +9,10 @@ import {
 } from "@/lib/bootTransition";
 
 /** Fração do tanque por segundo (3x do ritmo anterior). */
-const FILL_RATE = 0.219;
+const FILL_RATE = 0.4;
 
 /** Segundos de ejeção contínua pelo orifício; depois fade do splash. */
-const SPRAY_EJECT_S = 17;
+const SPRAY_EJECT_S = 0.36;
 const SPRAY_MS = SPRAY_EJECT_S * 1000;
 
 /** Início do jato (~90% do reservatório). */
@@ -31,7 +31,7 @@ const BUBBLE_N = 20;
 const BUBBLE_IMMEDIATE_N = 106;
 
 /** Últimos segundos: tanque esmaece quando a ejeção termina. */
-const TANK_TAIL_FADE_S = 1.95;
+const TANK_TAIL_FADE_S = 0.28;
 
 function lerpRgb(
   a: readonly [number, number, number],

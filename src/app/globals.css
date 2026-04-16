@@ -398,56 +398,42 @@ body {
   animation: logo-vertical-sweep 2.8s ease-in-out infinite;
 }
 
-/* ===== MODULE CARDS: border glow — gradual dim → 5s dark → gradual brighten (ease-in-out) ===== */
+/* ===== MODULE CARDS: neon breathing (6s border / 4s icon ring) ===== */
 @keyframes moduleCardBorderBlink {
   0%,
   100% {
+    opacity: 0.62;
+    box-shadow:
+      0 0 0 1.2px rgba(var(--card-rgb), 0.68),
+      0 0 20px rgba(var(--card-rgb), 0.32),
+      0 0 38px rgba(var(--card-rgb), 0.2),
+      0 0 70px rgba(var(--card-rgb), 0.12),
+      inset 0 0 22px rgba(var(--card-rgb), 0.07);
+  }
+  50% {
     opacity: 1;
     box-shadow:
       0 0 0 2px rgba(var(--card-rgb), 0.95),
       0 0 32px rgba(var(--card-rgb), 0.65),
-      0 0 56px rgba(var(--card-rgb), 0.38),
-      0 0 96px rgba(var(--card-rgb), 0.2),
-      inset 0 0 32px rgba(var(--card-rgb), 0.12);
-  }
-  /* dimmed / off (hold 5s: 8%→49.667% of 12s = 41.667% timeline = 5s) */
-  8%,
-  49.667% {
-    opacity: 0;
-    box-shadow:
-      0 0 0 0 transparent,
-      0 0 0 0 transparent,
-      0 0 0 0 transparent,
-      0 0 0 0 transparent,
-      inset 0 0 0 0 transparent;
-  }
-  /* full glow again after brighten ramp */
-  58%,
-  100% {
-    opacity: 1;
-    box-shadow:
-      0 0 0 2px rgba(var(--card-rgb), 0.95),
-      0 0 32px rgba(var(--card-rgb), 0.65),
-      0 0 56px rgba(var(--card-rgb), 0.38),
-      0 0 96px rgba(var(--card-rgb), 0.2),
-      inset 0 0 32px rgba(var(--card-rgb), 0.12);
+      0 0 58px rgba(var(--card-rgb), 0.4),
+      0 0 100px rgba(var(--card-rgb), 0.22),
+      inset 0 0 30px rgba(var(--card-rgb), 0.12);
   }
 }
 
-/* One expansion, then idle until next cycle (40% = ~2s wave, 60% = ~3s pause at 5s total) */
+/* Respiração contínua do anel — sobe/desce suave em 4s. */
 @keyframes moduleIconRingWave {
   0% {
-    transform: translate(-50%, -50%) scale(0.45);
-    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.72);
+    opacity: 0.26;
   }
-  40% {
-    transform: translate(-50%, -50%) scale(2.35);
-    opacity: 0;
+  50% {
+    transform: translate(-50%, -50%) scale(1.28);
+    opacity: 0.74;
   }
-  40.01%,
   100% {
-    transform: translate(-50%, -50%) scale(2.35);
-    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.72);
+    opacity: 0.26;
   }
 }
 
@@ -461,8 +447,7 @@ body {
 }
 
 .module-card-border-blink {
-  /* 12s cycle: dim 0→8%, off 8→49.667% (5s), brighten 49.667→58%, on 58→100% */
-  animation: moduleCardBorderBlink 12s ease-in-out infinite;
+  animation: moduleCardBorderBlink 6s ease-in-out infinite;
 }
 
 .module-icon-wave-ring {
@@ -476,7 +461,7 @@ body {
   border-style: solid;
   pointer-events: none;
   will-change: transform, opacity;
-  animation: moduleIconRingWave 5s ease-out infinite;
+  animation: moduleIconRingWave 4s ease-in-out infinite;
 }
 
 /* ===== GLASSMORPHISM ===== */

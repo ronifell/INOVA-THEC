@@ -926,7 +926,7 @@ export default function Milestone1Client() {
                         className="h-full rounded-full bg-gradient-to-r from-indigo-900 via-blue-600 to-cyan-400"
                         initial={{ width: 0 }}
                         animate={{ width: `${dashboardChartsAnimated ? 100 : 0}%` }}
-                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                       />
                     </div>
                     <strong className="tabular-nums text-white/85">
@@ -945,7 +945,7 @@ export default function Milestone1Client() {
                         animate={{
                           width: `${dashboardChartsAnimated ? (grossSpending ? (actualSpending / grossSpending) * 100 : 0) : 0}%`,
                         }}
-                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                       />
                     </div>
                     <strong className="tabular-nums text-emerald-300/95">
