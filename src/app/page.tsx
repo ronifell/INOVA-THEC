@@ -135,8 +135,8 @@ export default function Home() {
           <main
             className={`relative z-10 flex flex-1 flex-col min-h-0 ${
               activeModule
-                ? "min-h-full overflow-visible pt-40 sm:pt-44"
-                : "overflow-hidden pt-40 sm:pt-44 min-h-0"
+                ? "min-h-full overflow-visible pt-24 sm:pt-28"
+                : "overflow-hidden pt-24 sm:pt-28 min-h-0"
             }`}
           >
             <AnimatePresence mode="wait">
