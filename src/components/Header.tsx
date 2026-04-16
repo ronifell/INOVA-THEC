@@ -48,6 +48,55 @@ function ProtocolGreenStream() {
   );
 }
 
+/** Estação / local / coordenadas em verde; últimos dígitos das coordenadas em micro-oscilação. */
+function CustodyStationLine() {
+  const [latEnd, setLatEnd] = useState(7);
+  const [lonEnd, setLonEnd] = useState(1);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setLatEnd(6 + Math.floor(Math.random() * 3));
+      setLonEnd(Math.floor(Math.random() * 4));
+    }, 780);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <>
+      <div className="header-custody-track mt-1 min-h-[1.75rem] font-mono text-[9px] leading-relaxed text-emerald-300/95 md:text-[10px]">
+        <span className="header-custody-glitch relative inline">
+          ESTAÇÃO: AUDIT-ACRE // LOCAL: RIO BRANCO // COORD:{" "}
+        </span>
+        <span className="text-emerald-200/95">
+          -9.9
+          <motion.span
+            className="inline-block tabular-nums"
+            key={latEnd}
+            initial={{ opacity: 0.35, y: 1 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 420, damping: 24 }}
+          >
+            {latEnd}
+          </motion.span>
+          , -67.8
+          <motion.span
+            className="inline-block tabular-nums"
+            key={lonEnd}
+            initial={{ opacity: 0.35, y: -1 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 420, damping: 24 }}
+          >
+            {lonEnd}
+          </motion.span>
+        </span>
+      </div>
+      <p className="mt-1 text-[9px] font-medium tracking-[0.12em] text-emerald-400/90 md:text-[10px]">
+        Custódia Inviolável do Dado
+      </p>
+    </>
+  );
+}
+
 export default function Header() {
   const {
     themeColor,
@@ -118,11 +167,7 @@ export default function Header() {
           <h2 className="text-[11px] font-semibold tracking-[0.16em] text-white/92 md:text-xs">
             CADEIA DE CUSTÓDIA
           </h2>
-          <div className="header-custody-track mt-1 min-h-[1.75rem] font-mono text-[9px] leading-relaxed text-cyan-300/90 md:text-[10px]">
-            <span className="header-custody-glitch relative inline text-cyan-200/95">
-              ESTAÇÃO: AUDIT-ACRE // LOCAL: RIO BRANCO // COORD: -9.97, -67.81
-            </span>
-          </div>
+          <CustodyStationLine />
           <p className="header-truth-subline mt-1 text-[10px] font-semibold tracking-[0.2em] text-cyan-300/95 md:text-[11px]">
             VERDADE
           </p>
@@ -172,24 +217,26 @@ export default function Header() {
             PROTOCOLO AP-04
           </h2>
           <div className="relative mt-1.5 w-full max-w-[min(100%,21rem)] md:ml-auto">
-            <ProtocolGreenStream />
-            <div className="relative z-[1] rounded-md bg-black/10 px-2 py-1.5 backdrop-blur-[2px] md:px-2.5 md:py-2">
-              <motion.span
-                className={`block break-all text-right font-mono text-[9px] font-semibold leading-snug tracking-tight md:text-[10px] ${hashVisual.className}`}
-                animate={
-                  hashDisplayPhase === "flash"
-                    ? { scale: [1, 1.02, 1] }
-                    : { scale: 1 }
-                }
-                transition={{ duration: 0.2 }}
-              >
-                {hashVisual.text}
-              </motion.span>
-              <div className="mt-1.5 flex flex-wrap items-baseline justify-end gap-1.5 border-t border-white/[0.08] pt-1.5">
-                <span className="font-mono text-[9px] text-white/92 md:text-[10px]">
+            <div className="relative z-[1] rounded-md bg-black/10 backdrop-blur-[2px]">
+              <div className="relative overflow-hidden px-2 py-1.5 md:px-2.5 md:py-2">
+                <ProtocolGreenStream />
+                <motion.span
+                  className={`relative z-[1] block break-all text-right font-mono text-[9px] font-semibold leading-snug tracking-tight md:text-[10px] ${hashVisual.className}`}
+                  animate={
+                    hashDisplayPhase === "flash"
+                      ? { scale: [1, 1.02, 1] }
+                      : { scale: 1 }
+                  }
+                  transition={{ duration: 0.2 }}
+                >
+                  {hashVisual.text}
+                </motion.span>
+              </div>
+              <div className="flex flex-wrap items-baseline justify-end gap-1.5 border-t border-white/[0.08] px-2 py-1.5 md:px-2.5 md:py-2">
+                <span className="font-mono text-[9px] text-white md:text-[10px]">
                   SHA-256
                 </span>
-                <span className="font-mono text-[9px] tabular-nums text-emerald-300/90 md:text-[10px] [font-variant-numeric:tabular-nums]">
+                <span className="font-mono text-[9px] tabular-nums text-white md:text-[10px] [font-variant-numeric:tabular-nums]">
                   SEQ {formatted}
                 </span>
               </div>

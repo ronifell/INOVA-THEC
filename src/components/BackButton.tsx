@@ -10,7 +10,11 @@ export default function BackButton() {
 
   return (
     <motion.button
-      className="fixed bottom-6 left-6 z-40 glass rounded-full px-5 py-2.5 flex items-center gap-2 cursor-pointer"
+      className="fixed left-4 z-[60] flex cursor-pointer items-center gap-2 rounded-full glass px-5 py-2.5 sm:left-6"
+      style={{
+        /* Acima do ticker/rodapé fixo dos módulos — evita sobrepor outros botões */
+        bottom: "max(9rem, calc(6.5rem + env(safe-area-inset-bottom, 0px)))",
+      }}
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
