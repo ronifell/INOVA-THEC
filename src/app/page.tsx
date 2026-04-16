@@ -133,10 +133,10 @@ export default function Home() {
           <Header dashboardHero={!activeModule} />
 
           <main
-            className={`relative z-10 flex-1 flex flex-col min-h-0 ${
+            className={`relative z-10 flex flex-1 flex-col min-h-0 ${
               activeModule
-                ? "pt-16 min-h-full overflow-visible"
-                : "pt-16 overflow-hidden min-h-0"
+                ? "min-h-full overflow-visible pt-40 sm:pt-44"
+                : "overflow-hidden pt-40 sm:pt-44 min-h-0"
             }`}
           >
             <AnimatePresence mode="wait">
