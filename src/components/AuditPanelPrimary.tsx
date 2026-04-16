@@ -101,10 +101,10 @@ export default function AuditPanelPrimary() {
         <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Simulador de Fé Pública
         </h3>
-        <p className="audit-body-copy">
+        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Demonstração técnica do selo SHA-256 e da cadeia de custódia.
         </p>
-        <div className="flex flex-wrap [gap:min(3%,2.5vmin)]">
+        <div className="flex flex-wrap [gap:min(2.5%,2vmin)]">
           <button
             type="button"
             disabled={isGenerating}
@@ -144,12 +144,12 @@ export default function AuditPanelPrimary() {
         <AnimatePresence>
           {hash && (
             <motion.div
-              className="min-h-0 max-h-[min(22vh,35%)] overflow-hidden rounded-xl border-2 border-white/12 bg-white/[0.02] [padding:min(3%,2.6vmin)] shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_min(0.5vmin,5px)_min(1.8vmin,16px)_rgba(0,0,0,0.2)]"
+              className="min-h-0 max-h-[min(22vh,35%)] overflow-hidden rounded-md border border-white/10 [padding:min(2.5%,2vmin)]"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0 }}
             >
-              <p className="line-clamp-4 break-all font-mono leading-relaxed text-emerald-300 [font-size:min(1.28vmin,0.98vw)] md:[font-size:min(1.35vmin,1.02vw)]">
+              <p className="line-clamp-4 break-all font-mono leading-relaxed text-emerald-300 [font-size:min(1.1vmin,0.88vw)]">
                 {displayedHash}
               </p>
             </motion.div>
@@ -161,27 +161,27 @@ export default function AuditPanelPrimary() {
         <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Monitor de Integridade
         </h3>
-        <p className="audit-body-copy">
+        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Saúde do sistema e processos auditados em tempo real.
         </p>
-        <div className="flex flex-col items-center [gap:min(3.8%,3.3vmin)]">
-          <div className="flex items-center [gap:min(2.8%,2.3vmin)]">
+        <div className="flex flex-col items-center [gap:min(3.5%,3vmin)]">
+          <div className="flex items-center [gap:min(2.5%,2vmin)]">
             <span
-              className="animate-pulse rounded-full bg-emerald-400 shadow-[0_0_min(12px,1.6vmin)_rgba(52,211,153,0.85)] [height:min(1.45vmin,1.15vw)] [width:min(1.45vmin,1.15vw)]"
+              className="animate-pulse rounded-full bg-emerald-400 shadow-[0_0_min(10px,1.4vmin)_rgba(52,211,153,0.8)] [height:min(1.1vmin,0.9vw)] [width:min(1.1vmin,0.9vw)]"
               aria-hidden
             />
-            <span className="font-semibold tracking-wide text-white [font-size:min(1.42vmin,1.1vw)] md:[font-size:min(1.52vmin,1.14vw)]">
+            <span className="font-semibold tracking-wide text-white [font-size:min(1.3vmin,1.02vw)]">
               Sistema operacional
             </span>
           </div>
-          <div className="audit-card-inner space-y-[min(2.2%,2vmin)] rounded-xl border-2 border-white/12 bg-white/[0.04]">
-            <div className="flex justify-between text-white/85 [font-size:min(1.32vmin,1.02vw)] md:[font-size:min(1.4vmin,1.08vw)]">
+          <div className="audit-card-inner space-y-[min(1.8%,1.6vmin)] rounded-md border border-white/10 bg-white/[0.03]">
+            <div className="flex justify-between text-white/80 [font-size:min(1.15vmin,0.9vw)]">
               <span className="font-mono uppercase tracking-wider">Processos auditados</span>
-              <span className="font-mono tabular-nums font-semibold text-white">{auditedFmt}</span>
+              <span className="font-mono tabular-nums text-white">{auditedFmt}</span>
             </div>
-            <div className="flex justify-between text-white/85 [font-size:min(1.32vmin,1.02vw)] md:[font-size:min(1.4vmin,1.08vw)]">
+            <div className="flex justify-between text-white/80 [font-size:min(1.15vmin,0.9vw)]">
               <span className="font-mono uppercase tracking-wider">Índice de saúde</span>
-              <span className="font-mono tabular-nums font-semibold text-emerald-200">
+              <span className="font-mono tabular-nums text-emerald-200">
                 {healthPulse.toFixed(1)}%
               </span>
             </div>
@@ -193,7 +193,7 @@ export default function AuditPanelPrimary() {
         <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Validador de Documentos
         </h3>
-        <p className="audit-body-copy">
+        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Perícia de autenticidade por hash SHA-256.
         </p>
         <div className="flex flex-col items-stretch [gap:min(2.5%,2vmin)] lg:items-end">
@@ -220,9 +220,7 @@ export default function AuditPanelPrimary() {
             Validar documento
           </button>
           {validationMsg && (
-            <p className="text-left leading-snug text-white/92 [font-size:min(1.28vmin,0.98vw)] md:[font-size:min(1.35vmin,1.02vw)] lg:text-right">
-              {validationMsg}
-            </p>
+            <p className="text-left leading-snug text-white/90 [font-size:min(1.15vmin,0.9vw)] lg:text-right">{validationMsg}</p>
           )}
         </div>
       </div>

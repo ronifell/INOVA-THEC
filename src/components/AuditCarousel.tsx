@@ -111,7 +111,7 @@ export default function AuditCarousel({ className = "" }: { className?: string }
       </div>
 
       <div className="audit-carousel-controls" aria-label="Navegação do carrossel de auditoria">
-        <div className="audit-carousel-dots flex justify-center gap-[min(3.2%,2.8vmin)]">
+        <div className="audit-carousel-dots flex justify-center gap-[min(2.5%,2vmin)]">
           <button
             type="button"
             aria-label="Ferramentas principais"
