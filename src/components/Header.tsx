@@ -99,7 +99,7 @@ export default function Header({ dashboardHero = false }: HeaderProps) {
       return {
         text: hashStr + hashMain,
         className:
-          "text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.9)] [text-shadow:0_0_10px_#fff]",
+          "text-emerald-300 drop-shadow-[0_0_12px_rgba(16,185,129,0.75)] [text-shadow:0_0_10px_rgba(16,185,129,0.65)]",
       };
     }
     if (hashDisplayPhase === "validated") {
@@ -107,7 +107,7 @@ export default function Header({ dashboardHero = false }: HeaderProps) {
     }
     return {
       text: `${hashStr}${hashMain}`,
-      className: "text-white [text-shadow:0_0_8px_rgba(255,255,255,0.35)]",
+      className: "text-emerald-300 [text-shadow:0_0_8px_rgba(16,185,129,0.45)]",
     };
   }, [hashDisplayPhase, hashStr, hashMain]);
 
@@ -149,6 +149,9 @@ export default function Header({ dashboardHero = false }: HeaderProps) {
               ESTAÇÃO: AUDIT-ACRE // LOCAL: RIO BRANCO // COORD: -9.97, -67.81
             </span>
           </div>
+          <p className="header-truth-subline mt-1 text-[10px] font-semibold tracking-[0.2em] text-cyan-300/95 md:text-[11px]">
+            VERDADE
+          </p>
           {activeModule && (
             <p className="mt-3 flex items-center gap-2 text-[11px] font-mono text-white/70 md:text-xs">
               <span
@@ -209,7 +212,7 @@ export default function Header({ dashboardHero = false }: HeaderProps) {
                 {hashVisual.text}
               </motion.span>
               <div className="mt-1.5 flex flex-wrap items-baseline justify-end gap-1.5 border-t border-white/[0.08] pt-1.5">
-                <span className="font-mono text-[9px] text-emerald-400/85 md:text-[10px]">
+                <span className="font-mono text-[9px] text-white/92 md:text-[10px]">
                   SHA-256
                 </span>
                 <span className="font-mono text-[9px] tabular-nums text-emerald-300/90 md:text-[10px] [font-variant-numeric:tabular-nums]">

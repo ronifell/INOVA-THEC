@@ -527,15 +527,23 @@ body {
   flex-shrink: 0;
   width: 100%;
   min-width: 0;
-  margin-top: min(3%, 3vmin);
-  padding-top: min(2.2%, 2.2vmin);
-  padding-bottom: min(1%, 1vmin);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  display: grid;
-  /* Laterais pelo tamanho real dos botões — evita encolher/cortar com minmax(0,1fr) */
-  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  margin-top: min(1.2%, 1.2vmin);
+  padding-top: min(0.8%, 0.9vmin);
+  padding-bottom: min(0.4%, 0.5vmin);
+  display: flex;
+  justify-content: center;
+}
+
+/* Botões flutuantes nas laterais, mais abaixo, sem ocupar altura dos simuladores */
+.audit-carousel-floating-nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: min(0.3%, 0.4vmin);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  column-gap: min(3%, 2.8vmin);
+  padding-inline: min(1.2%, 1.2vmin);
 }
 
 /* Setas do carrossel — só ícone (ponta + cauda), brilhos alternados verde ↔ vermelho */
@@ -737,7 +745,7 @@ body {
 
 @keyframes header-center-sweep {
   0% {
-    transform: translateX(-135%);
+    transform: translateX(-220%);
     opacity: 0;
   }
   12% {
@@ -750,7 +758,7 @@ body {
     opacity: 0.62;
   }
   100% {
-    transform: translateX(135%);
+    transform: translateX(220%);
     opacity: 0;
   }
 }
@@ -758,9 +766,9 @@ body {
 .header-center-sweep-group::after {
   content: "";
   position: absolute;
-  left: -12%;
+  left: -42%;
   top: 0;
-  width: 38%;
+  width: 84%;
   height: 100%;
   pointer-events: none;
   background: linear-gradient(
