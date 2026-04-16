@@ -90,8 +90,8 @@ function CustodyStationLine() {
           </motion.span>
         </span>
       </div>
-      <p className="mt-1 text-[9px] font-medium tracking-[0.12em] text-emerald-400/90 md:text-[10px]">
-        Custódia Inviolável do Dado
+      <p className="mt-1 font-mono text-[9px] leading-snug tracking-tight text-white md:text-[10px]">
+        Custódia Inviolável dos Dados
       </p>
     </>
   );
@@ -168,9 +168,6 @@ export default function Header() {
             CADEIA DE CUSTÓDIA
           </h2>
           <CustodyStationLine />
-          <p className="header-truth-subline mt-1 text-[10px] font-semibold tracking-[0.2em] text-cyan-300/95 md:text-[11px]">
-            VERDADE
-          </p>
           {activeModule && (
             <p className="mt-3 flex items-center gap-2 text-[11px] font-mono text-white/70 md:text-xs">
               <span

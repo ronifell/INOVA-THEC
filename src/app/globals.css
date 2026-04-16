@@ -398,10 +398,10 @@ body {
   animation: logo-vertical-sweep 2.8s ease-in-out infinite;
 }
 
-/* ===== MODULE CARDS: border glow — ciclo original (expansão / hold / retorno) ===== */
+/* ===== MODULE CARDS: borda — ciclo 10s: ~6s aceso + ~4s apagado (fade suave nas transições) ===== */
 @keyframes moduleCardBorderBlink {
   0%,
-  100% {
+  58% {
     opacity: 1;
     box-shadow:
       0 0 0 2px rgba(var(--card-rgb), 0.95),
@@ -410,9 +410,9 @@ body {
       0 0 96px rgba(var(--card-rgb), 0.2),
       inset 0 0 32px rgba(var(--card-rgb), 0.12);
   }
-  /* escurece e mantém (~5s no ciclo de 12s) */
-  8%,
-  49.667% {
+  /* 58→60%: fade suave para apagado (~6s luminoso até o início do escurecimento) */
+  62%,
+  94% {
     opacity: 0;
     box-shadow:
       0 0 0 0 transparent,
@@ -421,7 +421,6 @@ body {
       0 0 0 0 transparent,
       inset 0 0 0 0 transparent;
   }
-  58%,
   100% {
     opacity: 1;
     box-shadow:
@@ -460,8 +459,8 @@ body {
 }
 
 .module-card-border-blink {
-  /* 12s: escurece gradual → ~5s apagado → retorno */
-  animation: moduleCardBorderBlink 12s ease-in-out infinite;
+  /* 10s: ~6s luminoso / ~4s apagado — linear para respeitar percentuais; fade entre chaves */
+  animation: moduleCardBorderBlink 10s linear infinite;
 }
 
 .module-icon-wave-ring {

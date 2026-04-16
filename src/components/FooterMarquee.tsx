@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 function buildTickerSegment(): string {
   const y = new Date().getFullYear();
-  return `INOVA THEC © ${y} — PROTOCOLO AP-04 — CADEIA IMUTÁVEL — SHA-256 — FÉ PÚBLICA DIGITAL — CRIPTOGRAFIA — AUDITORIA AP-04 — `;
+  return `INOVA THEC © ${y} • PROTOCOLO AP-04 • CADEIA IMUTÁVEL • FÉ PÚBLICA DIGITAL • CRIPTOGRAFIA SHA-256 • RASTREADOR DE CADEIA • CERTIFICADOR DE TIME STAMP • AUDITORIA DE BACKUP • MONITORAMENTO EM TEMPO REAL • `;
 }
 
 /**
@@ -51,18 +51,18 @@ export default function FooterMarquee() {
   }, [cycleW]);
 
   return (
-    <div className="w-full overflow-hidden border-y border-white/[0.06] bg-black/20 py-2 select-none">
+    <div className="w-full overflow-hidden border-y border-emerald-500/15 bg-black/20 py-2 select-none">
       <div
-        className="flex whitespace-nowrap font-mono text-[10px] tracking-[0.18em] text-white/90 will-change-transform antialiased"
+        className="flex whitespace-nowrap font-mono text-[10px] tracking-[0.12em] text-emerald-300 [text-shadow:0_0_12px_rgba(16,185,129,0.35)] will-change-transform antialiased"
         style={{ transform: `translate3d(${offset}px,0,0)` }}
       >
-        <span ref={spanRef} className="inline-block shrink-0 pr-8">
+        <span ref={spanRef} className="inline-block shrink-0 pr-3">
           {segment}
         </span>
-        <span className="inline-block shrink-0 pr-8" aria-hidden>
+        <span className="inline-block shrink-0 pr-3" aria-hidden>
           {segment}
         </span>
-        <span className="inline-block shrink-0 pr-8" aria-hidden>
+        <span className="inline-block shrink-0 pr-3" aria-hidden>
           {segment}
         </span>
       </div>
