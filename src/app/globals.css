@@ -506,8 +506,8 @@ body {
   width: 100%;
   min-height: 0;
   min-width: 0;
-  padding-top: min(1.8%, 2vmin);
-  padding-bottom: min(1.2%, 1.5vmin);
+  padding-top: min(2.6%, 2.8vmin);
+  padding-bottom: min(1.4%, 1.7vmin);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -539,10 +539,10 @@ body {
 
 .audit-carousel-dot {
   box-sizing: border-box;
-  width: min(0.65vmin, 0.5vw);
-  height: min(0.65vmin, 0.5vw);
-  min-width: 0.35em;
-  min-height: 0.35em;
+  width: min(0.85vmin, 0.65vw);
+  height: min(0.85vmin, 0.65vw);
+  min-width: 0.45em;
+  min-height: 0.45em;
   flex-shrink: 0;
   padding: 0;
   border: 0;
@@ -556,7 +556,7 @@ body {
   display: grid;
   width: 100%;
   grid-template-columns: minmax(0, 1fr);
-  row-gap: min(5%, 4.5vmin);
+  row-gap: min(5.8%, 5vmin);
 }
 
 @media (min-width: 1024px) {
@@ -564,42 +564,72 @@ body {
     /* min-content evita coluna a 0px e botões cortados (ex.: Varredura de elos) */
     grid-template-columns: repeat(3, minmax(min-content, 1fr));
     column-gap: min(5.5%, 5vmin);
-    row-gap: min(4%, 3.5vmin);
+    row-gap: min(4.6%, 4vmin);
   }
 }
 
 .audit-panel-stack {
   display: flex;
   flex-direction: column;
-  gap: min(3.5%, 3vmin);
+  gap: min(4.2%, 3.6vmin);
 }
 
 .audit-panel-stack-tight {
   display: flex;
   flex-direction: column;
-  gap: min(2.2%, 2vmin);
+  gap: min(2.8%, 2.5vmin);
+}
+
+/* Textos explicativos abaixo dos títulos (títulos não usam esta classe) */
+.audit-body-copy {
+  line-height: 1.45;
+  font-size: min(1.52vmin, 1.12vw);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (min-width: 1024px) {
+  .audit-body-copy {
+    font-size: min(1.62vmin, 1.18vw);
+  }
 }
 
 .audit-action-btn {
   box-sizing: border-box;
-  padding-inline: min(4.5%, 3.8vmin);
-  padding-block: min(2.2%, 2vmin);
-  font-size: min(1.15vmin, 0.88vw);
+  padding-inline: min(5.8%, 4.8vmin);
+  padding-block: min(3%, 2.65vmin);
+  font-size: min(1.38vmin, 1.05vw);
+  min-height: min(5.5vmin, 44px);
+}
+
+@media (min-width: 1024px) {
+  .audit-action-btn {
+    font-size: min(1.48vmin, 1.1vw);
+    min-height: min(5.8vmin, 48px);
+  }
 }
 
 .audit-input-field {
   box-sizing: border-box;
-  padding-inline: min(3.5%, 3vmin);
-  padding-block: min(2%, 1.8vmin);
-  font-size: min(1.15vmin, 0.88vw);
+  padding-inline: min(4.2%, 3.6vmin);
+  padding-block: min(2.6%, 2.35vmin);
+  font-size: min(1.32vmin, 1.02vw);
+}
+
+@media (min-width: 1024px) {
+  .audit-input-field {
+    font-size: min(1.42vmin, 1.08vw);
+  }
 }
 
 .audit-card-inner {
   box-sizing: border-box;
   width: 100%;
-  max-width: min(100%, 92%);
-  padding-inline: min(4%, 3.5vmin);
-  padding-block: min(3%, 2.6vmin);
+  max-width: min(100%, 96%);
+  padding-inline: min(5%, 4.2vmin);
+  padding-block: min(4%, 3.4vmin);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 min(0.75vmin, 8px) min(2.6vmin, 26px) rgba(0, 0, 0, 0.32);
 }
 
 /* Milestone 1 hub — shared vertical size for green (SIG-FROTA) and blue (SIG-PATRIMÔNIO) tiles */

@@ -84,16 +84,16 @@ export default function AuditPanelExtension() {
         <h3 className="shrink-0 font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Rastreador de Cadeia
         </h3>
-        <p className="shrink-0 leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-body-copy shrink-0">
           Verificação sequencial dos elos da custódia AP-04.
         </p>
         <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col [gap:min(2%,1.8vmin)]">
-          <div className="min-h-0 flex-1 overflow-hidden rounded-md border border-white/10 bg-white/[0.02]">
-            <div className="flex h-full max-h-full flex-col [gap:min(1.6%,1.4vmin)] [padding:min(2.4%,2vmin)]">
+          <div className="min-h-0 flex-1 overflow-hidden rounded-xl border-2 border-white/12 bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_min(0.6vmin,6px)_min(2vmin,18px)_rgba(0,0,0,0.22)]">
+            <div className="flex h-full max-h-full flex-col [gap:min(1.8%,1.55vmin)] [padding:min(2.8%,2.4vmin)]">
               {chainBlocks.map((b, i) => (
                 <div
                   key={b.id}
-                  className={`flex min-h-0 shrink-0 items-center justify-between [gap:min(2%,1.8vmin)] border-b border-white/[0.06] font-mono [padding-bottom:min(1.6%,1.4vmin)] [font-size:min(1.05vmin,0.85vw)] last:border-0 last:pb-0 ${
+                  className={`flex min-h-0 shrink-0 items-center justify-between [gap:min(2%,1.8vmin)] border-b border-white/[0.06] font-mono [padding-bottom:min(1.6%,1.4vmin)] [font-size:min(1.22vmin,0.95vw)] md:[font-size:min(1.3vmin,1vw)] last:border-0 last:pb-0 ${
                     scanning && chainScan === i ? "text-amber-200" : "text-white/70"
                   } ${
                     !scanning && chainScan === chainBlocks.length - 1 && i === chainBlocks.length - 1
@@ -122,15 +122,15 @@ export default function AuditPanelExtension() {
         <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Certificador de Timestamp
         </h3>
-        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-body-copy">
           Carimbo temporal alinhado a UTC e protocolo de auditoria.
         </p>
-        <div className="flex flex-col items-center [gap:min(2.5%,2vmin)]">
-          <div className="audit-card-inner rounded-md border border-white/10 bg-white/[0.03] text-left">
-            <p className="font-mono uppercase tracking-wider text-white/50 [font-size:min(1.05vmin,0.85vw)]">
+        <div className="flex flex-col items-center [gap:min(2.9%,2.4vmin)]">
+          <div className="audit-card-inner rounded-xl border-2 border-white/12 bg-white/[0.04] text-left">
+            <p className="font-mono uppercase tracking-wider text-white/60 [font-size:min(1.18vmin,0.92vw)] md:[font-size:min(1.25vmin,0.98vw)]">
               Relógio de referência
             </p>
-            <p className="mt-[min(1.8%,1.6vmin)] font-mono tabular-nums text-white [font-size:min(1.2vmin,0.95vw)]">
+            <p className="mt-[min(2%,1.75vmin)] font-mono tabular-nums text-white [font-size:min(1.32vmin,1.02vw)] md:[font-size:min(1.42vmin,1.08vw)]">
               {utcNow.toLocaleString("pt-BR", { timeZone: "UTC" })} UTC
             </p>
           </div>
@@ -147,7 +147,7 @@ export default function AuditPanelExtension() {
                 initial={{ opacity: 0, y: "0.45vmin" }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="max-w-[min(100%,92%)] text-center font-mono leading-snug text-violet-200/90 [font-size:min(1.05vmin,0.85vw)]"
+                className="max-w-[min(100%,92%)] text-center font-mono leading-snug text-violet-200/92 [font-size:min(1.2vmin,0.94vw)] md:[font-size:min(1.28vmin,1vw)]"
               >
                 Selo RFC 3161 (simulado): {stampIssued}
               </motion.p>
@@ -160,23 +160,23 @@ export default function AuditPanelExtension() {
         <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Auditoria de Backup
         </h3>
-        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-body-copy">
           Conferência de redundância e integridade das réplicas.
         </p>
-        <div className="flex flex-col items-stretch [gap:min(2.5%,2vmin)] lg:items-end">
-          <div className="audit-card-inner w-full rounded-md border border-white/10 bg-white/[0.03] lg:ml-auto">
-            <div className="flex justify-between font-mono uppercase tracking-wider text-white/55 [font-size:min(1.05vmin,0.85vw)]">
+        <div className="flex flex-col items-stretch [gap:min(2.9%,2.4vmin)] lg:items-end">
+          <div className="audit-card-inner w-full rounded-xl border-2 border-white/12 bg-white/[0.04] lg:ml-auto">
+            <div className="flex justify-between font-mono uppercase tracking-wider text-white/65 [font-size:min(1.22vmin,0.95vw)] md:[font-size:min(1.3vmin,1.02vw)]">
               <span>Verificação</span>
-              <span className="tabular-nums text-emerald-200">{backupPct}%</span>
+              <span className="tabular-nums font-semibold text-emerald-200">{backupPct}%</span>
             </div>
-            <div className="mt-[min(2.5%,2.2vmin)] overflow-hidden rounded-full bg-white/10 [height:min(0.45vmin,0.38vw)]">
+            <div className="mt-[min(2.8%,2.4vmin)] overflow-hidden rounded-full bg-white/12 [height:min(0.65vmin,0.52vw)]">
               <motion.div
                 className="h-full rounded-full bg-gradient-to-r from-cyan-500/80 to-emerald-400/90"
                 animate={{ width: `${backupPct}%` }}
                 transition={{ type: "spring", stiffness: 120, damping: 18 }}
               />
             </div>
-            <p className="mt-[min(2.5%,2.2vmin)] text-left font-mono text-white/45 [font-size:min(1.05vmin,0.85vw)]">
+            <p className="mt-[min(2.8%,2.4vmin)] text-left font-mono text-white/55 [font-size:min(1.15vmin,0.9vw)] md:[font-size:min(1.22vmin,0.96vw)]">
               SHA-256 cruzado em nós secundários • AP-04
             </p>
           </div>
