@@ -333,11 +333,11 @@ function ReactiveGrid() {
           float dist = distance(screenPos, uMouse);
           vDistToMouse = dist;
 
-          float wave = sin(pos.x * 0.3 + uTime * 0.5) * 0.2
-                     + sin(pos.y * 0.4 + uTime * 0.3) * 0.15;
+          float wave = sin(pos.x * 0.3 + uTime * 0.5) * 0.38
+                     + sin(pos.y * 0.4 + uTime * 0.3) * 0.28;
 
-          float repulse = max(0.0, 1.0 - dist / 0.5);
-          float peak = mix(4.0, 1.85, uModuleView);
+          float repulse = max(0.0, 1.0 - dist / 0.48);
+          float peak = mix(6.2, 2.75, uModuleView);
           float elevation = repulse * repulse * peak + wave;
           pos.z += elevation;
           vElevation = elevation;
