@@ -8,12 +8,29 @@ import AuditPanelExtension from "./AuditPanelExtension";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+/** Seta com ponta (triângulo) e cauda (haste) — aponta para a esquerda */
+function ArrowLeftHeadIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M2 12L9 5.5 9 8.5H22v7H9v3L2 12z" />
+    </svg>
+  );
+}
+
+/** Seta com ponta e cauda — aponta para a direita */
+function ArrowRightHeadIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M22 12L15 5.5 15 8.5H2v7H15v3L22 12z" />
+    </svg>
+  );
+}
+
 /**
  * Carrossel de Auditoria — dois painéis 3×3, alinhados à faixa SIG-FROTA … SIG-AMBIENTAL.
- * Espaçamento via classes globais (% / vmin), sem âncoras fix em px na barra de navegação.
  */
 export default function AuditCarousel({ className = "" }: { className?: string }) {
-  const { themeColor, triggerHashValidation } = useStore();
+  const { triggerHashValidation } = useStore();
   const [slide, setSlide] = useState(0);
 
   const goPrev = useCallback(() => {
@@ -64,27 +81,14 @@ export default function AuditCarousel({ className = "" }: { className?: string }
         <div className="audit-carousel-nav-left flex shrink-0 justify-start">
           <motion.button
             type="button"
-            aria-label="Painel anterior de ferramentas"
-            className="audit-carousel-nav-btn glass cursor-pointer text-white/85 shadow-lg"
-            initial={{ opacity: 0, x: "-1.2vmin" }}
+            aria-label="Painel anterior — ferramentas principais"
+            className="audit-carousel-arrow-btn audit-carousel-arrow-btn--prev"
+            initial={{ opacity: 0, x: "-1vmin" }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2, duration: 0.4, ease: easeOut }}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: `0 0 min(20px, 3vmin) ${themeColor}30`,
-            }}
-            whileTap={{ scale: 0.95 }}
             onClick={goPrev}
           >
-            <motion.span
-              className="inline-block"
-              style={{ fontSize: "min(1.35vmin, 1vw)" }}
-              animate={{ x: [0, "-0.35vmin", 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              ←
-            </motion.span>
-            <span className="audit-carousel-nav-label font-mono tracking-wider text-white/60">PAINEL 1</span>
+            <ArrowLeftHeadIcon />
           </motion.button>
         </div>
 
@@ -116,27 +120,14 @@ export default function AuditCarousel({ className = "" }: { className?: string }
         <div className="audit-carousel-nav-right flex shrink-0 justify-end">
           <motion.button
             type="button"
-            aria-label="Próximo painel de ferramentas"
-            className="audit-carousel-nav-btn glass cursor-pointer text-white/85 shadow-lg"
-            initial={{ opacity: 0, x: "1.2vmin" }}
+            aria-label="Próximo painel — extensão de auditoria"
+            className="audit-carousel-arrow-btn audit-carousel-arrow-btn--next"
+            initial={{ opacity: 0, x: "1vmin" }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2, duration: 0.4, ease: easeOut }}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: `0 0 min(20px, 3vmin) ${themeColor}30`,
-            }}
-            whileTap={{ scale: 0.95 }}
             onClick={goNext}
           >
-            <span className="audit-carousel-nav-label font-mono tracking-wider text-white/60">PAINEL 2</span>
-            <motion.span
-              className="inline-block"
-              style={{ fontSize: "min(1.35vmin, 1vw)" }}
-              animate={{ x: [0, "0.35vmin", 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              →
-            </motion.span>
+            <ArrowRightHeadIcon />
           </motion.button>
         </div>
       </div>

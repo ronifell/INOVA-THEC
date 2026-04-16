@@ -529,22 +529,82 @@ body {
   column-gap: min(3%, 2.8vmin);
 }
 
-.audit-carousel-nav-btn {
+/* Setas do carrossel — só ícone (ponta + cauda), brilhos alternados verde ↔ vermelho */
+.audit-carousel-arrow-btn {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  max-width: none;
-  padding-inline: min(6%, 5.5vmin);
-  padding-block: min(2.6%, 2.2vmin);
-  gap: min(2.5%, 2vmin);
-  font-size: min(1.2vmin, 0.9vw);
-  line-height: 1.2;
+  margin: 0;
+  padding: min(1.8%, 1.6vmin);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 9999px;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 0;
+  transition: transform 0.2s ease;
 }
 
-.audit-carousel-nav-btn .audit-carousel-nav-label {
-  font-size: min(1.1vmin, 0.82vw);
+.audit-carousel-arrow-btn:hover {
+  transform: scale(1.08);
+}
+
+.audit-carousel-arrow-btn:active {
+  transform: scale(0.94);
+}
+
+.audit-carousel-arrow-btn svg {
+  width: min(3.8vmin, 3vw);
+  height: min(3.8vmin, 3vw);
+  display: block;
+}
+
+/* Fase A: verde (esq.) forte → vermelho (dir.) fraco; Fase B: o contrário */
+@keyframes audit-carousel-glow-prev {
+  0%,
+  45% {
+    color: rgb(167, 243, 208);
+    filter: drop-shadow(0 0 min(10px, 1.2vmin) rgba(34, 211, 153, 0.95))
+      drop-shadow(0 0 min(22px, 2.6vmin) rgba(16, 185, 129, 0.48));
+  }
+  50%,
+  95% {
+    color: rgba(255, 255, 255, 0.28);
+    filter: drop-shadow(0 0 min(4px, 0.45vmin) rgba(34, 211, 153, 0.15));
+  }
+  100% {
+    color: rgb(167, 243, 208);
+    filter: drop-shadow(0 0 min(10px, 1.2vmin) rgba(34, 211, 153, 0.95))
+      drop-shadow(0 0 min(22px, 2.6vmin) rgba(16, 185, 129, 0.48));
+  }
+}
+
+@keyframes audit-carousel-glow-next {
+  0%,
+  45% {
+    color: rgba(255, 255, 255, 0.28);
+    filter: drop-shadow(0 0 min(4px, 0.45vmin) rgba(248, 113, 113, 0.18));
+  }
+  50%,
+  95% {
+    color: rgb(254, 202, 202);
+    filter: drop-shadow(0 0 min(10px, 1.2vmin) rgba(248, 113, 113, 0.95))
+      drop-shadow(0 0 min(22px, 2.6vmin) rgba(239, 68, 68, 0.48));
+  }
+  100% {
+    color: rgba(255, 255, 255, 0.28);
+    filter: drop-shadow(0 0 min(4px, 0.45vmin) rgba(248, 113, 113, 0.18));
+  }
+}
+
+.audit-carousel-arrow-btn--prev {
+  animation: audit-carousel-glow-prev 2.8s ease-in-out infinite;
+}
+
+.audit-carousel-arrow-btn--next {
+  animation: audit-carousel-glow-next 2.8s ease-in-out infinite;
 }
 
 .audit-carousel-dot {
