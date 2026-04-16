@@ -176,10 +176,10 @@ export default function PortalModuleCard({
 
         <div className="mt-[5%] flex items-center justify-center gap-[3%]">
           <div
-            className="aspect-square w-[5%] min-w-[0.35em] rounded-full"
+            className="module-card-status-dot aspect-square w-[5%] min-w-[0.35em] rounded-full"
             style={{
-              background: isFullModule ? color : "#FCD34D",
-              boxShadow: `0 0 4px ${isFullModule ? color : "#FCD34D"}`,
+              background: `rgba(${colorRgb}, 0.92)`,
+              boxShadow: `0 0 6px rgba(${colorRgb}, 0.55), 0 0 12px rgba(${colorRgb}, 0.3)`,
             }}
           />
           <span className="text-[78%] font-mono tracking-wider text-white/30">

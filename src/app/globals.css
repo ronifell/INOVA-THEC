@@ -501,6 +501,30 @@ body {
   cursor: wait;
 }
 
+/* Ponto de estado no rodapé do cartão — mesma família cromática do título + piscar */
+@keyframes module-card-status-dot-blink {
+  0%,
+  45%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50%,
+  55% {
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.module-card-status-dot {
+  animation: module-card-status-dot-blink 2.4s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
 /* ===== Header AP-04 — full width, vazado (sem moldura pesada) ===== */
 .header-ap04-shell {
   background: linear-gradient(
