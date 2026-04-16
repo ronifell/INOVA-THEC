@@ -10,8 +10,8 @@ export default function Dashboard() {
     <div className="flex h-full min-h-0 w-full flex-col overflow-x-hidden px-[2.5%] pb-[0.6vh] pt-[0.8vh]">
       <div className="flex min-h-0 flex-1 flex-col">
         {/* Espaço vertical extra: halos das cartas (até ~96px) + levitação não são cortados */}
-        <div className="mx-auto mt-[min(2vh,2vmin)] flex min-h-0 w-full max-w-[98%] flex-1 flex-col gap-[min(2vmin,1.75vh)]">
-          <div className="module-cards-glow-gutter min-h-0 w-full min-w-0 flex-[1.12]">
+        <div className="mx-auto mt-[min(2vh,2vmin)] flex min-h-0 w-full max-w-[98%] flex-1 flex-col gap-[min(1.4vmin,1.2vh)]">
+          <div className="module-cards-glow-gutter min-h-0 w-full min-w-0 flex-[1.02]">
             <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
               {MODULES.map((mod, i) => (
                 <ModuleCard key={mod.id} module={mod} index={i} />
@@ -19,7 +19,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+          <div className="flex min-h-0 min-w-0 flex-[1.08] flex-col overflow-hidden">
             <AuditCarousel />
           </div>
         </div>
