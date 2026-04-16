@@ -130,7 +130,7 @@ export default function Home() {
             <GlitchOverlay />
           </motion.div>
 
-          <Header dashboardHero={!activeModule} />
+          <Header />
 
           <main
             className={`relative z-10 flex flex-1 flex-col min-h-0 ${

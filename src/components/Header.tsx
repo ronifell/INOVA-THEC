@@ -48,17 +48,11 @@ function ProtocolGreenStream() {
   );
 }
 
-type HeaderProps = {
-  dashboardHero?: boolean;
-};
-
-export default function Header({ dashboardHero = false }: HeaderProps) {
+export default function Header() {
   const {
     themeColor,
     themeColorRgb,
     integrityCount,
-    audioEnabled,
-    toggleAudio,
     goHome,
     activeModule,
     hashDisplayPhase,
@@ -111,33 +105,13 @@ export default function Header({ dashboardHero = false }: HeaderProps) {
     };
   }, [hashDisplayPhase, hashStr, hashMain]);
 
-  const showHeaderAudio = !dashboardHero;
-
   return (
     <motion.header
       className="header-ap04-shell fixed top-0 left-0 right-0 z-40 w-full antialiased"
       variants={appShellHeader}
     >
-      {showHeaderAudio && (
-        <motion.button
-          type="button"
-          onClick={() => {
-            triggerHashValidation();
-            toggleAudio();
-          }}
-          className="absolute right-3 top-3 z-50 flex h-10 w-10 items-center justify-center rounded-lg bg-white/[0.06] text-lg text-white backdrop-blur-sm transition hover:bg-white/10 md:right-6 md:top-4 md:h-11 md:w-11"
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.94 }}
-          aria-label={audioEnabled ? "Desativar áudio" : "Ativar áudio"}
-        >
-          {audioEnabled ? "🔊" : "🔇"}
-        </motion.button>
-      )}
-
       <div
-        className={`mx-auto grid w-full max-w-[100vw] grid-cols-1 gap-3 pb-2 pl-3 pt-2 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1fr)] md:gap-4 md:pb-2.5 md:pt-2.5 lg:gap-6 ${
-          showHeaderAudio ? "pr-[4.25rem] md:pl-8 md:pr-[7.5rem]" : "pr-3 md:px-8"
-        }`}
+        className="mx-auto grid w-full max-w-[100vw] grid-cols-1 gap-3 px-3 pb-2 pt-2 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1fr)] md:gap-4 md:px-8 md:pb-2.5 md:pt-2.5 lg:gap-6"
       >
         {/* Esquerda — Cadeia de custódia (azul néon) */}
         <div className="order-2 flex min-w-0 flex-col justify-start md:order-1 md:pt-1">
