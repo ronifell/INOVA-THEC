@@ -135,20 +135,19 @@ export default function Header({ dashboardHero = false }: HeaderProps) {
       )}
 
       <div
-        className={`mx-auto grid w-full max-w-[100vw] grid-cols-1 gap-6 pb-5 pl-3 pt-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1fr)] md:gap-8 md:pb-6 md:pt-5 lg:gap-10 ${
+        className={`mx-auto grid w-full max-w-[100vw] grid-cols-1 gap-3 pb-2 pl-3 pt-2 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1fr)] md:gap-4 md:pb-2.5 md:pt-2.5 lg:gap-6 ${
           showHeaderAudio ? "pr-[4.25rem] md:pl-8 md:pr-[7.5rem]" : "pr-3 md:px-8"
         }`}
       >
         {/* Esquerda — Cadeia de custódia (azul néon) */}
-        <div className="order-2 flex min-w-0 flex-col justify-start md:order-1">
-          <h2 className="text-sm font-bold tracking-[0.2em] text-white md:text-base">
+        <div className="order-2 flex min-w-0 flex-col justify-start md:order-1 md:pt-1">
+          <h2 className="text-[11px] font-semibold tracking-[0.16em] text-white/92 md:text-xs">
             CADEIA DE CUSTÓDIA
           </h2>
-          <div className="header-custody-track mt-2 min-h-[2.75rem] font-mono text-[11px] leading-relaxed text-cyan-300 md:text-xs">
-            <span className="header-custody-glitch relative inline text-cyan-200 [text-shadow:0_0_12px_rgba(34,211,238,0.55)]">
+          <div className="header-custody-track mt-1 min-h-[1.75rem] font-mono text-[9px] leading-relaxed text-cyan-300/90 md:text-[10px]">
+            <span className="header-custody-glitch relative inline text-cyan-200/95">
               ESTAÇÃO: AUDIT-ACRE // LOCAL: RIO BRANCO // COORD: -9.97, -67.81
             </span>
-            <span className="ml-0.5 inline-block h-3 w-1.5 animate-pulse bg-cyan-400 align-middle [box-shadow:0_0_8px_#22d3ee]" />
           </div>
           {activeModule && (
             <p className="mt-3 flex items-center gap-2 text-[11px] font-mono text-white/70 md:text-xs">
@@ -165,57 +164,41 @@ export default function Header({ dashboardHero = false }: HeaderProps) {
         </div>
 
         {/* Centro — Identidade Inova Thec */}
-        <div className="order-1 flex min-w-0 flex-col items-center justify-start text-center md:order-2">
+        <div className="order-1 flex min-w-0 flex-col items-center justify-start text-center md:order-2 md:pt-0.5">
           <motion.button
             type="button"
             onClick={() => {
               triggerHashValidation();
               goHome();
             }}
-            className="flex flex-col items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+            className="header-center-sweep-group relative flex flex-col items-center overflow-hidden rounded-md px-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
           >
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <motion.div
-                className="logo-sweep-cross relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl text-base font-bold text-white md:h-14 md:w-14 md:text-lg"
-                style={{
-                  background: `linear-gradient(135deg, ${themeColor}, ${themeColor}88)`,
-                }}
-                animate={{
-                  boxShadow: [
-                    `0 0 6px rgba(${themeColorRgb}, 0.5)`,
-                    `0 0 22px rgba(${themeColorRgb}, 0.95)`,
-                    `0 0 6px rgba(${themeColorRgb}, 0.5)`,
-                  ],
-                }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-              >
-                IT
-              </motion.div>
-              <span className="bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-2xl font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)] md:text-3xl">
+            <div className="relative inline-flex items-center justify-center px-2">
+              <span className="relative z-[1] bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-2xl font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)] md:text-[2.05rem]">
                 INOVA THEC
               </span>
             </div>
-            <p className="mt-3 max-w-xl px-1 text-sm font-medium leading-snug text-slate-400 md:text-base md:text-slate-300">
+            <p className="relative mt-2 max-w-xl px-1 text-sm font-medium leading-snug text-white md:text-base">
               A Terceira Via da Fé Pública Digital
             </p>
-            <p className="header-truth-subline mt-2 max-w-lg bg-gradient-to-r from-emerald-300/95 via-cyan-200/90 to-sky-300/95 bg-clip-text px-2 text-xs font-medium leading-snug text-transparent md:text-sm">
+            <p className="relative mt-1.5 max-w-lg px-2 text-xs font-medium leading-snug text-white md:text-sm">
               A Verdade Digital que o Tempo Não Apaga
             </p>
           </motion.button>
         </div>
 
         {/* Direita — Protocolo AP-04 / SHA (esmeralda + branco) */}
-        <div className="order-3 flex min-w-0 flex-col items-stretch md:items-end">
-          <h2 className="text-right text-sm font-bold tracking-[0.2em] text-white md:text-base">
+        <div className="order-3 flex min-w-0 flex-col items-stretch md:items-end md:pt-1">
+          <h2 className="text-right text-[11px] font-semibold tracking-[0.16em] text-white/92 md:text-xs">
             PROTOCOLO AP-04
           </h2>
-          <div className="relative mt-3 w-full max-w-[min(100%,24rem)] md:ml-auto">
+          <div className="relative mt-1.5 w-full max-w-[min(100%,21rem)] md:ml-auto">
             <ProtocolGreenStream />
-            <div className="relative z-[1] rounded-md bg-black/10 px-2 py-2 backdrop-blur-[2px] md:px-3 md:py-2.5">
+            <div className="relative z-[1] rounded-md bg-black/10 px-2 py-1.5 backdrop-blur-[2px] md:px-2.5 md:py-2">
               <motion.span
-                className={`block break-all text-right font-mono text-[11px] font-semibold leading-relaxed tracking-tight md:text-sm ${hashVisual.className}`}
+                className={`block break-all text-right font-mono text-[9px] font-semibold leading-snug tracking-tight md:text-[10px] ${hashVisual.className}`}
                 animate={
                   hashDisplayPhase === "flash"
                     ? { scale: [1, 1.02, 1] }
@@ -225,11 +208,11 @@ export default function Header({ dashboardHero = false }: HeaderProps) {
               >
                 {hashVisual.text}
               </motion.span>
-              <div className="mt-2 flex flex-wrap items-baseline justify-end gap-2 border-t border-white/[0.08] pt-2">
-                <span className="font-mono text-[11px] text-emerald-400/90 md:text-xs">
+              <div className="mt-1.5 flex flex-wrap items-baseline justify-end gap-1.5 border-t border-white/[0.08] pt-1.5">
+                <span className="font-mono text-[9px] text-emerald-400/85 md:text-[10px]">
                   SHA-256
                 </span>
-                <span className="font-mono text-[11px] tabular-nums text-emerald-300 md:text-xs [font-variant-numeric:tabular-nums]">
+                <span className="font-mono text-[9px] tabular-nums text-emerald-300/90 md:text-[10px] [font-variant-numeric:tabular-nums]">
                   SEQ {formatted}
                 </span>
               </div>

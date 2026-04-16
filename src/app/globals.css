@@ -539,6 +539,46 @@ body {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
+@keyframes header-center-sweep {
+  0% {
+    transform: translateX(-135%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 0.86;
+  }
+  88% {
+    opacity: 0.62;
+  }
+  100% {
+    transform: translateX(135%);
+    opacity: 0;
+  }
+}
+
+.header-center-sweep-group::after {
+  content: "";
+  position: absolute;
+  left: -12%;
+  top: 0;
+  width: 38%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 24%,
+    rgba(255, 255, 255, 0.56) 50%,
+    rgba(255, 255, 255, 0.12) 74%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  animation: header-center-sweep 2.8s ease-in-out infinite;
+}
+
 @keyframes header-custody-glitch {
   0%,
   90%,
