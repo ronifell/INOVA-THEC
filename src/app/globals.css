@@ -543,16 +543,12 @@ body {
 @keyframes header-truth-pulse {
   0%,
   100% {
-    opacity: 0.95;
-    text-shadow:
-      0 0 6px rgba(255, 255, 255, 0.12),
-      0 0 14px rgba(255, 255, 255, 0.08);
+    opacity: 0.88;
+    filter: drop-shadow(0 0 6px rgba(52, 211, 153, 0.22));
   }
   50% {
     opacity: 1;
-    text-shadow:
-      0 0 10px rgba(255, 255, 255, 0.28),
-      0 0 22px rgba(255, 255, 255, 0.12);
+    filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.38));
   }
 }
 

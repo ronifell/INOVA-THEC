@@ -185,14 +185,14 @@ export default function Header({ dashboardHero: _dashboardHero }: HeaderProps) {
               >
                 IT
               </motion.div>
-              <span className="text-2xl font-bold tracking-[0.12em] text-white md:text-3xl">
+              <span className="bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-2xl font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)] md:text-3xl">
                 INOVA THEC
               </span>
             </div>
-            <p className="mt-3 max-w-xl px-1 text-sm font-medium leading-snug text-white md:text-base">
+            <p className="mt-3 max-w-xl px-1 text-sm font-medium leading-snug text-slate-400 md:text-base md:text-slate-300">
               A Terceira Via da Fé Pública Digital
             </p>
-            <p className="header-truth-subline mt-2 max-w-lg px-2 text-xs font-medium leading-snug text-white md:text-sm">
+            <p className="header-truth-subline mt-2 max-w-lg bg-gradient-to-r from-emerald-300/95 via-cyan-200/90 to-sky-300/95 bg-clip-text px-2 text-xs font-medium leading-snug text-transparent md:text-sm">
               A Verdade Digital que o Tempo Não Apaga
             </p>
           </motion.button>
