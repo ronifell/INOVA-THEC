@@ -239,10 +239,6 @@ export default function AuditPublicCenter({ className = "" }: { className?: stri
           </div>
         </div>
       </div>
-
-      <p className="mt-4 text-center text-[10px] font-mono tracking-[0.22em] text-white/45">
-        INOVA THEC © {new Date().getFullYear()} — Protocolo AP-04 — Cadeia imutável
-      </p>
     </motion.div>
   );
 }

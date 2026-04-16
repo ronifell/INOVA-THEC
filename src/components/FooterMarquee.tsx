@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-const BASE =
-  "INOVA THEC — PROTOCOLO AP-04 — FÉ PÚBLICA DIGITAL — SHA-256 — CADEIA IMUTÁVEL — ";
+function buildTickerSegment(): string {
+  const y = new Date().getFullYear();
+  return `INOVA THEC © ${y} — PROTOCOLO AP-04 — CADEIA IMUTÁVEL — SHA-256 — FÉ PÚBLICA DIGITAL — CRIPTOGRAFIA — AUDITORIA AP-04 — `;
+}
 
 /**
- * Memorial: rodapé global 40px/s, direita → esquerda, RAF.
+ * Memorial: rodapé global, direita → esquerda, RAF; texto único em loop contínuo.
  */
 export default function FooterMarquee() {
+  const segment = useMemo(() => buildTickerSegment(), []);
   const [offset, setOffset] = useState(0);
   const raf = useRef<number>(0);
   const last = useRef<number>(0);
@@ -30,7 +33,7 @@ export default function FooterMarquee() {
   }, []);
 
   useEffect(() => {
-    const speed = 40;
+    const speed = 72;
     last.current = performance.now();
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last.current) / 1000);
@@ -50,17 +53,17 @@ export default function FooterMarquee() {
   return (
     <div className="w-full overflow-hidden border-y border-white/[0.06] bg-black/20 py-2 select-none">
       <div
-        className="flex whitespace-nowrap font-mono text-[10px] tracking-wider text-white will-change-transform antialiased"
-        style={{ transform: `translateX(${offset}px)` }}
+        className="flex whitespace-nowrap font-mono text-[10px] tracking-[0.18em] text-white/90 will-change-transform antialiased"
+        style={{ transform: `translate3d(${offset}px,0,0)` }}
       >
-        <span ref={spanRef} className="inline-block pr-12">
-          {BASE}
+        <span ref={spanRef} className="inline-block shrink-0 pr-8">
+          {segment}
         </span>
-        <span className="inline-block pr-12" aria-hidden>
-          {BASE}
+        <span className="inline-block shrink-0 pr-8" aria-hidden>
+          {segment}
         </span>
-        <span className="inline-block pr-12" aria-hidden>
-          {BASE}
+        <span className="inline-block shrink-0 pr-8" aria-hidden>
+          {segment}
         </span>
       </div>
     </div>
