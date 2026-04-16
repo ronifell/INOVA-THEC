@@ -36,16 +36,18 @@ export default function ModuleCard({
   ]);
 
   return (
-    <PortalModuleCard
-      index={index}
-      color={module.color}
-      colorRgb={module.colorRgb}
-      icon={module.icon}
-      title={module.name}
-      description={module.description}
-      isFullModule={module.isFullModule}
-      voiceText={module.voiceText}
-      onClick={handleClick}
-    />
+    <div className="h-full w-[90%] justify-self-center">
+      <PortalModuleCard
+        index={index}
+        color={module.color}
+        colorRgb={module.colorRgb}
+        icon={module.icon}
+        title={module.name}
+        description={module.description}
+        isFullModule={module.isFullModule}
+        voiceText={module.voiceText}
+        onClick={handleClick}
+      />
+    </div>
   );
 }

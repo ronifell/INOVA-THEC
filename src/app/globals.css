@@ -322,26 +322,28 @@ body {
   animation: ticker-radar-flicker 2.4s ease-in-out infinite;
 }
 
-/* Ticker: start flush to the right edge of the viewport, then loop seamlessly (duplicate spans). */
+/* Protocol ticker under COMMAND PANEL: two duplicate spans; -50% = one full cycle (RTL flow). */
 @keyframes protocol-scroll-loop {
   0% {
-    transform: translateX(100cqi);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(100cqi - 50%));
+    transform: translateX(-50%);
   }
 }
 
 .protocol-ticker-viewport {
   container-type: inline-size;
-  container-name: protocol-ticker;
+  width: 100%;
+  min-width: 0;
 }
 
 .protocol-scroll-track {
   display: flex;
   width: max-content;
+  min-width: 100%;
   white-space: nowrap;
-  animation: protocol-scroll-loop 11s linear infinite;
+  animation: protocol-scroll-loop 12s linear infinite;
   text-shadow:
     0 0 10px rgba(255, 255, 255, 0.75),
     0 0 22px rgba(255, 255, 255, 0.35);
@@ -487,7 +489,7 @@ body {
 .m1-hub-tile-height {
   box-sizing: border-box;
   align-self: stretch;
-  min-height: clamp(10.5rem, 15vh, 18rem);
+  min-height: clamp(12.6rem, 18vh, 21.6rem);
 }
 
 /* ===== CUSTOM CURSOR STATES ===== */

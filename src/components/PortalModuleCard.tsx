@@ -97,7 +97,7 @@ export default function PortalModuleCard({
   const cardInner = (
     <>
       <div
-        className={`relative flex h-full min-h-0 flex-col rounded-[1vw] p-[6%] transition-all duration-500 module-card-float-${index % 3}`}
+        className={`relative flex h-full min-h-0 w-full flex-col rounded-[8%] p-[5%] text-[90%] transition-all duration-500 module-card-float-${index % 3}`}
         style={
           {
             "--card-rgb": colorRgb,
@@ -109,13 +109,13 @@ export default function PortalModuleCard({
         }
       >
         <div
-          className="module-card-border-blink pointer-events-none absolute inset-0 z-[1] rounded-[1vw]"
+          className="module-card-border-blink pointer-events-none absolute inset-0 z-[1] rounded-[8%]"
           style={{ "--card-rgb": colorRgb } as CSSProperties}
           aria-hidden
         />
 
         <div
-          className="absolute inset-0 rounded-[1vw] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="absolute inset-0 rounded-[8%] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{
             boxShadow: `inset 0 0 30px rgba(${colorRgb}, 0.1), 0 0 40px rgba(${colorRgb}, 0.15), 0 0 80px rgba(${colorRgb}, 0.05)`,
           }}
@@ -130,7 +130,7 @@ export default function PortalModuleCard({
         />
 
         <motion.div
-          className="relative z-[2] mx-auto mb-[7%] flex aspect-square w-[36%] items-center justify-center rounded-full"
+          className="relative z-[2] mx-auto mb-[6%] flex aspect-square w-[34%] max-w-[42%] items-center justify-center rounded-full"
           style={{ x: iconXSpring, y: iconYSpring }}
         >
           <span
@@ -149,14 +149,14 @@ export default function PortalModuleCard({
             }}
           />
           <div
-            className="absolute inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 z-[1]"
+            className="absolute inset-[5%] rounded-full opacity-0 transition-all duration-500 group-hover:opacity-100 z-[1]"
             style={{
               background: `radial-gradient(circle, rgba(${colorRgb}, 0.4) 0%, transparent 70%)`,
               boxShadow: `0 0 30px rgba(${colorRgb}, 0.4)`,
             }}
           />
           <motion.span
-            className="relative z-10 text-[3vh]"
+            className="relative z-10 text-[220%] leading-none"
             style={{ textShadow: `0 0 20px rgba(${colorRgb},0.45)` }}
           >
             {icon}
@@ -164,25 +164,25 @@ export default function PortalModuleCard({
         </motion.div>
 
         <h3
-          className="text-center text-[1.45vh] font-bold tracking-[0.17em] transition-colors duration-500 group-hover:text-white"
+          className="text-center text-[118%] font-bold tracking-wider transition-colors duration-500 group-hover:text-white"
           style={{ color: `rgba(${colorRgb}, 0.9)` }}
         >
           {title}
         </h3>
 
-        <p className="mt-[5%] flex-1 text-center text-[1.22vh] leading-[1.35] text-white transition-colors duration-500 group-hover:text-white">
+        <p className="mt-[4%] flex-1 text-center text-[92%] leading-relaxed text-white transition-colors duration-500 group-hover:text-white">
           {description}
         </p>
 
-        <div className="mt-[4%] flex items-center justify-center gap-[4%]">
+        <div className="mt-[5%] flex items-center justify-center gap-[3%]">
           <div
-            className="h-[0.52vh] w-[0.52vh] rounded-full"
+            className="aspect-square w-[5%] min-w-[0.35em] rounded-full"
             style={{
               background: isFullModule ? color : "#FCD34D",
               boxShadow: `0 0 4px ${isFullModule ? color : "#FCD34D"}`,
             }}
           />
-          <span className="text-[1.04vh] font-mono tracking-[0.13em] text-white/30">
+          <span className="text-[78%] font-mono tracking-wider text-white/30">
             {isFullModule ? "OPERACIONAL" : "HOMOLOGAÇÃO"}
           </span>
         </div>

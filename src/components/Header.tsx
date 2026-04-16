@@ -67,7 +67,6 @@ export default function Header({ dashboardHero: _dashboardHero }: HeaderProps) {
     }
     return {
       text: hashStr,
-      /* Nunca usar themeColor base (#0F172A) no texto — fica ilegível no vidro escuro */
       className:
         "text-emerald-400 [text-shadow:0_0_10px_rgba(52,211,153,0.45)]",
     };
@@ -78,127 +77,129 @@ export default function Header({ dashboardHero: _dashboardHero }: HeaderProps) {
       className="fixed top-0 left-0 right-0 z-40 overflow-hidden glass antialiased"
       variants={appShellHeader}
     >
-      <div className="mx-auto grid h-[8.5vh] w-full max-w-7xl grid-cols-3 items-center gap-[1.2vw] overflow-hidden px-[1.6vw]">
-        <motion.div
-          className="col-start-2 flex translate-y-[1.5vh] justify-center"
-          initial={{ opacity: 0, y: -34 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.72, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="flex w-full max-w-[26vw] flex-col items-center justify-center">
-            <h2 className="text-[1.35vh] font-bold tracking-[0.34em] text-white">
-              COMMAND PANEL
-            </h2>
-            <div className="mt-[0.65vh] w-[200%] max-w-none overflow-hidden border-y border-white/35 py-[0.18vh]">
-              <div className="protocol-scroll-track text-[0.96vh] font-mono tracking-[0.22em] text-white">
-                <span className="inline-block pr-[3.2vw]">
-                  INTEGRATED MANAGEMENT SYSTEM - AP-04 PROTOCOL
-                </span>
-                <span className="inline-block pr-[3.2vw]" aria-hidden>
-                  INTEGRATED MANAGEMENT SYSTEM - AP-04 PROTOCOL
-                </span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 md:px-8">
+        {/* Logo do sistema — mesmo bloco visual da identidade operacional */}
         <motion.button
+          type="button"
           onClick={() => {
             triggerHashValidation();
             goHome();
           }}
-          className="col-start-1 flex -translate-y-[5vh] items-center justify-start gap-[0.7vw] cursor-pointer justify-self-start"
-          initial={{ opacity: 0, x: -48 }}
+          className="flex shrink-0 cursor-pointer items-center gap-3"
+          initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 1.95, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.97 }}
+          transition={{ duration: 0.55, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
         >
           <motion.div
-            className="logo-sweep-cross relative flex h-[4.9vh] w-[4.9vh] items-center justify-center overflow-hidden rounded-[0.65vw] font-bold text-[1.45vh] text-white will-change-[box-shadow]"
+            className="logo-sweep-cross relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg text-sm font-bold text-white"
             style={{
               background: `linear-gradient(135deg, ${themeColor}, ${themeColor}80)`,
             }}
             animate={{
               boxShadow: [
-                `0 0 7px rgba(${themeColorRgb}, 0.55)`,
-                `0 0 24px rgba(${themeColorRgb}, 0.95)`,
-                `0 0 7px rgba(${themeColorRgb}, 0.55)`,
+                `0 0 5px rgba(${themeColorRgb}, 0.45)`,
+                `0 0 20px rgba(${themeColorRgb}, 0.9)`,
+                `0 0 5px rgba(${themeColorRgb}, 0.45)`,
               ],
             }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           >
             IT
           </motion.div>
-          <div className="hidden sm:block">
-            <h1 className="text-[1.34vh] font-bold tracking-[0.12em] text-white leading-none">
+          <div className="hidden min-w-0 sm:block">
+            <h1 className="text-base font-bold leading-none tracking-wide text-white">
               INOVA THEC
             </h1>
-            <p className="mt-[0.28vh] text-[0.92vh] tracking-[0.2em] text-white uppercase">
+            <p className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-white/40">
               Gestão Pública Inteligente
             </p>
           </div>
         </motion.button>
 
+        {/* Centro — nome ao tamanho anterior; faixa de protocolo sem moldura */}
         <motion.div
-          className="col-start-3 flex -translate-y-[5vh] items-center justify-end gap-[0.8vw] justify-self-end"
-          initial={{ opacity: 0, x: 42 }}
+          className="pointer-events-none absolute left-1/2 top-1/2 flex min-w-0 max-w-[min(92vw,28rem)] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center text-center sm:max-w-[32rem]"
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <h2 className="text-base font-bold tracking-[0.28em] text-white md:text-lg">
+            COMMAND PANEL
+          </h2>
+          <div className="mt-1 max-w-full overflow-hidden py-0.5 md:mt-1.5">
+            <div className="protocol-scroll-track text-[10px] font-mono tracking-[0.22em] text-white md:text-[11px]">
+              <span className="inline-block pr-8">
+                INTEGRATED MANAGEMENT SYSTEM — AP-04 PROTOCOL
+              </span>
+              <span className="inline-block pr-8" aria-hidden>
+                INTEGRATED MANAGEMENT SYSTEM — AP-04 PROTOCOL
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="flex shrink-0 items-center gap-3 md:gap-4"
+          initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.62, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.55, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
           {activeModule && (
-            <div className="hidden xl:flex items-center gap-[0.45vw]">
+            <div className="hidden items-center gap-2 lg:flex">
               <div
-                className="h-[0.7vh] w-[0.7vh] rounded-full"
+                className="h-2 w-2 rounded-full"
                 style={{
                   background: themeColor,
                   boxShadow: `0 0 8px ${themeColor}`,
                 }}
               />
-              <span className="text-[0.92vh] font-mono tracking-[0.14em] text-white">
+              <span className="text-xs font-mono tracking-wider text-white/70">
                 MÓDULO ATIVO
               </span>
             </div>
           )}
 
           <motion.div
-            className="glass flex max-w-[min(32vw,25rem)] flex-col gap-[0.2vh] rounded-[0.65vw] px-[0.78vw] py-[0.58vh]"
+            className="glass flex max-w-[min(100vw-10rem,22rem)] flex-col gap-0.5 rounded-lg px-3.5 py-2 sm:px-4 sm:py-2.5"
             whileHover={{ scale: 1.02 }}
           >
-            <div className="flex items-center gap-[0.45vw]">
-              <div className="h-[0.55vh] w-[0.55vh] shrink-0 rounded-full bg-white shadow-[0_0_8px_#fff]" />
-              <span className="text-[0.86vh] font-mono tracking-[0.13em] text-white whitespace-nowrap">
+            <div className="flex items-center gap-2">
+              <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-white shadow-[0_0_8px_#fff]" />
+              <span className="whitespace-nowrap text-[11px] font-mono tracking-wide text-white sm:text-xs">
                 INTEGRITY / SHA-256
               </span>
             </div>
-            <div className="flex items-center gap-[0.55vw]">
+            <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
               <motion.span
-                className={`text-[1.16vh] font-mono font-bold tracking-tight ${hashVisual.className}`}
+                className={`break-all font-mono text-xs font-bold tracking-tight sm:text-sm ${hashVisual.className}`}
                 animate={
                   hashDisplayPhase === "flash"
-                    ? { scale: [1, 1.08, 1] }
+                    ? { scale: [1, 1.06, 1] }
                     : { scale: 1 }
                 }
                 transition={{ duration: 0.2 }}
               >
                 {hashVisual.text}
               </motion.span>
-              <span className="text-[0.9vh] font-mono text-white tabular-nums whitespace-nowrap [font-variant-numeric:tabular-nums]">
+              <span className="whitespace-nowrap font-mono text-[11px] text-white tabular-nums sm:text-xs [font-variant-numeric:tabular-nums]">
                 SEQ {formatted}
               </span>
             </div>
           </motion.div>
 
           <motion.button
+            type="button"
             onClick={() => {
               triggerHashValidation();
               toggleAudio();
             }}
-            className="glass flex h-[4.2vh] w-[4.2vh] items-center justify-center rounded-[0.65vw] cursor-pointer"
+            className="glass flex h-9 w-9 shrink-0 items-center justify-center rounded-lg cursor-pointer"
             whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.92 }}
           >
-            <span className="text-[1.7vh]">{audioEnabled ? "🔊" : "🔇"}</span>
+            <span className="text-base">{audioEnabled ? "🔊" : "🔇"}</span>
           </motion.button>
         </motion.div>
       </div>

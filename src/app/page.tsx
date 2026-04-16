@@ -1,4 +1,4 @@
-"use client";
+  "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
@@ -136,7 +136,7 @@ export default function Home() {
             className={`relative z-10 flex-1 flex flex-col min-h-0 ${
               activeModule
                 ? "pt-16 min-h-full overflow-visible"
-                : "pt-[5.75rem] overflow-hidden min-h-0"
+                : "pt-16 overflow-hidden min-h-0"
             }`}
           >
             <AnimatePresence mode="wait">
