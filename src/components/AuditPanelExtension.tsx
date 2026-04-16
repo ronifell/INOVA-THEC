@@ -78,42 +78,47 @@ export default function AuditPanelExtension() {
   }, [speak, triggerHashValidation, verifying]);
 
   return (
-    <div className="audit-panels-3">
-      <div className="audit-panel-stack-tight min-h-0 text-left">
-        <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
+    <div className="audit-panels-3 h-full min-h-0 overflow-hidden [&>div]:min-h-0">
+      {/* Coluna esquerda: lista ocupa o espaço flexível; botão sempre visível (nunca cortado pelo overflow) */}
+      <div className="flex min-h-0 w-full min-w-0 flex-col text-left [gap:min(2%,1.8vmin)]">
+        <h3 className="shrink-0 font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Rastreador de Cadeia
         </h3>
-        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="shrink-0 leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Verificação sequencial dos elos da custódia AP-04.
         </p>
-        <div className="flex flex-col rounded-md border border-white/10 bg-white/[0.02] [gap:min(2.2%,2vmin)] [padding:min(3%,2.6vmin)]">
-          {chainBlocks.map((b, i) => (
-            <div
-              key={b.id}
-              className={`flex items-center justify-between [gap:min(2.5%,2vmin)] border-b border-white/[0.06] font-mono [padding-bottom:min(2.2%,2vmin)] [font-size:min(1.1vmin,0.88vw)] last:border-0 last:pb-0 ${
-                scanning && chainScan === i ? "text-amber-200" : "text-white/70"
-              } ${
-                !scanning && chainScan === chainBlocks.length - 1 && i === chainBlocks.length - 1
-                  ? "text-emerald-300/90"
-                  : ""
-              }`}
-            >
-              <span className="uppercase tracking-wider">{b.id}</span>
-              <span className="tabular-nums text-emerald-300/90">{b.h}</span>
+        <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col [gap:min(2%,1.8vmin)]">
+          <div className="min-h-0 flex-1 overflow-hidden rounded-md border border-white/10 bg-white/[0.02]">
+            <div className="flex h-full max-h-full flex-col [gap:min(1.6%,1.4vmin)] [padding:min(2.4%,2vmin)]">
+              {chainBlocks.map((b, i) => (
+                <div
+                  key={b.id}
+                  className={`flex min-h-0 shrink-0 items-center justify-between [gap:min(2%,1.8vmin)] border-b border-white/[0.06] font-mono [padding-bottom:min(1.6%,1.4vmin)] [font-size:min(1.05vmin,0.85vw)] last:border-0 last:pb-0 ${
+                    scanning && chainScan === i ? "text-amber-200" : "text-white/70"
+                  } ${
+                    !scanning && chainScan === chainBlocks.length - 1 && i === chainBlocks.length - 1
+                      ? "text-emerald-300/90"
+                      : ""
+                  }`}
+                >
+                  <span className="min-w-0 truncate uppercase tracking-wider">{b.id}</span>
+                  <span className="shrink-0 tabular-nums text-emerald-300/90">{b.h}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+          <button
+            type="button"
+            disabled={scanning}
+            onClick={runChainScan}
+            className="audit-action-btn z-10 w-full shrink-0 rounded-lg border border-amber-400/35 bg-transparent font-mono font-semibold uppercase tracking-wider text-white transition hover:border-amber-300/55 hover:bg-amber-500/10 disabled:opacity-50 sm:w-max sm:max-w-full"
+          >
+            {scanning ? "Varrendo…" : "Varredura de elos"}
+          </button>
         </div>
-        <button
-          type="button"
-          disabled={scanning}
-          onClick={runChainScan}
-          className="audit-action-btn w-fit rounded-lg border border-amber-400/35 bg-transparent font-mono font-semibold uppercase tracking-wider text-white transition hover:border-amber-300/55 hover:bg-amber-500/10 disabled:opacity-50 [margin-top:min(3.5%,3vmin)]"
-        >
-          {scanning ? "Varrendo…" : "Varredura de elos"}
-        </button>
       </div>
 
-      <div className="audit-panel-stack min-h-0 text-center">
+      <div className="audit-panel-stack flex h-full min-h-0 min-w-0 flex-col text-center">
         <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Certificador de Timestamp
         </h3>
@@ -151,7 +156,7 @@ export default function AuditPanelExtension() {
         </div>
       </div>
 
-      <div className="audit-panel-stack-tight min-h-0 text-right">
+      <div className="audit-panel-stack-tight flex h-full min-h-0 min-w-0 flex-col text-right">
         <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Auditoria de Backup
         </h3>

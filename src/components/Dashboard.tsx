@@ -8,16 +8,18 @@ import AuditCarousel from "./AuditCarousel";
 export default function Dashboard() {
   return (
     <div className="flex h-full min-h-0 w-full flex-col overflow-hidden px-[2.5%] pb-[0.6vh] pt-[0.8vh]">
-      <div className="flex min-h-0 flex-1 flex-col">
-        {/* Mesma faixa horizontal da grelha (1ª carta → 7ª carta) para os três pilares abaixo */}
-        <div className="mx-auto mt-[3vh] flex min-h-0 w-full max-w-[98%] flex-1 flex-col gap-[min(1.5%,1.5vh)]">
-          <div className="grid h-[52.2%] w-full shrink-0 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        {/* Repartição flex (~53% / ~47%): sem scroll vertical no ecrã */}
+        <div className="mx-auto mt-[2.5vh] flex min-h-0 w-full max-w-[98%] flex-1 flex-col gap-[min(1%,1vh)] overflow-hidden">
+          <div className="grid min-h-0 w-full min-w-0 flex-[1.12] auto-rows-fr grid-cols-2 items-stretch gap-[1vh] overflow-hidden sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
             {MODULES.map((mod, i) => (
               <ModuleCard key={mod.id} module={mod} index={i} />
             ))}
           </div>
 
-          <AuditCarousel className="min-h-0 shrink-0" />
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+            <AuditCarousel />
+          </div>
         </div>
       </div>
 

@@ -96,7 +96,7 @@ export default function AuditPanelPrimary() {
   }, [docInput, speak, triggerHashValidation]);
 
   return (
-    <div className="audit-panels-3">
+    <div className="audit-panels-3 h-full min-h-0 overflow-hidden">
       <div className="audit-panel-stack-tight min-h-0 text-left">
         <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
           Simulador de Fé Pública
@@ -144,12 +144,12 @@ export default function AuditPanelPrimary() {
         <AnimatePresence>
           {hash && (
             <motion.div
-              className="min-h-0 max-h-[min(28vh,40%)] overflow-y-auto rounded-md border border-white/10 [padding:min(2.5%,2vmin)]"
+              className="min-h-0 max-h-[min(22vh,35%)] overflow-hidden rounded-md border border-white/10 [padding:min(2.5%,2vmin)]"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0 }}
             >
-              <p className="break-all font-mono leading-relaxed text-emerald-300 [font-size:min(1.1vmin,0.88vw)]">
+              <p className="line-clamp-4 break-all font-mono leading-relaxed text-emerald-300 [font-size:min(1.1vmin,0.88vw)]">
                 {displayedHash}
               </p>
             </motion.div>

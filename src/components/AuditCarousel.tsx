@@ -36,24 +36,24 @@ export default function AuditCarousel({ className = "" }: { className?: string }
 
   return (
     <motion.div
-      className={`audit-carousel-root ${className}`}
+      className={`audit-carousel-root flex min-h-0 flex-1 flex-col ${className}`}
       initial={{ opacity: 0, y: "1.2vmin" }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.65, delay: 1.75, ease: easeOut }}
     >
-      <div className="audit-carousel-top">
-        <div className="audit-carousel-track">
+      <div className="audit-carousel-top flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+        <div className="audit-carousel-track flex min-h-0 flex-1 flex-col">
           <motion.div
-            className="flex"
+            className="flex h-full min-h-0"
             style={{ width: "200%" }}
             initial={false}
             animate={{ x: slide === 0 ? "0%" : "-50%" }}
             transition={{ duration: 0.48, ease: easeOut }}
           >
-            <div className="min-w-0 w-1/2 shrink-0">
+            <div className="flex h-full min-h-0 min-w-0 w-1/2 shrink-0 flex-col overflow-hidden">
               <AuditPanelPrimary />
             </div>
-            <div className="min-w-0 w-1/2 shrink-0">
+            <div className="flex h-full min-h-0 min-w-0 w-1/2 shrink-0 flex-col overflow-hidden">
               <AuditPanelExtension />
             </div>
           </motion.div>
@@ -61,7 +61,7 @@ export default function AuditCarousel({ className = "" }: { className?: string }
       </div>
 
       <div className="audit-carousel-controls" aria-label="Navegação do carrossel de auditoria">
-        <div className="audit-carousel-nav-left flex min-w-0 justify-start">
+        <div className="audit-carousel-nav-left flex shrink-0 justify-start">
           <motion.button
             type="button"
             aria-label="Painel anterior de ferramentas"
@@ -113,7 +113,7 @@ export default function AuditCarousel({ className = "" }: { className?: string }
           />
         </div>
 
-        <div className="audit-carousel-nav-right flex min-w-0 justify-end">
+        <div className="audit-carousel-nav-right flex shrink-0 justify-end">
           <motion.button
             type="button"
             aria-label="Próximo painel de ferramentas"
