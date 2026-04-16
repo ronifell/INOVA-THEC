@@ -105,7 +105,7 @@ export default function Home() {
 
   return (
     <div
-      className={`h-full ${activeModule ? "overflow-y-auto" : "overflow-hidden"} ${isGlitching ? "glitch-active" : ""}`}
+      className={`h-full ${activeModule ? "overflow-y-auto" : "overflow-x-hidden"} ${isGlitching ? "glitch-active" : ""}`}
     >
       <ThemeColorUpdater />
 
@@ -136,7 +136,7 @@ export default function Home() {
             className={`relative z-10 flex flex-1 flex-col min-h-0 ${
               activeModule
                 ? "min-h-full overflow-visible pt-24 sm:pt-28"
-                : "overflow-hidden pt-24 sm:pt-28 min-h-0"
+                : "overflow-x-hidden pt-24 sm:pt-28 min-h-0"
             }`}
           >
             <AnimatePresence mode="wait">

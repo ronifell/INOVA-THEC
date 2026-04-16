@@ -280,6 +280,15 @@ body {
   }
 }
 
+/* Faixa das 7 cartas — respiro para halos (box-shadow até ~96px) + float sem clip dos pais */
+.module-cards-glow-gutter {
+  box-sizing: border-box;
+  overflow: visible;
+  /* Respiro ≥ halos (32–96px) + levitação 10px; evita corte pelo header / carrossel */
+  padding-top: min(10vmin, 8.5vh);
+  padding-bottom: min(8vmin, 7vh);
+}
+
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
 @keyframes module-card-float {
   0%,
