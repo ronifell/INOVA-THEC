@@ -1235,31 +1235,6 @@ body {
   }
 }
 
-/* Tom alinhado ao SIG-Patrimônio / CID — azul elétrico legível no escuro */
-.header-ap04-pillar-title--custody {
-  color: rgb(147 197 253);
-  text-shadow: 0 0 18px rgba(59, 130, 246, 0.45);
-}
-
-/* Linha de lema — mesmo corpo que SHA-256 / SEQ na régua verde */
-.header-custody-subline {
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.95);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Duas linhas técnicas — mesmo tom vibrante do módulo Patrimônio */
-.header-custody-line1 {
-  color: rgb(147 197 253);
-  text-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
-}
-
-.header-custody-line2 {
-  color: rgb(96 165 250);
-  text-shadow: 0 0 14px rgba(59, 130, 246, 0.4);
-}
-
 @keyframes header-center-sweep {
   0% {
     transform: translateX(-220%);

@@ -48,20 +48,22 @@ function ProtocolGreenStream() {
   );
 }
 
-/** Duas linhas — espelha a altura do bloco verde; coordenadas com precisão pericial (5 casas). */
+/** Estação e COORD em verde, próximos; lema abaixo com folga para permitir subir só as duas primeiras linhas. */
 function CustodyStationLine() {
   return (
-    <>
-      <div className="header-custody-line1 mt-0.5 font-mono text-[8px] font-medium leading-snug tracking-wide md:text-[9px]">
+    <div className="mt-3 flex min-w-0 flex-col md:mt-4">
+      <p className="w-full break-words text-left font-mono text-[9px] font-semibold leading-snug tracking-tight text-emerald-300 [text-shadow:0_0_8px_rgba(16,185,129,0.45)] md:text-[10px]">
         ESTAÇÃO: AUDIT-ACRE // LOCAL: RIO BRANCO
-      </div>
-      <div className="header-custody-line2 mt-0.5 font-mono text-[8px] font-medium leading-snug tabular-nums tracking-wide md:text-[9px]">
-        COORD: -9.96970 / -67.88283
-      </div>
-      <p className="header-custody-subline mt-1 font-mono uppercase tracking-wide text-[9px] leading-snug md:text-[10px]">
-        CUSTÓDIA INVIOLÁVEL DOS DADOS
       </p>
-    </>
+      <div className="mt-0 flex min-w-0 w-full max-w-[min(100%,21rem)] flex-col gap-2">
+        <p className="w-full break-words text-left font-mono text-[9px] font-semibold leading-snug tracking-tight tabular-nums text-emerald-300 [text-shadow:0_0_8px_rgba(16,185,129,0.45)] md:text-[10px]">
+          COORD: -9.96970 / -67.88283
+        </p>
+        <p className="w-full border-t border-white/[0.08] pt-1 font-mono text-[9px] leading-snug text-white md:text-[10px]">
+          CUSTÓDIA INVIOLÁVEL DOS DADOS
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -128,9 +130,9 @@ export default function Header() {
       variants={appShellHeader}
     >
       <div className="mx-auto grid w-full max-w-[100vw] grid-cols-1 gap-2 px-4 pb-1.5 pt-1.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.22fr)_minmax(0,1fr)] md:gap-x-6 md:gap-y-2 md:px-10 md:pb-2 md:pt-2 lg:gap-x-10 lg:px-12">
-        {/* Esquerda — Cadeia de custódia (azul SIG-Patrimônio) */}
+        {/* Esquerda — Cadeia de custódia (espelho tipográfico do Protocolo) */}
         <div className="order-2 flex min-w-0 flex-col justify-start md:order-1 md:pt-0.5 md:pr-2 lg:pr-4">
-          <h2 className="header-ap04-pillar-title header-ap04-pillar-title--custody text-left">
+          <h2 className="header-ap04-pillar-title translate-y-0.5 text-left">
             CADEIA DE CUSTÓDIA
           </h2>
           <CustodyStationLine />
