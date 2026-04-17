@@ -98,8 +98,8 @@ export default function AuditPanelPrimary() {
   return (
     <div className="audit-panels-3 h-full min-h-0 overflow-hidden">
       <div className="audit-panel-stack-tight min-h-0 text-left">
-        <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
-          Simulador de Fé Pública
+        <h3 className="audit-panel-title max-w-full">
+          SIMULADOR DE FÉ PÚBLICA
         </h3>
         <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Demonstração técnica do selo SHA-256 e da cadeia de custódia.
@@ -158,8 +158,8 @@ export default function AuditPanelPrimary() {
       </div>
 
       <div className="audit-panel-stack min-h-0 text-center">
-        <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
-          Monitor de Integridade
+        <h3 className="audit-panel-title max-w-full">
+          MONITOR DE INTEGRIDADE
         </h3>
         <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Saúde do sistema e processos auditados em tempo real.
@@ -174,14 +174,20 @@ export default function AuditPanelPrimary() {
               Sistema operacional
             </span>
           </div>
-          <div className="audit-card-inner space-y-[min(1.8%,1.6vmin)] rounded-md border border-white/10 bg-white/[0.03]">
-            <div className="flex justify-between text-white/80 [font-size:min(1.15vmin,0.9vw)]">
-              <span className="font-mono uppercase tracking-wider">Processos auditados</span>
-              <span className="font-mono tabular-nums text-white">{auditedFmt}</span>
+          <div className="audit-card-inner w-full max-w-[min(100%,22rem)] space-y-[min(1.8%,1.6vmin)] rounded-md border border-white/10 bg-white/[0.03]">
+            <div className="grid w-full grid-cols-[minmax(0,1fr)_min(10ch,12rem)] items-center gap-x-[min(3.5%,3vmin)] text-white/80 [font-size:min(1.15vmin,0.9vw)]">
+              <span className="min-w-0 text-left font-mono uppercase leading-tight tracking-wider">
+                Processos auditados
+              </span>
+              <span className="text-right font-mono tabular-nums tracking-tight text-white">
+                {auditedFmt}
+              </span>
             </div>
-            <div className="flex justify-between text-white/80 [font-size:min(1.15vmin,0.9vw)]">
-              <span className="font-mono uppercase tracking-wider">Índice de saúde</span>
-              <span className="font-mono tabular-nums text-emerald-200">
+            <div className="grid w-full grid-cols-[minmax(0,1fr)_min(10ch,12rem)] items-center gap-x-[min(3.5%,3vmin)] text-white/80 [font-size:min(1.15vmin,0.9vw)]">
+              <span className="min-w-0 text-left font-mono uppercase leading-tight tracking-wider">
+                Índice de saúde
+              </span>
+              <span className="text-right font-mono tabular-nums tracking-tight text-emerald-200">
                 {healthPulse.toFixed(1)}%
               </span>
             </div>
@@ -190,8 +196,8 @@ export default function AuditPanelPrimary() {
       </div>
 
       <div className="audit-panel-stack-tight min-h-0 text-right">
-        <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
-          Validador de Documentos
+        <h3 className="audit-panel-title max-w-full">
+          VALIDADOR DE DOCUMENTOS
         </h3>
         <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Perícia de autenticidade por hash SHA-256.

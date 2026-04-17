@@ -81,8 +81,8 @@ export default function AuditPanelExtension() {
     <div className="audit-panels-3 h-full min-h-0 overflow-hidden [&>div]:min-h-0">
       {/* Coluna esquerda: lista ocupa o espaço flexível; botão sempre visível (nunca cortado pelo overflow) */}
       <div className="flex min-h-0 w-full min-w-0 flex-col text-left [gap:min(2%,1.8vmin)]">
-        <h3 className="shrink-0 font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
-          Rastreador de Cadeia
+        <h3 className="audit-panel-title max-w-full shrink-0">
+          RASTREADOR DE CADEIA
         </h3>
         <p className="shrink-0 leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Verificação sequencial dos elos da custódia AP-04.
@@ -119,8 +119,8 @@ export default function AuditPanelExtension() {
       </div>
 
       <div className="audit-panel-stack flex h-full min-h-0 min-w-0 flex-col text-center">
-        <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
-          Certificador de Timestamp
+        <h3 className="audit-panel-title max-w-full">
+          CERTIFICADOR DE TIMESTAMP
         </h3>
         <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Carimbo temporal alinhado a UTC e protocolo de auditoria.
@@ -157,8 +157,8 @@ export default function AuditPanelExtension() {
       </div>
 
       <div className="audit-panel-stack-tight flex h-full min-h-0 min-w-0 flex-col text-right">
-        <h3 className="font-bold uppercase tracking-[0.18em] text-white [font-size:min(1.35vmin,1.05vw)] md:[font-size:min(1.55vmin,1.12vw)]">
-          Auditoria de Backup
+        <h3 className="audit-panel-title max-w-full">
+          AUDITORIA DE BACKUP
         </h3>
         <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
           Conferência de redundância e integridade das réplicas.

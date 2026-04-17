@@ -284,9 +284,9 @@ body {
 .module-cards-glow-gutter {
   box-sizing: border-box;
   overflow: visible;
-  /* Respiro para halos (metade do valor anterior) */
-  padding-top: min(5vmin, 4.25vh);
-  padding-bottom: min(4vmin, 3.5vh);
+  /* Respiro para halos — ligeiramente mais compacto para maximizar altura útil das cápsulas */
+  padding-top: min(4.25vmin, 3.6vh);
+  padding-bottom: min(3.25vmin, 2.85vh);
 }
 
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
@@ -506,8 +506,8 @@ body {
   width: 100%;
   min-height: 0;
   min-width: 0;
-  padding-top: min(2.6%, 2.8vmin);
-  padding-bottom: min(1.4%, 1.7vmin);
+  padding-top: min(1.5%, 1.6vmin);
+  padding-bottom: min(0.45%, 0.55vmin);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -525,9 +525,9 @@ body {
   flex-shrink: 0;
   width: 100%;
   min-width: 0;
-  margin-top: min(0.7%, 0.8vmin);
-  padding-top: min(0.35%, 0.45vmin);
-  padding-bottom: min(0.2%, 0.25vmin);
+  margin-top: min(0.25%, 0.35vmin);
+  padding-top: min(0.1%, 0.15vmin);
+  padding-bottom: 0;
   display: flex;
   justify-content: center;
 }
@@ -535,6 +535,23 @@ body {
 /* Navegação lateral ao centro vertical — botões glass (ver AuditCarousel.tsx) */
 .audit-carousel-side-nav {
   box-sizing: border-box;
+}
+
+/* Títulos dos pilares — mesma escala da tagline central (text-sm / md:text-base) */
+.audit-panel-title {
+  font-size: 0.875rem;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(255 255 255);
+}
+
+@media (min-width: 768px) {
+  .audit-panel-title {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
 }
 
 .audit-carousel-dot {

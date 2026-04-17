@@ -77,11 +77,11 @@ export default function AuditCarousel({ className = "" }: { className?: string }
         </div>
 
         <div className="audit-carousel-side-nav pointer-events-none absolute inset-0 z-20 flex items-center justify-between">
-          <div className="pointer-events-auto flex shrink-0 pl-[min(0.6%,0.65vmin)]">
+          <div className="pointer-events-auto flex shrink-0 items-center pl-[min(1.1%,1.1vmin)]">
             <motion.button
               type="button"
               aria-label="Painel anterior — ferramentas principais"
-              className="glass flex items-center justify-center rounded-full px-[min(2.2%,2vmin)] py-[min(2%,1.8vmin)] text-white/90 shadow-none transition hover:bg-white/[0.08]"
+              className="glass flex items-center justify-center rounded-full px-[min(2.6%,2.4vmin)] py-[min(2.4%,2.1vmin)] text-white/90 shadow-none transition hover:bg-white/[0.08]"
               initial={{ opacity: 0, x: "-0.6vmin" }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 2, duration: 0.4, ease: easeOut }}
@@ -89,14 +89,14 @@ export default function AuditCarousel({ className = "" }: { className?: string }
               whileTap={{ scale: 0.96 }}
               onClick={goPrev}
             >
-              <ArrowLeftHeadIcon className="h-[min(3.2vmin,2.8vw)] w-[min(3.2vmin,2.8vw)]" />
+              <ArrowLeftHeadIcon className="h-[min(4.1vmin,3.5vw)] w-[min(4.1vmin,3.5vw)]" />
             </motion.button>
           </div>
-          <div className="pointer-events-auto flex shrink-0 pr-[min(0.6%,0.65vmin)]">
+          <div className="pointer-events-auto flex shrink-0 items-center pr-[min(1.1%,1.1vmin)]">
             <motion.button
               type="button"
               aria-label="Próximo painel — extensão de auditoria"
-              className="glass flex items-center justify-center rounded-full px-[min(2.2%,2vmin)] py-[min(2%,1.8vmin)] text-white/90 shadow-none transition hover:bg-white/[0.08]"
+              className="glass flex items-center justify-center rounded-full px-[min(2.6%,2.4vmin)] py-[min(2.4%,2.1vmin)] text-white/90 shadow-none transition hover:bg-white/[0.08]"
               initial={{ opacity: 0, x: "0.6vmin" }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 2, duration: 0.4, ease: easeOut }}
@@ -104,7 +104,7 @@ export default function AuditCarousel({ className = "" }: { className?: string }
               whileTap={{ scale: 0.96 }}
               onClick={goNext}
             >
-              <ArrowRightHeadIcon className="h-[min(3.2vmin,2.8vw)] w-[min(3.2vmin,2.8vw)]" />
+              <ArrowRightHeadIcon className="h-[min(4.1vmin,3.5vw)] w-[min(4.1vmin,3.5vw)]" />
             </motion.button>
           </div>
         </div>
