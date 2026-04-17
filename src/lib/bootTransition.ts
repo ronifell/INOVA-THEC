@@ -18,5 +18,8 @@ export const BOOT_EXIT_TOTAL_S =
     BOOT_TANK_FADE_DELAY_S + BOOT_TANK_FADE_S
   ) + 0.1;
 
+/** Duração mínima da tela de hashes em movimento (pós-100%) antes de avançar o boot. */
+export const POST100_HASH_HOLD_MS = 7000;
+
 /** @deprecated use BOOT_BACKDROP_FADE_S */
 export const BOOT_EXIT_FADE_S = BOOT_BACKDROP_FADE_S;

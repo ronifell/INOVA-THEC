@@ -6,7 +6,9 @@ import { motion } from "framer-motion";
 import {
   BOOT_BACKDROP_FADE_S,
   BOOT_EXIT_TOTAL_S,
+  POST100_HASH_HOLD_MS,
 } from "@/lib/bootTransition";
+import Post100HashStorm from "@/components/Post100HashStorm";
 
 /** Fração do tanque por segundo (3x do ritmo anterior). */
 const FILL_RATE = 0.4;
@@ -224,6 +226,10 @@ export default function BootScreen({
   const [phase, setPhase] = useState<BootPhase>("idle");
   const [burstBubbles, setBurstBubbles] = useState<BurstBubbleSpec[]>([]);
   const [sprayElapsed, setSprayElapsed] = useState(0);
+  /** Ao atingir 100%: fundo da home (mesh + flocos); o painel da home só entra após o hold dos hashes. */
+  const [post100View, setPost100View] = useState(false);
+  /** Hashes visíveis só durante POST100_HASH_HOLD_MS; depois some e libera a home. */
+  const [hashStormActive, setHashStormActive] = useState(false);
   const tankRef = useRef<HTMLDivElement>(null);
   const rafFillRef = useRef<number>(0);
   const rafWaveRef = useRef<number>(0);
@@ -281,7 +287,8 @@ export default function BootScreen({
         setFill(1);
         fillRef.current = 1;
         flushSync(() => {
-          onRevealRef.current();
+          setPost100View(true);
+          setHashStormActive(true);
         });
       }
     };
@@ -336,11 +343,16 @@ export default function BootScreen({
     setBurstBubbles(genBurstBubbles(r, maxDist));
   }, [phase, burstBubbles.length]);
 
+  /** Após o hold dos hashes: encerra a interstitial, monta a home e inicia a saída do overlay. */
   useEffect(() => {
-    if (phase !== "spray" || burstBubbles.length === 0) return;
-    const id = window.setTimeout(() => setPhase("deepen"), SPRAY_MS);
+    if (!hashStormActive) return;
+    const id = window.setTimeout(() => {
+      setHashStormActive(false);
+      onRevealRef.current();
+      setPhase("deepen");
+    }, POST100_HASH_HOLD_MS);
     return () => window.clearTimeout(id);
-  }, [phase, burstBubbles.length]);
+  }, [hashStormActive]);
 
   /* Transparência gradual do overlay assim que termina o spray (sem pausa escura). */
   useEffect(() => {
@@ -421,9 +433,9 @@ export default function BootScreen({
         className="absolute inset-0 z-[50] bg-[#0a0f1e]"
         aria-hidden
         initial={{ opacity: 1 }}
-        animate={{ opacity: exiting ? 0 : 1 }}
+        animate={{ opacity: post100View || exiting ? 0 : 1 }}
         transition={{
-          duration: BOOT_BACKDROP_FADE_S,
+          duration: post100View ? 0.32 : BOOT_BACKDROP_FADE_S,
           ease: [0.38, 0.06, 0.22, 1],
         }}
       />
@@ -435,11 +447,16 @@ export default function BootScreen({
         initial={false}
         animate={{
           opacity:
-            exiting ? 0 : phase === "spray" || phase === "deepen" ? 0.52 : 0.14,
+            post100View || exiting
+              ? 0
+              : phase === "spray" || phase === "deepen"
+                ? 0.52
+                : 0.14,
         }}
         transition={{
-          duration: exiting ? BOOT_BACKDROP_FADE_S * 0.92 : 0.45,
-          ease: exiting ? [0.38, 0.06, 0.22, 1] : "easeOut",
+          duration:
+            post100View || exiting ? BOOT_BACKDROP_FADE_S * 0.85 : 0.45,
+          ease: exiting || post100View ? [0.38, 0.06, 0.22, 1] : "easeOut",
         }}
         style={{
           background:
@@ -447,21 +464,24 @@ export default function BootScreen({
         }}
       />
 
+      <Post100HashStorm visible={hashStormActive} />
+
       {/* Bolhas — somem com o fundo; o tanque permanece visível um pouco mais */}
       <motion.div
         className="absolute inset-0 z-[65] overflow-visible pointer-events-none"
         initial={false}
         animate={{
           opacity:
-            exiting
+            post100View || exiting
               ? 0
               : phase === "spray" || phase === "deepen"
                 ? 1
                 : 0,
         }}
         transition={{
-          duration: exiting ? BOOT_BACKDROP_FADE_S * 0.88 : 0.3,
-          ease: exiting ? [0.35, 0.08, 0.2, 1] : "easeOut",
+          duration:
+            post100View || exiting ? BOOT_BACKDROP_FADE_S * 0.88 : 0.3,
+          ease: post100View || exiting ? [0.35, 0.08, 0.2, 1] : "easeOut",
         }}
       >
         {burstBubbles.map((b, i) => (
@@ -541,8 +561,8 @@ export default function BootScreen({
       </motion.div>
 
       <div
-        className="relative z-[58] flex flex-col items-center justify-center px-6"
-        style={{ opacity: tankShellOpacity }}
+        className="relative z-[58] flex flex-col items-center justify-center px-6 transition-opacity duration-300"
+        style={{ opacity: post100View ? 0 : tankShellOpacity }}
       >
         <div
           ref={tankRef}
