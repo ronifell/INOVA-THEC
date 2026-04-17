@@ -45,7 +45,7 @@ const LIGHTNING_PATHS = {
  * Valores moderados para não dominar o cartão; afinar w/h % se precisar.
  */
 const SHIELD_BOX_CLASS =
-  "absolute left-1/2 top-[48%] w-[182%] h-[216%] -translate-x-1/2 -translate-y-1/2";
+  "absolute left-1/2 top-[48%] w-[168%] h-[200%] -translate-x-1/2 -translate-y-1/2";
 
 /** Escudo suave atrás do vidro — sem relâmpago. */
 function HoverShieldBackdrop({
