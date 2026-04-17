@@ -8,6 +8,8 @@ import Header from "@/components/Header";
 import GlitchOverlay from "@/components/GlitchOverlay";
 import CursorTrail from "@/components/CursorTrail";
 import Dashboard from "@/components/Dashboard";
+import AppMainWithFooter from "@/components/AppMainWithFooter";
+import ModuleDefaultLowerBand from "@/components/ModuleDefaultLowerBand";
 import BackButton from "@/components/BackButton";
 import ReportModal from "@/components/ReportModal";
 import { getModuleById } from "@/lib/modules";
@@ -22,16 +24,13 @@ const Background3D = dynamic(() => import("@/components/Background3D"), {
   ssr: false,
 });
 
-const SigFrota = dynamic(() => import("@/components/SigFrota"), {
-  ssr: false,
-});
+const Milestone1Client = dynamic(
+  () => import("@/components/milestone1/Milestone1Client"),
+  { ssr: false }
+);
 
-const SigPatrimonio = dynamic(() => import("@/components/SigPatrimonio"), {
-  ssr: false,
-});
-
-const ModulePlaceholder = dynamic(
-  () => import("@/components/ModulePlaceholder"),
+const Milestone2Client = dynamic(
+  () => import("@/components/milestone2/Milestone2Client"),
   { ssr: false }
 );
 
@@ -45,9 +44,16 @@ function ActiveModuleView() {
 
   if (!module) return null;
 
-  if (module.id === "frota") return <SigFrota />;
-  if (module.id === "patrimonio") return <SigPatrimonio />;
-  return <ModulePlaceholder />;
+  const body =
+    module.id === "frota" ? (
+      <Milestone1Client embeddedInAppShell />
+    ) : module.id === "patrimonio" ? (
+      <Milestone2Client />
+    ) : (
+      <ModuleDefaultLowerBand moduleId={module.id} />
+    );
+
+  return <AppMainWithFooter>{body}</AppMainWithFooter>;
 }
 
 function ThemeColorUpdater() {
@@ -159,12 +165,12 @@ export default function Home() {
 
             <Header />
 
-            <main className="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden pt-24 sm:pt-28">
+            <main className="relative z-10 flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-visible pt-24 sm:pt-28">
               <AnimatePresence mode="wait">
                 {activeModule ? (
                   <motion.div
                     key={activeModule}
-                    className="min-h-0 flex-1 overflow-hidden"
+                    className="min-h-0 flex-1 overflow-x-hidden overflow-y-visible"
                     initial={{ opacity: 0, x: 36 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -28 }}

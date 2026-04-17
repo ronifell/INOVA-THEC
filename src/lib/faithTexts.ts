@@ -1,0 +1,7 @@
+/** Textos da Apresentação de Fé Pública (memorial técnico — PT). */
+
+export const FAITH_TEXT_FROTA =
+  "Bem-vindo à Camada de Auditoria SIG-FROTA. É a terceira via para a confiança pública na gestão de combustíveis. Operando sob os rigorosos padrões da classificação AP-04 — uma tecnologia proprietária registrada no INPI — o SIG-FROTA atua como uma barreira independente entre o governo e os fornecedores. Através da vetorização geográfica ativa e da expertise audiovisual, garante a integridade absoluta dos custos pré-liquidação. A Camada de Auditoria AP-04 protege o CPF do Tesouro e dos funcionários responsáveis pela aprovação, assegurando que cada litro seja convertido em evidência digital indiscutível. Esta é a soberania da supervisão em tempo real.";
+
+export const FAITH_TEXT_PATRIMONIO =
+  "Você acaba de acessar o ecossistema SIG-PATRIMÔNIO. Esta é a solução definitiva para engenharia de integridade. Como a Terceira Via da Confiança Pública, nossa camada de auditoria AP-04, registrada exclusivamente no INPI, transforma bens móveis e imóveis em um histórico de gestão de ativos inviolável por meio da criptografia SHA-256. Além da gestão de ativos, ela oferece segurança jurídica para a inversão do ônus da prova e a automação do MCASP. Essa tecnologia combina validade jurídica com a precisão da engenharia de dados, garantindo à autoridade gestora a certeza matemática quanto à existência física dos ativos.";

@@ -101,6 +101,12 @@ const MILESTONE1_PAT_TILES = [
   },
 ];
 
+/** 7 painéis numa única linha em xl — mesma grelha que a Home (`Dashboard`). */
+const MILESTONE1_HUB_SEVEN = [
+  ...MILESTONE1_FUEL_TILES.map((item) => ({ item, palette: "frota" as const })),
+  ...MILESTONE1_PAT_TILES.map((item) => ({ item, palette: "pat" as const })),
+];
+
 function moduleTitleLine(v: MilestoneHubView): string {
   switch (v) {
     case "governance":
@@ -157,7 +163,17 @@ function scrambleHex(len: number, seed: number, tick: number): string {
   return out;
 }
 
-export default function Milestone1Client() {
+export type Milestone1ClientProps = {
+  /**
+   * Na app principal: não duplicar cabeçalho “INOVA THEC” nem o rodapé fixo com ticker
+   * (usa-se o `Header` da página e o `FooterMarquee` comum).
+   */
+  embeddedInAppShell?: boolean;
+};
+
+export default function Milestone1Client({
+  embeddedInAppShell = false,
+}: Milestone1ClientProps = {}) {
   const triggerHashValidation = useStore((s) => s.triggerHashValidation);
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState<MilestoneHubView>("hub");
@@ -736,7 +752,17 @@ export default function Milestone1Client() {
         ? auditTickerAssets
         : auditTickerFuel;
 
-  const shellClass = `flex h-full min-h-0 w-full flex-col overflow-hidden pb-[clamp(6.5rem,11vh,9.5rem)] ${darkMode ? "text-slate-100" : "text-slate-900"}`;
+  const shellClass = embeddedInAppShell
+    ? `flex h-full min-h-0 w-full flex-col ${
+        activeView === "hub"
+          ? "overflow-x-hidden overflow-y-visible"
+          : "overflow-hidden"
+      } ${darkMode ? "text-slate-100" : "text-slate-900"}`
+    : `flex h-full min-h-0 w-full flex-col ${
+        activeView === "hub"
+          ? "overflow-x-hidden overflow-y-visible"
+          : "overflow-hidden"
+      } pb-[clamp(6.5rem,11vh,9.5rem)] ${darkMode ? "text-slate-100" : "text-slate-900"}`;
 
   if (loading || !demoData) {
     return (
@@ -752,90 +778,77 @@ export default function Milestone1Client() {
   return (
     <div className={shellClass}>
       {activeView === "hub" && (
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-          <header className="shrink-0 text-center">
-            <div className="inline-flex flex-col items-center">
-              <span className="bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-[2.4vh] font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)]">
-                INOVA THEC
-              </span>
-              <span className="text-[1vh] font-mono tracking-[0.32em] text-white/55">
-                Soluções Ltda
-              </span>
-            </div>
-            <p className="mt-[0.6vh] text-[1.05vh] font-mono tracking-[0.18em] text-white/45">
-              Centro de Governança — identidade visual por módulo
-            </p>
-          </header>
-
-          <div className="mt-[1vh] flex min-h-0 flex-1 flex-col gap-[1vh] overflow-hidden">
-            <section className="flex min-h-0 flex-1 flex-col gap-[0.7vh] overflow-hidden">
-              <h2 className="shrink-0 text-center text-[1.05vh] font-mono tracking-[0.22em] text-emerald-400/95">
-                SIG-FROTA — GESTÃO DE COMBUSTÍVEL
-              </h2>
-              <div className="mx-auto grid h-full min-h-0 w-[67.2%] max-w-[96%] flex-1 auto-rows-fr grid-cols-2 gap-[0.9vw] lg:grid-cols-4">
-                {MILESTONE1_FUEL_TILES.map((item, i) => (
-                  <PortalModuleCard
-                    key={item.view}
-                    className="m1-hub-tile-height h-full min-h-0"
-                    index={i}
-                    color={M1_FROTA.color}
-                    colorRgb={M1_FROTA.colorRgb}
-                    icon={item.icon}
-                    title={item.title}
-                    description={item.description}
-                    isFullModule
-                    voiceText={item.voiceText}
-                    onClick={() => {
-                      triggerHashValidation();
-                      setView(item.view);
-                    }}
-                  />
-                ))}
+        <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-visible">
+          {!embeddedInAppShell && (
+            <header className="shrink-0 text-center">
+              <div className="inline-flex flex-col items-center">
+                <span className="bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-[2.4vh] font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)]">
+                  INOVA THEC
+                </span>
+                <span className="text-[1vh] font-mono tracking-[0.32em] text-white/55">
+                  Soluções Ltda
+                </span>
               </div>
-            </section>
+              <p className="mt-[0.6vh] text-[1.05vh] font-mono tracking-[0.18em] text-white/45">
+                Centro de Governança — identidade visual por módulo
+              </p>
+            </header>
+          )}
 
-            <section className="flex min-h-0 flex-1 flex-col gap-[0.7vh] overflow-hidden">
-              <h2 className="shrink-0 text-center text-[1.05vh] font-mono tracking-[0.22em] text-blue-400/95">
-                SIG-PATRIMÔNIO — GESTÃO DE ATIVOS
+          {/* Mesma repartição vertical que `HomeShellLayout` (1.22 cartões : 0.96 faixa inferior) para altura idêntica à Home */}
+          <div
+            className={`flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)] ${
+              embeddedInAppShell ? "mt-0" : "mt-[1vh]"
+            }`}
+          >
+            {!embeddedInAppShell && (
+              <h2 className="shrink-0 text-center text-[1.05vh] font-mono tracking-[0.22em] text-white/55">
+                SIG-FROTA · SIG-PATRIMÔNIO — sete painéis operacionais
               </h2>
-              {/*
-                Same cell width as SIG-FROTA: (100% − 3×gap) / 4 inside the 67.2% row (0.7× prior 96% cap).
-                Three cards centered (symmetric).
-              */}
-              <div className="mx-auto flex h-full min-h-0 w-[67.2%] max-w-[96%] flex-1 flex-col items-stretch justify-center gap-[0.9vw] sm:flex-row sm:flex-wrap sm:justify-center sm:items-stretch lg:flex-nowrap">
-                {MILESTONE1_PAT_TILES.map((item, i) => (
-                  <div
-                    key={item.view}
-                    className="mx-auto flex h-full min-h-0 w-full min-w-0 flex-col max-sm:max-w-[min(100%,22rem)] sm:mx-0 sm:w-[calc((100%-3*0.9vw)/4)] sm:max-w-none sm:flex-[0_0_calc((100%-3*0.9vw)/4)]"
-                  >
-                    <PortalModuleCard
-                      className="m1-hub-tile-height h-full min-h-0 w-full"
-                      index={i + 4}
-                      color={M1_PAT.color}
-                      colorRgb={M1_PAT.colorRgb}
-                      icon={item.icon}
-                      title={item.title}
-                      description={item.description}
-                      isFullModule
-                      voiceText={item.voiceText}
-                      onClick={() => {
-                        triggerHashValidation();
-                        setView(item.view);
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </section>
+            )}
 
-            <div className="flex shrink-0 justify-center py-[0.5vh]">
-              <button
-                type="button"
-                onClick={() => setDarkMode((d) => !d)}
-                className="glass rounded-full border border-white/15 px-[1.2vw] py-[0.6vh] text-[1.05vh] font-mono tracking-[0.15em] text-white/80 hover:border-white/30"
-              >
-                {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
-              </button>
+            <div className="relative z-[12] flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
+              <div className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]">
+                <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                  {MILESTONE1_HUB_SEVEN.map(({ item, palette }, i) => (
+                    <div
+                      key={item.view}
+                      className="relative z-[1] h-full w-[90%] justify-self-center"
+                    >
+                      <PortalModuleCard
+                        index={i}
+                        color={
+                          palette === "frota" ? M1_FROTA.color : M1_PAT.color
+                        }
+                        colorRgb={
+                          palette === "frota"
+                            ? M1_FROTA.colorRgb
+                            : M1_PAT.colorRgb
+                        }
+                        icon={item.icon}
+                        title={item.title}
+                        description={item.description}
+                        isFullModule
+                        voiceText={item.voiceText}
+                        onClick={() => {
+                          triggerHashValidation();
+                          setView(item.view);
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex min-h-0 min-w-0 flex-[0.96] flex-col items-center justify-center overflow-x-hidden overflow-y-auto py-[0.5vh]">
+                <button
+                  type="button"
+                  onClick={() => setDarkMode((d) => !d)}
+                  className="glass rounded-full border border-white/15 px-[1.2vw] py-[0.6vh] text-[1.05vh] font-mono tracking-[0.15em] text-white/80 hover:border-white/30"
+                >
+                  {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1477,46 +1490,48 @@ export default function Milestone1Client() {
         </div>
       )}
 
-      <footer
-        id="m1-sha256-footer-anchor"
-        className="fixed bottom-0 left-0 right-0 z-30 border-t border-white/10 bg-[#0a1220]/95 py-2 backdrop-blur-md"
-      >
-        <div className="overflow-hidden whitespace-nowrap border-b border-white/5 py-1">
-          <motion.div
-            className="inline-block font-mono text-[9px] text-emerald-500/70"
-            animate={{ x: [0, -800] }}
-            transition={{
-              duration: 40,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          >
-            SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA
-            ·{" "}
-          </motion.div>
-        </div>
-        {activeView === "hub" && (
-          <div className="mx-auto max-w-6xl px-4 py-2 text-center">
-            <span className="text-[9px] text-white/35">Resto (SHA-256) </span>
-            <code className="break-all text-[8px] text-cyan-400/80">
-              {hubHashLocked ? hubFixedHash : hubLiveHash}
-            </code>
+      {!embeddedInAppShell && (
+        <footer
+          id="m1-sha256-footer-anchor"
+          className="fixed bottom-0 left-0 right-0 z-30 border-t border-white/10 bg-[#0a1220]/95 py-2 backdrop-blur-md"
+        >
+          <div className="overflow-hidden whitespace-nowrap border-b border-white/5 py-1">
+            <motion.div
+              className="inline-block font-mono text-[9px] text-emerald-500/70"
+              animate={{ x: [0, -800] }}
+              transition={{
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            >
+              SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA
+              ·{" "}
+            </motion.div>
           </div>
-        )}
-        <div className="flex overflow-hidden py-2">
-          <motion.div
-            className="flex gap-16 whitespace-nowrap font-mono text-[9px] text-white/40"
-            animate={{ x: [0, -2400] }}
-            transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-          >
-            <span>{tickerText}</span>
-            <span aria-hidden>{tickerText}</span>
-          </motion.div>
-        </div>
-        <p className="pb-2 text-center text-[8px] font-mono text-white/25">
-          Metodologia apresentada ao TCE-AC
-        </p>
-      </footer>
+          {activeView === "hub" && (
+            <div className="mx-auto max-w-6xl px-4 py-2 text-center">
+              <span className="text-[9px] text-white/35">Resto (SHA-256) </span>
+              <code className="break-all text-[8px] text-cyan-400/80">
+                {hubHashLocked ? hubFixedHash : hubLiveHash}
+              </code>
+            </div>
+          )}
+          <div className="flex overflow-hidden py-2">
+            <motion.div
+              className="flex gap-16 whitespace-nowrap font-mono text-[9px] text-white/40"
+              animate={{ x: [0, -2400] }}
+              transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+            >
+              <span>{tickerText}</span>
+              <span aria-hidden>{tickerText}</span>
+            </motion.div>
+          </div>
+          <p className="pb-2 text-center text-[8px] font-mono text-white/25">
+            Metodologia apresentada ao TCE-AC
+          </p>
+        </footer>
+      )}
 
       <AnimatePresence>
         {ap04ScannerOpen && (

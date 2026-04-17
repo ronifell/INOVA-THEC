@@ -295,6 +295,11 @@ body {
   padding-inline: min(1.25vmin, 1.1vw);
 }
 
+/* Hub Milestone 1 embutido: halos misturam com o cenário 3D sem camada isolada extra */
+.module-cards-glow-gutter.module-cards-glow-gutter--hub {
+  isolation: auto;
+}
+
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
 @keyframes module-card-float {
   0%,
