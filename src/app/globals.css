@@ -287,6 +287,7 @@ body {
 .module-cards-glow-gutter {
   box-sizing: border-box;
   overflow: visible;
+  isolation: isolate;
   /* Respiro para halos — evita o brilho superior dos cards ser cortado pela zona do header */
   padding-top: min(4.75vmin, 4vh);
   padding-bottom: min(2.4vmin, 2.05vh);

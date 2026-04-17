@@ -22,7 +22,7 @@ export default function CursorTrail() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 pointer-events-none z-25 hidden md:block"
+      className="fixed top-0 left-0 pointer-events-none z-[12] hidden md:block"
       style={{ x: sx, y: sy, translateX: "-50%", translateY: "-50%" }}
     >
       <div

@@ -133,7 +133,7 @@ export default function Home() {
           <Header />
 
           <main
-            className={`relative z-10 flex min-h-0 w-full max-w-full flex-1 flex-col pt-[5.85rem] sm:pt-[6.1rem] ${
+            className={`relative z-[35] flex min-h-0 w-full max-w-full flex-1 flex-col pt-[5.85rem] sm:pt-[6.1rem] ${
               activeModule ? "overflow-x-hidden overflow-y-auto" : "overflow-x-visible overflow-y-hidden"
             }`}
           >

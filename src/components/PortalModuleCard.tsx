@@ -191,7 +191,7 @@ export default function PortalModuleCard({
   );
 
   const motionProps = {
-    className: `relative z-[1] h-full min-h-0 w-full group [transform-style:preserve-3d] will-change-transform ${interactive ? "cursor-pointer" : "cursor-default"} ${className}`,
+    className: `relative z-[2] h-full min-h-0 w-full group [transform-style:preserve-3d] will-change-transform ${interactive ? "cursor-pointer" : "cursor-default"} ${className}`,
     initial: { opacity: 1, y: dropOffset, scale: 0.9 },
     animate: {
       opacity: 1,
