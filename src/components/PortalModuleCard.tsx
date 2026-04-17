@@ -27,7 +27,27 @@ export type PortalModuleCardProps = {
   className?: string;
 };
 
-/** Escudo grande atrás do cartão — visível no hover; traços animados (eletricidade). */
+const SHIELD_SILHOUETTE_PATH =
+  "M100 12 L173 50 L173 122 Q173 188 100 248 Q27 188 27 122 L27 50 Z";
+
+/** Polilinhas em zigue-zague — alinhadas ao escudo por trás (mesmo viewBox). */
+const LIGHTNING_PATHS = {
+  boltMain:
+    "M100 0 L103 20 L97 22 L106 46 L93 52 L102 74 L96 80 L108 102 L91 110 L101 134 L95 142 L104 174 L96 186 L100 218",
+  boltForkL: "M96 80 L72 98 L82 112 L64 128 L78 154 L58 172 L70 198",
+  boltForkR: "M108 102 L132 118 L122 136 L142 158 L128 178 L138 204",
+  boltSideL: "M44 38 L58 62 L48 70 L68 104 L42 118 L56 154 L38 176 L52 206",
+  boltSideR: "M156 44 L142 70 L152 76 L132 112 L158 124 L144 162 L162 188 L148 212",
+} as const;
+
+/**
+ * Escudo + relâmpago: dimensões em % do cartão (contentor `relative` do botão).
+ * Valores moderados para não dominar o cartão; afinar w/h % se precisar.
+ */
+const SHIELD_BOX_CLASS =
+  "absolute left-1/2 top-[48%] w-[182%] h-[216%] -translate-x-1/2 -translate-y-1/2";
+
+/** Escudo suave atrás do vidro — sem relâmpago. */
 function HoverShieldBackdrop({
   colorRgb,
   uid,
@@ -37,15 +57,13 @@ function HoverShieldBackdrop({
 }) {
   const fillId = `shield-fill-${uid}`;
   const rimGlowId = `shield-rim-glow-${uid}`;
-  const shieldPath =
-    "M100 12 L173 50 L173 122 Q173 188 100 248 Q27 188 27 122 L27 50 Z";
   return (
     <div
-      className="module-card-shield-backdrop absolute left-1/2 top-[46%] z-0 h-[min(340%,42rem)] w-[min(290%,36rem)] max-h-[520px] -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+      className={`module-card-shield-backdrop ${SHIELD_BOX_CLASS} z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100`}
       aria-hidden
     >
       <svg
-        className="module-card-shield-energy-pulse h-full w-full overflow-visible"
+        className="h-full w-full overflow-visible"
         viewBox="0 0 200 260"
         preserveAspectRatio="xMidYMid meet"
       >
@@ -62,43 +80,121 @@ function HoverShieldBackdrop({
             <stop offset="100%" stopColor="rgb(160, 200, 255)" stopOpacity="0" />
           </linearGradient>
         </defs>
-        <path d={shieldPath} fill={`url(#${fillId})`} />
+        <path d={SHIELD_SILHOUETTE_PATH} fill={`url(#${fillId})`} />
         <path
-          d={shieldPath}
+          d={SHIELD_SILHOUETTE_PATH}
           fill="none"
           stroke={`rgba(${colorRgb},0.35)`}
           strokeWidth="1.1"
         />
         <path
           className="module-card-shield-rim-electric"
-          d={shieldPath}
+          d={SHIELD_SILHOUETTE_PATH}
           fill="none"
           stroke={`url(#${rimGlowId})`}
           strokeWidth="2.2"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <g
-          style={{
-            stroke: `rgba(${colorRgb}, 0.92)`,
-            filter: `drop-shadow(0 0 4px rgba(${colorRgb}, 0.75))`,
-          }}
-        >
+      </svg>
+    </div>
+  );
+}
+
+/** Relâmpago por cima do vidro — z alto, não bloqueia cliques. */
+function HoverLightningFront({ uid }: { uid: string }) {
+  const rimStrikeId = `rim-strike-${uid}`;
+  const fireStroke = "rgb(251, 146, 60)";
+  const hotCore = "#fffbeb";
+  const p = LIGHTNING_PATHS;
+  return (
+    <div
+      className={`pointer-events-none ${SHIELD_BOX_CLASS} z-[20] opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100`}
+      aria-hidden
+    >
+      <svg
+        className="module-card-shield-energy-pulse h-full w-full overflow-visible"
+        viewBox="0 0 200 260"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <defs>
+          <linearGradient id={rimStrikeId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgb(255, 250, 235)" stopOpacity="0" />
+            <stop offset="50%" stopColor="rgb(255, 252, 240)" stopOpacity="1" />
+            <stop offset="100%" stopColor="rgb(255, 245, 220)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path
+          className="module-card-shield-rim-strike"
+          d={SHIELD_SILHOUETTE_PATH}
+          fill="none"
+          stroke={`url(#${rimStrikeId})`}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <g style={{ mixBlendMode: "screen" }}>
           <path
-            className="module-card-bolt module-card-bolt--delay-a"
-            d="M100 28 L103 58 L97 58 L106 98 L94 98 L102 138 L98 138 L105 188"
+            className="module-card-lightning-glow module-card-lightning--a"
+            d={p.boltMain}
+            fill="none"
+            stroke={fireStroke}
           />
           <path
-            className="module-card-bolt module-card-bolt--delay-b"
-            d="M100 28 L97 58 L103 58 L94 98 L106 98 L98 138 L102 138 L95 188"
+            className="module-card-lightning-core module-card-lightning--a"
+            d={p.boltMain}
+            fill="none"
+            stroke={hotCore}
           />
           <path
-            className="module-card-bolt module-card-bolt--delay-c"
-            d="M52 78 L78 108 L68 108 L92 152 L58 152 L88 198"
+            className="module-card-lightning-glow module-card-lightning--a"
+            d={p.boltForkL}
+            fill="none"
+            stroke="#fdba74"
           />
           <path
-            className="module-card-bolt module-card-bolt--delay-d"
-            d="M148 78 L122 108 L132 108 L108 152 L142 152 L112 198"
+            className="module-card-lightning-core module-card-lightning--a"
+            d={p.boltForkL}
+            fill="none"
+            stroke={hotCore}
+          />
+          <path
+            className="module-card-lightning-glow module-card-lightning--a"
+            d={p.boltForkR}
+            fill="none"
+            stroke="#fb923c"
+          />
+          <path
+            className="module-card-lightning-core module-card-lightning--a"
+            d={p.boltForkR}
+            fill="none"
+            stroke={hotCore}
+          />
+        </g>
+        <g style={{ mixBlendMode: "screen" }}>
+          <path
+            className="module-card-lightning-glow module-card-lightning--b"
+            d={p.boltSideL}
+            fill="none"
+            stroke="#fbbf24"
+          />
+          <path
+            className="module-card-lightning-core module-card-lightning--b"
+            d={p.boltSideL}
+            fill="none"
+            stroke={hotCore}
+          />
+          <path
+            className="module-card-lightning-glow module-card-lightning--c"
+            d={p.boltSideR}
+            fill="none"
+            stroke="#f97316"
+          />
+          <path
+            className="module-card-lightning-core module-card-lightning--c"
+            d={p.boltSideR}
+            fill="none"
+            stroke={hotCore}
           />
         </g>
       </svg>
@@ -268,6 +364,7 @@ export default function PortalModuleCard({
           </span>
         </div>
       </div>
+      <HoverLightningFront uid={shieldUid} />
     </>
   );
 

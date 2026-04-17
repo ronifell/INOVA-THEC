@@ -483,14 +483,14 @@ body {
   animation: moduleIconRingWave 5s ease-out infinite;
 }
 
-/* Escudo ao hover — traços e raios com movimento (eletricidade) */
+/* Escudo ao hover — relâmpago (flashes bruscos + traços tipo fogo) */
 .module-card-shield-backdrop {
   pointer-events: none;
 }
 
 .module-card-shield-rim-electric {
   stroke-dasharray: 12 20;
-  animation: module-card-shield-rim-flow 2.4s linear infinite;
+  animation: module-card-shield-rim-flow 4s linear infinite;
 }
 
 @keyframes module-card-shield-rim-flow {
@@ -499,54 +499,208 @@ body {
   }
 }
 
-.module-card-shield-energy-pulse {
-  animation: module-card-shield-energy-flicker 2.8s ease-in-out infinite;
+.module-card-shield-rim-strike {
+  animation: module-card-shield-rim-lightning 4.8s steps(1, end) infinite;
 }
 
-@keyframes module-card-shield-energy-flicker {
+@keyframes module-card-shield-rim-lightning {
+  0%,
+  88%,
+  100% {
+    opacity: 0.35;
+    filter: brightness(1);
+  }
+  89% {
+    opacity: 1;
+    filter: brightness(2.2) drop-shadow(0 0 6px rgba(255, 250, 220, 0.95));
+  }
+  90% {
+    opacity: 0.2;
+    filter: brightness(0.8);
+  }
+  91% {
+    opacity: 0.95;
+    filter: brightness(2);
+  }
+  93% {
+    opacity: 0.15;
+  }
+}
+
+.module-card-shield-energy-pulse {
+  animation: module-card-shield-sky-flash 5.5s steps(1, end) infinite;
+}
+
+@keyframes module-card-shield-sky-flash {
   0%,
   100% {
-    opacity: 0.72;
-    filter: brightness(0.95);
+    filter: brightness(1) saturate(1);
   }
-  33% {
-    opacity: 1;
-    filter: brightness(1.15);
+  8% {
+    filter: brightness(1.35) saturate(1.2);
   }
-  66% {
-    opacity: 0.88;
-    filter: brightness(1.05);
+  9% {
+    filter: brightness(2.2) saturate(1.45);
+  }
+  11% {
+    filter: brightness(0.9) saturate(1);
   }
 }
 
-.module-card-bolt {
+/* Relâmpagos — piscar em ~1–3 frames + ramificações visíveis */
+.module-card-lightning-glow {
   fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-width: 4.5;
+  opacity: 0.85;
+  animation: lightning-strike-fire 3.8s steps(1, end) infinite;
+}
+
+.module-card-lightning-core {
+  fill: none;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
   stroke-width: 1.35;
-  stroke-dasharray: 2 14;
-  animation: module-card-bolt-flow 0.95s linear infinite;
+  animation: lightning-strike-core 3.8s steps(1, end) infinite;
 }
 
-.module-card-bolt--delay-a {
-  animation-delay: -0.2s;
+.module-card-lightning-glow.module-card-lightning--b {
+  animation-name: lightning-strike-fire-b;
+  animation-duration: 4.4s;
 }
 
-.module-card-bolt--delay-b {
-  animation-delay: -0.45s;
+.module-card-lightning-core.module-card-lightning--b {
+  animation-name: lightning-strike-core-b;
+  animation-duration: 4.4s;
 }
 
-.module-card-bolt--delay-c {
-  animation-delay: -0.68s;
+.module-card-lightning-glow.module-card-lightning--c {
+  animation-name: lightning-strike-fire-c;
+  animation-duration: 5s;
 }
 
-.module-card-bolt--delay-d {
-  animation-delay: -0.9s;
+.module-card-lightning-core.module-card-lightning--c {
+  animation-name: lightning-strike-core-c;
+  animation-duration: 5s;
 }
 
-@keyframes module-card-bolt-flow {
-  to {
-    stroke-dashoffset: -64;
+/* Faísca quente (laranja/amarelo) — halo largo */
+@keyframes lightning-strike-fire {
+  0%,
+  92%,
+  100% {
+    opacity: 0;
+    filter: blur(1px);
+  }
+  93% {
+    opacity: 0.95;
+    filter: blur(0) brightness(2.2) drop-shadow(0 0 10px rgba(251, 191, 36, 0.95));
+  }
+  94% {
+    opacity: 0.15;
+  }
+  95% {
+    opacity: 1;
+    filter: brightness(2.5) drop-shadow(0 0 14px rgba(249, 115, 22, 0.9));
+  }
+  97% {
+    opacity: 0;
+  }
+}
+
+@keyframes lightning-strike-core {
+  0%,
+  92%,
+  100% {
+    opacity: 0;
+  }
+  93% {
+    opacity: 1;
+    filter: brightness(3) drop-shadow(0 0 4px #fff);
+  }
+  94% {
+    opacity: 0;
+  }
+  95% {
+    opacity: 1;
+    filter: brightness(2.5);
+  }
+  97% {
+    opacity: 0;
+  }
+}
+
+@keyframes lightning-strike-fire-b {
+  0%,
+  94%,
+  100% {
+    opacity: 0;
+  }
+  95% {
+    opacity: 0.92;
+    filter: brightness(2.1) drop-shadow(0 0 12px rgba(253, 186, 116, 0.95));
+  }
+  96% {
+    opacity: 0;
+  }
+  97% {
+    opacity: 0.85;
+    filter: brightness(2.4);
+  }
+  98% {
+    opacity: 0;
+  }
+}
+
+@keyframes lightning-strike-core-b {
+  0%,
+  94%,
+  100% {
+    opacity: 0;
+  }
+  95% {
+    opacity: 1;
+    filter: brightness(3);
+  }
+  96% {
+    opacity: 0;
+  }
+  97% {
+    opacity: 1;
+  }
+  98% {
+    opacity: 0;
+  }
+}
+
+@keyframes lightning-strike-fire-c {
+  0%,
+  91%,
+  100% {
+    opacity: 0;
+  }
+  92% {
+    opacity: 0.88;
+    filter: brightness(2) drop-shadow(0 0 10px rgba(254, 243, 199, 0.95));
+  }
+  94% {
+    opacity: 0;
+  }
+}
+
+@keyframes lightning-strike-core-c {
+  0%,
+  91%,
+  100% {
+    opacity: 0;
+  }
+  92% {
+    opacity: 1;
+    filter: brightness(3);
+  }
+  94% {
+    opacity: 0;
   }
 }
 
