@@ -84,7 +84,7 @@ export default function AuditPanelExtension() {
         <h3 className="audit-panel-title max-w-full shrink-0">
           RASTREADOR DE CADEIA
         </h3>
-        <p className="audit-panel-desc max-w-none shrink-0 text-left">
+        <p className="audit-panel-subtitle max-w-none shrink-0 text-left">
           Verificação sequencial dos elos da custódia AP-04.
         </p>
         <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col [gap:min(2%,1.8vmin)]">
@@ -111,7 +111,7 @@ export default function AuditPanelExtension() {
             type="button"
             disabled={scanning}
             onClick={runChainScan}
-            className="audit-action-btn z-10 w-full shrink-0 rounded-lg border border-amber-400/35 bg-transparent font-mono font-semibold uppercase tracking-wider text-white transition hover:border-amber-300/55 hover:bg-amber-500/10 disabled:opacity-50 sm:w-max sm:max-w-full"
+            className="audit-action-btn audit-action-btn--neon-amber z-10 w-full shrink-0 rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-amber-500/12 disabled:opacity-50 sm:w-max sm:max-w-full"
           >
             {scanning ? "Varrendo…" : "Varredura de elos"}
           </button>
@@ -122,7 +122,7 @@ export default function AuditPanelExtension() {
         <h3 className="audit-panel-title max-w-full">
           CERTIFICADOR DE TIMESTAMP
         </h3>
-        <p className="audit-panel-desc max-w-none text-center">
+        <p className="audit-panel-subtitle max-w-none text-center">
           Carimbo temporal alinhado a UTC e protocolo de auditoria.
         </p>
         <div className="flex flex-col items-center [gap:min(2.5%,2vmin)]">
@@ -137,7 +137,7 @@ export default function AuditPanelExtension() {
           <button
             type="button"
             onClick={issueStamp}
-            className="audit-action-btn rounded-lg border border-violet-400/35 bg-transparent font-mono font-semibold uppercase tracking-wider text-white transition hover:border-violet-300/55 hover:bg-violet-500/10"
+            className="audit-action-btn audit-action-btn--neon-violet rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-violet-500/12"
           >
             Emitir carimbo
           </button>
@@ -147,7 +147,7 @@ export default function AuditPanelExtension() {
                 initial={{ opacity: 0, y: "0.45vmin" }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="max-w-[min(100%,92%)] text-center font-mono leading-snug text-violet-200/90 [font-size:min(1.15vmin,0.9vw)] md:[font-size:min(1.22vmin,0.96vw)]"
+                className="audit-feedback-box max-w-[min(100%,92%)] text-center font-mono leading-relaxed text-violet-100/95 [font-size:min(1.2vmin,0.94vw)] md:[font-size:min(1.28vmin,1vw)]"
               >
                 Selo RFC 3161 (simulado): {stampIssued}
               </motion.p>
@@ -160,7 +160,7 @@ export default function AuditPanelExtension() {
         <h3 className="audit-panel-title max-w-full">
           AUDITORIA DE BACKUP
         </h3>
-        <p className="audit-panel-desc max-w-none text-right">
+        <p className="audit-panel-subtitle max-w-none text-right">
           Conferência de redundância e integridade das réplicas.
         </p>
         <div className="flex flex-col items-stretch [gap:min(2.5%,2vmin)] lg:items-end">
@@ -184,7 +184,7 @@ export default function AuditPanelExtension() {
             type="button"
             disabled={verifying}
             onClick={runBackupAudit}
-            className="audit-action-btn self-stretch rounded-lg border border-cyan-400/35 bg-transparent font-mono font-semibold uppercase tracking-wider text-white transition hover:border-cyan-300/55 hover:bg-cyan-500/10 disabled:opacity-50 lg:self-end"
+            className="audit-action-btn audit-action-btn--neon-cyan self-stretch rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-cyan-500/12 disabled:opacity-50 lg:self-end"
           >
             {verifying ? "Auditando…" : "Verificar redundância"}
           </button>

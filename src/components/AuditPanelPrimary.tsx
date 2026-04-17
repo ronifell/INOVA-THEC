@@ -101,7 +101,7 @@ export default function AuditPanelPrimary() {
         <h3 className="audit-panel-title max-w-full">
           SIMULADOR DE FÉ PÚBLICA
         </h3>
-        <p className="audit-panel-desc max-w-none text-left">
+        <p className="audit-panel-subtitle max-w-none text-left">
           Demonstração técnica do selo SHA-256 e da cadeia de custódia.
         </p>
         <div className="mt-[min(2.4%,2.1vmin)] flex flex-wrap [gap:min(2.8%,2.4vmin)]">
@@ -109,7 +109,7 @@ export default function AuditPanelPrimary() {
             type="button"
             disabled={isGenerating}
             onClick={handleGerarProva}
-            className="audit-action-btn relative overflow-hidden rounded-lg border border-emerald-400/35 bg-transparent font-mono font-semibold uppercase tracking-wider text-white transition hover:border-emerald-300/60 hover:bg-emerald-500/10 disabled:opacity-60"
+            className="audit-action-btn audit-action-btn--neon-emerald relative overflow-hidden rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-emerald-500/12 disabled:opacity-60"
           >
             {isGenerating ? "Gerando…" : "Gerar prova"}
             <AnimatePresence>
@@ -136,7 +136,7 @@ export default function AuditPanelPrimary() {
           <button
             type="button"
             onClick={handleSimularFraude}
-            className="audit-action-btn rounded-lg border border-red-400/35 bg-transparent font-mono font-semibold uppercase tracking-wider text-white transition hover:border-red-300/55 hover:bg-red-500/10"
+            className="audit-action-btn audit-action-btn--neon-red rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-red-500/12"
           >
             Simular fraude
           </button>
@@ -144,7 +144,7 @@ export default function AuditPanelPrimary() {
         <AnimatePresence>
           {hash && (
             <motion.div
-              className="min-h-0 max-h-[min(22vh,35%)] overflow-hidden rounded-md border border-white/10 [padding:min(2.5%,2vmin)]"
+              className="audit-feedback-box min-h-0 max-h-[min(24vh,38%)] overflow-auto rounded-md border border-emerald-400/25 bg-black/15"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0 }}
@@ -161,31 +161,31 @@ export default function AuditPanelPrimary() {
         <h3 className="audit-panel-title max-w-full shrink-0">
           MONITOR DE INTEGRIDADE
         </h3>
-        <p className="audit-panel-desc audit-panel-desc--compact-monitor max-w-none shrink-0 text-center">
+        <p className="audit-panel-subtitle max-w-none shrink-0 text-center">
           Saúde do sistema e processos auditados em tempo real.
         </p>
         <div className="mt-[min(2%,1.6vmin)] flex min-h-0 w-full flex-col items-center gap-[min(2.2%,1.9vmin)]">
-          <div className="audit-system-status-pill mx-auto flex shrink-0 items-center justify-center gap-[min(2.5%,2.2vmin)]">
+          <div className="audit-system-status-pill audit-system-status-pill--white mx-auto flex shrink-0 items-center justify-center gap-[min(2.5%,2.2vmin)]">
             <span
-              className="shrink-0 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_min(14px,1.8vmin)_rgba(52,211,153,0.85)] [height:min(1.45vmin,1.15vw)] [width:min(1.45vmin,1.15vw)] md:[height:min(1.6vmin,1.25vw)] md:[width:min(1.6vmin,1.25vw)]"
+              className="audit-system-status-pill__dot--white shrink-0 animate-pulse rounded-full [height:min(1.45vmin,1.15vw)] [width:min(1.45vmin,1.15vw)] md:[height:min(1.6vmin,1.25vw)] md:[width:min(1.6vmin,1.25vw)]"
               aria-hidden
             />
             <span className="audit-system-status-pill__label">Sistema operacional</span>
           </div>
-          <div className="audit-card-inner audit-card-inner--monitor mx-auto w-full shrink-0 space-y-[min(1.6%,1.4vmin)] rounded-md border border-white/12 bg-white/[0.04]">
+          <div className="audit-card-inner audit-card-inner--monitor audit-card-inner--monitor-white mx-auto w-full shrink-0 space-y-[min(1.6%,1.4vmin)] rounded-md">
             <div className="grid w-full grid-cols-[minmax(0,1fr)_min(12ch,14rem)] items-center gap-x-[min(4%,3.5vmin)] md:grid-cols-[minmax(0,1fr)_min(13ch,15rem)]">
-              <span className="audit-monitor-metric-label min-w-0 text-left font-mono uppercase leading-snug tracking-wide text-white/88">
+              <span className="audit-monitor-metric-label min-w-0 text-left font-mono uppercase leading-snug tracking-wide">
                 Processos auditados
               </span>
-              <span className="audit-monitor-metric-value text-right font-mono tabular-nums tracking-tight text-white">
+              <span className="audit-monitor-metric-value text-right font-mono tabular-nums tracking-tight">
                 {auditedFmt}
               </span>
             </div>
             <div className="grid w-full grid-cols-[minmax(0,1fr)_min(12ch,14rem)] items-center gap-x-[min(4%,3.5vmin)] md:grid-cols-[minmax(0,1fr)_min(13ch,15rem)]">
-              <span className="audit-monitor-metric-label min-w-0 text-left font-mono uppercase leading-snug tracking-wide text-white/88">
+              <span className="audit-monitor-metric-label min-w-0 text-left font-mono uppercase leading-snug tracking-wide">
                 Índice de saúde
               </span>
-              <span className="audit-monitor-metric-value text-right font-mono tabular-nums tracking-tight text-emerald-200">
+              <span className="audit-monitor-metric-value text-right font-mono tabular-nums tracking-tight">
                 {healthPulse.toFixed(1)}%
               </span>
             </div>
@@ -197,7 +197,7 @@ export default function AuditPanelPrimary() {
         <h3 className="audit-panel-title max-w-full">
           VALIDADOR DE DOCUMENTOS
         </h3>
-        <p className="audit-panel-desc max-w-none text-right">
+        <p className="audit-panel-subtitle max-w-none text-right">
           Perícia de autenticidade por hash SHA-256.
         </p>
         <div className="mt-[min(1.2%,1vmin)] flex flex-col items-stretch [gap:min(3%,2.6vmin)] lg:items-end">
@@ -213,18 +213,18 @@ export default function AuditPanelPrimary() {
               setValidationMsg(null);
             }}
             placeholder="Cole o hash SHA-256 do relatório"
-            className="audit-input-field w-full max-w-full rounded-lg border border-white/15 bg-transparent text-left font-mono text-white placeholder:text-white/35 focus:border-white/35 focus:outline-none focus:ring-1 focus:ring-white/20 lg:max-w-[min(100%,32vw)]"
+            className="audit-input-field w-full max-w-full rounded-lg border border-white/25 bg-black/10 text-left font-mono text-white placeholder:text-white/40 focus:border-cyan-300/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/25 lg:max-w-[min(100%,32vw)]"
             autoComplete="off"
           />
           <button
             type="button"
             onClick={handleValidarDocumento}
-            className="audit-action-btn self-stretch rounded-lg border border-cyan-400/35 bg-transparent font-mono font-semibold uppercase tracking-wider text-white transition hover:border-cyan-300/55 hover:bg-cyan-500/10 lg:self-end"
+            className="audit-action-btn audit-action-btn--neon-cyan self-stretch rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-cyan-500/12 lg:self-end"
           >
             Validar documento
           </button>
           {validationMsg && (
-            <p className="audit-panel-desc !text-white/92 text-left leading-relaxed lg:text-right">{validationMsg}</p>
+            <p className="audit-panel-desc audit-feedback-box !text-white/92 text-left lg:text-right">{validationMsg}</p>
           )}
         </div>
       </div>

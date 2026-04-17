@@ -624,33 +624,120 @@ body {
 
 .audit-action-btn {
   box-sizing: border-box;
-  padding-inline: min(6.5%, 5.4vmin);
-  padding-block: min(3.6%, 3.1vmin);
-  font-size: min(1.72vmin, 1.28vw);
-  min-height: min(6.6vmin, 52px);
+  padding-inline: min(7%, 5.8vmin);
+  padding-block: min(4.2%, 3.65vmin);
+  font-size: min(1.75vmin, 1.3vw);
+  font-weight: 600;
+  line-height: 1.35;
+  min-height: min(8.2vmin, 58px);
+  white-space: normal;
+  word-break: break-word;
 }
 
 @media (min-width: 1024px) {
   .audit-action-btn {
-    font-size: min(1.88vmin, 1.38vw);
-    min-height: min(6.9vmin, 54px);
+    font-size: min(1.9vmin, 1.4vw);
+    min-height: min(8.6vmin, 60px);
   }
+}
+
+/* Neon por cor — bordas fortes + glow */
+.audit-action-btn--neon-emerald {
+  border-width: 2px !important;
+  border-color: rgba(52, 211, 153, 0.95) !important;
+  box-shadow:
+    0 0 14px rgba(16, 185, 129, 0.55),
+    0 0 28px rgba(16, 185, 129, 0.25),
+    inset 0 0 22px rgba(16, 185, 129, 0.08);
+}
+
+.audit-action-btn--neon-red {
+  border-width: 2px !important;
+  border-color: rgba(248, 113, 113, 0.95) !important;
+  box-shadow:
+    0 0 14px rgba(239, 68, 68, 0.5),
+    0 0 28px rgba(239, 68, 68, 0.22),
+    inset 0 0 22px rgba(239, 68, 68, 0.07);
+}
+
+.audit-action-btn--neon-cyan {
+  border-width: 2px !important;
+  border-color: rgba(34, 211, 238, 0.95) !important;
+  box-shadow:
+    0 0 14px rgba(6, 182, 212, 0.5),
+    0 0 28px rgba(6, 182, 212, 0.22),
+    inset 0 0 22px rgba(6, 182, 212, 0.08);
+}
+
+.audit-action-btn--neon-amber {
+  border-width: 2px !important;
+  border-color: rgba(251, 191, 36, 0.95) !important;
+  box-shadow:
+    0 0 14px rgba(245, 158, 11, 0.5),
+    0 0 28px rgba(245, 158, 11, 0.22),
+    inset 0 0 22px rgba(245, 158, 11, 0.07);
+}
+
+.audit-action-btn--neon-violet {
+  border-width: 2px !important;
+  border-color: rgba(167, 139, 250, 0.95) !important;
+  box-shadow:
+    0 0 14px rgba(139, 92, 246, 0.5),
+    0 0 28px rgba(139, 92, 246, 0.22),
+    inset 0 0 22px rgba(139, 92, 246, 0.08);
 }
 
 .audit-input-field {
   box-sizing: border-box;
-  padding-inline: min(5%, 4.1vmin);
-  padding-block: min(3.1%, 2.75vmin);
-  font-size: min(1.6vmin, 1.2vw);
+  min-height: min(8vmin, 52px);
+  padding-inline: min(5.2%, 4.4vmin);
+  padding-block: min(3.8%, 3.25vmin);
+  font-size: min(1.65vmin, 1.22vw);
+  line-height: 1.4;
 }
 
 @media (min-width: 1024px) {
   .audit-input-field {
-    font-size: min(1.75vmin, 1.28vw);
+    font-size: min(1.78vmin, 1.3vw);
+    min-height: min(8.2vmin, 54px);
   }
 }
 
-/* Parágrafos sob os títulos — largura total, leitura confortável */
+/* Caixas de resposta / mensagens — altura mínima para não cortar texto */
+.audit-feedback-box {
+  box-sizing: border-box;
+  min-height: min(7vmin, 3.25rem);
+  padding: min(3.2%, 2.75vmin) min(4%, 3.2vmin);
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+/* Subtítulos dos 6 pilares — um único ritmo (ref.: linha do Monitor) */
+.audit-panel-subtitle {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  font-size: clamp(0.88rem, 1.9vmin, 1.04rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+@media (min-width: 768px) {
+  .audit-panel-subtitle {
+    font-size: clamp(0.92rem, 2vmin, 1.1rem);
+    line-height: 1.52;
+  }
+}
+
+@media (min-width: 1024px) {
+  .audit-panel-subtitle {
+    font-size: clamp(0.94rem, 2.05vmin, 1.12rem);
+  }
+}
+
+/* Textos longos / mensagens de feedback (não subtítulos de secção) */
 .audit-panel-desc {
   width: 100%;
   max-width: 100%;
@@ -672,18 +759,6 @@ body {
   }
 }
 
-/* Subtítulo só do Monitor — menos altura para libertar o cartão de métricas */
-.audit-panel-column-monitor .audit-panel-desc--compact-monitor {
-  font-size: clamp(0.82rem, 1.75vmin, 0.95rem);
-  line-height: 1.38;
-}
-
-@media (min-width: 768px) {
-  .audit-panel-column-monitor .audit-panel-desc--compact-monitor {
-    font-size: clamp(0.88rem, 1.85vmin, 1.02rem);
-  }
-}
-
 .audit-card-inner {
   box-sizing: border-box;
   width: 100%;
@@ -695,21 +770,34 @@ body {
     0 min(0.75vmin, 8px) min(2.6vmin, 26px) rgba(0, 0, 0, 0.32);
 }
 
-/* Painel central do Monitor — compacto para caber sem cortar a borda inferior */
+/* Painel central do Monitor — identidade branca + neon branco */
 .audit-card-inner--monitor {
   max-width: min(100%, 34rem);
   padding-inline: min(5%, 4.2vmin);
   padding-block: min(3.4%, 2.85vmin);
 }
 
+.audit-card-inner--monitor-white {
+  border-width: 2px !important;
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  box-shadow:
+    0 0 18px rgba(255, 255, 255, 0.22),
+    0 0 36px rgba(255, 255, 255, 0.08),
+    inset 0 0 28px rgba(255, 255, 255, 0.06);
+}
+
 .audit-monitor-metric-label {
   font-size: min(1.58vmin, 1.18vw);
   line-height: 1.25;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .audit-monitor-metric-value {
   font-size: min(1.72vmin, 1.28vw);
   line-height: 1.2;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
 }
 
 @media (min-width: 1024px) {
@@ -722,7 +810,7 @@ body {
   }
 }
 
-/* Faixa de status (verde) — leitura confortável */
+/* Faixa de status — base (outras colunas podem usar verde) */
 .audit-system-status-pill {
   box-sizing: border-box;
   display: flex;
@@ -738,12 +826,34 @@ body {
   box-shadow: 0 0 min(16px, 2vmin) rgba(16, 185, 129, 0.12);
 }
 
+/* Monitor: faixa e indicador — neon branco */
+.audit-system-status-pill--white {
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 16px rgba(255, 255, 255, 0.35),
+    0 0 32px rgba(255, 255, 255, 0.12),
+    inset 0 0 26px rgba(255, 255, 255, 0.06);
+}
+
+.audit-system-status-pill__dot--white {
+  background: #ffffff !important;
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.95),
+    0 0 22px rgba(255, 255, 255, 0.45) !important;
+}
+
 .audit-system-status-pill__label {
   font-size: clamp(0.8rem, 1.72vmin, 0.94rem);
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.98);
+}
+
+.audit-system-status-pill--white .audit-system-status-pill__label {
+  color: #ffffff;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.45);
 }
 
 @media (min-width: 768px) {
