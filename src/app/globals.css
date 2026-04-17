@@ -483,6 +483,73 @@ body {
   animation: moduleIconRingWave 5s ease-out infinite;
 }
 
+/* Escudo ao hover — traços e raios com movimento (eletricidade) */
+.module-card-shield-backdrop {
+  pointer-events: none;
+}
+
+.module-card-shield-rim-electric {
+  stroke-dasharray: 12 20;
+  animation: module-card-shield-rim-flow 2.4s linear infinite;
+}
+
+@keyframes module-card-shield-rim-flow {
+  to {
+    stroke-dashoffset: -128;
+  }
+}
+
+.module-card-shield-energy-pulse {
+  animation: module-card-shield-energy-flicker 2.8s ease-in-out infinite;
+}
+
+@keyframes module-card-shield-energy-flicker {
+  0%,
+  100% {
+    opacity: 0.72;
+    filter: brightness(0.95);
+  }
+  33% {
+    opacity: 1;
+    filter: brightness(1.15);
+  }
+  66% {
+    opacity: 0.88;
+    filter: brightness(1.05);
+  }
+}
+
+.module-card-bolt {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.35;
+  stroke-dasharray: 2 14;
+  animation: module-card-bolt-flow 0.95s linear infinite;
+}
+
+.module-card-bolt--delay-a {
+  animation-delay: -0.2s;
+}
+
+.module-card-bolt--delay-b {
+  animation-delay: -0.45s;
+}
+
+.module-card-bolt--delay-c {
+  animation-delay: -0.68s;
+}
+
+.module-card-bolt--delay-d {
+  animation-delay: -0.9s;
+}
+
+@keyframes module-card-bolt-flow {
+  to {
+    stroke-dashoffset: -64;
+  }
+}
+
 /* ===== GLASSMORPHISM ===== */
 .glass {
   background: rgba(255, 255, 255, 0.05);

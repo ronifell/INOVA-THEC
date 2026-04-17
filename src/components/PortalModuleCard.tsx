@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, type CSSProperties } from "react";
+import { useCallback, useId, useRef, type CSSProperties } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useVoice } from "@/hooks/useVoice";
 
@@ -27,6 +27,85 @@ export type PortalModuleCardProps = {
   className?: string;
 };
 
+/** Escudo grande atrás do cartão — visível no hover; traços animados (eletricidade). */
+function HoverShieldBackdrop({
+  colorRgb,
+  uid,
+}: {
+  colorRgb: string;
+  uid: string;
+}) {
+  const fillId = `shield-fill-${uid}`;
+  const rimGlowId = `shield-rim-glow-${uid}`;
+  const shieldPath =
+    "M100 12 L173 50 L173 122 Q173 188 100 248 Q27 188 27 122 L27 50 Z";
+  return (
+    <div
+      className="module-card-shield-backdrop absolute left-1/2 top-[46%] z-0 h-[min(340%,42rem)] w-[min(290%,36rem)] max-h-[520px] -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+      aria-hidden
+    >
+      <svg
+        className="module-card-shield-energy-pulse h-full w-full overflow-visible"
+        viewBox="0 0 200 260"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <defs>
+          <linearGradient id={fillId} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor={`rgb(${colorRgb})`} stopOpacity="0.07" />
+            <stop offset="42%" stopColor={`rgb(${colorRgb})`} stopOpacity="0.2" />
+            <stop offset="100%" stopColor={`rgb(${colorRgb})`} stopOpacity="0.05" />
+          </linearGradient>
+          <linearGradient id={rimGlowId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgb(200, 230, 255)" stopOpacity="0" />
+            <stop offset="35%" stopColor="rgb(220, 240, 255)" stopOpacity="0.95" />
+            <stop offset="70%" stopColor="rgb(180, 210, 255)" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="rgb(160, 200, 255)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={shieldPath} fill={`url(#${fillId})`} />
+        <path
+          d={shieldPath}
+          fill="none"
+          stroke={`rgba(${colorRgb},0.35)`}
+          strokeWidth="1.1"
+        />
+        <path
+          className="module-card-shield-rim-electric"
+          d={shieldPath}
+          fill="none"
+          stroke={`url(#${rimGlowId})`}
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <g
+          style={{
+            stroke: `rgba(${colorRgb}, 0.92)`,
+            filter: `drop-shadow(0 0 4px rgba(${colorRgb}, 0.75))`,
+          }}
+        >
+          <path
+            className="module-card-bolt module-card-bolt--delay-a"
+            d="M100 28 L103 58 L97 58 L106 98 L94 98 L102 138 L98 138 L105 188"
+          />
+          <path
+            className="module-card-bolt module-card-bolt--delay-b"
+            d="M100 28 L97 58 L103 58 L94 98 L106 98 L98 138 L102 138 L95 188"
+          />
+          <path
+            className="module-card-bolt module-card-bolt--delay-c"
+            d="M52 78 L78 108 L68 108 L92 152 L58 152 L88 198"
+          />
+          <path
+            className="module-card-bolt module-card-bolt--delay-d"
+            d="M148 78 L122 108 L132 108 L108 152 L142 152 L112 198"
+          />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 /**
  * Same visuals as {@link ModuleCard}: glass sphere, neon border blink, icon wave ring, tilt parallax.
  * Use for Milestone hubs and any portal tile that must match the main dashboard cards.
@@ -46,6 +125,7 @@ export default function PortalModuleCard({
   disabled = false,
   className = "",
 }: PortalModuleCardProps) {
+  const shieldUid = useId().replace(/:/g, "");
   const { speak } = useVoice();
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
   const rotateX = useMotionValue(0);
@@ -96,8 +176,9 @@ export default function PortalModuleCard({
 
   const cardInner = (
     <>
+      <HoverShieldBackdrop colorRgb={colorRgb} uid={shieldUid} />
       <div
-        className={`relative flex h-full min-h-0 w-full flex-col rounded-[8%] p-[5%] text-[100%] transition-all duration-500 module-card-float-${index % 3}`}
+        className={`relative z-[3] flex h-full min-h-0 w-full flex-col rounded-[min(1rem,3vmin)] p-[5%] text-[100%] transition-all duration-500 module-card-float-${index % 3}`}
         style={
           {
             "--card-rgb": colorRgb,
@@ -109,13 +190,13 @@ export default function PortalModuleCard({
         }
       >
         <div
-          className="module-card-border-blink pointer-events-none absolute inset-0 z-[1] rounded-[8%]"
+          className="module-card-border-blink pointer-events-none absolute inset-0 z-[1] rounded-[min(1rem,3vmin)]"
           style={{ "--card-rgb": colorRgb } as CSSProperties}
           aria-hidden
         />
 
         <div
-          className="absolute inset-0 rounded-[8%] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="absolute inset-0 rounded-[min(1rem,3vmin)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{
             boxShadow: `inset 0 0 30px rgba(${colorRgb}, 0.1), 0 0 40px rgba(${colorRgb}, 0.15), 0 0 80px rgba(${colorRgb}, 0.05)`,
           }}
@@ -191,7 +272,7 @@ export default function PortalModuleCard({
   );
 
   const motionProps = {
-    className: `relative z-[2] h-full min-h-0 w-full group [transform-style:preserve-3d] will-change-transform ${interactive ? "cursor-pointer" : "cursor-default"} ${className}`,
+    className: `relative z-[2] h-full min-h-0 w-full overflow-visible group [transform-style:preserve-3d] will-change-transform ${interactive ? "cursor-pointer" : "cursor-default"} ${className}`,
     initial: { opacity: 1, y: dropOffset, scale: 0.9 },
     animate: {
       opacity: 1,
