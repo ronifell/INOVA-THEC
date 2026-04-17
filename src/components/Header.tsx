@@ -129,7 +129,7 @@ export default function Header() {
       className="header-ap04-shell fixed top-0 left-0 right-0 z-40 w-full antialiased"
       variants={appShellHeader}
     >
-      <div className="mx-auto grid w-full max-w-[100vw] grid-cols-1 gap-2 px-4 pb-1.5 pt-1.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.22fr)_minmax(0,1fr)] md:gap-x-6 md:gap-y-2 md:px-10 md:pb-2 md:pt-2 lg:gap-x-10 lg:px-12">
+      <div className="mx-auto grid w-full max-w-[98%] grid-cols-1 gap-2 px-[2.5%] pb-1.5 pt-1.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.22fr)_minmax(0,1fr)] md:gap-x-6 md:gap-y-2 md:pb-2 md:pt-2 lg:gap-x-10">
         {/* Esquerda — Cadeia de custódia (espelho tipográfico do Protocolo) */}
         <div className="order-2 flex min-w-0 flex-col justify-start md:order-1 md:pt-0.5 md:pr-2 lg:pr-4">
           <h2 className="header-ap04-pillar-title translate-y-0.5 text-left">

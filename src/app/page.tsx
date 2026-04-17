@@ -15,8 +15,8 @@ import { appShellContainer, appShellFadeUp } from "@/lib/motionVariants";
 import BootScreen from "@/components/BootScreen";
 
 const SKIP_BOOT_ONCE_KEY = "skip-home-boot-once";
-const APP_STAGE_WIDTH = 1920;
-const APP_STAGE_HEIGHT = 1080;
+const APP_STAGE_WIDTH = 2240;
+const APP_STAGE_BASE_HEIGHT = 1080;
 
 const Background3D = dynamic(() => import("@/components/Background3D"), {
   ssr: false,
@@ -67,6 +67,7 @@ export default function Home() {
   const isGlitching = useStore((s) => s.isGlitching);
   const [mounted, setMounted] = useState(false);
   const [stageScale, setStageScale] = useState(1);
+  const [stageHeight, setStageHeight] = useState(APP_STAGE_BASE_HEIGHT);
   /** Painel montado ao atingir 100% (cartões); overlay do boot some por cima com fade. */
   const [appRevealed, setAppRevealed] = useState(false);
   const [bootOverlay, setBootOverlay] = useState(true);
@@ -94,8 +95,8 @@ export default function Home() {
   useEffect(() => {
     const updateStageScale = () => {
       const widthScale = window.innerWidth / APP_STAGE_WIDTH;
-      const heightScale = window.innerHeight / APP_STAGE_HEIGHT;
-      setStageScale(Math.min(widthScale, heightScale));
+      setStageScale(widthScale);
+      setStageHeight(window.innerHeight / widthScale);
     };
 
     updateStageScale();
@@ -119,12 +120,24 @@ export default function Home() {
   }
 
   return (
-    <div className={`fixed inset-0 overflow-hidden ${isGlitching ? "glitch-active" : ""}`}>
-      <div className="absolute left-1/2 top-1/2" style={{ transform: `translate(-50%, -50%) scale(${stageScale})`, transformOrigin: "center center", width: APP_STAGE_WIDTH, height: APP_STAGE_HEIGHT }}>
-        <ThemeColorUpdater />
+    <div
+      className={`fixed inset-0 overflow-hidden ${isGlitching ? "glitch-active" : ""}`}
+    >
+      <ThemeColorUpdater />
 
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <Background3D />
+      </div>
 
+      <div
+        className="absolute left-1/2 top-1/2"
+        style={{
+          transform: `translate(-50%, -50%) scale(${stageScale})`,
+          transformOrigin: "center center",
+          width: APP_STAGE_WIDTH,
+          height: stageHeight,
+        }}
+      >
         {bootOverlay && (
           <BootScreen
             onRevealMain={handleRevealMain}
