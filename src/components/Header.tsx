@@ -90,8 +90,8 @@ function CustodyStationLine() {
           </motion.span>
         </span>
       </div>
-      <p className="mt-1 font-mono text-[9px] leading-snug tracking-tight text-white md:text-[10px]">
-        Custódia Inviolável dos Dados
+      <p className="header-custody-subline mt-1 text-[9px] font-medium leading-snug tracking-[0.06em] text-white md:text-[10px]">
+        CUSTÓDIA INVIOLÁVEL DOS DADOS
       </p>
     </>
   );

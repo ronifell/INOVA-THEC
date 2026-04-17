@@ -686,6 +686,12 @@ body {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
+/* Subtítulo sob «CADEIA DE CUSTÓDIA» — Inter, legível em tamanho reduzido */
+.header-custody-subline {
+  font-family: var(--font-custody-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
 @keyframes header-center-sweep {
   0% {
     transform: translateX(-220%);
