@@ -63,11 +63,11 @@ function CustodyStationLine() {
 
   return (
     <>
-      <div className="header-custody-track mt-0.5 min-h-[1.45rem] font-mono text-[8px] leading-relaxed text-emerald-300/95 md:text-[9px]">
+      <div className="header-custody-track header-custody-station mt-0.5 min-h-[1.45rem] font-mono text-[8px] leading-relaxed md:text-[9px]">
         <span className="header-custody-glitch relative inline">
           ESTAÇÃO: AUDIT-ACRE // LOCAL: RIO BRANCO // COORD:{" "}
         </span>
-        <span className="text-emerald-200/95">
+        <span className="header-custody-station-coords tabular-nums">
           -9.9
           <motion.span
             className="inline-block tabular-nums"
@@ -90,7 +90,7 @@ function CustodyStationLine() {
           </motion.span>
         </span>
       </div>
-      <p className="header-custody-subline mt-0.5 text-[8px] font-medium leading-snug tracking-[0.06em] text-white md:text-[9px]">
+      <p className="header-custody-subline mt-0.5 uppercase tracking-wide">
         CUSTÓDIA INVIOLÁVEL DOS DADOS
       </p>
     </>
@@ -164,7 +164,7 @@ export default function Header() {
       >
         {/* Esquerda — Cadeia de custódia (azul néon) */}
         <div className="order-2 flex min-w-0 flex-col justify-start md:order-1 md:pt-0.5">
-          <h2 className="text-[10px] font-semibold tracking-[0.16em] text-white/92 md:text-[11px]">
+          <h2 className="header-ap04-pillar-title text-left">
             CADEIA DE CUSTÓDIA
           </h2>
           <CustodyStationLine />
@@ -210,7 +210,7 @@ export default function Header() {
 
         {/* Direita — Protocolo AP-04 / SHA (esmeralda + branco) */}
         <div className="order-3 flex min-w-0 flex-col items-stretch md:items-end md:pt-0.5">
-          <h2 className="text-right text-[10px] font-semibold tracking-[0.16em] text-white/92 md:text-[11px]">
+          <h2 className="header-ap04-pillar-title text-right">
             PROTOCOLO AP-04
           </h2>
           <div className="relative mt-1 w-full max-w-[min(100%,21rem)] md:ml-auto">
