@@ -48,49 +48,17 @@ function ProtocolGreenStream() {
   );
 }
 
-/** Estação / local / coordenadas em verde; últimos dígitos das coordenadas em micro-oscilação. */
+/** Duas linhas — espelha a altura do bloco verde; coordenadas com precisão pericial (5 casas). */
 function CustodyStationLine() {
-  const [latEnd, setLatEnd] = useState(7);
-  const [lonEnd, setLonEnd] = useState(1);
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setLatEnd(6 + Math.floor(Math.random() * 3));
-      setLonEnd(Math.floor(Math.random() * 4));
-    }, 780);
-    return () => window.clearInterval(id);
-  }, []);
-
   return (
     <>
-      <div className="header-custody-track header-custody-station mt-0.5 min-h-[1.45rem] font-mono text-[8px] leading-relaxed md:text-[9px]">
-        <span className="header-custody-glitch relative inline">
-          ESTAÇÃO: AUDIT-ACRE // LOCAL: RIO BRANCO // COORD:{" "}
-        </span>
-        <span className="header-custody-station-coords tabular-nums">
-          -9.9
-          <motion.span
-            className="inline-block tabular-nums"
-            key={latEnd}
-            initial={{ opacity: 0.35, y: 1 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 420, damping: 24 }}
-          >
-            {latEnd}
-          </motion.span>
-          , -67.8
-          <motion.span
-            className="inline-block tabular-nums"
-            key={lonEnd}
-            initial={{ opacity: 0.35, y: -1 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 420, damping: 24 }}
-          >
-            {lonEnd}
-          </motion.span>
-        </span>
+      <div className="header-custody-line1 mt-0.5 font-mono text-[8px] font-medium leading-snug tracking-wide md:text-[9px]">
+        ESTAÇÃO: AUDIT-ACRE // LOCAL: RIO BRANCO
       </div>
-      <p className="header-custody-subline mt-0.5 uppercase tracking-wide">
+      <div className="header-custody-line2 mt-0.5 font-mono text-[8px] font-medium leading-snug tabular-nums tracking-wide md:text-[9px]">
+        COORD: -9.96970 / -67.88283
+      </div>
+      <p className="header-custody-subline mt-1 font-mono uppercase tracking-wide text-[9px] leading-snug md:text-[10px]">
         CUSTÓDIA INVIOLÁVEL DOS DADOS
       </p>
     </>
@@ -159,12 +127,10 @@ export default function Header() {
       className="header-ap04-shell fixed top-0 left-0 right-0 z-40 w-full antialiased"
       variants={appShellHeader}
     >
-      <div
-        className="mx-auto grid w-full max-w-[100vw] grid-cols-1 gap-2 px-3 pb-1.5 pt-1.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1fr)] md:gap-3 md:px-8 md:pb-2 md:pt-2 lg:gap-5"
-      >
-        {/* Esquerda — Cadeia de custódia (azul néon) */}
-        <div className="order-2 flex min-w-0 flex-col justify-start md:order-1 md:pt-0.5">
-          <h2 className="header-ap04-pillar-title text-left">
+      <div className="mx-auto grid w-full max-w-[100vw] grid-cols-1 gap-2 px-4 pb-1.5 pt-1.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.22fr)_minmax(0,1fr)] md:gap-x-6 md:gap-y-2 md:px-10 md:pb-2 md:pt-2 lg:gap-x-10 lg:px-12">
+        {/* Esquerda — Cadeia de custódia (azul SIG-Patrimônio) */}
+        <div className="order-2 flex min-w-0 flex-col justify-start md:order-1 md:pt-0.5 md:pr-2 lg:pr-4">
+          <h2 className="header-ap04-pillar-title header-ap04-pillar-title--custody text-left">
             CADEIA DE CUSTÓDIA
           </h2>
           <CustodyStationLine />
@@ -183,7 +149,7 @@ export default function Header() {
         </div>
 
         {/* Centro — Identidade Inova Thec */}
-        <div className="order-1 flex min-w-0 flex-col items-center justify-start text-center md:order-2 md:pt-0">
+        <div className="order-1 flex min-w-0 flex-col items-center justify-start px-1 text-center md:order-2 md:pt-0">
           <motion.button
             type="button"
             onClick={() => {
@@ -209,7 +175,7 @@ export default function Header() {
         </div>
 
         {/* Direita — Protocolo AP-04 / SHA (esmeralda + branco) */}
-        <div className="order-3 flex min-w-0 flex-col items-stretch md:items-end md:pt-0.5">
+        <div className="order-3 flex min-w-0 flex-col items-stretch md:items-end md:pl-2 md:pt-0.5 lg:pl-4">
           <h2 className="header-ap04-pillar-title text-right">
             PROTOCOLO AP-04
           </h2>

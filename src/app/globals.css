@@ -733,8 +733,8 @@ body {
   width: 100%;
   min-height: 0;
   min-width: 0;
-  padding-top: min(1.5%, 1.6vmin);
-  padding-bottom: min(0.45%, 0.55vmin);
+  padding-top: min(1.1%, 1.2vmin);
+  padding-bottom: min(0.25%, 0.35vmin);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -746,22 +746,56 @@ body {
   overflow: hidden;
 }
 
-/* Faixa de navegação: separada do conteúdo — margin-top % usa largura do contentor (comportamento CSS estável) */
-.audit-carousel-controls {
+/* Barra inferior: setas preenchidas + indicadores — não sobrepõe o conteúdo */
+.audit-carousel-bottom-bar {
   box-sizing: border-box;
   flex-shrink: 0;
   width: 100%;
   min-width: 0;
-  margin-top: min(0.45%, 0.55vmin);
-  padding-top: min(0.25%, 0.35vmin);
-  padding-bottom: min(0.9vmin, 1vh);
+  margin-top: min(0.35%, 0.45vmin);
+  padding: min(0.5vmin, 0.45vh) min(2%, 1.2vmin) min(0.65vmin, 0.75vh);
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
+  gap: min(3.5%, 3vmin);
 }
 
-/* Navegação lateral ao centro vertical — botões glass (ver AuditCarousel.tsx) */
-.audit-carousel-side-nav {
+.audit-carousel-arrow-btn {
   box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: min(10.5vmin, 2.85rem);
+  height: min(10.5vmin, 2.85rem);
+  padding: 0;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  color: rgb(255 255 255);
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.audit-carousel-arrow-btn:hover {
+  filter: brightness(1.08);
+}
+
+.audit-carousel-arrow-btn--prev {
+  background: linear-gradient(165deg, rgb(16, 185, 129) 0%, rgb(5, 150, 105) 55%, rgb(4, 120, 87) 100%);
+}
+
+.audit-carousel-arrow-btn--next {
+  background: linear-gradient(165deg, rgb(6, 182, 212) 0%, rgb(8, 145, 178) 55%, rgb(14, 116, 144) 100%);
+}
+
+.audit-carousel-arrow-icon {
+  width: min(3.5vmin, 1.35rem);
+  height: min(3.5vmin, 1.35rem);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
 
 /* Títulos dos pilares */
@@ -813,6 +847,45 @@ body {
     grid-template-rows: minmax(0, 1fr);
     column-gap: min(5.5%, 5vmin);
     row-gap: min(3.6%, 3.2vmin);
+  }
+}
+
+/* Painel 2 do carrossel — menos respiro vertical; cartões alinhados entre si */
+.audit-panels-3--extension {
+  row-gap: min(2.35%, 2.05vmin) !important;
+}
+
+@media (min-width: 1024px) {
+  .audit-panels-3--extension {
+    column-gap: min(4.4%, 4vmin) !important;
+    row-gap: min(2.85%, 2.5vmin) !important;
+  }
+}
+
+/* Certificador / Auditoria: mesma “caixa” compacta (referência visual comum) */
+.audit-card-inner--extension-match {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: min(10.5vmin, 6.75rem);
+  padding-block: min(2.6%, 2.25vmin) !important;
+  padding-inline: min(4.2%, 3.55vmin) !important;
+}
+
+/* Botões da extensão — altura uniforme e barra mais fina */
+.audit-action-btn--extension-unified {
+  min-height: min(6.35vmin, 44px) !important;
+  padding-block: min(2.45%, 2.1vmin) !important;
+  padding-inline: min(5.4%, 4.5vmin) !important;
+  font-size: min(1.45vmin, 1.08vw) !important;
+  line-height: 1.3 !important;
+}
+
+@media (min-width: 1024px) {
+  .audit-action-btn--extension-unified {
+    font-size: min(1.52vmin, 1.12vw) !important;
+    min-height: min(6.5vmin, 46px) !important;
   }
 }
 
@@ -1144,7 +1217,7 @@ body {
   padding-bottom: min(0.35rem, 0.6vmin);
 }
 
-/* Títulos dos pilares — CADEIA DE CUSTÓDIA e PROTOCOLO AP-04 (mesma fonte e escala) */
+/* Títulos dos pilares — mesma fonte e escala (irmãos: custódia × protocolo) */
 .header-ap04-pillar-title {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   font-size: 0.625rem;
@@ -1162,31 +1235,29 @@ body {
   }
 }
 
-/* Linha de custódia — mesmo corpo que SHA-256 / SEQ (mono + 9px/10px) */
+/* Tom alinhado ao SIG-Patrimônio / CID — azul elétrico legível no escuro */
+.header-ap04-pillar-title--custody {
+  color: rgb(147 197 253);
+  text-shadow: 0 0 18px rgba(59, 130, 246, 0.45);
+}
+
+/* Linha de lema — mesmo corpo que SHA-256 / SEQ na régua verde */
 .header-custody-subline {
-  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 9px;
   font-weight: 500;
-  line-height: 1.35;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.95);
   -webkit-font-smoothing: antialiased;
 }
 
-@media (min-width: 768px) {
-  .header-custody-subline {
-    font-size: 10px;
-  }
+/* Duas linhas técnicas — mesmo tom vibrante do módulo Patrimônio */
+.header-custody-line1 {
+  color: rgb(147 197 253);
+  text-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
 }
 
-/* Estação / local / coords — azul escuro corporativo (separado do verde do protocolo) */
-.header-custody-station {
-  color: rgb(88 125 165);
-}
-
-.header-custody-station-coords {
-  color: rgb(125 158 198);
+.header-custody-line2 {
+  color: rgb(96 165 250);
+  text-shadow: 0 0 14px rgba(59, 130, 246, 0.4);
 }
 
 @keyframes header-center-sweep {
@@ -1227,31 +1298,6 @@ body {
   );
   mix-blend-mode: screen;
   animation: header-center-sweep 2.8s ease-in-out infinite;
-}
-
-@keyframes header-custody-glitch {
-  0%,
-  90%,
-  100% {
-    transform: translate(0);
-    opacity: 1;
-  }
-  91% {
-    transform: translate(-1px, 1px);
-    opacity: 0.92;
-  }
-  93% {
-    transform: translate(2px, -1px);
-    opacity: 0.88;
-  }
-  95% {
-    transform: translate(-1px, 0);
-    opacity: 1;
-  }
-}
-
-.header-custody-glitch {
-  animation: header-custody-glitch 4.5s ease-in-out infinite;
 }
 
 @keyframes header-truth-pulse {

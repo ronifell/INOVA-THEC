@@ -78,7 +78,7 @@ export default function AuditPanelExtension() {
   }, [speak, triggerHashValidation, verifying]);
 
   return (
-    <div className="audit-panels-3 h-full min-h-0 overflow-hidden [&>div]:min-h-0">
+    <div className="audit-panels-3 audit-panels-3--extension h-full min-h-0 overflow-hidden [&>div]:min-h-0">
       {/* Coluna esquerda: lista ocupa o espaço flexível; botão sempre visível (nunca cortado pelo overflow) */}
       <div className="flex min-h-0 w-full min-w-0 flex-col text-left [gap:min(2%,1.8vmin)]">
         <h3 className="audit-panel-title max-w-full shrink-0">
@@ -111,7 +111,7 @@ export default function AuditPanelExtension() {
             type="button"
             disabled={scanning}
             onClick={runChainScan}
-            className="audit-action-btn audit-action-btn--neon-amber z-10 w-full shrink-0 rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-amber-500/12 disabled:opacity-50 sm:w-max sm:max-w-full"
+            className="audit-action-btn audit-action-btn--neon-amber audit-action-btn--extension-unified z-10 w-full shrink-0 rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-amber-500/12 disabled:opacity-50 sm:w-max sm:max-w-full"
           >
             {scanning ? "Varrendo…" : "Varredura de elos"}
           </button>
@@ -126,7 +126,7 @@ export default function AuditPanelExtension() {
           Carimbo temporal alinhado a UTC e protocolo de auditoria.
         </p>
         <div className="flex flex-col items-center [gap:min(2.5%,2vmin)]">
-          <div className="audit-card-inner rounded-md border border-white/10 bg-white/[0.03] text-left">
+          <div className="audit-card-inner audit-card-inner--extension-match rounded-md border border-white/10 bg-white/[0.03] text-left">
             <p className="font-mono uppercase tracking-wider text-white/55 [font-size:min(1.15vmin,0.9vw)] md:[font-size:min(1.22vmin,0.96vw)]">
               Relógio de referência
             </p>
@@ -137,7 +137,7 @@ export default function AuditPanelExtension() {
           <button
             type="button"
             onClick={issueStamp}
-            className="audit-action-btn audit-action-btn--neon-violet rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-violet-500/12"
+            className="audit-action-btn audit-action-btn--neon-violet audit-action-btn--extension-unified rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-violet-500/12"
           >
             Emitir carimbo
           </button>
@@ -164,7 +164,7 @@ export default function AuditPanelExtension() {
           Conferência de redundância e integridade das réplicas.
         </p>
         <div className="flex flex-col items-stretch [gap:min(2.5%,2vmin)] lg:items-end">
-          <div className="audit-card-inner w-full rounded-md border border-white/10 bg-white/[0.03] lg:ml-auto">
+          <div className="audit-card-inner audit-card-inner--extension-match w-full rounded-md border border-white/10 bg-white/[0.03] lg:ml-auto">
             <div className="flex justify-between font-mono uppercase tracking-wider text-white/65 [font-size:min(1.22vmin,0.95vw)] md:[font-size:min(1.3vmin,1vw)]">
               <span>Verificação</span>
               <span className="tabular-nums text-emerald-200">{backupPct}%</span>
@@ -184,7 +184,7 @@ export default function AuditPanelExtension() {
             type="button"
             disabled={verifying}
             onClick={runBackupAudit}
-            className="audit-action-btn audit-action-btn--neon-cyan self-stretch rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-cyan-500/12 disabled:opacity-50 lg:self-end"
+            className="audit-action-btn audit-action-btn--neon-cyan audit-action-btn--extension-unified self-stretch rounded-lg border border-transparent bg-transparent font-mono uppercase tracking-wider text-white transition hover:bg-cyan-500/12 disabled:opacity-50 lg:self-end"
           >
             {verifying ? "Auditando…" : "Verificar redundância"}
           </button>

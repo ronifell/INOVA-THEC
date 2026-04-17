@@ -75,43 +75,27 @@ export default function AuditCarousel({ className = "" }: { className?: string }
             </div>
           </motion.div>
         </div>
-
-        <div className="audit-carousel-side-nav pointer-events-none absolute inset-0 z-20 flex items-center justify-between">
-          <div className="pointer-events-auto flex shrink-0 items-center pl-[min(1.1%,1.1vmin)]">
-            <motion.button
-              type="button"
-              aria-label="Painel anterior — ferramentas principais"
-              className="glass flex items-center justify-center rounded-full px-[min(2.6%,2.4vmin)] py-[min(2.4%,2.1vmin)] text-white/90 shadow-none transition hover:bg-white/[0.08]"
-              initial={{ opacity: 0, x: "-0.6vmin" }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 2, duration: 0.4, ease: easeOut }}
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={goPrev}
-            >
-              <ArrowLeftHeadIcon className="h-[min(3.75vmin,3.2vw)] w-[min(3.75vmin,3.2vw)]" />
-            </motion.button>
-          </div>
-          <div className="pointer-events-auto flex shrink-0 items-center pr-[min(1.1%,1.1vmin)]">
-            <motion.button
-              type="button"
-              aria-label="Próximo painel — extensão de auditoria"
-              className="glass flex items-center justify-center rounded-full px-[min(2.6%,2.4vmin)] py-[min(2.4%,2.1vmin)] text-white/90 shadow-none transition hover:bg-white/[0.08]"
-              initial={{ opacity: 0, x: "0.6vmin" }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 2, duration: 0.4, ease: easeOut }}
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={goNext}
-            >
-              <ArrowRightHeadIcon className="h-[min(3.75vmin,3.2vw)] w-[min(3.75vmin,3.2vw)]" />
-            </motion.button>
-          </div>
-        </div>
       </div>
 
-      <div className="audit-carousel-controls" aria-label="Navegação do carrossel de auditoria">
-        <div className="audit-carousel-dots flex justify-center gap-[min(2.5%,2vmin)]">
+      <div
+        className="audit-carousel-bottom-bar"
+        aria-label="Navegação do carrossel de auditoria"
+      >
+        <motion.button
+          type="button"
+          aria-label="Painel anterior — ferramentas principais"
+          className="audit-carousel-arrow-btn audit-carousel-arrow-btn--prev"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2, duration: 0.4, ease: easeOut }}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={goPrev}
+        >
+          <ArrowLeftHeadIcon className="audit-carousel-arrow-icon" />
+        </motion.button>
+
+        <div className="audit-carousel-dots flex items-center justify-center gap-[min(2.5%,2vmin)]">
           <button
             type="button"
             aria-label="Ferramentas principais"
@@ -135,6 +119,20 @@ export default function AuditCarousel({ className = "" }: { className?: string }
             }`}
           />
         </div>
+
+        <motion.button
+          type="button"
+          aria-label="Próximo painel — extensão de auditoria"
+          className="audit-carousel-arrow-btn audit-carousel-arrow-btn--next"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2, duration: 0.4, ease: easeOut }}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={goNext}
+        >
+          <ArrowRightHeadIcon className="audit-carousel-arrow-icon" />
+        </motion.button>
       </div>
 
     </motion.div>
