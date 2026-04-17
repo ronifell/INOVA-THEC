@@ -86,13 +86,18 @@ const N = 42;
 
 type Post100HashStormProps = {
   visible: boolean;
+  /** 0–1; na reta final da interstitial esmaece junto com a home por baixo. */
+  contentOpacity?: number;
 };
 
 /**
  * Interstitial pós-100%: conteúdo muda rápido (hex), deslocamento horizontal lento
  * (cada faixa com origem e sentido próprios), profundidade 3D; cor cinza clara fixa.
  */
-export default function Post100HashStorm({ visible }: Post100HashStormProps) {
+export default function Post100HashStorm({
+  visible,
+  contentOpacity = 1,
+}: Post100HashStormProps) {
   const layers = useMemo(() => genLayers(N), []);
   const [texts, setTexts] = useState<string[]>(() =>
     Array.from({ length: N }, () => randomHex(HASH_CHAR_LEN))
@@ -108,14 +113,14 @@ export default function Post100HashStorm({ visible }: Post100HashStormProps) {
     return () => clearInterval(id);
   }, [visible]);
 
+  const layerOpacity = visible ? contentOpacity : 0;
+
   return (
-    <motion.div
+    <div
       className="absolute inset-0 z-[54] pointer-events-none overflow-hidden"
       aria-hidden
-      initial={false}
-      animate={{ opacity: visible ? 1 : 0 }}
-      transition={{ duration: 0.35, ease: [0.33, 1, 0.36, 1] }}
       style={{
+        opacity: layerOpacity,
         perspective: "1750px",
         perspectiveOrigin: "50% 42%",
       }}
@@ -162,6 +167,6 @@ export default function Post100HashStorm({ visible }: Post100HashStormProps) {
           );
         })}
       </div>
-    </motion.div>
+    </div>
   );
 }

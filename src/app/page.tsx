@@ -13,6 +13,10 @@ import ReportModal from "@/components/ReportModal";
 import { getModuleById } from "@/lib/modules";
 import { appShellContainer, appShellFadeUp } from "@/lib/motionVariants";
 import BootScreen from "@/components/BootScreen";
+import {
+  BOOT_HANDOFF_EASE,
+  HOME_SHELL_FADE_IN_S,
+} from "@/lib/bootTransition";
 
 const SKIP_BOOT_ONCE_KEY = "skip-home-boot-once";
 
@@ -124,6 +128,10 @@ export default function Home() {
           variants={appShellContainer}
           initial="hidden"
           animate="visible"
+          transition={{
+            duration: HOME_SHELL_FADE_IN_S,
+            ease: BOOT_HANDOFF_EASE,
+          }}
         >
           <motion.div className="pointer-events-none" variants={appShellFadeUp}>
             <CursorTrail />

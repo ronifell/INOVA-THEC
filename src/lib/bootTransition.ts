@@ -18,8 +18,12 @@ export const BOOT_EXIT_TOTAL_S =
     BOOT_TANK_FADE_DELAY_S + BOOT_TANK_FADE_S
   ) + 0.1;
 
-/** Duração mínima da tela de hashes em movimento (pós-100%) antes de avançar o boot. */
-export const POST100_HASH_HOLD_MS = 7000;
+/** Duração total da interstitial de hashes (pós-100%). */
+export const POST100_HASH_TOTAL_MS = 9000;
+/** A partir daqui a home começa a surgir (fade ~HOME_SHELL_FADE_IN_S). Hashes seguem visíveis por cima. */
+export const POST100_HOME_REVEAL_MS = 7000;
+/** Fade-in do painel da home durante o cruzamento com os hashes (7–9 s). */
+export const HOME_SHELL_FADE_IN_S = 2;
 
 /** @deprecated use BOOT_BACKDROP_FADE_S */
 export const BOOT_EXIT_FADE_S = BOOT_BACKDROP_FADE_S;
