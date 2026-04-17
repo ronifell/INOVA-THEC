@@ -97,7 +97,7 @@ export default function PortalModuleCard({
   const cardInner = (
     <>
       <div
-        className={`relative flex h-full min-h-0 w-full flex-col rounded-[8%] p-[5%] text-[90%] transition-all duration-500 module-card-float-${index % 3}`}
+        className={`relative flex h-full min-h-0 w-full flex-col rounded-[8%] p-[5%] text-[100%] transition-all duration-500 module-card-float-${index % 3}`}
         style={
           {
             "--card-rgb": colorRgb,
@@ -130,7 +130,7 @@ export default function PortalModuleCard({
         />
 
         <motion.div
-          className="relative z-[2] mx-auto mb-[6%] flex aspect-square w-[34%] max-w-[42%] items-center justify-center rounded-full"
+          className="relative z-[2] mx-auto mb-[5%] flex aspect-square w-[34%] max-w-[42%] items-center justify-center rounded-full"
           style={{ x: iconXSpring, y: iconYSpring }}
         >
           <span
@@ -164,25 +164,25 @@ export default function PortalModuleCard({
         </motion.div>
 
         <h3
-          className="text-center text-[118%] font-bold tracking-wider transition-colors duration-500 group-hover:text-white"
+          className="text-center text-[130%] font-bold uppercase tracking-wide transition-colors duration-500 group-hover:text-white"
           style={{ color: `rgba(${colorRgb}, 0.9)` }}
         >
           {title}
         </h3>
 
-        <p className="mt-[4%] flex-1 text-center text-[92%] leading-relaxed text-white transition-colors duration-500 group-hover:text-white">
+        <p className="mt-[4%] min-h-0 flex-1 text-center text-[102%] uppercase leading-relaxed text-white transition-colors duration-500 group-hover:text-white">
           {description}
         </p>
 
-        <div className="mt-[5%] flex items-center justify-center gap-[3%]">
+        <div className="mt-[6%] flex shrink-0 items-center justify-center gap-[3.5%]">
           <div
-            className="module-card-status-dot aspect-square w-[5%] min-w-[0.35em] rounded-full"
+            className="module-card-status-dot aspect-square w-[5.5%] min-w-[0.4em] rounded-full"
             style={{
               background: `rgba(${colorRgb}, 0.92)`,
               boxShadow: `0 0 6px rgba(${colorRgb}, 0.55), 0 0 12px rgba(${colorRgb}, 0.3)`,
             }}
           />
-          <span className="text-[78%] font-mono tracking-wider text-white/30">
+          <span className="text-[86%] font-mono uppercase tracking-wider text-white/45">
             {isFullModule ? "OPERACIONAL" : "HOMOLOGAÇÃO"}
           </span>
         </div>

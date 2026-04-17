@@ -97,14 +97,14 @@ export default function AuditPanelPrimary() {
 
   return (
     <div className="audit-panels-3 h-full min-h-0 overflow-hidden">
-      <div className="audit-panel-stack-tight min-h-0 text-left">
+      <div className="audit-panel-stack-tight min-h-0 min-w-0 overflow-hidden text-left">
         <h3 className="audit-panel-title max-w-full">
           SIMULADOR DE FÉ PÚBLICA
         </h3>
-        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-panel-desc max-w-none text-left">
           Demonstração técnica do selo SHA-256 e da cadeia de custódia.
         </p>
-        <div className="flex flex-wrap [gap:min(2.5%,2vmin)]">
+        <div className="mt-[min(2.4%,2.1vmin)] flex flex-wrap [gap:min(2.8%,2.4vmin)]">
           <button
             type="button"
             disabled={isGenerating}
@@ -149,7 +149,7 @@ export default function AuditPanelPrimary() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0 }}
             >
-              <p className="line-clamp-4 break-all font-mono leading-relaxed text-emerald-300 [font-size:min(1.1vmin,0.88vw)]">
+              <p className="line-clamp-4 break-all font-mono leading-relaxed text-emerald-300 [font-size:min(1.32vmin,1.02vw)] md:[font-size:min(1.42vmin,1.08vw)]">
                 {displayedHash}
               </p>
             </motion.div>
@@ -157,37 +157,35 @@ export default function AuditPanelPrimary() {
         </AnimatePresence>
       </div>
 
-      <div className="audit-panel-stack min-h-0 text-center">
-        <h3 className="audit-panel-title max-w-full">
+      <div className="audit-panel-column-monitor flex min-h-0 min-w-0 flex-col overflow-x-hidden overflow-y-auto text-center [scrollbar-width:thin]">
+        <h3 className="audit-panel-title max-w-full shrink-0">
           MONITOR DE INTEGRIDADE
         </h3>
-        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-panel-desc audit-panel-desc--compact-monitor max-w-none shrink-0 text-center">
           Saúde do sistema e processos auditados em tempo real.
         </p>
-        <div className="flex flex-col items-center [gap:min(3.5%,3vmin)]">
-          <div className="flex items-center [gap:min(2.5%,2vmin)]">
+        <div className="mt-[min(2%,1.6vmin)] flex min-h-0 w-full flex-col items-center gap-[min(2.2%,1.9vmin)]">
+          <div className="audit-system-status-pill mx-auto flex shrink-0 items-center justify-center gap-[min(2.5%,2.2vmin)]">
             <span
-              className="animate-pulse rounded-full bg-emerald-400 shadow-[0_0_min(10px,1.4vmin)_rgba(52,211,153,0.8)] [height:min(1.1vmin,0.9vw)] [width:min(1.1vmin,0.9vw)]"
+              className="shrink-0 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_min(14px,1.8vmin)_rgba(52,211,153,0.85)] [height:min(1.45vmin,1.15vw)] [width:min(1.45vmin,1.15vw)] md:[height:min(1.6vmin,1.25vw)] md:[width:min(1.6vmin,1.25vw)]"
               aria-hidden
             />
-            <span className="font-semibold tracking-wide text-white [font-size:min(1.3vmin,1.02vw)]">
-              Sistema operacional
-            </span>
+            <span className="audit-system-status-pill__label">Sistema operacional</span>
           </div>
-          <div className="audit-card-inner w-full max-w-[min(100%,22rem)] space-y-[min(1.8%,1.6vmin)] rounded-md border border-white/10 bg-white/[0.03]">
-            <div className="grid w-full grid-cols-[minmax(0,1fr)_min(10ch,12rem)] items-center gap-x-[min(3.5%,3vmin)] text-white/80 [font-size:min(1.15vmin,0.9vw)]">
-              <span className="min-w-0 text-left font-mono uppercase leading-tight tracking-wider">
+          <div className="audit-card-inner audit-card-inner--monitor mx-auto w-full shrink-0 space-y-[min(1.6%,1.4vmin)] rounded-md border border-white/12 bg-white/[0.04]">
+            <div className="grid w-full grid-cols-[minmax(0,1fr)_min(12ch,14rem)] items-center gap-x-[min(4%,3.5vmin)] md:grid-cols-[minmax(0,1fr)_min(13ch,15rem)]">
+              <span className="audit-monitor-metric-label min-w-0 text-left font-mono uppercase leading-snug tracking-wide text-white/88">
                 Processos auditados
               </span>
-              <span className="text-right font-mono tabular-nums tracking-tight text-white">
+              <span className="audit-monitor-metric-value text-right font-mono tabular-nums tracking-tight text-white">
                 {auditedFmt}
               </span>
             </div>
-            <div className="grid w-full grid-cols-[minmax(0,1fr)_min(10ch,12rem)] items-center gap-x-[min(3.5%,3vmin)] text-white/80 [font-size:min(1.15vmin,0.9vw)]">
-              <span className="min-w-0 text-left font-mono uppercase leading-tight tracking-wider">
+            <div className="grid w-full grid-cols-[minmax(0,1fr)_min(12ch,14rem)] items-center gap-x-[min(4%,3.5vmin)] md:grid-cols-[minmax(0,1fr)_min(13ch,15rem)]">
+              <span className="audit-monitor-metric-label min-w-0 text-left font-mono uppercase leading-snug tracking-wide text-white/88">
                 Índice de saúde
               </span>
-              <span className="text-right font-mono tabular-nums tracking-tight text-emerald-200">
+              <span className="audit-monitor-metric-value text-right font-mono tabular-nums tracking-tight text-emerald-200">
                 {healthPulse.toFixed(1)}%
               </span>
             </div>
@@ -195,14 +193,14 @@ export default function AuditPanelPrimary() {
         </div>
       </div>
 
-      <div className="audit-panel-stack-tight min-h-0 text-right">
+      <div className="audit-panel-stack-tight min-h-0 min-w-0 overflow-hidden text-right">
         <h3 className="audit-panel-title max-w-full">
           VALIDADOR DE DOCUMENTOS
         </h3>
-        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-panel-desc max-w-none text-right">
           Perícia de autenticidade por hash SHA-256.
         </p>
-        <div className="flex flex-col items-stretch [gap:min(2.5%,2vmin)] lg:items-end">
+        <div className="mt-[min(1.2%,1vmin)] flex flex-col items-stretch [gap:min(3%,2.6vmin)] lg:items-end">
           <label className="sr-only" htmlFor="doc-hash-input">
             Hash do relatório
           </label>
@@ -226,7 +224,7 @@ export default function AuditPanelPrimary() {
             Validar documento
           </button>
           {validationMsg && (
-            <p className="text-left leading-snug text-white/90 [font-size:min(1.15vmin,0.9vw)] lg:text-right">{validationMsg}</p>
+            <p className="audit-panel-desc !text-white/92 text-left leading-relaxed lg:text-right">{validationMsg}</p>
           )}
         </div>
       </div>

@@ -59,7 +59,7 @@ export default function AuditCarousel({ className = "" }: { className?: string }
       transition={{ duration: 0.65, delay: 1.75, ease: easeOut }}
     >
       <div className="audit-carousel-top relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-        <div className="audit-carousel-track flex min-h-0 flex-1 flex-col">
+        <div className="audit-carousel-track flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
           <motion.div
             className="flex h-full min-h-0"
             style={{ width: "200%" }}
@@ -89,7 +89,7 @@ export default function AuditCarousel({ className = "" }: { className?: string }
               whileTap={{ scale: 0.96 }}
               onClick={goPrev}
             >
-              <ArrowLeftHeadIcon className="h-[min(4.1vmin,3.5vw)] w-[min(4.1vmin,3.5vw)]" />
+              <ArrowLeftHeadIcon className="h-[min(3.75vmin,3.2vw)] w-[min(3.75vmin,3.2vw)]" />
             </motion.button>
           </div>
           <div className="pointer-events-auto flex shrink-0 items-center pr-[min(1.1%,1.1vmin)]">
@@ -104,7 +104,7 @@ export default function AuditCarousel({ className = "" }: { className?: string }
               whileTap={{ scale: 0.96 }}
               onClick={goNext}
             >
-              <ArrowRightHeadIcon className="h-[min(4.1vmin,3.5vw)] w-[min(4.1vmin,3.5vw)]" />
+              <ArrowRightHeadIcon className="h-[min(3.75vmin,3.2vw)] w-[min(3.75vmin,3.2vw)]" />
             </motion.button>
           </div>
         </div>

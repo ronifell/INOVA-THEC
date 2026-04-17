@@ -105,7 +105,7 @@ export default function Home() {
 
   return (
     <div
-      className={`h-full ${activeModule ? "overflow-y-auto" : "overflow-x-hidden"} ${isGlitching ? "glitch-active" : ""}`}
+      className={`h-full min-h-0 w-full max-w-full overflow-x-hidden ${activeModule ? "overflow-y-auto" : "overflow-hidden"} ${isGlitching ? "glitch-active" : ""}`}
     >
       <ThemeColorUpdater />
 
@@ -133,10 +133,8 @@ export default function Home() {
           <Header />
 
           <main
-            className={`relative z-10 flex flex-1 flex-col min-h-0 ${
-              activeModule
-                ? "min-h-full overflow-visible pt-24 sm:pt-28"
-                : "overflow-x-hidden pt-24 sm:pt-28 min-h-0"
+            className={`relative z-10 flex min-h-0 w-full max-w-full flex-1 flex-col overflow-x-hidden pt-24 sm:pt-28 ${
+              activeModule ? "overflow-y-auto" : "overflow-y-hidden"
             }`}
           >
             <AnimatePresence mode="wait">
@@ -153,7 +151,7 @@ export default function Home() {
               ) : (
                 <motion.div
                   key="dashboard"
-                  className="flex h-full min-h-0 flex-1 flex-col"
+                  className="flex h-full min-h-0 w-full min-w-0 max-w-full flex-1 flex-col overflow-hidden"
                   initial={{ opacity: 1, y: 0 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}

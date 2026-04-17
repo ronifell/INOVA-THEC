@@ -51,9 +51,9 @@ export default function FooterMarquee() {
   }, [cycleW]);
 
   return (
-    <div className="w-full overflow-hidden border-y border-emerald-500/15 bg-black/20 py-2 select-none">
+    <div className="w-full max-w-full overflow-hidden border-y border-emerald-500/15 bg-black/20 py-[min(1.2vmin,0.9vh)] select-none">
       <div
-        className="flex whitespace-nowrap font-mono text-[10px] tracking-[0.12em] text-emerald-300 [text-shadow:0_0_12px_rgba(16,185,129,0.35)] will-change-transform antialiased"
+        className="flex max-w-none whitespace-nowrap font-mono text-[10px] tracking-[0.12em] text-emerald-300 [text-shadow:0_0_12px_rgba(16,185,129,0.35)] will-change-transform antialiased"
         style={{ transform: `translate3d(${offset}px,0,0)` }}
       >
         <span ref={spanRef} className="inline-block shrink-0 pr-3">

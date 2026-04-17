@@ -84,7 +84,7 @@ export default function AuditPanelExtension() {
         <h3 className="audit-panel-title max-w-full shrink-0">
           RASTREADOR DE CADEIA
         </h3>
-        <p className="shrink-0 leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-panel-desc max-w-none shrink-0 text-left">
           Verificação sequencial dos elos da custódia AP-04.
         </p>
         <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col [gap:min(2%,1.8vmin)]">
@@ -93,7 +93,7 @@ export default function AuditPanelExtension() {
               {chainBlocks.map((b, i) => (
                 <div
                   key={b.id}
-                  className={`flex min-h-0 shrink-0 items-center justify-between [gap:min(2%,1.8vmin)] border-b border-white/[0.06] font-mono [padding-bottom:min(1.6%,1.4vmin)] [font-size:min(1.05vmin,0.85vw)] last:border-0 last:pb-0 ${
+                  className={`flex min-h-0 shrink-0 items-center justify-between [gap:min(2%,1.8vmin)] border-b border-white/[0.06] font-mono [padding-bottom:min(1.6%,1.4vmin)] [font-size:min(1.28vmin,1vw)] md:[font-size:min(1.36vmin,1.05vw)] last:border-0 last:pb-0 ${
                     scanning && chainScan === i ? "text-amber-200" : "text-white/70"
                   } ${
                     !scanning && chainScan === chainBlocks.length - 1 && i === chainBlocks.length - 1
@@ -122,15 +122,15 @@ export default function AuditPanelExtension() {
         <h3 className="audit-panel-title max-w-full">
           CERTIFICADOR DE TIMESTAMP
         </h3>
-        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-panel-desc max-w-none text-center">
           Carimbo temporal alinhado a UTC e protocolo de auditoria.
         </p>
         <div className="flex flex-col items-center [gap:min(2.5%,2vmin)]">
           <div className="audit-card-inner rounded-md border border-white/10 bg-white/[0.03] text-left">
-            <p className="font-mono uppercase tracking-wider text-white/50 [font-size:min(1.05vmin,0.85vw)]">
+            <p className="font-mono uppercase tracking-wider text-white/55 [font-size:min(1.15vmin,0.9vw)] md:[font-size:min(1.22vmin,0.96vw)]">
               Relógio de referência
             </p>
-            <p className="mt-[min(1.8%,1.6vmin)] font-mono tabular-nums text-white [font-size:min(1.2vmin,0.95vw)]">
+            <p className="mt-[min(1.8%,1.6vmin)] font-mono tabular-nums text-white [font-size:min(1.32vmin,1.02vw)] md:[font-size:min(1.4vmin,1.08vw)]">
               {utcNow.toLocaleString("pt-BR", { timeZone: "UTC" })} UTC
             </p>
           </div>
@@ -147,7 +147,7 @@ export default function AuditPanelExtension() {
                 initial={{ opacity: 0, y: "0.45vmin" }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="max-w-[min(100%,92%)] text-center font-mono leading-snug text-violet-200/90 [font-size:min(1.05vmin,0.85vw)]"
+                className="max-w-[min(100%,92%)] text-center font-mono leading-snug text-violet-200/90 [font-size:min(1.15vmin,0.9vw)] md:[font-size:min(1.22vmin,0.96vw)]"
               >
                 Selo RFC 3161 (simulado): {stampIssued}
               </motion.p>
@@ -160,12 +160,12 @@ export default function AuditPanelExtension() {
         <h3 className="audit-panel-title max-w-full">
           AUDITORIA DE BACKUP
         </h3>
-        <p className="leading-snug text-white/75 [font-size:min(1.2vmin,0.95vw)]">
+        <p className="audit-panel-desc max-w-none text-right">
           Conferência de redundância e integridade das réplicas.
         </p>
         <div className="flex flex-col items-stretch [gap:min(2.5%,2vmin)] lg:items-end">
           <div className="audit-card-inner w-full rounded-md border border-white/10 bg-white/[0.03] lg:ml-auto">
-            <div className="flex justify-between font-mono uppercase tracking-wider text-white/55 [font-size:min(1.05vmin,0.85vw)]">
+            <div className="flex justify-between font-mono uppercase tracking-wider text-white/65 [font-size:min(1.22vmin,0.95vw)] md:[font-size:min(1.3vmin,1vw)]">
               <span>Verificação</span>
               <span className="tabular-nums text-emerald-200">{backupPct}%</span>
             </div>
@@ -176,7 +176,7 @@ export default function AuditPanelExtension() {
                 transition={{ type: "spring", stiffness: 120, damping: 18 }}
               />
             </div>
-            <p className="mt-[min(2.5%,2.2vmin)] text-left font-mono text-white/45 [font-size:min(1.05vmin,0.85vw)]">
+            <p className="mt-[min(2.5%,2.2vmin)] text-left font-mono text-white/55 [font-size:min(1.12vmin,0.88vw)] md:[font-size:min(1.2vmin,0.94vw)]">
               SHA-256 cruzado em nós secundários • AP-04
             </p>
           </div>
