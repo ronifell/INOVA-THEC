@@ -134,7 +134,7 @@ export default function SigPatrimonio() {
 
   return (
     <motion.div
-      className="min-h-full flex flex-col px-4 md:px-8 py-24 cursor-crosshair"
+      className="min-h-full flex flex-col px-4 md:px-8 py-20 cursor-crosshair"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

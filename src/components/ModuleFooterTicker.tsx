@@ -70,7 +70,7 @@ export default function ModuleFooterTicker({
 
   return (
     <div
-      className={`overflow-hidden border border-white/10 rounded-lg bg-black/25 py-1.5 ${className}`}
+      className={`overflow-hidden rounded-md border border-white/[0.07] bg-black/20 py-0.5 ${className}`}
       onMouseEnter={() => {
         hoverRef.current = true;
         targetRef.current = 0;
@@ -81,7 +81,7 @@ export default function ModuleFooterTicker({
       }}
     >
       <div
-        className={`flex whitespace-nowrap font-mono text-[9px] tracking-wide text-white/40 px-2 will-change-transform antialiased ${flicker ? "ticker-radar-flicker" : ""}`}
+        className={`flex whitespace-nowrap font-mono text-[8px] tracking-wide text-white/38 px-1.5 will-change-transform antialiased ${flicker ? "ticker-radar-flicker" : ""}`}
         style={{ transform: `translateX(${offset}px)` }}
       >
         <span ref={spanRef} className="inline-block pr-10">

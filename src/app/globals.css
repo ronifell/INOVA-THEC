@@ -287,9 +287,11 @@ body {
 .module-cards-glow-gutter {
   box-sizing: border-box;
   overflow: visible;
-  /* Respiro para halos — compacto para caber num único viewport sem scroll */
-  padding-top: min(3.6vmin, 3.05vh);
-  padding-bottom: min(2.65vmin, 2.25vh);
+  /* Respiro para halos — evita o brilho superior dos cards ser cortado pela zona do header */
+  padding-top: min(4.75vmin, 4vh);
+  padding-bottom: min(2.4vmin, 2.05vh);
+  /* Margem lateral para o glow dos cards das pontas não encostar ao limite do ecrã */
+  padding-inline: min(1.25vmin, 1.1vw);
 }
 
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
@@ -906,14 +908,18 @@ body {
 .header-ap04-shell {
   background: linear-gradient(
     180deg,
-    rgba(15, 23, 42, 0.45) 0%,
-    rgba(15, 23, 42, 0.2) 55%,
+    rgba(15, 23, 42, 0.42) 0%,
+    rgba(15, 23, 42, 0.14) 52%,
     transparent 100%
   );
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
+  /* Linha mais suave + afastada do conteúdo — não “corta” o halo dos cards por baixo */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.02),
+    0 10px 28px -12px rgba(0, 0, 0, 0.35);
+  padding-bottom: min(0.35rem, 0.6vmin);
 }
 
 /* Subtítulo sob «CADEIA DE CUSTÓDIA» — Inter, legível em tamanho reduzido */

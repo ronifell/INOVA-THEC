@@ -231,7 +231,7 @@ export default function SigFrota() {
 
   return (
     <motion.div
-      className="min-h-full flex flex-col gap-4 px-4 md:px-8 py-24"
+      className="min-h-full flex flex-col gap-4 px-4 md:px-8 py-20"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
