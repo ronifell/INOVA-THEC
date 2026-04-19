@@ -34,7 +34,7 @@ const Milestone1Map = dynamic(() => import("./Milestone1Map"), {
   ssr: false,
   loading: () => (
     <div
-      className="h-[min(52vh,420px)] w-full animate-pulse rounded-xl border border-white/10 bg-white/5"
+      className="h-[min(56vh,520px)] w-full animate-pulse rounded-xl border border-white/10 bg-white/5"
       aria-hidden
     />
   ),
@@ -766,9 +766,9 @@ export default function Milestone1Client({
 
   if (loading || !demoData) {
     return (
-      <div className="flex h-full min-h-0 flex-col items-center justify-center gap-[1.2vh] px-[2%]">
-        <div className="h-[6vh] w-[6vh] max-h-14 max-w-14 animate-pulse rounded-xl border border-emerald-500/30 bg-emerald-500/10" />
-        <p className="text-[1vh] font-mono tracking-[0.3em] text-white/40">
+      <div className="flex h-full min-h-0 flex-col items-center justify-center gap-4 px-[2%]">
+        <div className="h-16 w-16 max-h-20 max-w-20 animate-pulse rounded-xl border border-emerald-500/30 bg-emerald-500/10" />
+        <p className="text-[var(--m1-text-mono-tight)] font-mono tracking-[0.3em] text-white/40">
           CARREGANDO DEMONSTRAÇÃO…
         </p>
       </div>
@@ -776,20 +776,20 @@ export default function Milestone1Client({
   }
 
   return (
-    <div className={shellClass}>
+    <div className={`milestone1-app ${shellClass}`}>
       {activeView === "hub" && (
         <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-visible">
           {!embeddedInAppShell && (
             <header className="shrink-0 text-center">
               <div className="inline-flex flex-col items-center">
-                <span className="bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-[2.4vh] font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)]">
+                <span className="bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-[var(--m1-text-hero)] font-black tracking-tight text-transparent drop-shadow-[0_0_24px_rgba(52,211,153,0.35)]">
                   INOVA THEC
                 </span>
-                <span className="text-[1vh] font-mono tracking-[0.32em] text-white/55">
+                <span className="text-[var(--m1-text-mono-tight)] font-mono tracking-[0.32em] text-white/55">
                   Soluções Ltda
                 </span>
               </div>
-              <p className="mt-[0.6vh] text-[1.05vh] font-mono tracking-[0.18em] text-white/45">
+              <p className="mt-[0.6vh] text-[var(--m1-text-ui)] font-mono tracking-[0.18em] text-white/45">
                 Centro de Governança — identidade visual por módulo
               </p>
             </header>
@@ -802,7 +802,7 @@ export default function Milestone1Client({
             }`}
           >
             {!embeddedInAppShell && (
-              <h2 className="shrink-0 text-center text-[1.05vh] font-mono tracking-[0.22em] text-white/55">
+              <h2 className="shrink-0 text-center text-[var(--m1-text-ui)] font-mono tracking-[0.22em] text-white/55">
                 SIG-FROTA · SIG-PATRIMÔNIO — sete painéis operacionais
               </h2>
             )}
@@ -844,7 +844,7 @@ export default function Milestone1Client({
                 <button
                   type="button"
                   onClick={() => setDarkMode((d) => !d)}
-                  className="glass rounded-full border border-white/15 px-[1.2vw] py-[0.6vh] text-[1.05vh] font-mono tracking-[0.15em] text-white/80 hover:border-white/30"
+                  className="glass rounded-full border border-white/15 px-[1.2vw] py-[0.6vh] text-[var(--m1-text-ui)] font-mono tracking-[0.15em] text-white/80 hover:border-white/30"
                 >
                   {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
                 </button>
@@ -860,29 +860,29 @@ export default function Milestone1Client({
             <button
               type="button"
               onClick={goToHub}
-              className="glass inline-flex items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[1.05vh] font-mono tracking-[0.12em] text-white/80 hover:border-emerald-500/40"
+              className="glass inline-flex items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[var(--m1-text-ui)] font-mono tracking-[0.12em] text-white/80 hover:border-emerald-500/40"
             >
               ← Menu principal
             </button>
             <button
               type="button"
               onClick={() => setDarkMode((d) => !d)}
-              className="glass rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[1.05vh] font-mono text-white/70"
+              className="glass rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[var(--m1-text-ui)] font-mono text-white/70"
             >
               {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
             </button>
           </div>
 
           <header className="mx-auto mb-[1vh] max-w-[min(96%,72rem)] shrink-0 text-center">
-            <p className="text-[1vh] font-mono tracking-[0.18em] text-white/50">
+            <p className="text-[var(--m1-text-mono-tight)] font-mono tracking-[0.18em] text-white/50">
               {isFuelModuleView
                 ? "SIG-FROTA — GESTÃO DE COMBUSTÍVEL"
                 : "SIG-PATRIMÔNIO — GESTÃO DE ATIVOS"}
             </p>
-            <h1 className="mt-[0.4vh] text-[2vh] font-bold tracking-wide text-white/95 md:text-[2.2vh]">
+            <h1 className="mt-[0.4vh] text-[var(--m1-text-title)] font-bold tracking-wide text-white/95">
               {moduleTitleLine(activeView)}
             </h1>
-            <p className="mx-auto mt-[0.5vh] max-w-[min(96%,42rem)] text-[1.15vh] leading-snug text-white/60">
+            <p className="mx-auto mt-[0.5vh] max-w-[min(96%,42rem)] text-[var(--m1-text-body)] leading-snug text-white/60">
               {moduleSubtitle(
                 activeView,
                 isFuelModuleView,
@@ -893,32 +893,32 @@ export default function Milestone1Client({
 
           <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-gutter:stable]">
           {activeView === "governance" && (
-            <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
-              <div className="glass rounded-2xl border border-emerald-500/20 p-5">
-                <h4 className="text-[10px] font-mono uppercase tracking-wider text-white/45">
+            <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-3">
+              <div className="glass rounded-2xl border border-emerald-500/20 p-6">
+                <h4 className="text-[var(--m1-text-caption)] font-mono uppercase tracking-wider text-white/45">
                   Frota total
                 </h4>
-                <p className="mt-2 text-3xl font-bold tabular-nums text-emerald-300">
+                <p className="mt-2 text-4xl font-bold tabular-nums tracking-tight text-emerald-300 sm:text-5xl">
                   {displayFleet.toLocaleString("pt-BR")}
                 </p>
               </div>
-              <div className="glass rounded-2xl border border-cyan-500/20 p-5">
-                <h4 className="text-[10px] font-mono uppercase tracking-wider text-white/45">
+              <div className="glass rounded-2xl border border-cyan-500/20 p-6">
+                <h4 className="text-[var(--m1-text-caption)] font-mono uppercase tracking-wider text-white/45">
                   Total de litros auditados
                 </h4>
-                <p className="mt-2 text-3xl font-bold tabular-nums text-cyan-200">
+                <p className="mt-2 text-4xl font-bold tabular-nums tracking-tight text-cyan-200 sm:text-5xl">
                   {displayLiters.toLocaleString("pt-BR", {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 2,
                   })}{" "}
-                  <span className="text-lg text-white/50">L</span>
+                  <span className="text-xl text-white/50">L</span>
                 </p>
               </div>
-              <div className="glass rounded-2xl border border-emerald-400/30 p-5 shadow-[0_0_24px_rgba(16,185,129,0.12)]">
-                <h4 className="text-[10px] font-mono uppercase tracking-wider text-white/45">
+              <div className="glass rounded-2xl border border-emerald-400/30 p-6 shadow-[0_0_24px_rgba(16,185,129,0.12)]">
+                <h4 className="text-[var(--m1-text-caption)] font-mono uppercase tracking-wider text-white/45">
                   Economia total
                 </h4>
-                <p className="mt-2 text-3xl font-bold text-emerald-300">
+                <p className="mt-2 text-4xl font-bold tracking-tight text-emerald-300 sm:text-5xl">
                   R${" "}
                   {displaySavings.toLocaleString("pt-BR", {
                     minimumFractionDigits: 2,
@@ -927,11 +927,11 @@ export default function Milestone1Client({
                 </p>
               </div>
 
-              <div className="glass md:col-span-2 rounded-2xl border border-white/10 p-6">
-                <h4 className="text-xs font-mono tracking-wider text-white/50">
+              <div className="glass md:col-span-2 rounded-2xl border border-white/10 p-7">
+                <h4 className="text-[var(--m1-text-ui)] font-mono tracking-wider text-white/50">
                   Gráfico de ROI
                 </h4>
-                <div className="mt-4 space-y-3 text-xs">
+                <div className="mt-4 space-y-3 text-[var(--m1-text-ui)]">
                   <div className="flex items-center gap-3">
                     <span className="w-24 shrink-0 text-white/55">Gasto bruto</span>
                     <div className="h-3 flex-1 overflow-hidden rounded-full bg-white/10">
@@ -969,21 +969,21 @@ export default function Milestone1Client({
                     </strong>
                   </div>
                 </div>
-                <p className="mt-4 text-sm text-emerald-400/90">
+                <p className="mt-4 text-[var(--m1-text-body)] text-emerald-400/90">
                   Economia: {displaySavingsPct.toFixed(1)}%{" "}
                   <span className="text-white/35">meta 15%–25%</span>
                 </p>
               </div>
 
-              <div className="glass rounded-2xl border border-white/10 p-6">
-                <h4 className="text-xs font-mono text-white/55">
+              <div className="glass rounded-2xl border border-white/10 p-7">
+                <h4 className="text-[var(--m1-text-ui)] font-mono text-white/55">
                   Principais irregularidades
                 </h4>
                 <div className="mt-4 space-y-2">
                   {topIrregularities.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-center gap-2 text-[11px]"
+                      className="flex items-center gap-2 text-[var(--m1-text-ui)]"
                     >
                       <span className="flex-1 truncate text-white/70">
                         {item.name}
@@ -1007,9 +1007,9 @@ export default function Milestone1Client({
           )}
 
           {(isFuelGeoView || activeView === "assets-map") && (
-            <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[1fr_340px]">
-              <div className="glass rounded-2xl border border-white/10 p-4">
-                <h4 className="text-xs font-mono tracking-wider text-white/55">
+            <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[1fr_min(400px,40vw)]">
+              <div className="glass rounded-2xl border border-white/10 p-5">
+                <h4 className="text-[var(--m1-text-ui)] font-mono tracking-wider text-white/55">
                   {activeView === "assets-map"
                     ? "Vistoria e Censo (Fé Pública)"
                     : activeView === "fuel-reserve"
@@ -1020,7 +1020,7 @@ export default function Milestone1Client({
                   selectedMapRecord &&
                   isAutomaticDeduction(selectedMapRecord) && (
                     <div
-                      className="mt-3 flex items-center gap-2 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200"
+                      className="mt-3 flex items-center gap-2 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-[var(--m1-text-ui)] text-red-200"
                       role="alert"
                     >
                       Alerta: transação fora do raio — glosa / dedução automática
@@ -1055,28 +1055,28 @@ export default function Milestone1Client({
                     }}
                   />
                 </div>
-                <p className="mt-2 text-[10px] text-white/35">
+                <p className="mt-2 text-[var(--m1-text-caption)] text-white/35">
                   Área visível: {demoData.resultados_motor_glosa.length} registros
                 </p>
               </div>
 
-              <div className="glass flex flex-col gap-3 rounded-2xl border border-white/10 p-4">
+              <div className="glass flex flex-col gap-4 rounded-2xl border border-white/10 p-5">
                 {selectedMapRecord && isFuelGeoView && (
                   <>
-                    <h4 className="text-xs font-mono text-white/55">
+                    <h4 className="text-[var(--m1-text-ui)] font-mono text-white/55">
                       Painel lateral de auditoria
                     </h4>
-                    <p className="text-sm text-white/75">
+                    <p className="text-[var(--m1-text-body)] text-white/75">
                       <strong>Placa:</strong> {selectedMapRecord.placa}
                     </p>
-                    <p className="text-sm text-white/75">
+                    <p className="text-[var(--m1-text-body)] text-white/75">
                       <strong>Motorista:</strong>{" "}
                       {demoData.abastecimentos[0]?.driver_name ?? "—"}
                     </p>
-                    <p className="text-sm text-white/75">
+                    <p className="text-[var(--m1-text-body)] text-white/75">
                       <strong>Litros:</strong> {selectedMapRecord.volumeLitros}
                     </p>
-                    <p className="text-sm text-white/75">
+                    <p className="text-[var(--m1-text-body)] text-white/75">
                       <strong>Distância:</strong>{" "}
                       {Math.round(
                         getMapDistanceMeters(selectedMapRecord)
@@ -1086,7 +1086,7 @@ export default function Milestone1Client({
                     <button
                       type="button"
                       onClick={triggerFuelCamera}
-                      className={`mt-2 rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-4 py-3 text-xs font-mono text-emerald-200 ${fuelShutterPulse ? "scale-95" : ""}`}
+                      className={`mt-2 rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-4 py-3 text-[var(--m1-text-ui)] font-mono text-emerald-200 ${fuelShutterPulse ? "scale-95" : ""}`}
                     >
                       Capturar imagem com marca d&apos;água
                     </button>
@@ -1110,28 +1110,28 @@ export default function Milestone1Client({
                 )}
                 {activeView === "assets-map" && selectedMapRecord && (
                   <>
-                    <h4 className="text-xs font-mono text-white/55">
+                    <h4 className="text-[var(--m1-text-ui)] font-mono text-white/55">
                       Painel de registro e conservação
                     </h4>
-                    <p className="text-sm">
+                    <p className="text-[var(--m1-text-body)]">
                       <strong>Nº de registro:</strong> {selectedMapRecord.placa}
                     </p>
                     <button
                       type="button"
                       onClick={() => openAp04Scanner(false)}
-                      className="rounded-xl border border-blue-500/40 bg-blue-500/15 px-4 py-2 text-xs text-blue-200"
+                      className="rounded-xl border border-blue-500/40 bg-blue-500/15 px-4 py-2 text-[var(--m1-text-ui)] text-blue-200"
                     >
                       Escanear código de tombamento
                     </button>
                   </>
                 )}
-                <div className="mt-auto flex max-h-48 flex-col gap-1 overflow-y-auto">
+                <div className="mt-auto flex max-h-56 flex-col gap-1.5 overflow-y-auto">
                   {demoData.resultados_motor_glosa.map((r) => (
                     <button
                       key={r.id}
                       type="button"
                       onClick={() => setSelectedMapRecord(r)}
-                      className={`rounded-lg px-2 py-1.5 text-left text-[11px] font-mono ${selectedMapRecord?.id === r.id ? "bg-white/15 text-white" : "text-white/55 hover:bg-white/5"}`}
+                      className={`rounded-lg px-3 py-2 text-left text-[var(--m1-text-ui)] font-mono leading-snug ${selectedMapRecord?.id === r.id ? "bg-white/15 text-white" : "text-white/55 hover:bg-white/5"}`}
                     >
                       {r.transacaoId} — {r.placa}
                     </button>
@@ -1154,15 +1154,15 @@ export default function Milestone1Client({
 
           {activeView === "fuel-integrity" && (
             <div className="mx-auto max-w-6xl">
-              <div className="glass relative overflow-hidden rounded-2xl border border-white/10 p-5">
+              <div className="glass relative overflow-hidden rounded-2xl border border-white/10 p-6 md:p-7">
                 {integrityLaserSweep && (
                   <div className="pointer-events-none absolute inset-0 z-10 animate-pulse bg-gradient-to-b from-cyan-400/10 via-transparent to-transparent" />
                 )}
-                <h4 className="text-sm font-mono tracking-wider text-white/60">
+                <h4 className="text-[var(--m1-text-body)] font-mono tracking-wider text-white/60">
                   Relatórios e Trilha de Auditoria
                 </h4>
                 <div className="mt-4 flex flex-wrap gap-3">
-                  <label className="text-[11px] text-white/45">
+                  <label className="text-[var(--m1-text-ui)] text-white/45">
                     Data
                     <input
                       type="date"
@@ -1171,10 +1171,10 @@ export default function Milestone1Client({
                         setDateFilter(e.target.value);
                         onIntegrityFilter();
                       }}
-                      className="ml-2 rounded-lg border border-white/15 bg-white/5 px-2 py-1 text-white"
+                      className="ml-2 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-[var(--m1-text-ui)] text-white"
                     />
                   </label>
-                  <label className="text-[11px] text-white/45">
+                  <label className="text-[var(--m1-text-ui)] text-white/45">
                     Departamento
                     <select
                       value={departmentFilter}
@@ -1182,7 +1182,7 @@ export default function Milestone1Client({
                         setDepartmentFilter(e.target.value);
                         onIntegrityFilter();
                       }}
-                      className="ml-2 rounded-lg border border-white/15 bg-white/5 px-2 py-1 text-white"
+                      className="ml-2 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-[var(--m1-text-ui)] text-white"
                     >
                       <option value="all">Todos</option>
                       {departments.map((d) => (
@@ -1206,14 +1206,14 @@ export default function Milestone1Client({
                             : "",
                       })
                     }
-                    className="w-full rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-xs font-mono text-cyan-200 sm:ml-auto sm:w-auto"
+                    className="w-full rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-[var(--m1-text-ui)] font-mono text-cyan-200 sm:ml-auto sm:w-auto"
                   >
                     Exportar PDF oficial
                   </button>
                 </div>
 
                 {integrityFilterLoading && (
-                  <p className="mt-6 text-xs text-white/45">Consultando…</p>
+                  <p className="mt-6 text-[var(--m1-text-ui)] text-white/45">Consultando…</p>
                 )}
 
                 {!integrityFilterLoading && (
@@ -1227,16 +1227,16 @@ export default function Milestone1Client({
                             <span className="relative h-3 w-3 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.7)]" />
                           </div>
                           <div className="rounded-2xl border border-cyan-500/30 bg-slate-900/75 p-4 text-slate-200 shadow-[0_10px_20px_rgba(2,6,23,0.32)] backdrop-blur">
-                            <p className="text-sm font-semibold text-white">{row.department}</p>
-                            <p className="mt-1 text-xs text-slate-300/75">{row.date}</p>
-                            <p className="mt-2 text-sm text-slate-200/90">
+                            <p className="text-[var(--m1-text-body)] font-semibold text-white">{row.department}</p>
+                            <p className="mt-1 text-[var(--m1-text-ui)] text-slate-300/75">{row.date}</p>
+                            <p className="mt-2 text-[var(--m1-text-body)] text-slate-200/90">
                               Placa {row.plate} — registro na trilha SHA-256 do SIG-FROTA.
                             </p>
-                            <p className="mt-2 text-xs font-semibold text-cyan-300">SHA-256</p>
-                            <code className="mt-1 block break-all rounded-md border border-cyan-400/40 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
+                            <p className="mt-2 text-[var(--m1-text-ui)] font-semibold text-cyan-300">SHA-256</p>
+                            <code className="mt-1 block break-all rounded-md border border-cyan-400/40 bg-slate-950/70 px-2 py-1 text-[var(--m1-text-caption)] text-cyan-200">
                               {getHashDisplay(row, ri)}
                             </code>
-                            <p className="mt-2 text-[11px] text-slate-300/80">
+                            <p className="mt-2 text-[var(--m1-text-ui)] text-slate-300/80">
                               {row.verified ? "Verificado / imutável" : "Em revisão"}
                             </p>
                           </div>
@@ -1248,17 +1248,17 @@ export default function Milestone1Client({
                       key={integrityScanGen}
                       className="mt-4 hidden overflow-x-auto rounded-2xl border border-slate-700/60 bg-slate-900/65 p-2 shadow-[0_10px_24px_rgba(2,6,23,0.35)] backdrop-blur sm:block"
                     >
-                      <table className="w-full min-w-[720px] border-collapse text-left text-[11px]">
+                      <table className="w-full min-w-[720px] border-collapse text-left text-[var(--m1-text-ui)]">
                         <thead>
                           <tr className="border-b border-slate-600/70 bg-slate-950/55 text-slate-300/85">
-                            <th className="p-2">Int.</th>
-                            <th className="p-2">Data</th>
-                            <th className="p-2">Depto</th>
-                            <th className="p-2">Placa</th>
-                            <th className="p-2">L</th>
-                            <th className="p-2">Valor</th>
-                            <th className="p-2">SHA-256</th>
-                            <th className="p-2">Situação</th>
+                            <th className="px-3 py-2.5">Int.</th>
+                            <th className="px-3 py-2.5">Data</th>
+                            <th className="px-3 py-2.5">Depto</th>
+                            <th className="px-3 py-2.5">Placa</th>
+                            <th className="px-3 py-2.5">L</th>
+                            <th className="px-3 py-2.5">Valor</th>
+                            <th className="px-3 py-2.5">SHA-256</th>
+                            <th className="px-3 py-2.5">Situação</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1267,20 +1267,20 @@ export default function Milestone1Client({
                               key={row.id}
                               className="border-b border-slate-700/55 text-slate-200/85 odd:bg-slate-900/35 even:bg-slate-950/25"
                             >
-                              <td className="p-2">
+                              <td className="px-3 py-2.5">
                                 {integrityShieldOk[row.id] ? "✓" : "…"}
                               </td>
-                              <td className="p-2 whitespace-nowrap">{row.date}</td>
-                              <td className="p-2">{row.department}</td>
-                              <td className="p-2">{row.plate}</td>
-                              <td className="p-2">{row.liters}</td>
-                              <td className="p-2">
+                              <td className="px-3 py-2.5 whitespace-nowrap">{row.date}</td>
+                              <td className="px-3 py-2.5">{row.department}</td>
+                              <td className="px-3 py-2.5">{row.plate}</td>
+                              <td className="px-3 py-2.5">{row.liters}</td>
+                              <td className="px-3 py-2.5">
                                 R$ {row.amount.toFixed(2)}
                               </td>
-                              <td className="max-w-[200px] break-all font-mono text-[9px] text-cyan-300/90">
+                              <td className="max-w-[200px] break-all px-3 py-2.5 font-mono text-[var(--m1-text-micro)] text-cyan-300/90">
                                 {getHashDisplay(row, ri)}
                               </td>
-                              <td className="p-2">
+                              <td className="px-3 py-2.5">
                                 {row.verified
                                   ? "Verificado / imutável"
                                   : "Em revisão"}
@@ -1298,8 +1298,8 @@ export default function Milestone1Client({
 
           {activeView === "assets-report" && (
             <div className="mx-auto max-w-6xl">
-              <div className="glass rounded-2xl border border-white/10 p-6">
-                <h4 className="text-sm font-mono text-white/60">
+              <div className="glass rounded-2xl border border-white/10 p-7">
+                <h4 className="text-[var(--m1-text-body)] font-mono text-white/60">
                   Inventário e Tombamento
                 </h4>
                 {assetsReportLoading ? (
@@ -1308,20 +1308,20 @@ export default function Milestone1Client({
                   <>
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
                       <div className="rounded-xl border border-blue-500/20 p-4">
-                        <p className="text-[10px] text-white/45">
+                        <p className="text-[var(--m1-text-caption)] text-white/45">
                           Bens catalogados
                         </p>
-                        <p className="text-3xl font-bold text-blue-300">
+                        <p className="text-4xl font-bold tracking-tight text-blue-300 sm:text-5xl">
                           {(demoData.resumo_patrimonio?.total_bens_catalogados ??
                             demoData.resultados_motor_glosa.length
                           ).toString()}
                         </p>
                       </div>
                       <div className="rounded-xl border border-blue-500/20 p-4">
-                        <p className="text-[10px] text-white/45">
+                        <p className="text-[var(--m1-text-caption)] text-white/45">
                           Registros auditados
                         </p>
-                        <p className="text-3xl font-bold text-blue-200">
+                        <p className="text-4xl font-bold tracking-tight text-blue-200 sm:text-5xl">
                           {(demoData.resumo_patrimonio
                             ?.total_vistorias_realizadas ??
                             demoData.abastecimentos.length
@@ -1332,7 +1332,7 @@ export default function Milestone1Client({
                     <button
                       type="button"
                       onClick={() => openPatrimonyPdf(patrimonyChainRows)}
-                      className="mt-6 w-full rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-xs text-cyan-200 sm:w-auto"
+                      className="mt-6 w-full rounded-xl border border-cyan-500/40 bg-cyan-500/15 px-4 py-2 text-[var(--m1-text-ui)] text-cyan-200 sm:w-auto"
                     >
                       Exportar PDF oficial
                     </button>
@@ -1342,32 +1342,32 @@ export default function Milestone1Client({
                           key={`m1-assets-mobile-${row.tombo}-${row.integrityHash}`}
                           className="rounded-2xl border border-cyan-500/30 bg-slate-900/75 p-4 text-slate-200 shadow-[0_10px_20px_rgba(2,6,23,0.32)] backdrop-blur"
                         >
-                          <p className="text-[11px] text-slate-300/80">Tombamento</p>
-                          <p className="text-sm font-semibold text-white">{row.tombo}</p>
-                          <p className="mt-3 text-[11px] text-slate-300/80">Descrição</p>
-                          <p className="text-sm text-slate-200/90">{row.descricao}</p>
-                          <p className="mt-3 text-[11px] text-slate-300/80">INPI</p>
-                          <code className="block rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
+                          <p className="text-[var(--m1-text-ui)] text-slate-300/80">Tombamento</p>
+                          <p className="text-[var(--m1-text-body)] font-semibold text-white">{row.tombo}</p>
+                          <p className="mt-3 text-[var(--m1-text-ui)] text-slate-300/80">Descrição</p>
+                          <p className="text-[var(--m1-text-body)] text-slate-200/90">{row.descricao}</p>
+                          <p className="mt-3 text-[var(--m1-text-ui)] text-slate-300/80">INPI</p>
+                          <code className="block rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[var(--m1-text-caption)] text-cyan-200">
                             {row.inpiRegistro}
                           </code>
-                          <p className="mt-3 text-[11px] text-slate-300/80">SHA-256</p>
-                          <code className="block break-all rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
+                          <p className="mt-3 text-[var(--m1-text-ui)] text-slate-300/80">SHA-256</p>
+                          <code className="block break-all rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[var(--m1-text-caption)] text-cyan-200">
                             {row.integrityHash}
                           </code>
-                          <p className="mt-3 text-[11px] text-slate-300/80">Situação</p>
-                          <p className="text-sm text-slate-100">{row.situacao}</p>
+                          <p className="mt-3 text-[var(--m1-text-ui)] text-slate-300/80">Situação</p>
+                          <p className="text-[var(--m1-text-body)] text-slate-100">{row.situacao}</p>
                         </div>
                       ))}
                     </div>
                     <div className="mt-6 hidden overflow-x-auto sm:block">
-                      <table className="w-full min-w-[640px] text-left text-[11px]">
+                      <table className="w-full min-w-[640px] text-left text-[var(--m1-text-ui)]">
                         <thead>
                           <tr className="text-white/45">
-                            <th className="p-2">Tombamento</th>
-                            <th className="p-2">Descrição</th>
-                            <th className="p-2">INPI</th>
-                            <th className="p-2">SHA-256</th>
-                            <th className="p-2">Situação</th>
+                            <th className="px-3 py-2.5">Tombamento</th>
+                            <th className="px-3 py-2.5">Descrição</th>
+                            <th className="px-3 py-2.5">INPI</th>
+                            <th className="px-3 py-2.5">SHA-256</th>
+                            <th className="px-3 py-2.5">Situação</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1376,15 +1376,15 @@ export default function Milestone1Client({
                               key={row.tombo + row.integrityHash}
                               className="border-t border-white/5 text-white/75"
                             >
-                              <td className="p-2">{row.tombo}</td>
-                              <td className="p-2">{row.descricao}</td>
-                              <td className="p-2 font-mono text-cyan-300">
+                              <td className="px-3 py-2.5">{row.tombo}</td>
+                              <td className="px-3 py-2.5">{row.descricao}</td>
+                              <td className="px-3 py-2.5 font-mono text-cyan-300">
                                 {row.inpiRegistro}
                               </td>
-                              <td className="max-w-[180px] break-all p-2 font-mono text-[9px] text-cyan-200/90">
+                              <td className="max-w-[180px] break-all px-3 py-2.5 font-mono text-[var(--m1-text-micro)] text-cyan-200/90">
                                 {row.integrityHash}
                               </td>
-                              <td className="p-2">{row.situacao}</td>
+                              <td className="px-3 py-2.5">{row.situacao}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -1397,16 +1397,16 @@ export default function Milestone1Client({
           )}
 
           {activeView === "assets-timeline" && (
-            <div className="mx-auto max-w-3xl">
-              <div className="glass rounded-2xl border border-white/10 p-6">
-                <h4 className="text-sm font-mono text-white/60">
+            <div className="mx-auto max-w-4xl">
+              <div className="glass rounded-2xl border border-white/10 p-7">
+                <h4 className="text-[var(--m1-text-body)] font-mono text-white/60">
                   Timeline de auditoria
                 </h4>
                 <button
                   type="button"
                   disabled={timelineCompare !== "idle"}
                   onClick={compareTimelineHashes}
-                  className="mt-4 w-full rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-4 py-2 text-xs text-emerald-200 disabled:opacity-40 sm:w-auto"
+                  className="mt-4 w-full rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-4 py-2 text-[var(--m1-text-ui)] text-emerald-200 disabled:opacity-40 sm:w-auto"
                 >
                   Comparar Hashes
                 </button>
@@ -1439,11 +1439,11 @@ export default function Milestone1Client({
                           <span className="relative h-3 w-3 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.7)]" />
                         </div>
                         <div className={`rounded-2xl border p-4 text-slate-200 shadow-[0_10px_20px_rgba(2,6,23,0.32)] backdrop-blur ${compareClass}`}>
-                          <p className="text-[11px] font-semibold text-cyan-200/90">{ev.title}</p>
-                          <time className="mt-1 block text-[10px] text-slate-300/75">{ev.at}</time>
-                          <p className="mt-2 text-sm text-slate-200/90">{ev.detail}</p>
-                          <p className="mt-2 text-xs font-semibold text-cyan-300">SHA-256</p>
-                          <code className="mt-1 block break-all rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[10px] text-cyan-200">
+                          <p className="text-[var(--m1-text-ui)] font-semibold text-cyan-200/90">{ev.title}</p>
+                          <time className="mt-1 block text-[var(--m1-text-caption)] text-slate-300/75">{ev.at}</time>
+                          <p className="mt-2 text-[var(--m1-text-body)] text-slate-200/90">{ev.detail}</p>
+                          <p className="mt-2 text-[var(--m1-text-ui)] font-semibold text-cyan-300">SHA-256</p>
+                          <code className="mt-1 block break-all rounded-md border border-cyan-400/35 bg-slate-950/70 px-2 py-1 text-[var(--m1-text-caption)] text-cyan-200">
                             {ev.integrityHash}
                           </code>
                         </div>
@@ -1472,12 +1472,12 @@ export default function Milestone1Client({
                       }`}
                     >
                       <span className="absolute -left-[29px] top-4 h-3 w-3 rounded-full bg-blue-500 shadow-[0_0_10px_#3b82f6]" />
-                      <p className="text-xs font-semibold text-white/90">
+                      <p className="text-[var(--m1-text-ui)] font-semibold text-white/90">
                         {ev.title}
                       </p>
-                      <time className="text-[10px] text-white/40">{ev.at}</time>
-                      <p className="mt-1 text-sm text-white/65">{ev.detail}</p>
-                      <code className="mt-2 block break-all text-[9px] text-cyan-300/80">
+                      <time className="text-[var(--m1-text-caption)] text-white/40">{ev.at}</time>
+                      <p className="mt-1 text-[var(--m1-text-body)] text-white/65">{ev.detail}</p>
+                      <code className="mt-2 block break-all text-[var(--m1-text-micro)] text-cyan-300/80">
                         {ev.integrityHash}
                       </code>
                     </motion.div>
@@ -1497,7 +1497,7 @@ export default function Milestone1Client({
         >
           <div className="overflow-hidden whitespace-nowrap border-b border-white/5 py-1">
             <motion.div
-              className="inline-block font-mono text-[9px] text-emerald-500/70"
+              className="inline-block font-mono text-[var(--m1-text-micro)] text-emerald-500/70"
               animate={{ x: [0, -800] }}
               transition={{
                 duration: 40,
@@ -1511,15 +1511,15 @@ export default function Milestone1Client({
           </div>
           {activeView === "hub" && (
             <div className="mx-auto max-w-6xl px-4 py-2 text-center">
-              <span className="text-[9px] text-white/35">Resto (SHA-256) </span>
-              <code className="break-all text-[8px] text-cyan-400/80">
+              <span className="text-[var(--m1-text-micro)] text-white/35">Resto (SHA-256) </span>
+              <code className="break-all text-[var(--m1-text-micro)] text-cyan-400/80">
                 {hubHashLocked ? hubFixedHash : hubLiveHash}
               </code>
             </div>
           )}
           <div className="flex overflow-hidden py-2">
             <motion.div
-              className="flex gap-16 whitespace-nowrap font-mono text-[9px] text-white/40"
+              className="flex gap-16 whitespace-nowrap font-mono text-[var(--m1-text-micro)] text-white/40"
               animate={{ x: [0, -2400] }}
               transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
             >
@@ -1527,7 +1527,7 @@ export default function Milestone1Client({
               <span aria-hidden>{tickerText}</span>
             </motion.div>
           </div>
-          <p className="pb-2 text-center text-[8px] font-mono text-white/25">
+          <p className="pb-2 text-center text-[var(--m1-text-micro)] font-mono text-white/25">
             Metodologia apresentada ao TCE-AC
           </p>
         </footer>
@@ -1542,14 +1542,14 @@ export default function Milestone1Client({
             exit={{ opacity: 0 }}
           >
             <div className="glass max-w-md rounded-2xl border border-white/15 p-6">
-              <h3 className="text-sm font-semibold text-white">
+              <h3 className="text-[var(--m1-text-body)] font-semibold text-white">
                 Leitor AP04 — câmera exclusiva
               </h3>
               <div className="relative mt-4 h-48 overflow-hidden rounded-xl bg-slate-900">
                 {ap04Scanning && (
                   <div className="absolute inset-x-0 top-0 h-1 animate-pulse bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
                 )}
-                <p className="absolute inset-0 flex items-center justify-center text-xs text-white/45">
+                <p className="absolute inset-0 flex items-center justify-center text-[var(--m1-text-ui)] text-white/45">
                   {ap04Scanning
                     ? "Linha laser em leitura…"
                     : "Fechando…"}
@@ -1563,7 +1563,7 @@ export default function Milestone1Client({
                   setAp04ScannerOpen(false);
                   setAp04Scanning(false);
                 }}
-                className="mt-4 text-xs text-white/50 underline"
+                className="mt-4 text-[var(--m1-text-ui)] text-white/50 underline"
               >
                 Cancelar
               </button>
@@ -1578,17 +1578,17 @@ export default function Milestone1Client({
           role="dialog"
         >
           <div className="glass max-w-lg rounded-2xl border border-white/15 p-6">
-            <h3 className="text-sm font-semibold text-white">
+            <h3 className="text-[var(--m1-text-body)] font-semibold text-white">
               {activeView === "assets-map"
                 ? "Bem patrimonial"
                 : "Ativo / equipamento"}
             </h3>
             <div className="mt-4 h-32 rounded-xl bg-white/5" />
-            <p className="mt-2 text-xs text-white/45">
+            <p className="mt-2 text-[var(--m1-text-ui)] text-white/45">
               Localização validada por GPS — SHA-256
             </p>
             <div className="mt-4">
-              <div className="flex justify-between text-[10px] text-white/45">
+              <div className="flex justify-between text-[var(--m1-text-caption)] text-white/45">
                 <span>Conservação</span>
                 <span>{Math.round(modalConservation)}%</span>
               </div>
@@ -1599,13 +1599,13 @@ export default function Milestone1Client({
                 />
               </div>
             </div>
-            <code className="mt-4 block break-all text-[9px] text-cyan-300">
+            <code className="mt-4 block break-all text-[var(--m1-text-micro)] text-cyan-300">
               {pinDetailRecord.integrityHash}
             </code>
             <button
               type="button"
               onClick={() => setPinDetailRecord(null)}
-              className="mt-6 rounded-xl border border-white/20 px-4 py-2 text-xs text-white/80"
+              className="mt-6 rounded-xl border border-white/20 px-4 py-2 text-[var(--m1-text-ui)] text-white/80"
             >
               Fechar
             </button>
@@ -1615,14 +1615,14 @@ export default function Milestone1Client({
 
       {ap04PhotoCaptured && activeView === "assets-map" && (
         <div className="fixed bottom-24 left-4 right-4 z-[560] mx-auto max-w-md rounded-xl border border-blue-500/30 bg-slate-900/95 p-4 shadow-xl md:left-auto md:right-8">
-          <p className="text-[10px] text-white/55">Fé pública — metadados</p>
-          <p className="text-xs text-cyan-200">GPS {ap04LiveGps}</p>
-          <p className="text-[10px] text-white/45">{ap04LiveTime}</p>
+          <p className="text-[var(--m1-text-caption)] text-white/55">Fé pública — metadados</p>
+          <p className="text-[var(--m1-text-ui)] text-cyan-200">GPS {ap04LiveGps}</p>
+          <p className="text-[var(--m1-text-caption)] text-white/45">{ap04LiveTime}</p>
           <button
             type="button"
             onClick={confirmAp04}
             disabled={ap04Saving}
-            className="mt-3 rounded-lg border border-emerald-500/40 px-3 py-1.5 text-xs text-emerald-200"
+            className="mt-3 rounded-lg border border-emerald-500/40 px-3 py-1.5 text-[var(--m1-text-ui)] text-emerald-200"
           >
             {ap04Saving ? "Gravando…" : "Confirmar e gravar fé pública"}
           </button>

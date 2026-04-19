@@ -71,8 +71,9 @@ export default function Milestone1Map({
       const postoGlyph = assetMode ? patrimonyRefIcon(idx) : "⛽";
       const postoIcon = L.divIcon({
         className: "m1-leaflet-marker",
-        html: `<span class="map-live-pulse" style="animation-delay:${(idx * 0.11).toFixed(2)}s;font-size:14px">${postoGlyph}</span>`,
-        iconSize: [26, 26],
+        html: `<span class="map-live-pulse" style="animation-delay:${(idx * 0.11).toFixed(2)}s;font-size:17px">${postoGlyph}</span>`,
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
       });
 
       const pulseWarn = automaticDeduction ? " map-live-pulse--warn" : "";
@@ -90,8 +91,8 @@ export default function Milestone1Map({
       const assetIcon = L.divIcon({
         className: "m1-leaflet-marker",
         html: assetHtml,
-        iconSize: [26, 26],
-        iconAnchor: [13, 13],
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
       });
 
       L.marker([record.postoLat, record.postoLng], { icon: postoIcon }).addTo(
@@ -175,7 +176,7 @@ export default function Milestone1Map({
   return (
     <div
       ref={containerRef}
-      className="m1-leaflet-root h-[min(52vh,420px)] w-full rounded-xl overflow-hidden border border-white/10"
+      className="m1-leaflet-root h-[var(--m1-map-min-height)] w-full rounded-xl overflow-hidden border border-white/10"
     />
   );
 }

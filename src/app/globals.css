@@ -300,6 +300,21 @@ body {
   isolation: auto;
 }
 
+/**
+ * Milestone 1 (wrapper em `Milestone1Client`): escala fluida para legibilidade
+ * em ecrãs 1080p+ sem texto minúsculo fixo em px.
+ */
+.milestone1-app {
+  --m1-text-micro: clamp(0.6875rem, 0.55rem + 0.52vmin, 0.8125rem);
+  --m1-text-caption: clamp(0.78125rem, 0.64rem + 0.58vmin, 0.875rem);
+  --m1-text-ui: clamp(0.8125rem, 0.7rem + 0.62vmin, 0.9375rem);
+  --m1-text-body: clamp(0.875rem, 0.76rem + 0.68vmin, 1.0625rem);
+  --m1-text-mono-tight: clamp(0.78125rem, 0.64rem + 0.62vmin, 0.9375rem);
+  --m1-text-title: clamp(1.25rem, 1rem + 1.05vmin, 1.875rem);
+  --m1-text-hero: clamp(1.5rem, 1.15rem + 1.35vmin, 2.125rem);
+  --m1-map-min-height: min(56vh, 520px);
+}
+
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
 @keyframes module-card-float {
   0%,
