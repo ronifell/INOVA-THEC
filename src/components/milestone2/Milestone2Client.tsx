@@ -213,7 +213,7 @@ export default function Milestone2Client() {
   const trailRows = integrityRows.slice(0, 12);
 
   return (
-    <div className="mx-auto flex h-full min-h-0 w-full max-w-7xl flex-col overflow-x-hidden overflow-y-auto px-4 pb-16 pt-4 md:px-6">
+    <div className="milestone1-app flex h-full min-h-0 w-full flex-col overflow-x-hidden overflow-y-auto">
       <AnimatePresence mode="wait">
         {!activeMenu ? (
           <motion.div
@@ -222,6 +222,7 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
+            className="mx-auto w-full max-w-7xl px-4 pb-16 pt-4 md:px-6"
           >
             <motion.div
               className="mb-10 text-center"
@@ -813,50 +814,73 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
-            className="flex min-h-0 min-w-0 flex-1 flex-col"
+            className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-visible"
           >
-            <AuditCommandFrame variant={activeMenu}>
-              <div className="mb-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
+            {/* Espelha o hub do Milestone 1 (embedded): proporção 1.22 cartões : 0.96 faixa inferior */}
+            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
+              <div className="flex shrink-0 flex-col items-center gap-[min(1.5vmin,1.2vh)] text-center">
                 <button
                   type="button"
                   onClick={goPortal}
-                  className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+                  className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
                 >
                   ← Portal Milestone 2
                 </button>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: easeOut }}
+                >
+                  <h2 className="text-[var(--m1-text-ui)] font-mono tracking-[0.22em] text-white/55 md:text-base">
+                    {menuTitle}
+                  </h2>
+                  <p className="mt-1 text-[10px] font-mono uppercase tracking-[0.25em] text-white/30">
+                    Menu de comando · sete frentes de auditoria
+                  </p>
+                  <div className="mx-auto mt-3 h-px w-32 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                </motion.div>
               </div>
 
-              <motion.div
-                className="mb-10 text-center"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: easeOut }}
-              >
-                <h2 className="text-2xl font-bold tracking-wider text-white/90 md:text-3xl">
-                  {menuTitle}
-                </h2>
-                <p className="mt-2 text-xs font-mono tracking-[0.25em] text-white/25 uppercase">
-                  Menu de comando · sete frentes de auditoria
-                </p>
-                <div className="mx-auto mt-4 h-px w-32 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              </motion.div>
+              <div className="relative z-[12] flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
+                <AuditCommandFrame
+                  variant={activeMenu}
+                  className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
+                >
+                  <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                    {submenuTiles.map((tile, i) => (
+                      <div
+                        key={tile.id}
+                        className="relative z-[1] h-full w-[90%] justify-self-center"
+                      >
+                        <PortalModuleCard
+                          index={i}
+                          color={menuTheme.color}
+                          colorRgb={menuTheme.colorRgb}
+                          icon={tile.icon}
+                          title={tile.title}
+                          description={tile.description}
+                          isFullModule
+                          voiceText={`${menuTitle}. ${tile.title}. ${tile.description}`}
+                          onClick={() => openTile(tile)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </AuditCommandFrame>
 
-              <div className="module-cards-glow-gutter module-cards-glow-gutter--hub mb-12 grid w-full grid-cols-2 gap-3 overflow-visible sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-7">
-                {submenuTiles.map((tile, i) => (
-                  <PortalModuleCard
-                    key={tile.title}
-                    index={i}
-                    color={menuTheme.color}
-                    colorRgb={menuTheme.colorRgb}
-                    icon={tile.icon}
-                    title={tile.title}
-                    description={tile.description}
-                    isFullModule
-                    onClick={() => openTile(tile)}
-                  />
-                ))}
+                <div className="flex min-h-0 min-w-0 flex-[0.96] flex-col items-center justify-center overflow-x-hidden overflow-y-auto py-[0.5vh]">
+                  {/* Reserva a mesma faixa inferior do hub M1 (botão modo claro/escuro) para alinhar proporção dos cartões */}
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    aria-hidden
+                    className="glass pointer-events-none invisible select-none rounded-full border border-white/15 px-[1.2vw] py-[0.6vh] text-[var(--m1-text-ui)] font-mono tracking-[0.15em] text-white/80"
+                  >
+                    ☾ Modo escuro
+                  </button>
+                </div>
               </div>
-            </AuditCommandFrame>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
