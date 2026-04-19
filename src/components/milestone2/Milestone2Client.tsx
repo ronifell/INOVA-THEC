@@ -13,6 +13,8 @@ import {
 } from "@/lib/milestone1/data";
 import type { DemoData, IntegrityRow, MotorResult } from "@/lib/milestone1/types";
 import { openFuelAuditPdf } from "@/components/milestone1/milestone1Pdf";
+import AuditCommandFrame from "@/components/audit/AuditCommandFrame";
+import Operational6040Workspace from "@/components/audit/Operational6040Workspace";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 const MilestoneMap = dynamic(() => import("@/components/milestone1/Milestone1Map"), {
@@ -288,33 +290,39 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
+            className="flex min-h-0 min-w-0 flex-1 flex-col"
           >
-            <div className="mb-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <button
-                type="button"
-                onClick={goBackToMenu}
-                className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+            <AuditCommandFrame variant={activeMenu}>
+              <div className="mb-6 flex flex-col items-stretch gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
+                <button
+                  type="button"
+                  onClick={goBackToMenu}
+                  className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+                >
+                  ← Voltar ao cardápio
+                </button>
+              </div>
+
+              <motion.div
+                className="mb-6 text-center sm:mb-8"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: easeOut }}
               >
-                ← Voltar ao cardápio
-              </button>
-            </div>
+                <h2 className="text-2xl font-bold tracking-wider text-white/90 md:text-3xl">
+                  {activeTile.title}
+                </h2>
+                <p className="mt-2 text-xs font-mono tracking-[0.25em] text-white/25 uppercase">
+                  {menuTitle} · tela operacional
+                </p>
+              </motion.div>
 
-            <motion.div
-              className="mb-8 text-center"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: easeOut }}
-            >
-              <h2 className="text-2xl font-bold tracking-wider text-white/90 md:text-3xl">
-                {activeTile.title}
-              </h2>
-              <p className="mt-2 text-xs font-mono tracking-[0.25em] text-white/25 uppercase">
-                {menuTitle} · tela operacional
-              </p>
-            </motion.div>
-
-            <div className="glass mx-auto max-w-5xl rounded-2xl border border-white/10 p-6 md:p-8">
-              <div className="mb-6 flex items-center gap-3">
+              <Operational6040Workspace
+                variant={activeMenu}
+                title={activeTile.title}
+                subtitle={activeTile.description}
+              >
+                <div className="mb-6 flex items-center gap-3">
                 <div
                   className="flex h-11 w-11 items-center justify-center rounded-xl text-2xl"
                   style={{ backgroundColor: `rgba(${menuTheme.colorRgb}, 0.14)` }}
@@ -773,7 +781,8 @@ export default function Milestone2Client() {
                   )}
                 </>
               )}
-            </div>
+              </Operational6040Workspace>
+
             <div className="mt-5 overflow-hidden rounded-xl border border-cyan-500/20 bg-[#071330]/80">
               <div className="whitespace-nowrap py-2 text-[11px] font-mono text-cyan-200/80 [animation:milestone2Ticker_20s_linear_infinite]">
                 <span className="px-6">
@@ -786,6 +795,7 @@ export default function Milestone2Client() {
                 </span>
               </div>
             </div>
+            </AuditCommandFrame>
           </motion.div>
         ) : (
           <motion.div
@@ -794,47 +804,50 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
+            className="flex min-h-0 min-w-0 flex-1 flex-col"
           >
-            <div className="mb-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <button
-                type="button"
-                onClick={goPortal}
-                className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+            <AuditCommandFrame variant={activeMenu}>
+              <div className="mb-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <button
+                  type="button"
+                  onClick={goPortal}
+                  className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+                >
+                  ← Portal Milestone 2
+                </button>
+              </div>
+
+              <motion.div
+                className="mb-10 text-center"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: easeOut }}
               >
-                ← Portal Milestone 2
-              </button>
-            </div>
+                <h2 className="text-2xl font-bold tracking-wider text-white/90 md:text-3xl">
+                  {menuTitle}
+                </h2>
+                <p className="mt-2 text-xs font-mono tracking-[0.25em] text-white/25 uppercase">
+                  Menu de comando · sete frentes de auditoria
+                </p>
+                <div className="mx-auto mt-4 h-px w-32 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              </motion.div>
 
-            <motion.div
-              className="mb-10 text-center"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: easeOut }}
-            >
-              <h2 className="text-2xl font-bold tracking-wider text-white/90 md:text-3xl">
-                {menuTitle}
-              </h2>
-              <p className="mt-2 text-xs font-mono tracking-[0.25em] text-white/25 uppercase">
-                Botões operacionais do frontend · Milestone 2
-              </p>
-              <div className="mx-auto mt-4 h-px w-32 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            </motion.div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-4 w-full mb-12 overflow-visible">
-              {submenuTiles.map((tile, i) => (
-                <PortalModuleCard
-                  key={tile.title}
-                  index={i}
-                  color={menuTheme.color}
-                  colorRgb={menuTheme.colorRgb}
-                  icon={tile.icon}
-                  title={tile.title}
-                  description={tile.description}
-                  isFullModule
-                  onClick={() => openTile(tile)}
-                />
-              ))}
-            </div>
+              <div className="module-cards-glow-gutter module-cards-glow-gutter--hub mb-12 grid w-full grid-cols-2 gap-3 overflow-visible sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-7">
+                {submenuTiles.map((tile, i) => (
+                  <PortalModuleCard
+                    key={tile.title}
+                    index={i}
+                    color={menuTheme.color}
+                    colorRgb={menuTheme.colorRgb}
+                    icon={tile.icon}
+                    title={tile.title}
+                    description={tile.description}
+                    isFullModule
+                    onClick={() => openTile(tile)}
+                  />
+                ))}
+              </div>
+            </AuditCommandFrame>
           </motion.div>
         )}
       </AnimatePresence>

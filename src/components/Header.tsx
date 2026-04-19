@@ -77,6 +77,13 @@ export default function Header() {
     hashDisplayPhase,
     triggerHashValidation,
   } = useStore();
+
+  const brandTitleClass =
+    activeModule === "patrimonio"
+      ? "bg-gradient-to-r from-white via-blue-200 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(96,165,250,0.38)]"
+      : activeModule === "frota"
+        ? "bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(52,211,153,0.32)]"
+        : "bg-gradient-to-r from-white via-slate-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_16px_rgba(148,163,184,0.28)]";
   const [liveCount, setLiveCount] = useState(integrityCount);
   const [hashStr, setHashStr] = useState(() => randomHex(16));
   const [hashMain, setHashMain] = useState(() => randomHex(48));
@@ -163,7 +170,9 @@ export default function Header() {
             whileTap={{ scale: 0.99 }}
           >
             <div className="relative inline-flex items-center justify-center px-2">
-              <span className="relative z-[1] bg-gradient-to-r from-white via-emerald-200 to-cyan-300 bg-clip-text text-xl font-black tracking-tight text-transparent drop-shadow-[0_0_20px_rgba(52,211,153,0.32)] md:text-[1.72rem]">
+              <span
+                className={`relative z-[1] bg-clip-text text-xl font-black tracking-tight md:text-[1.72rem] ${brandTitleClass}`}
+              >
                 INOVA THEC
               </span>
             </div>

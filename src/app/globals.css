@@ -283,6 +283,32 @@ body {
   }
 }
 
+/* Trilhos verticais do menu operacional — 6s aceso / 4s respiração (ciclo 10s) */
+@keyframes inova-rail-respire {
+  0%,
+  59.999% {
+    opacity: 1;
+    filter: brightness(1.06) saturate(1.06);
+  }
+  60%,
+  100% {
+    opacity: 0.14;
+    filter: brightness(0.74) saturate(0.88);
+  }
+}
+
+.audit-rail-line {
+  animation: inova-rail-respire 10s ease-in-out infinite;
+}
+
+/* Selo mestre — halo periférico no workspace 60/40 */
+.audit-flow-gold-ring {
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.22),
+    0 0 42px rgba(212, 175, 55, 0.14),
+    inset 0 0 56px rgba(212, 175, 55, 0.06);
+}
+
 /* Faixa das 7 cartas — respiro para halos (box-shadow até ~96px) + float sem clip dos pais */
 .module-cards-glow-gutter {
   box-sizing: border-box;

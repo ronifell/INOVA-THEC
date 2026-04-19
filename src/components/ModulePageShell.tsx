@@ -3,6 +3,7 @@
 import HomeShellLayout from "@/components/HomeShellLayout";
 import FaithPublicPresentation from "@/components/FaithPublicPresentation";
 import ModuleInteriorCardGrid from "@/components/ModuleInteriorCardGrid";
+import AuditCommandFrame from "@/components/audit/AuditCommandFrame";
 
 type Props = {
   variant: "frota" | "patrimonio";
@@ -20,9 +21,15 @@ export default function ModulePageShell({
   faithText,
   moduleId,
 }: Props) {
+  const auditVariant = moduleId === "frota" ? "frota" : "patrimonio";
+
   return (
     <HomeShellLayout
-      topBand={<ModuleInteriorCardGrid moduleId={moduleId} />}
+      topBand={
+        <AuditCommandFrame variant={auditVariant} className="min-h-0 h-full">
+          <ModuleInteriorCardGrid moduleId={moduleId} />
+        </AuditCommandFrame>
+      }
       bottomBand={
         <FaithPublicPresentation
           text={faithText}

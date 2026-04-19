@@ -25,6 +25,7 @@ import {
   isAutomaticDeduction,
   mockDepartment,
 } from "@/lib/milestone1/data";
+import AuditCommandFrame from "@/components/audit/AuditCommandFrame";
 import PortalModuleCard from "@/components/PortalModuleCard";
 import { MODULES } from "@/lib/modules";
 import { useStore } from "@/store/useStore";
@@ -42,7 +43,6 @@ const Milestone1Map = dynamic(() => import("./Milestone1Map"), {
 
 /** Same accent tokens as dashboard SIG-FROTA / SIG-PATRIMÔNIO cards */
 const M1_FROTA = MODULES[0]!;
-const M1_PAT = MODULES[1]!;
 
 const MILESTONE1_FUEL_TILES = [
   {
@@ -808,23 +808,20 @@ export default function Milestone1Client({
             )}
 
             <div className="relative z-[12] flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
-              <div className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]">
+              <AuditCommandFrame
+                variant="frota"
+                className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
+              >
                 <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
-                  {MILESTONE1_HUB_SEVEN.map(({ item, palette }, i) => (
+                  {MILESTONE1_HUB_SEVEN.map(({ item }, i) => (
                     <div
                       key={item.view}
                       className="relative z-[1] h-full w-[90%] justify-self-center"
                     >
                       <PortalModuleCard
                         index={i}
-                        color={
-                          palette === "frota" ? M1_FROTA.color : M1_PAT.color
-                        }
-                        colorRgb={
-                          palette === "frota"
-                            ? M1_FROTA.colorRgb
-                            : M1_PAT.colorRgb
-                        }
+                        color={M1_FROTA.color}
+                        colorRgb={M1_FROTA.colorRgb}
                         icon={item.icon}
                         title={item.title}
                         description={item.description}
@@ -838,7 +835,7 @@ export default function Milestone1Client({
                     </div>
                   ))}
                 </div>
-              </div>
+              </AuditCommandFrame>
 
               <div className="flex min-h-0 min-w-0 flex-[0.96] flex-col items-center justify-center overflow-x-hidden overflow-y-auto py-[0.5vh]">
                 <button
