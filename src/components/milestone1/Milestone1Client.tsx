@@ -45,85 +45,97 @@ const Milestone1Map = dynamic(() => import("./Milestone1Map"), {
 /** Same accent tokens as dashboard SIG-FROTA / SIG-PATRIMÔNIO cards */
 const M1_FROTA = MODULES[0]!;
 
-const MILESTONE1_FUEL_TILES = [
+/** Nível 2 — apenas SIG-FROTA (Combustível): sete botões por organograma cliente. */
+type HubTileDef = {
+  hubKey: string;
+  view: MilestoneHubView;
+  title: string;
+  description: string;
+  icon: string;
+  voiceText: string;
+};
+
+const MILESTONE1_MENU_COMBUSTIVEL: HubTileDef[] = [
   {
-    view: "governance" as const,
-    title: "Monitoramento e Inteligência Fiscal",
-    description: "KPIs de frota, ROI e irregularidades em tempo real.",
-    icon: "📊",
-    voiceText:
-      "Monitoramento e inteligência fiscal. Protocolo SIG-FROTA ativo.",
-  },
-  {
-    view: "fuel-map" as const,
-    title: "Georreferenciamento de Prova",
-    description: "Mapa, perímetro e trilha veículo–posto com prova pericial.",
-    icon: "🌐",
-    voiceText:
-      "Georreferenciamento de prova. Geolocalização e motor de glosa.",
-  },
-  {
-    view: "fuel-reserve" as const,
-    title: "Abastecimento Reserva",
-    description: "Galões e trechos sem posto — mesma captura com GPS.",
+    hubKey: "comb-tanque",
+    view: "fuel-reserve",
+    title: "TANQUE",
+    description: "Volume, litragem e lacre — prova pericial do reservatório.",
     icon: "🛢️",
-    voiceText: "Abastecimento reserva. Protocolo de foto e marca d'água.",
+    voiceText: "Auditoria de tanque e volume de combustível.",
   },
   {
-    view: "fuel-integrity" as const,
-    title: "Relatórios e Trilha de Auditoria",
-    description: "SHA-256, filtros departamentais e exportação oficial.",
-    icon: "📄",
-    voiceText: "Relatórios e trilha de auditoria. Integridade documental.",
+    hubKey: "comb-placa",
+    view: "fuel-map",
+    title: "PLACA",
+    description: "Identificação do veículo e correlação com frota cadastrada.",
+    icon: "🔖",
+    voiceText: "Verificação de placa e vínculo com o ativo.",
+  },
+  {
+    hubKey: "comb-hodometro",
+    view: "governance",
+    title: "HODÔMETRO",
+    description: "Quilometragem e consistência com rotas e consumo.",
+    icon: "📟",
+    voiceText: "Leitura de hodômetro e coerência operacional.",
+  },
+  {
+    hubKey: "comb-abastecimento",
+    view: "fuel-reserve",
+    title: "ABASTECIMENTO",
+    description: "Litros, posto e captura com GPS — fé pública.",
+    icon: "⛽",
+    voiceText: "Registro de abastecimento georreferenciado.",
+  },
+  {
+    hubKey: "comb-nota",
+    view: "fuel-integrity",
+    title: "NOTA FISCAL",
+    description: "Cupom, NF-e e vínculo com transação auditada.",
+    icon: "🧾",
+    voiceText: "Conferência documental e trilha fiscal.",
+  },
+  {
+    hubKey: "comb-gps",
+    view: "fuel-map",
+    title: "GPS · ROTA",
+    description: "Trajeto, perímetro e validação veículo–posto.",
+    icon: "🛰️",
+    voiceText: "Georreferenciamento e malha operacional.",
+  },
+  {
+    hubKey: "comb-selo",
+    view: "fuel-integrity",
+    title: "TRILHA · SELO",
+    description: "SHA-256, exportação oficial e selo AP-04.",
+    icon: "🔗",
+    voiceText: "Trilha de integridade e selo de auditoria.",
   },
 ];
 
-const MILESTONE1_PAT_TILES = [
-  {
-    view: "assets-map" as const,
-    title: "Vistoria e Censo (Fé Pública)",
-    description: "Mapa patrimonial, perímetro e registro com AP04.",
-    icon: "🔍",
-    voiceText: "Vistoria e censo com fé pública. SIG-PATRIMÔNIO.",
-  },
-  {
-    view: "assets-report" as const,
-    title: "Inventário e Tombamento",
-    description: "Cadeia INPI, selos SHA-256 e inventário consolidado.",
-    icon: "🏛️",
-    voiceText: "Inventário e tombamento. Trilha documental homologada.",
-  },
-  {
-    view: "assets-timeline" as const,
-    title: "Timeline de Auditoria (perícia digital)",
-    description: "Histórico imutável do bem e comparação de hashes.",
-    icon: "📜",
-    voiceText: "Timeline de auditoria pericial. Cadeia imutável.",
-  },
-];
-
-/** 7 painéis numa única linha em xl — mesma grelha que a Home (`Dashboard`). */
-const MILESTONE1_HUB_SEVEN = [
-  ...MILESTONE1_FUEL_TILES.map((item) => ({ item, palette: "frota" as const })),
-  ...MILESTONE1_PAT_TILES.map((item) => ({ item, palette: "pat" as const })),
-];
+/** Sete cartões na grelha — só combustível (portal Patrimônio usa Milestone 2). */
+const MILESTONE1_HUB_SEVEN = MILESTONE1_MENU_COMBUSTIVEL.map((item) => ({
+  item,
+  palette: "frota" as const,
+}));
 
 function moduleTitleLine(v: MilestoneHubView): string {
   switch (v) {
     case "governance":
-      return "Monitoramento e Inteligência Fiscal";
+      return "HODÔMETRO · Inteligência operacional";
     case "fuel-map":
-      return "Georreferenciamento de Prova";
+      return "PLACA · GPS · Georreferenciamento";
     case "fuel-reserve":
-      return "Abastecimento Reserva";
+      return "TANQUE · ABASTECIMENTO";
     case "fuel-integrity":
-      return "Relatórios e Trilha de Auditoria";
+      return "NOTA FISCAL · TRILHA E SELO";
     case "assets-map":
-      return "Vistoria e Censo (Fé Pública)";
+      return "LOCALIZAÇÃO · Vistoria em campo";
     case "assets-report":
-      return "Inventário e Tombamento";
+      return "PLAQUETA · Inventário e tombo";
     case "assets-timeline":
-      return "Timeline de Auditoria (perícia digital)";
+      return "ESTADO · Timeline pericial";
     default:
       return "";
   }
@@ -804,7 +816,7 @@ export default function Milestone1Client({
           >
             {!embeddedInAppShell && (
               <h2 className="shrink-0 text-center text-[var(--m1-text-ui)] font-mono tracking-[0.22em] text-white/55">
-                SIG-FROTA · SIG-PATRIMÔNIO — sete painéis operacionais
+                SIG-FROTA (Combustível) — menu de comando · sete frentes
               </h2>
             )}
 
@@ -816,7 +828,7 @@ export default function Milestone1Client({
                 <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                   {MILESTONE1_HUB_SEVEN.map(({ item }, i) => (
                     <div
-                      key={item.view}
+                      key={item.hubKey}
                       className="relative z-[1] h-full w-[90%] justify-self-center"
                     >
                       <PortalModuleCard

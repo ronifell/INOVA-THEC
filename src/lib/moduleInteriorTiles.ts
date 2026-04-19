@@ -7,52 +7,72 @@ export type InteriorTile = {
   voiceText: string;
 };
 
+/** Nível 2 — SIG-FROTA (Combustível): sete frentes de auditoria (organograma cliente). */
 const FROTA: InteriorTile[] = [
   {
-    title: "ROTAS",
-    description: "Malha operacional e correlação de trajetos.",
-    icon: "🧭",
-    voiceText: "Rotas e correlação operacional.",
+    title: "TANQUE",
+    description: "Volume, litragem e lacre — prova pericial do reservatório.",
+    icon: "🛢️",
+    voiceText: "Auditoria de tanque e volume de combustível.",
   },
   {
-    title: "GEOFENCE",
-    description: "Perímetros ativos e violação de cerca virtual.",
-    icon: "📡",
-    voiceText: "Geocerca e alertas de perímetro.",
+    title: "PLACA",
+    description: "Identificação do veículo e correlação com frota cadastrada.",
+    icon: "🔖",
+    voiceText: "Verificação de placa e vínculo com o ativo.",
   },
   {
-    title: "ALERTAS",
-    description: "Eventos críticos e fila de confirmação.",
-    icon: "🔔",
-    voiceText: "Central de alertas do SIG-FROTA.",
+    title: "HODÔMETRO",
+    description: "Quilometragem, desgaste e consistência com rotas.",
+    icon: "📟",
+    voiceText: "Leitura de hodômetro e coerência operacional.",
   },
   {
-    title: "COMBUSTÍVEL",
-    description: "Litros, notas e prova pericial vinculada.",
+    title: "ABASTECIMENTO",
+    description: "Litros, data e posto — registro com GPS e fé pública.",
     icon: "⛽",
-    voiceText: "Auditoria de combustível e despesa.",
+    voiceText: "Captura de abastecimento com georreferenciamento.",
   },
   {
-    title: "MANUTENÇÃO",
-    description: "OS, peças e vínculo com frota.",
-    icon: "🔧",
-    voiceText: "Manutenção e custo operacional.",
+    title: "NOTA FISCAL",
+    description: "Cupom, NF-e e vínculo com transação auditada.",
+    icon: "🧾",
+    voiceText: "Conferência documental e trilha fiscal.",
   },
   {
-    title: "MOTORISTA",
-    description: "Identidade, jornada e conformidade.",
-    icon: "👤",
-    voiceText: "Condutores e conformidade de jornada.",
+    title: "GPS · ROTA",
+    description: "Trajeto, perímetro e validação veículo–posto.",
+    icon: "🛰️",
+    voiceText: "Georreferenciamento e malha operacional.",
   },
   {
-    title: "INTEGRAÇÃO",
-    description: "APIs, selos e trilha documental.",
+    title: "TRILHA · SELO",
+    description: "SHA-256, exportação oficial e selo AP-04.",
     icon: "🔗",
-    voiceText: "Integração e trilha AP-04.",
+    voiceText: "Trilha de integridade e selo de auditoria.",
   },
 ];
 
+/** Nível 2 — SIG-PATRIMÔNIO: sete frentes (organograma cliente). */
 const PATRIMONIO: InteriorTile[] = [
+  {
+    title: "PLAQUETA",
+    description: "Identificação física do bem e registro tombado.",
+    icon: "🏷️",
+    voiceText: "Auditoria de plaqueta e identificação patrimonial.",
+  },
+  {
+    title: "ESTADO DE CONSERVAÇÃO",
+    description: "Classificação pericial e histórico de conservação.",
+    icon: "🏛️",
+    voiceText: "Estado de conservação e perícia visual.",
+  },
+  {
+    title: "LOCALIZAÇÃO",
+    description: "Georreferenciamento e perímetro do bem.",
+    icon: "📍",
+    voiceText: "Localização geográfica e área de custódia.",
+  },
   {
     title: "INVENTÁRIO",
     description: "Censo, tombo e consolidação patrimonial.",
@@ -66,34 +86,16 @@ const PATRIMONIO: InteriorTile[] = [
     voiceText: "Vistoria e evidências vinculadas.",
   },
   {
-    title: "BAIXA",
-    description: "Baixa patrimonial com trilha SHA-256.",
-    icon: "📥",
-    voiceText: "Processo de baixa e conformidade.",
-  },
-  {
-    title: "TRANSFERÊNCIA",
-    description: "Movimentação entre órgãos e responsáveis.",
-    icon: "↔️",
-    voiceText: "Transferência de bens documentada.",
-  },
-  {
-    title: "QR TRACE",
-    description: "Rastreio por QR e validação de campo.",
+    title: "QR · RASTREIO",
+    description: "Leitura de QR e validação de campo.",
     icon: "📱",
     voiceText: "Rastreabilidade por QR Code.",
   },
   {
-    title: "HASH LOCAL",
-    description: "Integridade offline e carimbo verificável.",
-    icon: "#️⃣",
-    voiceText: "Hash local e integridade do registro.",
-  },
-  {
-    title: "AUDITORIA",
-    description: "Painel pericial e exportação oficial.",
+    title: "AUDITORIA · HASH",
+    description: "Integridade SHA-256 e exportação pericial.",
     icon: "🛡️",
-    voiceText: "Auditoria patrimonial AP-04.",
+    voiceText: "Auditoria patrimonial e hash verificável.",
   },
 ];
 
