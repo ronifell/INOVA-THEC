@@ -236,6 +236,13 @@ export default function Milestone2Client() {
               <div className="mx-auto mt-4 h-px w-32 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             </motion.div>
 
+            <p className="mx-auto mb-8 max-w-xl text-center text-[11px] leading-relaxed text-white/40 md:text-xs">
+              Para abrir a <strong className="text-white/70">operação 60/40</strong> (comandos + desenho técnico): escolha{" "}
+              <span className="text-emerald-300/90">SIG-FROTA</span> ou{" "}
+              <span className="text-blue-300/90">SIG-PATRIMÔNIO</span>, depois um dos sete botões do menu.
+              Em ecrã largo o painel divide 60% / 40%.
+            </p>
+
             <section
               aria-labelledby="m2-portal-hub-heading"
               className="w-full overflow-visible"
@@ -293,7 +300,7 @@ export default function Milestone2Client() {
             className="flex min-h-0 min-w-0 flex-1 flex-col"
           >
             <AuditCommandFrame variant={activeMenu}>
-              <div className="mb-6 flex flex-col items-stretch gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
+              <div className="mb-6 flex flex-col items-center gap-4 sm:mb-8">
                 <button
                   type="button"
                   onClick={goBackToMenu}

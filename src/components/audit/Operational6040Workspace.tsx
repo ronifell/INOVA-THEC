@@ -194,8 +194,11 @@ export default function Operational6040Workspace({
           }}
           onPointerDownCapture={triggerPulse}
         >
-          <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain p-[clamp(0.65rem,1.6vmin,1rem)] sm:p-5">
-            {children}
+          {/* Centra blocos operacionais no “meio” dos 60%, sem colar à esquerda */}
+          <div className="flex min-h-0 flex-1 justify-center overflow-x-hidden overflow-y-auto overscroll-contain px-[clamp(0.65rem,1.6vmin,1rem)] pb-2 pt-[clamp(0.65rem,1.6vmin,1rem)] sm:px-6 sm:pb-3 sm:pt-5">
+            <div className="flex w-full max-w-[72rem] flex-col items-center gap-y-10 [&>*]:w-full">
+              {children}
+            </div>
           </div>
 
           <div className="shrink-0 border-t border-white/[0.07] px-4 py-3 sm:px-5">
@@ -229,7 +232,7 @@ export default function Operational6040Workspace({
           <InovaFlowLogoKnot variant={variant} pulse={pulse} goldSeal={goldSeal} />
         </div>
 
-        <div className="relative z-[13] flex min-h-[240px] min-w-0 lg:order-3 lg:min-h-0">
+        <div className="relative z-[13] flex min-h-[240px] min-w-0 items-center justify-center lg:order-3 lg:min-h-0">
           <TechnicalBlueprintPanel
             variant={variant}
             pulseKey={pulse}

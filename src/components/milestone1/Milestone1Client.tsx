@@ -26,6 +26,7 @@ import {
   mockDepartment,
 } from "@/lib/milestone1/data";
 import AuditCommandFrame from "@/components/audit/AuditCommandFrame";
+import Operational6040Workspace from "@/components/audit/Operational6040Workspace";
 import PortalModuleCard from "@/components/PortalModuleCard";
 import { MODULES } from "@/lib/modules";
 import { useStore } from "@/store/useStore";
@@ -853,7 +854,7 @@ export default function Milestone1Client({
 
       {activeView !== "hub" && (
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-          <div className="mx-auto mb-[1vh] flex max-w-[min(96%,72rem)] shrink-0 flex-wrap items-center justify-between gap-[1vw]">
+          <div className="mx-auto mb-[1vh] flex max-w-[min(96%,72rem)] shrink-0 flex-wrap items-center justify-center gap-4 sm:gap-6">
             <button
               type="button"
               onClick={goToHub}
@@ -888,7 +889,15 @@ export default function Milestone1Client({
             </p>
           </header>
 
-          <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-gutter:stable]">
+          <Operational6040Workspace
+            variant={isFuelModuleView ? "frota" : "patrimonio"}
+            title={moduleTitleLine(activeView)}
+            subtitle={moduleSubtitle(
+              activeView,
+              isFuelModuleView,
+              isAssetsModuleView
+            )}
+          >
           {activeView === "governance" && (
             <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-3">
               <div className="glass rounded-2xl border border-emerald-500/20 p-6">
@@ -1483,7 +1492,7 @@ export default function Milestone1Client({
               </div>
             </div>
           )}
-          </div>
+          </Operational6040Workspace>
         </div>
       )}
 

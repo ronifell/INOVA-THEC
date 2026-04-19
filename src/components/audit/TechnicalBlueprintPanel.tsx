@@ -125,14 +125,14 @@ export default function TechnicalBlueprintPanel({
 
   return (
     <div
-      className="relative flex h-full min-h-[260px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#060d18]/85 p-4 shadow-[inset_0_0_60px_rgba(0,0,0,0.45)] backdrop-blur-md lg:min-h-0"
+      className="relative flex h-full min-h-[260px] w-full max-w-[520px] flex-col items-center overflow-hidden rounded-2xl border border-white/[0.08] bg-[#060d18]/85 p-4 text-center shadow-[inset_0_0_60px_rgba(0,0,0,0.45)] backdrop-blur-md lg:min-h-0 lg:max-w-none lg:self-stretch"
       style={{
         boxShadow: goldSeal
           ? `inset 0 0 0 1px rgba(${GOLD_SEAL.rgb},0.35), 0 0 36px rgba(${GOLD_SEAL.rgb},0.18)`
           : `inset 0 0 0 1px rgba(${t.rgb},0.12)`,
       }}
     >
-      <div className="mb-2 shrink-0">
+      <div className="mb-2 w-full shrink-0">
         <p className="text-[10px] font-mono tracking-[0.28em] text-white/40">
           VISUAL TÉCNICO · MARCO 1
         </p>
@@ -146,7 +146,7 @@ export default function TechnicalBlueprintPanel({
 
       <motion.div
         key={`${pulseKey}-${goldSeal ? "g" : "n"}`}
-        className="relative flex min-h-0 flex-1 items-center justify-center"
+        className="relative flex min-h-0 w-full flex-1 items-center justify-center"
         initial={{ opacity: 0.75, filter: "brightness(0.85)" }}
         animate={{
           opacity: [0.85, 1, 1],
