@@ -6,6 +6,17 @@ import type {
   PatrimonyTimelineEvent,
 } from "./types";
 
+/** Fast fallback when API is unreachable (e.g. dev without backend). Override via NEXT_PUBLIC_API_FETCH_TIMEOUT_MS. */
+function apiFetchTimeoutMs(): number {
+  const raw = Number(
+    typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_API_FETCH_TIMEOUT_MS
+      : undefined
+  );
+  if (Number.isFinite(raw) && raw >= 500 && raw <= 60000) return raw;
+  return 2500;
+}
+
 const EMPTY: DemoData = {
   abastecimentos: [],
   resultados_motor_glosa: [],
@@ -17,24 +28,68 @@ const EMPTY: DemoData = {
   },
 };
 
+/**
+ * Loads demo motor data.
+ * Default: mock JSON and API run in parallel — first success wins (mock is usually instant).
+ * Set `NEXT_PUBLIC_MOTOR_FETCH_PRIORITY=api` to try API first, then mock (legacy behaviour).
+ */
 export async function fetchDemoMotor(): Promise<DemoData> {
-  try {
-    const ctrl = new AbortController();
-    const t = window.setTimeout(() => ctrl.abort(), 8000);
-    const res = await fetch(`${API_URL}/auditoria/motor`, {
-      signal: ctrl.signal,
-    });
-    window.clearTimeout(t);
+  const apiFirst =
+    typeof process !== "undefined" &&
+    process.env.NEXT_PUBLIC_MOTOR_FETCH_PRIORITY === "api";
+
+  const loadMock = async (signal?: AbortSignal): Promise<DemoData> => {
+    const res = await fetch("/mock/DB.json", { signal });
+    if (!res.ok) throw new Error("mock");
+    return (await res.json()) as DemoData;
+  };
+
+  const loadApi = async (signal: AbortSignal): Promise<DemoData> => {
+    const res = await fetch(`${API_URL}/auditoria/motor`, { signal });
     if (!res.ok) throw new Error("api");
     return (await res.json()) as DemoData;
-  } catch {
+  };
+
+  if (apiFirst) {
+    const ctrl = new AbortController();
+    const t = window.setTimeout(() => ctrl.abort(), apiFetchTimeoutMs());
     try {
-      const res = await fetch("/mock/DB.json");
-      if (!res.ok) throw new Error("mock");
-      return (await res.json()) as DemoData;
+      return await loadApi(ctrl.signal);
     } catch {
-      return EMPTY;
+      try {
+        return await loadMock();
+      } catch {
+        return EMPTY;
+      }
+    } finally {
+      window.clearTimeout(t);
     }
+  }
+
+  const mockCtrl = new AbortController();
+  const apiCtrl = new AbortController();
+  const apiTimeout = window.setTimeout(() => apiCtrl.abort(), apiFetchTimeoutMs());
+
+  const mockRace = (async () => {
+    const data = await loadMock(mockCtrl.signal);
+    apiCtrl.abort();
+    return data;
+  })();
+
+  const apiRace = (async () => {
+    try {
+      const data = await loadApi(apiCtrl.signal);
+      mockCtrl.abort();
+      return data;
+    } finally {
+      window.clearTimeout(apiTimeout);
+    }
+  })();
+
+  try {
+    return await Promise.any([mockRace, apiRace]);
+  } catch {
+    return EMPTY;
   }
 }
 

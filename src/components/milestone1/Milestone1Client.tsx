@@ -288,12 +288,14 @@ export default function Milestone1Client({
     let cancelled = false;
     (async () => {
       const data = await fetchDemoMotor();
-      const rows = await buildIntegrityRows(data);
       if (cancelled) return;
       setDemoData(data);
-      setIntegrityRows(rows);
       setSelectedMapRecord(data.resultados_motor_glosa[0]);
       setLoading(false);
+
+      const rows = await buildIntegrityRows(data);
+      if (cancelled) return;
+      setIntegrityRows(rows);
     })();
     return () => {
       cancelled = true;

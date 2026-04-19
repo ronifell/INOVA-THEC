@@ -20,6 +20,8 @@ export type PortalModuleCardProps = {
   voiceText?: string;
   /** Click handler; if omitted and `interactive` is false, renders as static panel */
   onClick?: () => void;
+  /** e.g. prefetch heavy route chunk on hover */
+  onPointerEnter?: () => void;
   /** When false, renders styled `div` (no button semantics) */
   interactive?: boolean;
   type?: "button" | "submit";
@@ -103,6 +105,7 @@ export default function PortalModuleCard({
   isFullModule = true,
   voiceText,
   onClick,
+  onPointerEnter,
   interactive = true,
   type = "button",
   disabled = false,
@@ -275,6 +278,7 @@ export default function PortalModuleCard({
       ease: [easeFall, easeSettle],
     },
     whileTap: interactive && !disabled ? { scale: 0.98 } : undefined,
+    onPointerEnter,
     onHoverStart: interactive ? handleHover : undefined,
     onHoverEnd: interactive ? resetParallax : undefined,
     onMouseMove: interactive ? handleMouseMove : undefined,

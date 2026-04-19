@@ -26,7 +26,17 @@ const Background3D = dynamic(() => import("@/components/Background3D"), {
 
 const Milestone1Client = dynamic(
   () => import("@/components/milestone1/Milestone1Client"),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => (
+      <div className="milestone1-app flex h-full min-h-0 flex-col items-center justify-center gap-3">
+        <div className="h-14 w-14 max-h-16 max-w-16 animate-pulse rounded-xl border border-emerald-500/30 bg-emerald-500/10" />
+        <p className="font-mono tracking-[0.3em] text-white/40">
+          CARREGANDO MÓDULO…
+        </p>
+      </div>
+    ),
+  }
 );
 
 const Milestone2Client = dynamic(
@@ -109,6 +119,19 @@ export default function Home() {
     window.addEventListener("resize", updateStageScale);
     return () => window.removeEventListener("resize", updateStageScale);
   }, []);
+
+  /** Warm the Frota chunk while user is still on the dashboard (no hover required). */
+  useEffect(() => {
+    if (!appRevealed || activeModule) return;
+    const run = () => void import("@/components/milestone1/Milestone1Client");
+    const ric = window.requestIdleCallback?.(run, { timeout: 2500 });
+    const tid =
+      ric === undefined ? window.setTimeout(run, 1200) : undefined;
+    return () => {
+      if (ric !== undefined) window.cancelIdleCallback?.(ric);
+      if (tid !== undefined) window.clearTimeout(tid);
+    };
+  }, [appRevealed, activeModule]);
 
   if (!mounted) {
     return (

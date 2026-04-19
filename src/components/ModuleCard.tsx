@@ -22,6 +22,12 @@ export default function ModuleCard({
   const triggerHashValidation = useStore((s) => s.triggerHashValidation);
   const { speak } = useVoice();
 
+  const preloadMilestone1 = useCallback(() => {
+    if (module.id === "frota") {
+      void import("@/components/milestone1/Milestone1Client");
+    }
+  }, [module.id]);
+
   const handleClick = useCallback(() => {
     triggerHashValidation();
     setActiveModule(module.id, module.color, module.colorRgb);
@@ -47,6 +53,7 @@ export default function ModuleCard({
         isFullModule={module.isFullModule}
         voiceText={module.voiceText}
         onClick={handleClick}
+        onPointerEnter={preloadMilestone1}
       />
     </div>
   );
