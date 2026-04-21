@@ -17,7 +17,8 @@ function apiFetchTimeoutMs(): number {
   return 2500;
 }
 
-const EMPTY: DemoData = {
+/** Fallback quando API e mock falham ou excedem tempo. */
+export const EMPTY_DEMO_MOTOR_DATA: DemoData = {
   abastecimentos: [],
   resultados_motor_glosa: [],
   resumo_dashboard: {
@@ -27,6 +28,8 @@ const EMPTY: DemoData = {
     total_transacoes: 0,
   },
 };
+
+const EMPTY = EMPTY_DEMO_MOTOR_DATA;
 
 /**
  * Loads demo motor data.
@@ -69,11 +72,17 @@ export async function fetchDemoMotor(): Promise<DemoData> {
   const mockCtrl = new AbortController();
   const apiCtrl = new AbortController();
   const apiTimeout = window.setTimeout(() => apiCtrl.abort(), apiFetchTimeoutMs());
+  /** Evita Promise.any pendente para sempre se GET /mock/DB.json nunca resolver (rede). */
+  const mockHangGuard = window.setTimeout(() => mockCtrl.abort(), 10000);
 
   const mockRace = (async () => {
-    const data = await loadMock(mockCtrl.signal);
-    apiCtrl.abort();
-    return data;
+    try {
+      const data = await loadMock(mockCtrl.signal);
+      apiCtrl.abort();
+      return data;
+    } finally {
+      window.clearTimeout(mockHangGuard);
+    }
   })();
 
   const apiRace = (async () => {

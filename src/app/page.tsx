@@ -15,6 +15,7 @@ import ReportModal from "@/components/ReportModal";
 import { getModuleById } from "@/lib/modules";
 import { appShellContainer, appShellFadeUp } from "@/lib/motionVariants";
 import BootScreen from "@/components/BootScreen";
+import Milestone1Client from "@/components/milestone1/Milestone1Client";
 
 const SKIP_BOOT_ONCE_KEY = "skip-home-boot-once";
 const APP_STAGE_WIDTH = 2240;
@@ -23,21 +24,6 @@ const APP_STAGE_BASE_HEIGHT = 1080;
 const Background3D = dynamic(() => import("@/components/Background3D"), {
   ssr: false,
 });
-
-const Milestone1Client = dynamic(
-  () => import("@/components/milestone1/Milestone1Client"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="milestone1-app flex h-full min-h-0 flex-col items-center justify-center gap-3">
-        <div className="h-14 w-14 max-h-16 max-w-16 animate-pulse rounded-xl border border-emerald-500/30 bg-emerald-500/10" />
-        <p className="font-mono tracking-[0.3em] text-white/40">
-          CARREGANDO MÓDULO…
-        </p>
-      </div>
-    ),
-  }
-);
 
 const Milestone2Client = dynamic(
   () => import("@/components/milestone2/Milestone2Client"),
@@ -120,19 +106,6 @@ export default function Home() {
     return () => window.removeEventListener("resize", updateStageScale);
   }, []);
 
-  /** Warm the Frota chunk while user is still on the dashboard (no hover required). */
-  useEffect(() => {
-    if (!appRevealed || activeModule) return;
-    const run = () => void import("@/components/milestone1/Milestone1Client");
-    const ric = window.requestIdleCallback?.(run, { timeout: 2500 });
-    const tid =
-      ric === undefined ? window.setTimeout(run, 1200) : undefined;
-    return () => {
-      if (ric !== undefined) window.cancelIdleCallback?.(ric);
-      if (tid !== undefined) window.clearTimeout(tid);
-    };
-  }, [appRevealed, activeModule]);
-
   if (!mounted) {
     return (
       <div className="h-screen bg-[#0F172A] flex items-center justify-center">
@@ -193,11 +166,11 @@ export default function Home() {
                 {activeModule ? (
                   <motion.div
                     key={activeModule}
-                    className="min-h-0 flex-1 overflow-x-hidden overflow-y-visible"
-                    initial={{ opacity: 0, x: 36 }}
+                    className="flex h-full min-h-[min(48vh,480px)] flex-1 flex-col overflow-x-hidden overflow-y-auto"
+                    initial={false}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -28 }}
-                    transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <ActiveModuleView />
                   </motion.div>

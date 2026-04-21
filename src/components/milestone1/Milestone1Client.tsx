@@ -20,6 +20,7 @@ import type {
 import {
   buildDefaultTimeline,
   buildIntegrityRows,
+  EMPTY_DEMO_MOTOR_DATA,
   fetchDemoMotor,
   getMapDistanceMeters,
   isAutomaticDeduction,
@@ -287,15 +288,23 @@ export default function Milestone1Client({
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const data = await fetchDemoMotor();
-      if (cancelled) return;
-      setDemoData(data);
-      setSelectedMapRecord(data.resultados_motor_glosa[0]);
-      setLoading(false);
+      try {
+        const data = await fetchDemoMotor();
+        if (cancelled) return;
+        setDemoData(data);
+        setSelectedMapRecord(data.resultados_motor_glosa[0]);
 
-      const rows = await buildIntegrityRows(data);
-      if (cancelled) return;
-      setIntegrityRows(rows);
+        const rows = await buildIntegrityRows(data);
+        if (cancelled) return;
+        setIntegrityRows(rows);
+      } catch {
+        if (!cancelled) {
+          setDemoData(EMPTY_DEMO_MOTOR_DATA);
+          setIntegrityRows([]);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     })();
     return () => {
       cancelled = true;
@@ -767,12 +776,13 @@ export default function Milestone1Client({
         ? auditTickerAssets
         : auditTickerFuel;
 
+  /** No shell da Home o fundo é escuro — forçar texto claro; o toggle claro/escuro só aplica fora do embed. */
   const shellClass = embeddedInAppShell
     ? `flex h-full min-h-0 w-full flex-col ${
         activeView === "hub"
           ? "overflow-x-hidden overflow-y-visible"
           : "overflow-hidden"
-      } ${darkMode ? "text-slate-100" : "text-slate-900"}`
+      } text-slate-100`
     : `flex h-full min-h-0 w-full flex-col ${
         activeView === "hub"
           ? "overflow-x-hidden overflow-y-visible"
