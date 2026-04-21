@@ -15,6 +15,9 @@ import FuelProtocolMaterialidade from "@/components/milestone2/fuel/FuelProtocol
 import FuelAssetIdentification from "@/components/milestone2/fuel/FuelAssetIdentification";
 import FuelOdometerProtocol from "@/components/milestone2/fuel/FuelOdometerProtocol";
 import FuelGeographicInsumo from "@/components/milestone2/fuel/FuelGeographicInsumo";
+import FuelSentenceLiquidation from "@/components/milestone2/fuel/FuelSentenceLiquidation";
+import FuelEconomicidadePanel from "@/components/milestone2/fuel/FuelEconomicidadePanel";
+import FuelAuditExitReports from "@/components/milestone2/fuel/FuelAuditExitReports";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -63,20 +66,20 @@ const FROTA_MENU_TILES: MilestoneTile[] = [
   },
   {
     id: "tribunal",
-    title: "NOTA FISCAL · GLOSAS",
-    description: "Documento fiscal e deliberação de glosas.",
+    title: "CENTRAL DE SENTENÇA E LIQUIDAÇÃO",
+    description: "Scanner pericial das evidências e comando final de autorizar/rejeitar.",
     icon: "🧾",
   },
   {
     id: "economicidade",
-    title: "GPS · ROTA · ECONOMICIDADE",
-    description: "Trajeto, consumo observado e indicadores de eficiência.",
+    title: "ECONOMICIDADE — CÉREBRO SIG-FROTA",
+    description: "Cruzamento de KM, litros e valor pago com infográficos de economia.",
     icon: "🛰️",
   },
   {
     id: "certificacao",
-    title: "SELO · FÉ PÚBLICA",
-    description: "Certificação com integridade documental e AP-04.",
+    title: "MÓDULO DE SAÍDA E AUDITORIA FINAL",
+    description: "Emissão dos 5 relatórios oficiais com blindagem criptográfica.",
     icon: "✅",
   },
 ];
@@ -218,6 +221,12 @@ export default function Milestone2Client() {
       activeTile.id === "vetoracao" ||
       activeTile.id === "pericia" ||
       activeTile.id === "trilha");
+  const fuelAdvancedTile =
+    activeMenu === "frota" &&
+    activeTile &&
+    (activeTile.id === "tribunal" ||
+      activeTile.id === "economicidade" ||
+      activeTile.id === "certificacao");
 
   return (
     <Milestone2FuelProvider>
@@ -366,6 +375,12 @@ export default function Milestone2Client() {
                     {activeTile.id === "vetoracao" && <FuelAssetIdentification />}
                     {activeTile.id === "pericia" && <FuelOdometerProtocol />}
                     {activeTile.id === "trilha" && <FuelGeographicInsumo />}
+                  </>
+                ) : fuelAdvancedTile ? (
+                  <>
+                    {activeTile?.id === "tribunal" && <FuelSentenceLiquidation />}
+                    {activeTile?.id === "economicidade" && <FuelEconomicidadePanel />}
+                    {activeTile?.id === "certificacao" && <FuelAuditExitReports />}
                   </>
                 ) : loadingData ? (
                 <div className="rounded-xl border border-white/10 bg-white/5 p-5 text-center text-sm text-white/70">
