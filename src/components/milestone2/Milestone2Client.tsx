@@ -221,7 +221,7 @@ export default function Milestone2Client() {
 
   return (
     <Milestone2FuelProvider>
-    <div className="milestone1-app flex h-full min-h-0 w-full flex-col overflow-x-hidden overflow-y-auto">
+    <div className="milestone1-app flex h-full min-h-0 w-full flex-col overflow-x-hidden overflow-y-auto lg:overflow-y-hidden">
       <AnimatePresence mode="wait">
         {!activeMenu ? (
           <motion.div
@@ -308,21 +308,21 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
-            className="flex min-h-0 min-w-0 flex-1 flex-col"
+            className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
           >
             <AuditCommandFrame variant={activeMenu}>
-              <div className="mb-6 flex flex-col items-center gap-4 sm:mb-8">
+              <div className="pointer-events-none absolute left-0 right-0 top-0 z-[30] flex justify-start px-2 pt-1 sm:px-4 sm:pt-2">
                 <button
                   type="button"
                   onClick={goBackToMenu}
-                  className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-4 py-2 text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+                  className="pointer-events-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/18 bg-black/35 px-3 py-1.5 text-[10px] font-mono tracking-wider text-white/80 transition-colors hover:border-emerald-500/45 hover:text-white sm:px-4 sm:py-2 sm:text-[11px]"
                 >
                   ← Voltar ao cardápio
                 </button>
               </div>
 
               <motion.div
-                className="mb-6 text-center sm:mb-8"
+                className="mb-4 pt-8 text-center sm:mb-6 sm:pt-10"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: easeOut }}
@@ -578,7 +578,7 @@ export default function Milestone2Client() {
               )}
               </Operational6040Workspace>
 
-            <div className="mt-5 overflow-hidden rounded-xl border border-cyan-500/20 bg-[#071330]/80">
+            <div className="mt-3 shrink-0 overflow-hidden rounded-xl border border-cyan-500/20 bg-[#071330]/80">
               <div className="whitespace-nowrap py-2 text-[11px] font-mono text-cyan-200/80 [animation:milestone2Ticker_20s_linear_infinite]">
                 <span className="px-6">
                   SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
