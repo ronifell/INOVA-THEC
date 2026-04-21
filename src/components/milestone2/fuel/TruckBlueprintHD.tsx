@@ -23,6 +23,15 @@ export type TruckBlueprintMode =
       gallonLit?: boolean;
       outlineRedPulse?: boolean;
       shortCircuit?: boolean;
+      /** Módulo 04: abastecimento direto (só bocal) vs contingência galão. */
+      protocolVariant?: "4a" | "4b";
+      /** 4-B validado: bocal do veículo apagado; galão em verde alface. */
+      nozzleMuted4b?: boolean;
+      gallonLettuce?: boolean;
+      /** 4-B: galão amarelo + shake (nulidade por ilegibilidade). */
+      gallonYellowShake?: boolean;
+      /** Fraude: vetor inteiro em vermelho sangue rápido + SHA. */
+      bloodRedPulse?: boolean;
     };
 
 type Props = {
@@ -46,6 +55,25 @@ export default function TruckBlueprintHD({ mode, className = "" }: Props) {
 
   const od = mode.kind === "odometer" ? mode.visualState : "idle";
   const geo = mode.kind === "geo" ? mode : null;
+  const is4a = geo?.protocolVariant === "4a";
+  const is4b = geo?.protocolVariant === "4b";
+  const showGallon4b = is4b;
+
+  const nozzleStroke =
+    geo?.bloodRedPulse
+      ? "#b91c1c"
+      : is4b && geo.nozzleMuted4b
+        ? baseStroke
+        : geo?.nozzleLit
+          ? is4a
+            ? "#10b981"
+            : neon
+          : baseStroke;
+  const nozzleGlow =
+    geo?.nozzleLit &&
+    !geo?.bloodRedPulse &&
+    !(is4b && geo.nozzleMuted4b) &&
+    (!is4b || !geo.nozzleMuted4b);
 
   return (
     <svg
@@ -196,13 +224,21 @@ export default function TruckBlueprintHD({ mode, className = "" }: Props) {
         filter={z2 ? "url(#neon-glow-a)" : undefined}
       />
 
-      {/* Conexão bomba / bocal — zona 3 */}
+      {/* Conexão bomba / bocal — zona 3 (4-A: só bocal esmeralda; 4-B: apagado se galão validado) */}
       <path
         d="M 318 124 L 338 124 L 342 108 L 352 108 L 356 130 L 338 138 Z"
-        fill="rgba(15,23,42,0.65)"
-        stroke={z3 || geo?.nozzleLit ? neon : baseStroke}
-        strokeWidth={z3 || geo?.nozzleLit ? 2.2 : 1.2}
-        filter={z3 || geo?.nozzleLit ? "url(#neon-glow-a)" : undefined}
+        fill={
+          geo?.bloodRedPulse
+            ? "rgba(127,29,29,0.45)"
+            : "rgba(15,23,42,0.65)"
+        }
+        stroke={nozzleStroke}
+        strokeWidth={
+          geo?.bloodRedPulse ? 2.8 : z3 || nozzleGlow ? 2.2 : 1.2
+        }
+        filter={
+          nozzleGlow && !geo?.bloodRedPulse ? "url(#neon-glow-a)" : undefined
+        }
       />
       {geo?.shortCircuit && (
         <>
@@ -222,21 +258,58 @@ export default function TruckBlueprintHD({ mode, className = "" }: Props) {
         </>
       )}
 
-      {/* Galão 04.B */}
-      {geo && (
+      {/* Galão 04-B: flutuante ao teto; verde alface validado; amarelo + shake se ilegível */}
+      {showGallon4b && geo && (
         <g transform="translate(195, 58)">
+          <motion.g
+            animate={
+              geo.gallonYellowShake
+                ? { x: [0, -3, 3, -2, 2, 0], y: [0, 2, -2, 1, -1, 0] }
+                : { y: [0, -4, 0] }
+            }
+            transition={
+              geo.gallonYellowShake
+                ? { duration: 0.12, repeat: Infinity }
+                : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
+            }
+          >
           <rect
             x="0"
             y="0"
             width="28"
             height="36"
             rx="4"
-            fill="rgba(15,23,42,0.7)"
-            stroke={geo.gallonLit ? "#86efac" : baseStroke}
-            strokeWidth={geo.gallonLit ? 2 : 1}
-            filter={geo.gallonLit ? "url(#neon-glow-a)" : undefined}
+            fill="rgba(15,23,42,0.75)"
+            stroke={
+              geo.bloodRedPulse
+                ? "#dc2626"
+                : geo.gallonYellowShake
+                  ? "#facc15"
+                  : geo.gallonLettuce
+                    ? "#bbf7d0"
+                    : geo.gallonLit
+                      ? "#86efac"
+                      : "rgba(52,211,153,0.65)"
+            }
+            strokeWidth={
+              geo.gallonLettuce || geo.gallonYellowShake || geo.bloodRedPulse
+                ? 2.6
+                : geo.gallonLit
+                  ? 2
+                  : 1.2
+            }
+            filter={
+              geo.gallonLettuce || geo.gallonLit
+                ? "url(#neon-glow-a)"
+                : undefined
+            }
           />
-          <path d="M 8 10 L 20 10" stroke="rgba(148,163,184,0.5)" strokeWidth="1" />
+          <path
+            d="M 8 10 L 20 10"
+            stroke="rgba(148,163,184,0.5)"
+            strokeWidth="1"
+          />
+          </motion.g>
         </g>
       )}
 
@@ -317,6 +390,21 @@ export default function TruckBlueprintHD({ mode, className = "" }: Props) {
           strokeWidth="3"
           animate={{ opacity: [1, 0.35, 1] }}
           transition={{ duration: 1, repeat: Infinity }}
+        />
+      )}
+
+      {geo?.bloodRedPulse && (
+        <motion.rect
+          x="40"
+          y="52"
+          width="320"
+          height="128"
+          rx="14"
+          fill="rgba(185,28,28,0.22)"
+          stroke="#7f1d1d"
+          strokeWidth="2.5"
+          animate={{ opacity: [0.55, 0.95, 0.55] }}
+          transition={{ duration: 0.45, repeat: Infinity }}
         />
       )}
 

@@ -56,9 +56,9 @@ const FROTA_MENU_TILES: MilestoneTile[] = [
   },
   {
     id: "trilha",
-    title: "IDENTIDADE GEOGRÁFICA E CRUZAMENTO DE INSUMO",
+    title: "COMPROVAÇÃO DE MATERIALIDADE E LASTRO DE INSUMO",
     description:
-      "GPS 500m, bomba, cruzamento com o protocolo inicial e insumo misto.",
+      "Protocolo 4-A (tanque direto) e 4-B (galão contingência) com triangulação pericial.",
     icon: "⛽",
   },
   {
