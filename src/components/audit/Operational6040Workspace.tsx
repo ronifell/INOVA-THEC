@@ -185,7 +185,7 @@ export default function Operational6040Workspace({
 
   return (
     <div
-      className={`relative flex min-h-0 w-full flex-1 flex-col gap-6 lg:min-h-[min(72vh,680px)] ${
+      className={`relative flex min-h-0 w-full flex-1 flex-col gap-[min(1.8vmin,1.6vh)] lg:min-h-[60vh] ${
         goldSeal ? "audit-flow-gold-ring" : ""
       }`}
     >
@@ -210,7 +210,7 @@ export default function Operational6040Workspace({
         )}
       </AnimatePresence>
 
-      <div className="relative grid min-h-[min(68vh,620px)] flex-1 grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(64px,80px)_minmax(0,2fr)] lg:gap-x-3 lg:gap-y-0">
+      <div className="relative grid min-h-[54vh] flex-1 grid-cols-1 gap-[min(1.8vmin,1.6vh)] lg:grid-cols-[minmax(0,3fr)_minmax(3.2%,4.2%)_minmax(0,2fr)] lg:gap-x-[min(1.2vmin,1vh)] lg:gap-y-0">
         <FlowRibbonDesktop variant={variant} pulse={pulse} goldSeal={goldSeal} />
         <FlowRibbonMobile variant={variant} pulse={pulse} goldSeal={goldSeal} />
 
@@ -225,13 +225,13 @@ export default function Operational6040Workspace({
           onPointerDownCapture={triggerPulse}
         >
           {/* Centra blocos operacionais no “meio” dos 60%, sem colar à esquerda */}
-          <div className="flex min-h-0 flex-1 justify-center overflow-x-hidden overflow-y-auto overscroll-contain px-[clamp(0.65rem,1.6vmin,1rem)] pb-2 pt-[clamp(0.65rem,1.6vmin,1rem)] sm:px-6 sm:pb-3 sm:pt-5">
-            <div className="flex w-full max-w-[72rem] flex-col items-center gap-y-10 [&>*]:w-full">
+          <div className="flex min-h-0 flex-1 justify-center overflow-hidden px-[min(1.8%,1.2vmin)] pb-[min(1.4%,1.2vmin)] pt-[min(1.8%,1.4vmin)] sm:px-[min(2.2%,1.8vmin)] sm:pb-[min(1.8%,1.4vmin)] sm:pt-[min(2.4%,2vmin)]">
+            <div className="flex h-full w-full max-w-[98%] flex-col items-center gap-y-[min(2.6%,2.2vmin)] [&>*]:w-full">
               {children}
             </div>
           </div>
 
-          <div className="shrink-0 border-t border-white/[0.07] px-4 py-3 sm:px-5">
+          <div className="shrink-0 border-t border-white/[0.07] px-[min(2.2%,1.6vmin)] py-[min(2.2%,1.6vmin)] sm:px-[min(2.6%,2vmin)] sm:py-[min(2%,1.6vmin)]">
             {footerSlot ?? (
               <button
                 type="button"
@@ -260,11 +260,11 @@ export default function Operational6040Workspace({
           </div>
         </motion.div>
 
-        <div className="relative z-[14] flex min-h-[100px] items-stretch justify-center lg:order-2 lg:min-h-0">
+        <div className="relative z-[14] flex min-h-[12%] items-stretch justify-center lg:order-2 lg:min-h-0">
           <InovaFlowLogoKnot variant={variant} pulse={pulse} goldSeal={goldSeal} />
         </div>
 
-        <div className="relative z-[13] flex min-h-[240px] min-w-0 items-center justify-center lg:order-3 lg:min-h-0">
+        <div className="relative z-[13] flex min-h-[28%] min-w-0 items-center justify-center lg:order-3 lg:min-h-0">
           <TechnicalBlueprintPanel
             variant={variant}
             pulseKey={pulse}

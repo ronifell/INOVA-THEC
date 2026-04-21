@@ -227,6 +227,7 @@ export default function Milestone2Client() {
     (activeTile.id === "tribunal" ||
       activeTile.id === "economicidade" ||
       activeTile.id === "certificacao");
+  const hideBottomTickerOnDetail = Boolean(fuelAdvancedTile);
 
   return (
     <Milestone2FuelProvider>
@@ -593,18 +594,20 @@ export default function Milestone2Client() {
               )}
               </Operational6040Workspace>
 
-            <div className="mt-3 shrink-0 overflow-hidden rounded-xl border border-cyan-500/20 bg-[#071330]/80">
-              <div className="whitespace-nowrap py-2 text-[11px] font-mono text-cyan-200/80 [animation:milestone2Ticker_20s_linear_infinite]">
-                <span className="px-6">
-                  SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
-                  Vistoria AO VIVO · Conservação sincronizada · Acre ·
-                </span>
-                <span className="px-6" aria-hidden>
-                  SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
-                  Vistoria AO VIVO · Conservação sincronizada · Acre ·
-                </span>
+            {!hideBottomTickerOnDetail && (
+              <div className="mt-3 shrink-0 overflow-hidden rounded-xl border border-cyan-500/20 bg-[#071330]/80">
+                <div className="whitespace-nowrap py-2 text-[11px] font-mono text-cyan-200/80 [animation:milestone2Ticker_20s_linear_infinite]">
+                  <span className="px-6">
+                    SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
+                    Vistoria AO VIVO · Conservação sincronizada · Acre ·
+                  </span>
+                  <span className="px-6" aria-hidden>
+                    SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
+                    Vistoria AO VIVO · Conservação sincronizada · Acre ·
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
             </AuditCommandFrame>
           </motion.div>
         ) : (

@@ -157,7 +157,7 @@ export default function FuelSentenceLiquidation() {
               </div>
             ))}
             <motion.div
-              className="pointer-events-none absolute left-0 right-0 h-0.5 bg-cyan-300"
+              className="pointer-events-none absolute left-0 right-0 h-[0.28%] bg-cyan-300"
               style={{ top: `${scanLine}%`, boxShadow: "0 0 16px rgba(34,211,238,0.95)" }}
               animate={verdict === "scanning" ? { opacity: [0.9, 1, 0.9] } : { opacity: 0 }}
               transition={{ duration: 0.25, repeat: Infinity }}

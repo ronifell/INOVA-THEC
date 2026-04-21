@@ -104,7 +104,7 @@ export default function FuelEconomicidadePanel() {
             <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
               Velocímetro de eficiência da frota
             </p>
-            <div className="mt-3 h-28">
+            <div className="mt-3 h-[24%] min-h-[18vh]">
               <svg viewBox="0 0 240 120" className="h-full w-full" aria-hidden>
                 <path d="M 20 110 A 100 100 0 0 1 220 110" fill="none" stroke="rgba(148,163,184,0.35)" strokeWidth="8" />
                 <path d="M 20 110 A 100 100 0 0 1 220 110" fill="none" stroke={efficiency >= 65 ? "#10b981" : "#ef4444"} strokeWidth="8" strokeDasharray={`${(efficiency / 100) * 314} 400`} />
@@ -123,7 +123,7 @@ export default function FuelEconomicidadePanel() {
             <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
               Painel de economia (R$)
             </p>
-            <p className="mt-2 font-mono text-2xl text-emerald-300">
+            <p className="mt-2 font-mono text-[min(3.2vmin,3.2vw)] text-emerald-300">
               R$ {savings.toLocaleString("pt-BR")}
             </p>
           </div>
@@ -131,7 +131,7 @@ export default function FuelEconomicidadePanel() {
             <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
               Tendência de despesas
             </p>
-            <svg className="mt-2 h-20 w-full" viewBox="0 0 300 120" preserveAspectRatio="none">
+            <svg className="mt-2 h-[16%] min-h-[12vh] w-full" viewBox="0 0 300 120" preserveAspectRatio="none">
               <motion.polyline
                 fill="none"
                 stroke={alertDev ? "#ef4444" : "#10b981"}

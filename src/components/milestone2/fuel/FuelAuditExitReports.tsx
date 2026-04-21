@@ -88,7 +88,7 @@ export default function FuelAuditExitReports() {
               </p>
             </div>
             <motion.div
-              className="pointer-events-none absolute left-0 right-0 h-[2px] bg-cyan-300"
+              className="pointer-events-none absolute left-0 right-0 h-[0.28%] bg-cyan-300"
               animate={
                 generating
                   ? { top: ["12%", "90%", "12%"], opacity: [0.7, 1, 0.7] }
@@ -109,7 +109,7 @@ export default function FuelAuditExitReports() {
                 <p className="mt-1">{REPORTS.find((r) => r.id === selected)?.desc}</p>
                 <p className="mt-3 text-[10px] font-mono text-white/45">Rodapé hash: {hash ?? "pendente"}</p>
               </div>
-              <div className="flex h-16 w-16 items-center justify-center rounded border border-emerald-400/40 bg-emerald-500/10 text-[10px] font-mono text-emerald-200">
+              <div className="flex h-[12vh] min-h-[8%] w-[12vh] min-w-[8%] items-center justify-center rounded border border-emerald-400/40 bg-emerald-500/10 text-[min(1.1vmin,1.1vw)] font-mono text-emerald-200">
                 QR
               </div>
             </div>
