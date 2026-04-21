@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TechnicalBlueprintPanel from "./TechnicalBlueprintPanel";
 import InovaFlowLogoKnot from "./InovaFlowLogoKnot";
@@ -11,6 +11,17 @@ type Props = {
   title?: string;
   subtitle?: string;
   children: ReactNode;
+  /** Substitui o desenho padrão do painel técnico (40%). */
+  blueprintCustom?: ReactNode;
+  /** Bloco opcional abaixo do blueprint (mapa, cruzamentos). */
+  blueprintBelow?: ReactNode;
+  /** Substitui o botão mestre da base (fé pública / protocolos). */
+  footerSlot?: ReactNode;
+  /**
+   * Estado visual do selo dourado. Quando omitido, o botão mestre interno controla.
+   * Use com `footerSlot` para protocolos com trava própria.
+   */
+  goldSealActive?: boolean;
 };
 
 function FlowRibbonDesktop({
@@ -134,10 +145,16 @@ export default function Operational6040Workspace({
   title,
   subtitle,
   children,
+  blueprintCustom,
+  blueprintBelow,
+  footerSlot,
+  goldSealActive: goldSealControlled,
 }: Props) {
   const t = AUDIT_THEME[variant];
   const [pulse, setPulse] = useState(0);
-  const [goldSeal, setGoldSeal] = useState(false);
+  const [internalGoldSeal, setInternalGoldSeal] = useState(false);
+  const goldSeal =
+    goldSealControlled !== undefined ? goldSealControlled : internalGoldSeal;
   const last = useRef(0);
 
   const triggerPulse = useCallback(() => {
@@ -149,9 +166,22 @@ export default function Operational6040Workspace({
   }, [goldSeal]);
 
   const activateGoldSeal = useCallback(() => {
-    setGoldSeal(true);
+    if (goldSealControlled !== undefined) return;
+    setInternalGoldSeal(true);
     setPulse((p) => p + 1);
-  }, []);
+  }, [goldSealControlled]);
+
+  const prevGoldRef = useRef(false);
+  useEffect(() => {
+    if (goldSealControlled === undefined) {
+      prevGoldRef.current = goldSeal;
+      return;
+    }
+    if (goldSeal && !prevGoldRef.current) {
+      setPulse((p) => p + 1);
+    }
+    prevGoldRef.current = goldSeal;
+  }, [goldSeal, goldSealControlled]);
 
   return (
     <div
@@ -202,29 +232,31 @@ export default function Operational6040Workspace({
           </div>
 
           <div className="shrink-0 border-t border-white/[0.07] px-4 py-3 sm:px-5">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                activateGoldSeal();
-              }}
-              disabled={goldSeal}
-              className="w-full rounded-xl border px-4 py-3 text-center text-[11px] font-mono uppercase tracking-[0.2em] transition-all disabled:cursor-default sm:text-xs"
-              style={{
-                borderColor: goldSeal ? `rgba(${GOLD_SEAL.rgb},0.55)` : `rgba(${t.rgb},0.35)`,
-                background: goldSeal
-                  ? `linear-gradient(135deg, rgba(${GOLD_SEAL.rgb},0.22), rgba(212,175,55,0.08))`
-                  : `linear-gradient(135deg, rgba(${t.rgb},0.15), rgba(15,23,42,0.5))`,
-                color: goldSeal ? "rgba(253,230,138,0.95)" : "rgba(255,255,255,0.88)",
-                boxShadow: goldSeal
-                  ? `0 0 28px rgba(${GOLD_SEAL.rgb},0.35)`
-                  : `0 0 16px rgba(${t.rgb},0.12)`,
-              }}
-            >
-              {goldSeal
-                ? "Selo mestre emitido — camada dourada ativa"
-                : "Botão mestre — banho dourado · fé pública"}
-            </button>
+            {footerSlot ?? (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  activateGoldSeal();
+                }}
+                disabled={goldSeal}
+                className="w-full rounded-xl border px-4 py-3 text-center text-[11px] font-mono uppercase tracking-[0.2em] transition-all disabled:cursor-default sm:text-xs"
+                style={{
+                  borderColor: goldSeal ? `rgba(${GOLD_SEAL.rgb},0.55)` : `rgba(${t.rgb},0.35)`,
+                  background: goldSeal
+                    ? `linear-gradient(135deg, rgba(${GOLD_SEAL.rgb},0.22), rgba(212,175,55,0.08))`
+                    : `linear-gradient(135deg, rgba(${t.rgb},0.15), rgba(15,23,42,0.5))`,
+                  color: goldSeal ? "rgba(253,230,138,0.95)" : "rgba(255,255,255,0.88)",
+                  boxShadow: goldSeal
+                    ? `0 0 28px rgba(${GOLD_SEAL.rgb},0.35)`
+                    : `0 0 16px rgba(${t.rgb},0.12)`,
+                }}
+              >
+                {goldSeal
+                  ? "Selo mestre emitido — camada dourada ativa"
+                  : "Botão mestre — banho dourado · fé pública"}
+              </button>
+            )}
           </div>
         </motion.div>
 
@@ -239,6 +271,8 @@ export default function Operational6040Workspace({
             goldSeal={goldSeal}
             title={title}
             subtitle={subtitle}
+            customBlueprint={blueprintCustom}
+            belowBlueprint={blueprintBelow}
           />
         </div>
       </div>

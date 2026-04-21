@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { AUDIT_THEME, GOLD_SEAL, type AuditVariant } from "./auditThemes";
 
@@ -12,6 +12,10 @@ type Props = {
   goldSeal?: boolean;
   title?: string;
   subtitle?: string;
+  /** Substitui o SVG padrão (vetor técnico HD, etc.). */
+  customBlueprint?: ReactNode;
+  /** Conteúdo abaixo do desenho (mapa radar, miniaturas). */
+  belowBlueprint?: ReactNode;
 };
 
 export default function TechnicalBlueprintPanel({
@@ -20,12 +24,17 @@ export default function TechnicalBlueprintPanel({
   goldSeal,
   title,
   subtitle,
+  customBlueprint,
+  belowBlueprint,
 }: Props) {
   const t = AUDIT_THEME[variant];
   const strokeRgb = goldSeal ? GOLD_SEAL.rgb : t.rgb;
   const strokeHex = goldSeal ? GOLD_SEAL.hex : t.hex;
 
   const blueprint = useMemo(() => {
+    if (customBlueprint) {
+      return customBlueprint;
+    }
     if (variant === "frota") {
       return (
         <svg
@@ -121,7 +130,7 @@ export default function TechnicalBlueprintPanel({
         </text>
       </svg>
     );
-  }, [strokeRgb, variant]);
+  }, [customBlueprint, strokeRgb, variant]);
 
   return (
     <div
@@ -174,6 +183,10 @@ export default function TechnicalBlueprintPanel({
         />
         <div className="relative z-[1] w-full">{blueprint}</div>
       </motion.div>
+
+      {belowBlueprint && (
+        <div className="mt-3 w-full shrink-0">{belowBlueprint}</div>
+      )}
 
       <p className="mt-2 shrink-0 text-center text-[10px] font-mono tracking-wider text-white/30">
         {goldSeal

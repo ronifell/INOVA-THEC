@@ -1119,3 +1119,111 @@ body {
 .header-truth-subline {
   animation: header-truth-pulse 3.2s ease-in-out infinite;
 }
+
+/* —— Protocolo de materialidade / frota (Milestone 2) —— */
+@keyframes fuel-neon-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 12px rgba(34, 197, 94, 0.55),
+      0 0 28px rgba(16, 185, 129, 0.35),
+      inset 0 0 12px rgba(255, 255, 255, 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(52, 211, 153, 0.85),
+      0 0 44px rgba(16, 185, 129, 0.5),
+      inset 0 0 16px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.fuel-neon-action-btn {
+  animation: fuel-neon-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes master-faith-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.master-faith-metallic {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    125deg,
+    #2a2a2a 0%,
+    #d4af37 18%,
+    #f5f0dc 32%,
+    #c0c0c0 48%,
+    #d4af37 62%,
+    #2a2a2a 100%
+  );
+  background-size: 220% 220%;
+  animation: master-faith-shimmer 2.8s linear infinite;
+  border-color: rgba(212, 175, 55, 0.65) !important;
+  color: #0f172a !important;
+  font-weight: 700;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.master-faith-metallic::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: master-faith-shimmer 1.8s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+@keyframes scanline-neon {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.fuel-scanner-line {
+  animation: scanline-neon 2.2s ease-in-out infinite;
+}
+
+@keyframes fuel-glitch-skew {
+  0%,
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  25% {
+    transform: translate(-2px, 1px);
+    filter: hue-rotate(12deg);
+  }
+  50% {
+    transform: translate(2px, -1px);
+  }
+  75% {
+    transform: translate(-1px, -2px);
+    filter: hue-rotate(-8deg);
+  }
+}
+
+.fuel-glitch-img {
+  animation: fuel-glitch-skew 0.4s steps(2) infinite;
+}
