@@ -529,10 +529,6 @@ body {
   animation: moduleIconRingWave 5s ease-out infinite;
 }
 
-.module-card-shield-backdrop {
-  pointer-events: none;
-}
-
 /* ===== GLASSMORPHISM ===== */
 .glass {
   background: rgba(255, 255, 255, 0.05);

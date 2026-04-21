@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useId, useRef, type CSSProperties } from "react";
+import { useCallback, useRef, type CSSProperties } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useVoice } from "@/hooks/useVoice";
 
@@ -29,68 +29,6 @@ export type PortalModuleCardProps = {
   className?: string;
 };
 
-const SHIELD_SILHOUETTE_PATH =
-  "M100 12 L173 50 L173 122 Q173 188 100 248 Q27 188 27 122 L27 50 Z";
-
-/**
- * Escudo decorativo ao hover: dimensões em % do cartão (contentor `relative` do botão).
- */
-const SHIELD_BOX_CLASS =
-  "absolute left-1/2 top-[48%] w-[168%] h-[200%] -translate-x-1/2 -translate-y-1/2";
-
-/** Escudo suave atrás do vidro — sem relâmpago. */
-function HoverShieldBackdrop({
-  colorRgb,
-  uid,
-}: {
-  colorRgb: string;
-  uid: string;
-}) {
-  const fillId = `shield-fill-${uid}`;
-  const rimGlowId = `shield-rim-glow-${uid}`;
-  return (
-    <div
-      className={`module-card-shield-backdrop ${SHIELD_BOX_CLASS} z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100`}
-      aria-hidden
-    >
-      <svg
-        className="h-full w-full overflow-visible"
-        viewBox="0 0 200 260"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <defs>
-          <linearGradient id={fillId} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={`rgb(${colorRgb})`} stopOpacity="0.07" />
-            <stop offset="42%" stopColor={`rgb(${colorRgb})`} stopOpacity="0.2" />
-            <stop offset="100%" stopColor={`rgb(${colorRgb})`} stopOpacity="0.05" />
-          </linearGradient>
-          <linearGradient id={rimGlowId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgb(200, 230, 255)" stopOpacity="0" />
-            <stop offset="35%" stopColor="rgb(220, 240, 255)" stopOpacity="0.95" />
-            <stop offset="70%" stopColor="rgb(180, 210, 255)" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="rgb(160, 200, 255)" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path d={SHIELD_SILHOUETTE_PATH} fill={`url(#${fillId})`} />
-        <path
-          d={SHIELD_SILHOUETTE_PATH}
-          fill="none"
-          stroke={`rgba(${colorRgb},0.35)`}
-          strokeWidth="1.1"
-        />
-        <path
-          d={SHIELD_SILHOUETTE_PATH}
-          fill="none"
-          stroke={`url(#${rimGlowId})`}
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </div>
-  );
-}
-
 /**
  * Same visuals as {@link ModuleCard}: glass sphere, neon border blink, icon wave ring, tilt parallax.
  * Use for Milestone hubs and any portal tile that must match the main dashboard cards.
@@ -111,7 +49,6 @@ export default function PortalModuleCard({
   disabled = false,
   className = "",
 }: PortalModuleCardProps) {
-  const shieldUid = useId().replace(/:/g, "");
   const { speak } = useVoice();
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
   const rotateX = useMotionValue(0);
@@ -162,7 +99,6 @@ export default function PortalModuleCard({
 
   const cardInner = (
     <>
-      <HoverShieldBackdrop colorRgb={colorRgb} uid={shieldUid} />
       <div
         className={`relative z-[3] flex h-full min-h-0 w-full flex-col rounded-[min(1rem,3vmin)] p-[5%] text-[100%] transition-all duration-500 module-card-float-${index % 3}`}
         style={
