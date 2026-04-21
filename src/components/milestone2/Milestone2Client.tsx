@@ -621,14 +621,16 @@ export default function Milestone2Client() {
           >
             {/* Espelha o hub do Milestone 1 (embedded): proporção 1.22 cartões : 0.96 faixa inferior */}
             <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
-              <div className="flex shrink-0 flex-col items-center gap-[min(1.5vmin,1.2vh)] text-center">
-                <button
-                  type="button"
-                  onClick={goPortal}
-                  className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
-                >
-                  ← Portal Milestone 2
-                </button>
+              <div className="flex shrink-0 flex-col gap-[min(1.5vmin,1.2vh)] text-center">
+                <div className="flex w-full justify-start">
+                  <button
+                    type="button"
+                    onClick={goPortal}
+                    className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+                  >
+                    ← Portal Milestone 2
+                  </button>
+                </div>
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
