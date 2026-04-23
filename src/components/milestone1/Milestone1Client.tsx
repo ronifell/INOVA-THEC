@@ -838,7 +838,7 @@ export default function Milestone1Client({
                 contentFullWidth
                 className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
               >
-                <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                <div className="grid min-h-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                   {MILESTONE1_HUB_SEVEN.map(({ item }, i) => (
                     <div
                       key={item.hubKey}

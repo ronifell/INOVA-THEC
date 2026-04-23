@@ -320,32 +320,35 @@ export default function Milestone2Client() {
             transition={{ duration: 0.45, ease: easeOut }}
             className="milestone-detail-neon flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
             data-audit-variant={activeMenu}
+            data-milestone="2"
           >
             <AuditCommandFrame variant={activeMenu}>
-              <div className="pointer-events-none absolute left-0 right-0 top-0 z-[30] flex justify-start px-2 pt-1 sm:px-4 sm:pt-2">
-                <button
-                  type="button"
-                  onClick={goBackToMenu}
-                  className="pointer-events-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/18 bg-black/35 px-3 py-1.5 text-[10px] font-mono tracking-wider text-white/80 transition-colors hover:border-emerald-500/45 hover:text-white sm:px-4 sm:py-2 sm:text-[11px]"
+              <header className="shrink-0 border-b border-white/[0.06] px-2 pb-3 pt-1 sm:px-4 sm:pb-4 sm:pt-2">
+                <div className="flex w-full justify-start">
+                  <button
+                    type="button"
+                    onClick={goBackToMenu}
+                    className="inline-flex w-fit items-center gap-2 rounded-full border border-white/18 bg-black/35 px-3 py-1.5 text-[10px] font-mono tracking-wider text-white/80 transition-colors hover:border-emerald-500/45 hover:text-white sm:px-4 sm:py-2 sm:text-[11px]"
+                  >
+                    ← Voltar ao cardápio
+                  </button>
+                </div>
+                <motion.div
+                  className="mt-3 text-center sm:mt-4"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: easeOut }}
                 >
-                  ← Voltar ao cardápio
-                </button>
-              </div>
+                  <h2 className="text-2xl font-bold tracking-wider text-white/90 md:text-3xl">
+                    {activeTile.title}
+                  </h2>
+                  <p className="mt-2 text-xs font-mono tracking-[0.25em] text-white/25 uppercase">
+                    {menuTitle} · tela operacional
+                  </p>
+                </motion.div>
+              </header>
 
-              <motion.div
-                className="mb-4 pt-8 text-center sm:mb-6 sm:pt-10"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: easeOut }}
-              >
-                <h2 className="text-2xl font-bold tracking-wider text-white/90 md:text-3xl">
-                  {activeTile.title}
-                </h2>
-                <p className="mt-2 text-xs font-mono tracking-[0.25em] text-white/25 uppercase">
-                  {menuTitle} · tela operacional
-                </p>
-              </motion.div>
-
+              <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-2 sm:gap-3">
               <Operational6040Workspace
                 variant={activeMenu}
                 title={activeTile.title}
@@ -596,8 +599,9 @@ export default function Milestone2Client() {
               </Operational6040Workspace>
 
             {!hideBottomTickerOnDetail && (
-              <div className="mt-3 shrink-0 overflow-hidden rounded-xl border border-cyan-500/20 bg-[#071330]/80">
-                <div className="whitespace-nowrap py-2 text-[11px] font-mono text-cyan-200/80 [animation:milestone2Ticker_20s_linear_infinite]">
+              <div className="milestone-m2-detail-ticker mt-auto w-full shrink-0 rounded-xl border border-cyan-500/20 bg-[#071330]/80 px-0.5 pb-1 pt-0.5 sm:pb-1.5 sm:pt-1">
+                <div className="overflow-x-hidden">
+                  <div className="whitespace-nowrap py-1.5 text-[11px] font-mono leading-normal text-cyan-200/80 [animation:milestone2Ticker_20s_linear_infinite] sm:py-2">
                   <span className="px-6">
                     SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
                     Vistoria AO VIVO · Conservação sincronizada · Acre ·
@@ -606,9 +610,11 @@ export default function Milestone2Client() {
                     SHA-256 · TRILHA DE AUDITORIA E INTEGRIDADE DOCUMENTAL · FÉ PÚBLICA ·
                     Vistoria AO VIVO · Conservação sincronizada · Acre ·
                   </span>
+                  </div>
                 </div>
               </div>
             )}
+              </div>
             </AuditCommandFrame>
           </motion.div>
         ) : (
@@ -628,9 +634,9 @@ export default function Milestone2Client() {
                   contentFullWidth
                   className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
                 >
-                  <div className="relative h-full min-h-0 w-full">
-                    <div className="pointer-events-none absolute inset-x-0 top-0 z-[25] flex flex-col gap-1 px-[min(1.25vmin,1.1vw)] pt-[min(1.2vmin,1vh)]">
-                      <div className="pointer-events-auto flex w-full justify-start">
+                  <div className="relative flex min-h-0 w-full flex-1 flex-col gap-[min(1.6vmin,1.4vh)]">
+                    <div className="shrink-0 border-b border-white/[0.06] px-[min(1.25vmin,1.1vw)] pb-[min(1.4vmin,1.2vh)] pt-[min(0.8vmin,0.7vh)]">
+                      <div className="flex w-full justify-start">
                         <button
                           type="button"
                           onClick={goPortal}
@@ -639,11 +645,11 @@ export default function Milestone2Client() {
                           ← Portal Milestone 2
                         </button>
                       </div>
-                      <p className="text-center text-[10px] font-mono uppercase tracking-[0.22em] text-white/35">
+                      <p className="mt-1.5 text-center text-[10px] font-mono uppercase tracking-[0.22em] text-white/35">
                         {menuTitle}
                       </p>
                     </div>
-                    <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                    <div className="grid min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                       {submenuTiles.map((tile, i) => (
                         <div
                           key={tile.id}

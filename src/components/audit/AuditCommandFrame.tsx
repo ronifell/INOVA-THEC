@@ -71,12 +71,12 @@ export default function AuditCommandFrame({
   const t = AUDIT_THEME[variant];
 
   const innerClass = contentFullWidth
-    ? "relative z-[1] mx-auto min-h-0 h-full w-full min-w-0 max-w-full px-0"
-    : "relative z-[1] mx-auto min-h-0 h-full w-full max-w-[min(100%,calc(100%-clamp(2.75rem,7.5vmin,5.5rem)))] px-[clamp(0.6rem,2vmin,1.35rem)]";
+    ? "relative z-[1] mx-auto flex min-h-0 w-full min-w-0 max-w-full flex-1 flex-col px-0"
+    : "relative z-[1] mx-auto flex min-h-0 w-full max-w-[min(100%,calc(100%-clamp(2.75rem,7.5vmin,5.5rem)))] min-w-0 flex-1 flex-col px-[clamp(0.6rem,2vmin,1.35rem)]";
 
   return (
     <div
-      className={`relative isolate min-h-0 w-full min-w-0 flex-1 ${className}`}
+      className={`relative isolate flex min-h-0 w-full min-w-0 flex-1 flex-col ${className}`}
     >
       <VerticalRailCluster side="left" rgb={t.rgb} />
       <VerticalRailCluster side="right" rgb={t.rgb} />

@@ -215,7 +215,6 @@ export default function Operational6040Workspace({
         <FlowRibbonMobile variant={variant} pulse={pulse} goldSeal={goldSeal} />
 
         <motion.div
-          layout
           className="milestone-detail-command-panel relative z-[12] flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#040810]/88 backdrop-blur-sm lg:order-1"
           style={{
             boxShadow: goldSeal

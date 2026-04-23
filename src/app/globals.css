@@ -433,6 +433,11 @@ body::after {
   box-shadow: inset 0 1px 0 rgba(56, 189, 248, 0.12);
 }
 
+/* Milestone 2 detail: evita cortar o ticker na borda inferior da caixa néon */
+.milestone-detail-neon[data-milestone="2"] {
+  padding-bottom: min(14px, 1.6vmin);
+}
+
 .milestone-detail-neon[data-audit-variant="frota"] :is(div, section, article, aside)[class*="rounded"]:not(button),
 .milestone-detail-neon[data-audit-variant="frota"] .glass {
   background-color: rgba(0, 14, 6, 0.58) !important;
