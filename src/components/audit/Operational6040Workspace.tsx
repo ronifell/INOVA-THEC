@@ -185,7 +185,7 @@ export default function Operational6040Workspace({
 
   return (
     <div
-      className={`relative flex min-h-0 w-full flex-1 flex-col gap-[min(1.8vmin,1.6vh)] lg:min-h-[60vh] ${
+      className={`relative flex min-h-0 w-full flex-1 flex-col gap-[min(2.2vmin,2vh)] lg:min-h-[62vh] ${
         goldSeal ? "audit-flow-gold-ring" : ""
       }`}
     >
@@ -210,7 +210,7 @@ export default function Operational6040Workspace({
         )}
       </AnimatePresence>
 
-      <div className="relative grid min-h-[54vh] flex-1 grid-cols-1 gap-[min(1.8vmin,1.6vh)] lg:grid-cols-[minmax(0,3fr)_minmax(3.2%,4.2%)_minmax(0,2fr)] lg:gap-x-[min(1.2vmin,1vh)] lg:gap-y-0">
+      <div className="relative grid min-h-[56vh] flex-1 grid-cols-1 gap-[min(2.2vmin,2vh)] lg:grid-cols-[minmax(0,3fr)_minmax(3.2%,4.2%)_minmax(0,2fr)] lg:gap-x-[min(1.4vmin,1.2vh)] lg:gap-y-0">
         <FlowRibbonDesktop variant={variant} pulse={pulse} goldSeal={goldSeal} />
         <FlowRibbonMobile variant={variant} pulse={pulse} goldSeal={goldSeal} />
 
@@ -225,13 +225,13 @@ export default function Operational6040Workspace({
           onPointerDownCapture={triggerPulse}
         >
           {/* Centra blocos operacionais no “meio” dos 60%, sem colar à esquerda */}
-          <div className="flex min-h-0 flex-1 justify-center overflow-hidden px-[min(1.8%,1.2vmin)] pb-[min(1.4%,1.2vmin)] pt-[min(1.8%,1.4vmin)] sm:px-[min(2.2%,1.8vmin)] sm:pb-[min(1.8%,1.4vmin)] sm:pt-[min(2.4%,2vmin)]">
-            <div className="flex h-full w-full max-w-[98%] flex-col items-center gap-y-[min(2.6%,2.2vmin)] [&>*]:w-full">
+          <div className="flex min-h-0 flex-1 justify-center overflow-hidden px-[min(2.2%,1.6vmin)] pb-[min(1.8%,1.4vmin)] pt-[min(2.4%,1.8vmin)] sm:px-[min(2.8%,2.2vmin)] sm:pb-[min(2.2%,1.8vmin)] sm:pt-[min(3%,2.4vmin)]">
+            <div className="flex h-full w-full max-w-[99%] flex-col items-center gap-y-[min(3.2%,2.8vmin)] [&>*]:w-full">
               {children}
             </div>
           </div>
 
-          <div className="shrink-0 border-t border-white/[0.07] px-[min(2.2%,1.6vmin)] py-[min(2.2%,1.6vmin)] sm:px-[min(2.6%,2vmin)] sm:py-[min(2%,1.6vmin)]">
+          <div className="shrink-0 border-t border-white/[0.07] px-[min(2.6%,2vmin)] py-[min(2.6%,2vmin)] sm:px-[min(3%,2.4vmin)] sm:py-[min(2.4%,2vmin)]">
             {footerSlot ?? (
               <button
                 type="button"
@@ -240,7 +240,7 @@ export default function Operational6040Workspace({
                   activateGoldSeal();
                 }}
                 disabled={goldSeal}
-                className="w-full rounded-xl border px-4 py-3 text-center text-[11px] font-mono uppercase tracking-[0.2em] transition-all disabled:cursor-default sm:text-xs"
+                className="w-full rounded-xl border px-5 py-4 text-center text-[12px] font-mono uppercase tracking-[0.2em] transition-all disabled:cursor-default sm:text-[13px]"
                 style={{
                   borderColor: goldSeal ? `rgba(${GOLD_SEAL.rgb},0.55)` : `rgba(${t.rgb},0.35)`,
                   background: goldSeal

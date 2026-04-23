@@ -161,7 +161,7 @@ export default function Home() {
 
             <Header />
 
-            <main className="relative z-10 flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-visible pt-24 sm:pt-28">
+            <main className="relative z-10 flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-visible pt-28 sm:pt-32">
               <AnimatePresence mode="wait">
                 {activeModule ? (
                   <motion.div

@@ -55,19 +55,19 @@ export default function AuditPresentationHeader({
 
   return (
     <div
-      className="mb-4 w-full rounded-xl border border-white/[0.08] bg-black/25 px-3 py-2.5 backdrop-blur-sm sm:px-4"
+      className="mb-5 w-full rounded-xl border border-white/[0.08] bg-black/25 px-4 py-3.5 backdrop-blur-sm sm:px-5"
       style={{
         boxShadow: `0 0 20px rgba(${accentRgb},0.08)`,
       }}
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <div className="min-w-0 flex-1">
-          <p className="text-[9px] font-mono uppercase tracking-[0.28em] text-white/45">
+          <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-white/45 sm:text-[11px]">
             SHA-256 · memorial AP-04
           </p>
           <motion.p
             key={hashState + (lockedHash ?? "")}
-            className={`mt-1 break-all font-mono text-[10px] leading-snug tracking-tight sm:text-[11px] ${colorClass}`}
+            className={`mt-1.5 break-all font-mono text-[11px] leading-snug tracking-tight sm:text-[12px] ${colorClass}`}
             animate={
               hashState === "spinning"
                 ? { opacity: [0.92, 1, 0.92] }
@@ -82,12 +82,12 @@ export default function AuditPresentationHeader({
             {display}
           </motion.p>
         </div>
-        <div className="flex shrink-0 items-center gap-2 border-t border-white/[0.06] pt-2 sm:border-t-0 sm:pt-0">
-          <span className="text-[9px] font-mono uppercase tracking-wider text-white/40">
+        <div className="flex shrink-0 items-center gap-2.5 border-t border-white/[0.06] pt-2.5 sm:border-t-0 sm:pt-0">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-white/40 sm:text-[11px]">
             Cadeia de custódia
           </span>
           <span
-            className={`flex h-7 w-7 items-center justify-center rounded-full border text-xs font-bold ${
+            className={`flex h-8 w-8 items-center justify-center rounded-full border text-sm font-bold ${
               custodyFirstCheck
                 ? "border-emerald-400/70 bg-emerald-500/20 text-emerald-200 shadow-[0_0_12px_rgba(16,185,129,0.45)]"
                 : hashState === "error"
