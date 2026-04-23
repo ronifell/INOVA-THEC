@@ -185,7 +185,7 @@ export default function Operational6040Workspace({
 
   return (
     <div
-      className={`relative flex min-h-0 w-full flex-1 flex-col gap-[min(2.2vmin,2vh)] lg:min-h-[62vh] ${
+      className={`relative flex min-h-0 w-full flex-1 flex-col gap-[min(2.2vmin,2vh)] ${
         goldSeal ? "audit-flow-gold-ring" : ""
       }`}
     >
@@ -210,13 +210,13 @@ export default function Operational6040Workspace({
         )}
       </AnimatePresence>
 
-      <div className="relative grid min-h-[56vh] flex-1 grid-cols-1 gap-[min(2.2vmin,2vh)] lg:grid-cols-[minmax(0,3fr)_minmax(3.2%,4.2%)_minmax(0,2fr)] lg:gap-x-[min(1.4vmin,1.2vh)] lg:gap-y-0">
+      <div className="relative grid min-h-0 flex-1 grid-cols-1 gap-[min(2.2vmin,2vh)] lg:grid-cols-[minmax(0,3fr)_minmax(3.2%,4.2%)_minmax(0,2fr)] lg:gap-x-[min(1.4vmin,1.2vh)] lg:gap-y-0">
         <FlowRibbonDesktop variant={variant} pulse={pulse} goldSeal={goldSeal} />
         <FlowRibbonMobile variant={variant} pulse={pulse} goldSeal={goldSeal} />
 
         <motion.div
           layout
-          className="relative z-[12] flex min-h-0 min-w-0 flex-col rounded-2xl border border-white/[0.06] bg-[#050a14]/45 backdrop-blur-sm lg:order-1"
+          className="relative z-[12] flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#050a14]/45 backdrop-blur-sm lg:order-1"
           style={{
             boxShadow: goldSeal
               ? `inset 0 0 0 1px rgba(${GOLD_SEAL.rgb},0.35), 0 0 40px rgba(${GOLD_SEAL.rgb},0.12)`

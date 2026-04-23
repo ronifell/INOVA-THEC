@@ -370,12 +370,13 @@ body::after {
 /* Main detail container (Milestone 1/2) tuned to screenshot green panel tone. */
 .milestone-detail-neon {
   background: #03261c;
-  border: 1px solid rgba(6, 64, 44, 0.95);
+  border: 1px solid rgba(4, 44, 31, 0.98);
   border-radius: 1rem;
   box-shadow:
-    inset 0 0 0 1px rgba(34, 197, 94, 0.26),
-    0 0 14px rgba(34, 197, 94, 0.22),
-    0 0 28px rgba(16, 185, 129, 0.14);
+    inset 0 0 0 1px rgba(34, 197, 94, 0.42),
+    0 0 0 1px rgba(8, 78, 55, 0.94),
+    0 0 5px rgba(22, 163, 74, 0.46),
+    0 0 10px rgba(16, 185, 129, 0.28);
 }
 
 /* Inner boxes/cards inside the main detail box: darker to match the shell. */
@@ -387,12 +388,13 @@ body::after {
       rgba(20, 83, 45, 0.16),
       rgba(2, 24, 18, 0.96)
     ) !important;
-  border-color: rgba(7, 72, 50, 0.96) !important;
+  border-color: rgba(5, 56, 39, 0.98) !important;
   box-shadow:
-    inset 0 0 0 1px rgba(21, 128, 61, 0.5),
-    0 0 10px rgba(22, 163, 74, 0.34),
-    0 0 18px rgba(34, 197, 94, 0.24),
-    0 0 28px rgba(16, 185, 129, 0.18) !important;
+    inset 0 0 0 1px rgba(22, 163, 74, 0.64),
+    0 0 0 1px rgba(8, 78, 55, 0.95),
+    0 0 3px rgba(22, 163, 74, 0.58),
+    0 0 7px rgba(34, 197, 94, 0.42),
+    0 0 12px rgba(16, 185, 129, 0.3) !important;
 }
 
 /* Catch utility backgrounds used by cards/tables/modals in detail screens. */
@@ -401,17 +403,20 @@ body::after {
 .milestone-detail-neon [class*="bg-[#071330]"],
 .milestone-detail-neon [class*="bg-[#050a14]"] {
   background-color: rgba(2, 24, 18, 0.9) !important;
-  border-color: rgba(7, 72, 50, 0.92) !important;
+  border-color: rgba(5, 56, 39, 0.96) !important;
   box-shadow:
-    inset 0 0 0 1px rgba(21, 128, 61, 0.44),
-    0 0 10px rgba(22, 163, 74, 0.28),
-    0 0 18px rgba(16, 185, 129, 0.16) !important;
+    inset 0 0 0 1px rgba(22, 163, 74, 0.54),
+    0 0 0 1px rgba(8, 78, 55, 0.92),
+    0 0 3px rgba(22, 163, 74, 0.44),
+    0 0 8px rgba(16, 185, 129, 0.24) !important;
 }
 
 /* Tables/inputs/chips inside details: darker border + phosphorescent edge. */
 .milestone-detail-neon :is(table, thead, tbody, tr, th, td, input, select, textarea) {
-  border-color: rgba(7, 72, 50, 0.9) !important;
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.18);
+  border-color: rgba(5, 56, 39, 0.96) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(22, 163, 74, 0.42),
+    0 0 3px rgba(22, 163, 74, 0.36);
 }
 
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
