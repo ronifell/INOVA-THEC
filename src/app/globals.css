@@ -541,28 +541,83 @@ body::after {
   animation: moduleCardBorderBlink 10s linear infinite;
 }
 
-.module-card-metallic-shell {
+.module-card-band-wrap {
   position: relative;
-}
-
-.module-card-metallic-shell::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
+  isolation: isolate;
+  /* Equal X/Y chamfer => 45deg corner cut */
+  --card-corner-cut: 13%;
   background: linear-gradient(
     135deg,
-    rgba(206, 222, 245, 0.35) 0%,
-    rgba(90, 115, 150, 0.22) 22%,
-    rgba(220, 236, 255, 0.35) 45%,
-    rgba(85, 112, 142, 0.24) 66%,
-    rgba(208, 226, 248, 0.34) 100%
+    rgba(82, 88, 100, 0.82) 0%,
+    rgba(171, 144, 92, 0.64) 18%,
+    rgba(218, 200, 160, 0.56) 34%,
+    rgba(96, 102, 114, 0.8) 56%,
+    rgba(180, 150, 92, 0.62) 78%,
+    rgba(84, 90, 102, 0.84) 100%
   );
   box-shadow:
-    0 0 0 1px rgba(210, 228, 248, 0.18),
-    0 0 18px rgba(100, 130, 170, 0.2);
+    0 0 0 1px rgba(195, 171, 120, 0.35),
+    0 0 18px rgba(182, 148, 90, 0.24);
+  clip-path: polygon(
+    var(--card-corner-cut) 0%,
+    calc(100% - var(--card-corner-cut)) 0%,
+    100% var(--card-corner-cut),
+    100% calc(100% - var(--card-corner-cut)),
+    calc(100% - var(--card-corner-cut)) 100%,
+    var(--card-corner-cut) 100%,
+    0% calc(100% - var(--card-corner-cut)),
+    0% var(--card-corner-cut)
+  );
+}
+
+.module-card-band-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(222, 208, 178, 0.42);
   pointer-events: none;
   z-index: 0;
+  clip-path: inherit;
+}
+
+.module-card-band-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 12px 6px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 0%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.55) 22%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.75) 48%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.5) 76%,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 100%
+    )
+    left center / 4px 86% no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 0%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.55) 22%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.75) 48%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.5) 76%,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 100%
+    )
+    right center / 4px 86% no-repeat;
+  filter: drop-shadow(0 0 8px rgba(var(--band-rgb, 52, 211, 153), 0.65));
+  clip-path: inherit;
+}
+
+.module-card-band-inner {
+  position: relative;
+  clip-path: inherit;
+}
+
+.module-card-border-blink {
+  clip-path: inherit;
 }
 
 .module-icon-wave-ring {
@@ -814,7 +869,63 @@ body::after {
   box-shadow:
     0 0 0 1px rgba(220, 236, 255, 0.08),
     0 0 18px rgba(86, 171, 227, 0.14),
-    inset 0 0 16px rgba(120, 204, 255, 0.05);
+    inset 0 0 16px rgba(120, 204, 255, 0.05),
+    inset 2px 0 14px rgba(var(--band-rgb, 52, 211, 153), 0.42),
+    inset -2px 0 14px rgba(var(--band-rgb, 52, 211, 153), 0.42);
+  position: relative;
+  isolation: isolate;
+  --band-rgb: 52, 211, 153;
+}
+
+.audit-action-btn::before,
+.fuel-neon-action-btn::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: linear-gradient(
+    140deg,
+    rgba(94, 100, 112, 0.68) 0%,
+    rgba(176, 149, 93, 0.56) 20%,
+    rgba(224, 205, 160, 0.52) 44%,
+    rgba(106, 112, 124, 0.64) 66%,
+    rgba(182, 152, 92, 0.54) 84%,
+    rgba(95, 101, 114, 0.66) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(198, 173, 120, 0.35),
+    0 0 12px rgba(184, 151, 93, 0.26);
+}
+
+.audit-action-btn::after,
+.fuel-neon-action-btn::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 0%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.52) 20%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.72) 50%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.46) 78%,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 100%
+    )
+    left center / 3px 86% no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 0%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.52) 20%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.72) 50%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.46) 78%,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 100%
+    )
+    right center / 3px 86% no-repeat;
+  filter: drop-shadow(0 0 6px rgba(var(--band-rgb, 52, 211, 153), 0.55));
 }
 
 @media (min-width: 1024px) {
@@ -828,6 +939,7 @@ body::after {
 .audit-action-btn--neon-emerald {
   border-width: 2px !important;
   border-color: rgba(52, 211, 153, 0.95) !important;
+  --band-rgb: 52, 211, 153;
   box-shadow:
     0 0 14px rgba(16, 185, 129, 0.55),
     0 0 28px rgba(16, 185, 129, 0.25),
@@ -837,6 +949,7 @@ body::after {
 .audit-action-btn--neon-red {
   border-width: 2px !important;
   border-color: rgba(248, 113, 113, 0.95) !important;
+  --band-rgb: 248, 113, 113;
   box-shadow:
     0 0 14px rgba(239, 68, 68, 0.5),
     0 0 28px rgba(239, 68, 68, 0.22),
@@ -846,6 +959,7 @@ body::after {
 .audit-action-btn--neon-cyan {
   border-width: 2px !important;
   border-color: rgba(34, 211, 238, 0.95) !important;
+  --band-rgb: 34, 211, 238;
   box-shadow:
     0 0 14px rgba(6, 182, 212, 0.5),
     0 0 28px rgba(6, 182, 212, 0.22),
@@ -855,6 +969,7 @@ body::after {
 .audit-action-btn--neon-amber {
   border-width: 2px !important;
   border-color: rgba(251, 191, 36, 0.95) !important;
+  --band-rgb: 251, 191, 36;
   box-shadow:
     0 0 14px rgba(245, 158, 11, 0.5),
     0 0 28px rgba(245, 158, 11, 0.22),
@@ -864,6 +979,7 @@ body::after {
 .audit-action-btn--neon-violet {
   border-width: 2px !important;
   border-color: rgba(167, 139, 250, 0.95) !important;
+  --band-rgb: 167, 139, 250;
   box-shadow:
     0 0 14px rgba(139, 92, 246, 0.5),
     0 0 28px rgba(139, 92, 246, 0.22),
@@ -961,6 +1077,58 @@ body::after {
   );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  isolation: isolate;
+  --band-rgb: 34, 211, 238;
+}
+
+.audit-card-inner::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: linear-gradient(
+    140deg,
+    rgba(94, 100, 112, 0.68) 0%,
+    rgba(176, 149, 93, 0.56) 20%,
+    rgba(224, 205, 160, 0.52) 44%,
+    rgba(106, 112, 124, 0.64) 66%,
+    rgba(182, 152, 92, 0.54) 84%,
+    rgba(95, 101, 114, 0.66) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(198, 173, 120, 0.35),
+    0 0 12px rgba(184, 151, 93, 0.24);
+}
+
+.audit-card-inner::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(var(--band-rgb, 34, 211, 238), 0) 0%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.52) 20%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.72) 50%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.46) 78%,
+      rgba(var(--band-rgb, 34, 211, 238), 0) 100%
+    )
+    left center / 3px 86% no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(var(--band-rgb, 34, 211, 238), 0) 0%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.52) 20%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.72) 50%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.46) 78%,
+      rgba(var(--band-rgb, 34, 211, 238), 0) 100%
+    )
+    right center / 3px 86% no-repeat;
+  filter: drop-shadow(0 0 6px rgba(var(--band-rgb, 34, 211, 238), 0.55));
 }
 
 /* Painel central do Monitor — identidade branca + neon branco */
@@ -1209,6 +1377,15 @@ body::after {
   font-size: 0.82rem;
   padding-top: 0.82rem;
   padding-bottom: 0.82rem;
+  position: relative;
+  isolation: isolate;
+  --band-rgb: 52, 211, 153;
+  box-shadow:
+    0 0 12px rgba(34, 197, 94, 0.55),
+    0 0 28px rgba(16, 185, 129, 0.35),
+    inset 0 0 12px rgba(255, 255, 255, 0.06),
+    inset 2px 0 12px rgba(var(--band-rgb), 0.45),
+    inset -2px 0 12px rgba(var(--band-rgb), 0.45);
 }
 
 @keyframes master-faith-shimmer {

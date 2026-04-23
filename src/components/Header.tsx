@@ -152,15 +152,15 @@ export default function Header() {
     >
       <div className="mx-auto grid w-full max-w-[99.5%] grid-cols-1 gap-2.5 px-[2.2%] pb-2.5 pt-2.5 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.5fr)_minmax(0,1.2fr)] md:gap-x-8 md:gap-y-2.5 md:pb-3 md:pt-3 lg:gap-x-12">
         {/* Esquerda — Cadeia de custódia (espelho tipográfico do Protocolo) */}
-        <div className="order-2 flex min-w-0 flex-col justify-start md:order-1 md:pt-0.5 md:pr-3 lg:pr-5">
-          <h2 className="header-ap04-pillar-title translate-y-0.5 text-left">
+        <div className="order-2 flex min-w-0 flex-col justify-start overflow-hidden md:order-1 md:pt-0.5 md:pr-3 lg:pr-5">
+          <h2 className="header-ap04-pillar-title translate-y-0.5 break-words text-left">
             CADEIA DE CUSTÓDIA
           </h2>
           <CustodyStationLine />
         </div>
 
         {/* Centro — Identidade Inova Thec */}
-        <div className="order-1 flex min-w-0 flex-col items-center justify-start px-1 text-center md:order-2 md:pt-0">
+        <div className="order-1 flex min-w-0 flex-col items-center justify-start overflow-hidden px-1 text-center md:order-2 md:pt-0">
           <motion.button
             type="button"
             onClick={() => {
@@ -178,18 +178,18 @@ export default function Header() {
                 INOVA THEC
               </span>
             </div>
-            <p className="relative mt-1.5 max-w-xl px-1 text-[14px] font-medium leading-snug text-white md:text-[1.08rem]">
+            <p className="relative mt-1.5 max-w-xl break-words px-1 text-[14px] font-medium leading-snug text-white md:text-[1.08rem]">
               A Terceira Via da Fé Pública Digital
             </p>
-            <p className="relative mt-1 max-w-lg px-2 text-[12px] font-medium leading-snug text-white md:text-[14px]">
+            <p className="relative mt-1 max-w-lg break-words px-2 text-[12px] font-medium leading-snug text-white md:text-[14px]">
               A Verdade Digital que o Tempo Não Apaga
             </p>
           </motion.button>
         </div>
 
         {/* Direita — Protocolo AP-04 / SHA (esmeralda + branco) */}
-        <div className="order-3 flex min-w-0 flex-col items-stretch md:items-end md:pl-2 md:pt-0.5 lg:pl-4">
-          <h2 className="header-ap04-pillar-title text-right">
+        <div className="order-3 flex min-w-0 flex-col items-stretch overflow-hidden md:items-end md:pl-2 md:pt-0.5 lg:pl-4">
+          <h2 className="header-ap04-pillar-title break-words text-right">
             PROTOCOLO AP-04
           </h2>
           <div className="relative mt-1.5 w-full max-w-[min(100%,24.5rem)] md:ml-auto">

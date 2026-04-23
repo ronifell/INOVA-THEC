@@ -100,21 +100,25 @@ export default function PortalModuleCard({
   const cardInner = (
     <>
       <div
-        className={`module-card-metallic-shell relative z-[3] flex h-full min-h-0 w-full flex-col rounded-[min(1rem,3vmin)] p-[5%] text-[100%] transition-all duration-500 module-card-float-${index % 3}`}
-        style={
-          {
-            "--card-rgb": colorRgb,
-            background:
-              "linear-gradient(160deg, rgba(14,26,42,0.78) 0%, rgba(10,20,32,0.82) 52%, rgba(12,24,38,0.86) 100%)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            border: `1px solid rgba(${colorRgb}, 0.26)`,
-            boxShadow: `inset 0 0 24px rgba(${colorRgb},0.08), 0 0 22px rgba(${colorRgb},0.15)`,
-          } as CSSProperties
-        }
+        className={`module-card-band-wrap relative z-[3] h-full min-h-0 w-full p-[4.4%] transition-all duration-500 module-card-float-${index % 3}`}
+        style={{ "--card-rgb": colorRgb, "--band-rgb": colorRgb } as CSSProperties}
       >
         <div
-          className="module-card-border-blink pointer-events-none absolute inset-0 z-[1] rounded-[min(1rem,3vmin)]"
+          className="module-card-band-inner relative flex h-full min-h-0 w-full flex-col p-[5%] text-[100%]"
+          style={
+            {
+              "--card-rgb": colorRgb,
+              background:
+                "linear-gradient(160deg, rgba(14,26,42,0.78) 0%, rgba(10,20,32,0.82) 52%, rgba(12,24,38,0.86) 100%)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: `1px solid rgba(${colorRgb}, 0.24)`,
+              boxShadow: `inset 0 0 24px rgba(${colorRgb},0.08), 0 0 22px rgba(${colorRgb},0.15)`,
+            } as CSSProperties
+          }
+        >
+        <div
+          className="module-card-border-blink pointer-events-none absolute inset-0 z-[1]"
           style={{ "--card-rgb": colorRgb } as CSSProperties}
           aria-hidden
         />
@@ -191,6 +195,7 @@ export default function PortalModuleCard({
             {isFullModule ? "OPERACIONAL" : "HOMOLOGAÇÃO"}
           </span>
         </div>
+      </div>
       </div>
     </>
   );
