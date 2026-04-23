@@ -106,6 +106,14 @@ export default function PortalModuleCard({
         <span className="module-card-band-outline" aria-hidden />
         <span className="card-corner-crease card-corner-crease--left" aria-hidden />
         <span className="card-corner-crease card-corner-crease--right" aria-hidden />
+        <span
+          className="card-corner-crease card-corner-crease--bottom-left"
+          aria-hidden
+        />
+        <span
+          className="card-corner-crease card-corner-crease--bottom-right"
+          aria-hidden
+        />
         <div
           className="module-card-band-inner relative flex h-full min-h-0 w-full flex-col p-[5%] text-[100%]"
           style={
@@ -115,8 +123,8 @@ export default function PortalModuleCard({
                 "rgba(6,14,24,0.05)",
               backdropFilter: "blur(6px) saturate(1.01)",
               WebkitBackdropFilter: "blur(6px) saturate(1.01)",
-              border: "4px solid rgba(0,0,0,0.9)",
-              boxShadow: `inset 0 0 10px rgba(${colorRgb},0.06), 0 0 8px rgba(${colorRgb},0.1)`,
+              border: `1px solid rgba(${colorRgb}, 0.55)`,
+              boxShadow: `inset 0 0 0 1px rgba(0,0,0,0.42), inset 0 0 12px rgba(${colorRgb},0.08), 0 0 12px rgba(${colorRgb},0.14)`,
             } as CSSProperties
           }
         >
