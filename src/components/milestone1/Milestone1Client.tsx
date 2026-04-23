@@ -835,6 +835,7 @@ export default function Milestone1Client({
             <div className="relative z-[12] flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
               <AuditCommandFrame
                 variant="frota"
+                contentFullWidth
                 className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
               >
                 <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">

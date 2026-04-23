@@ -26,7 +26,11 @@ export default function ModulePageShell({
   return (
     <HomeShellLayout
       topBand={
-        <AuditCommandFrame variant={auditVariant} className="min-h-0 h-full">
+        <AuditCommandFrame
+          variant={auditVariant}
+          contentFullWidth
+          className="min-h-0 h-full"
+        >
           <ModuleInteriorCardGrid moduleId={moduleId} />
         </AuditCommandFrame>
       }

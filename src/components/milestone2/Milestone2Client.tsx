@@ -617,64 +617,55 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
-            className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-visible"
+            className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-visible"
           >
-            {/* Espelha o hub do Milestone 1 (embedded): proporção 1.22 cartões : 0.96 faixa inferior */}
-            <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
-              <div className="flex shrink-0 flex-col gap-[min(1.5vmin,1.2vh)] text-center">
-                <div className="flex w-full justify-start">
-                  <button
-                    type="button"
-                    onClick={goPortal}
-                    className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
-                  >
-                    ← Portal Milestone 2
-                  </button>
-                </div>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: easeOut }}
-                >
-                  <h2 className="text-[var(--m1-text-ui)] font-mono tracking-[0.22em] text-white/55 md:text-base">
-                    {menuTitle}
-                  </h2>
-                  <p className="mt-1 text-[10px] font-mono uppercase tracking-[0.25em] text-white/30">
-                    Menu de comando · sete frentes de auditoria
-                  </p>
-                  <div className="mx-auto mt-3 h-px w-32 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                </motion.div>
-              </div>
-
+            {/* Mesma proporção 1.22 : 0.96 que `HomeShellLayout` (largura já vem de `AppMainWithFooter` max-w-[98%]) */}
+            <div className="flex min-h-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
               <div className="relative z-[12] flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
                 <AuditCommandFrame
                   variant={activeMenu}
+                  contentFullWidth
                   className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
                 >
-                  <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
-                    {submenuTiles.map((tile, i) => (
-                      <div
-                        key={tile.id}
-                        className="relative z-[1] h-full w-[90%] justify-self-center"
-                      >
-                        <PortalModuleCard
-                          index={i}
-                          color={menuTheme.color}
-                          colorRgb={menuTheme.colorRgb}
-                          icon={tile.icon}
-                          title={tile.title}
-                          description={tile.description}
-                          isFullModule
-                          voiceText={`${menuTitle}. ${tile.title}. ${tile.description}`}
-                          onClick={() => openTile(tile)}
-                        />
+                  <div className="relative h-full min-h-0 w-full">
+                    <div className="pointer-events-none absolute inset-x-0 top-0 z-[25] flex flex-col gap-1 px-[min(1.25vmin,1.1vw)] pt-[min(1.2vmin,1vh)]">
+                      <div className="pointer-events-auto flex w-full justify-start">
+                        <button
+                          type="button"
+                          onClick={goPortal}
+                          className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+                        >
+                          ← Portal Milestone 2
+                        </button>
                       </div>
-                    ))}
+                      <p className="text-center text-[10px] font-mono uppercase tracking-[0.22em] text-white/35">
+                        {menuTitle}
+                      </p>
+                    </div>
+                    <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                      {submenuTiles.map((tile, i) => (
+                        <div
+                          key={tile.id}
+                          className="relative z-[1] h-full w-[90%] justify-self-center"
+                        >
+                          <PortalModuleCard
+                            index={i}
+                            color={menuTheme.color}
+                            colorRgb={menuTheme.colorRgb}
+                            icon={tile.icon}
+                            title={tile.title}
+                            description={tile.description}
+                            isFullModule
+                            voiceText={`${menuTitle}. ${tile.title}. ${tile.description}`}
+                            onClick={() => openTile(tile)}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </AuditCommandFrame>
 
                 <div className="flex min-h-0 min-w-0 flex-[0.96] flex-col items-center justify-center overflow-x-hidden overflow-y-auto py-[0.5vh]">
-                  {/* Reserva a mesma faixa inferior do hub M1 (botão modo claro/escuro) para alinhar proporção dos cartões */}
                   <button
                     type="button"
                     tabIndex={-1}

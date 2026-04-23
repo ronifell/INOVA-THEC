@@ -51,6 +51,11 @@ type Props = {
   children: ReactNode;
   /** Extra classes on the outer wrapper */
   className?: string;
+  /**
+   * When true, children span the full width inside the frame (no extra max-width / horizontal inset).
+   * Use for 7-card hubs that must match the homepage `Dashboard` grid cell size.
+   */
+  contentFullWidth?: boolean;
 };
 
 /**
@@ -61,8 +66,13 @@ export default function AuditCommandFrame({
   variant,
   children,
   className = "",
+  contentFullWidth = false,
 }: Props) {
   const t = AUDIT_THEME[variant];
+
+  const innerClass = contentFullWidth
+    ? "relative z-[1] mx-auto min-h-0 h-full w-full min-w-0 max-w-full px-0"
+    : "relative z-[1] mx-auto min-h-0 h-full w-full max-w-[min(100%,calc(100%-clamp(2.75rem,7.5vmin,5.5rem)))] px-[clamp(0.6rem,2vmin,1.35rem)]";
 
   return (
     <div
@@ -71,7 +81,7 @@ export default function AuditCommandFrame({
       <VerticalRailCluster side="left" rgb={t.rgb} />
       <VerticalRailCluster side="right" rgb={t.rgb} />
 
-      <div className="relative z-[1] mx-auto min-h-0 h-full w-full max-w-[min(100%,calc(100%-clamp(2.75rem,7.5vmin,5.5rem)))] px-[clamp(0.6rem,2vmin,1.35rem)]">
+      <div className={innerClass}>
         {children}
       </div>
     </div>

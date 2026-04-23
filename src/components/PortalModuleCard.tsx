@@ -115,7 +115,7 @@ export default function PortalModuleCard({
           aria-hidden
         />
         <div
-          className="module-card-band-inner relative flex h-full min-h-0 w-full flex-col p-[5%] text-[100%]"
+          className="module-card-band-inner relative flex h-full min-h-0 w-full flex-col p-[5%] text-base"
           style={
             {
               "--card-rgb": colorRgb,
@@ -176,7 +176,7 @@ export default function PortalModuleCard({
             }}
           />
           <motion.span
-            className="relative z-10 text-[220%] leading-none"
+            className="relative z-10 text-[2.2rem] leading-none"
             style={{ textShadow: `0 0 20px rgba(${colorRgb},0.45)` }}
           >
             {icon}
@@ -184,13 +184,13 @@ export default function PortalModuleCard({
         </motion.div>
 
         <h3
-          className="text-center text-[130%] font-bold uppercase tracking-wide transition-colors duration-500 group-hover:text-white"
+          className="text-center text-[1.3rem] font-bold uppercase tracking-wide transition-colors duration-500 group-hover:text-white"
           style={{ color: `rgba(${colorRgb}, 0.9)` }}
         >
           {title}
         </h3>
 
-        <p className="mt-[4%] min-h-0 flex-1 text-center text-[102%] uppercase leading-relaxed text-white transition-colors duration-500 group-hover:text-white">
+        <p className="mt-[4%] min-h-0 flex-1 text-center text-[1.02rem] uppercase leading-relaxed text-white transition-colors duration-500 group-hover:text-white">
           {description}
         </p>
 
@@ -202,7 +202,7 @@ export default function PortalModuleCard({
               boxShadow: `0 0 6px rgba(${colorRgb}, 0.55), 0 0 12px rgba(${colorRgb}, 0.3)`,
             }}
           />
-          <span className="text-[86%] font-mono uppercase tracking-wider text-white/45">
+          <span className="text-[0.86rem] font-mono uppercase tracking-wider text-white/45">
             {isFullModule ? "OPERACIONAL" : "HOMOLOGAÇÃO"}
           </span>
         </div>
@@ -212,7 +212,7 @@ export default function PortalModuleCard({
   );
 
   const motionProps = {
-    className: `relative z-[2] h-full min-h-0 w-full overflow-visible group [transform-style:preserve-3d] will-change-transform ${interactive ? "cursor-pointer" : "cursor-default"} ${className}`,
+    className: `relative z-[2] h-full min-h-0 w-full overflow-visible text-base font-sans group [transform-style:preserve-3d] will-change-transform ${interactive ? "cursor-pointer" : "cursor-default"} ${className}`,
     initial: { opacity: 1, y: dropOffset, scale: 0.9 },
     animate: {
       opacity: 1,
