@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateSHA256, generateMockHash } from "@/lib/crypto";
 import Operational6040Workspace from "@/components/audit/Operational6040Workspace";
@@ -87,9 +87,6 @@ export default function FuelGeographicInsumo() {
   const [materialAlert, setMaterialAlert] = useState<string | null>(null);
 
   const refBomba = useRef<HTMLInputElement>(null);
-  const refSeal = useRef<HTMLInputElement>(null);
-  const refPlate = useRef<HTMLInputElement>(null);
-  const refOdometer = useRef<HTMLInputElement>(null);
   const [labelBomba, setLabelBomba] = useState<string | null>(null);
   const [assetValidated, setAssetValidated] = useState(false);
   const [assetDenied, setAssetDenied] = useState(false);
@@ -192,7 +189,7 @@ export default function FuelGeographicInsumo() {
 
   const lines4bYellow = useMemo(
     () => [
-      "> ERRO: CAPTURA ABAIXO DO PADRÃO PERICIAL. REPETIR FOTO PARA EVITAR NULIDADE JURÍDICA.",
+      "> REPETIR CAPTURA: PADRÃO PERICIAL INSUFICIENTE.",
     ],
     []
   );
@@ -218,6 +215,25 @@ export default function FuelGeographicInsumo() {
     playSuccessChime();
     setGold(true);
   }, [allMaterialValidated]);
+
+  const run4aScenario = useCallback(async (outcome: "green" | "red") => {
+    setResult("scanning");
+    setGold(false);
+    setHash(null);
+    playEnergyCharge();
+    await new Promise((r) => setTimeout(r, 520));
+    if (outcome === "green") {
+      setMaterialEvidence({ seal: true, plate: true, odometer: true, pump: true });
+      setResult("green");
+      setHash(await generateSHA256("04A-TERRITORIAL-OK"));
+      setGold(true);
+      playSuccessChime();
+      return;
+    }
+    setResult("red");
+    setHash("aa0000" + generateMockHash().slice(6));
+    playAlertFail();
+  }, []);
 
   const run4b = useCallback(
     async (outcome: Result) => {
@@ -250,18 +266,33 @@ export default function FuelGeographicInsumo() {
     []
   );
 
+  useEffect(() => {
+    if (step !== "run" || !protocol) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (protocol === "4a") {
+        if (e.key.toLowerCase() === "g") void run4aScenario("green");
+        if (e.key.toLowerCase() === "r") void run4aScenario("red");
+      }
+      if (protocol === "4b") {
+        if (e.key.toLowerCase() === "g") void run4b("green");
+        if (e.key.toLowerCase() === "y") void run4b("yellow");
+        if (e.key.toLowerCase() === "r") void run4b("red");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [protocol, run4aScenario, run4b, step]);
+
   const blueprint = useMemo(() => {
     if (protocol === "4a") {
       return (
         <TruckBlueprintHD
           mode={{
-            kind: "materialidade",
-            litZones: [
-              materialEvidence.seal,
-              materialEvidence.plate,
-              materialEvidence.odometer,
-              materialEvidence.pump,
-            ],
+            kind: "geo",
+            protocolVariant: "4a",
+            nozzleLit: result === "green" || result === "scanning",
+            outlineRedPulse: result === "red",
+            bloodRedPulse: result === "red",
           }}
         />
       );
@@ -285,7 +316,7 @@ export default function FuelGeographicInsumo() {
         }}
       />
     );
-  }, [assetDenied, assetValidated, materialEvidence, protocol, result]);
+  }, [assetDenied, assetValidated, protocol, result]);
 
   const mapVariant =
     result === "green" ? "success" : result === "red" ? "error" : "idle";
@@ -316,14 +347,14 @@ export default function FuelGeographicInsumo() {
       </p>
       <button
         type="button"
-        disabled={result !== "green" || !gold || !allMaterialValidated}
+        disabled={result !== "green" || !gold || (protocol === "4a" ? false : !allMaterialValidated)}
         className={`w-full rounded-xl border-2 px-4 py-4 text-[11px] font-mono uppercase tracking-[0.14em] sm:py-5 sm:text-xs ${
-          result === "green" && gold && allMaterialValidated
+          result === "green" && gold && (protocol === "4a" ? true : allMaterialValidated)
             ? "master-faith-metallic border-amber-400/45"
             : "cursor-not-allowed border-white/10 bg-zinc-900 text-zinc-500"
         }`}
       >
-        {result === "green" && gold && allMaterialValidated
+        {result === "green" && gold && (protocol === "4a" ? true : allMaterialValidated)
           ? "Fé Pública Pericial (liberado)"
           : "Fé Pública Pericial (bloqueado)"}
       </button>
@@ -363,10 +394,10 @@ export default function FuelGeographicInsumo() {
             Botão 4-A
           </p>
           <p className="mt-2 text-sm font-semibold text-white">
-            Botão 1 · Combustível pericial
+            Tanque do Veículo
           </p>
           <p className="mt-2 text-[11px] leading-snug text-white/45">
-            Reservatório, vedação, ativo e insumo com validação em 4 zonas do blueprint.
+            MÓDULO 04-A: PROTOCOLO DE MATERIALIDADE TERRITORIAL
           </p>
         </button>
         <button
@@ -387,10 +418,10 @@ export default function FuelGeographicInsumo() {
             Botão 4-B
           </p>
           <p className="mt-2 text-sm font-semibold text-white">
-            Botão 2 · Identificação de ativo
+            Protocolo do Galão
           </p>
           <p className="mt-2 text-[11px] leading-snug text-white/45">
-            Correlação de frota e vínculo contratual com scanner técnico.
+            PROTOCOLO DE ABASTECIMENTO EM CONTINGÊNCIA (GALÃO)
           </p>
         </button>
       </div>
@@ -404,7 +435,7 @@ export default function FuelGeographicInsumo() {
       <div className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
           <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300/80">
-            PROTOCOLO DE MATERIALIDADE PERICIAL: Reservatório, Vedação e Insumo
+            MÓDULO 04-A: PROTOCOLO DE MATERIALIDADE TERRITORIAL
           </span>
           <button
             type="button"
@@ -421,32 +452,12 @@ export default function FuelGeographicInsumo() {
           </button>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-950/20 px-3 py-2 text-[10px] font-mono text-emerald-100/85">
+          Atalhos de apresentação: <span className="text-lime-300">G = Cenário Verde</span> ·{" "}
+          <span className="text-red-300">R = Cenário Vermelho</span>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
           <div className="space-y-3">
-            <input
-              ref={refSeal}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="sr-only"
-              onChange={(e) => captureMaterialEvidence("seal", e.target.files?.[0])}
-            />
-            <input
-              ref={refPlate}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="sr-only"
-              onChange={(e) => captureMaterialEvidence("plate", e.target.files?.[0])}
-            />
-            <input
-              ref={refOdometer}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="sr-only"
-              onChange={(e) => captureMaterialEvidence("odometer", e.target.files?.[0])}
-            />
             <input
               ref={refBomba}
               type="file"
@@ -455,34 +466,39 @@ export default function FuelGeographicInsumo() {
               className="sr-only"
               onChange={(e) => captureMaterialEvidence("pump", e.target.files?.[0])}
             />
-            <button
-              type="button"
-              onClick={() => refSeal.current?.click()}
-              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-400/60 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(16,185,129,0.35)]"
-            >
-              Evidência de Vedação (Lacre) {materialEvidence.seal ? "• VALIDADO" : ""}
-            </button>
-            <button
-              type="button"
-              onClick={() => refPlate.current?.click()}
-              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-400/60 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(16,185,129,0.35)]"
-            >
-              Identificação de Ativo (Placa) {materialEvidence.plate ? "• VALIDADO" : ""}
-            </button>
-            <button
-              type="button"
-              onClick={() => refOdometer.current?.click()}
-              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-400/60 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(16,185,129,0.35)]"
-            >
-              Métrica de Desempenho (Hodômetro) {materialEvidence.odometer ? "• VALIDADO" : ""}
-            </button>
-            <button
-              type="button"
-              onClick={() => refBomba.current?.click()}
-              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-400/60 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(16,185,129,0.35)]"
-            >
-              Validação de Insumo (Bomba) {materialEvidence.pump ? "• VALIDADO" : ""}
-            </button>
+            <div className={`relative overflow-hidden rounded-xl border border-white/12 bg-gradient-to-br from-slate-950 to-slate-900 ${result === "red" ? "fuel-glitch-img" : ""}`}>
+              <div className="flex aspect-[4/3] flex-col items-center justify-center gap-2">
+                <span className="text-4xl">⛽</span>
+                <p className="px-4 text-center text-[11px] text-white/55">
+                  Câmera ativa no bocal do tanque (área de materialidade)
+                </p>
+                <button
+                  type="button"
+                  onClick={() => refBomba.current?.click()}
+                  className="rounded-lg border border-emerald-500/45 bg-emerald-600/20 px-3 py-1.5 text-[10px] font-mono text-emerald-100"
+                >
+                  Capturar bocal do tanque
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => void run4aScenario("green")}
+                disabled={scanning}
+                className="rounded-lg border border-lime-400/55 bg-lime-900/35 py-2 text-[10px] font-mono uppercase text-lime-100"
+              >
+                Cenário A · Verde
+              </button>
+              <button
+                type="button"
+                onClick={() => void run4aScenario("red")}
+                disabled={scanning}
+                className="rounded-lg border border-red-500/55 bg-red-950/45 py-2 text-[10px] font-mono uppercase text-red-100"
+              >
+                Cenário B · Vermelho
+              </button>
+            </div>
             <button
               type="button"
               onClick={run4a}
@@ -492,10 +508,18 @@ export default function FuelGeographicInsumo() {
               Consolidar validação pericial
             </button>
           </div>
-          <div>
+          <div className="space-y-3">
+            <div className="relative overflow-hidden rounded-xl border border-emerald-500/25 bg-[#03160b] p-2">
+              <GeoprocessingRadarMap variant="idle" />
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-emerald-400/55 bg-black/70 p-1 shadow-[0_0_22px_rgba(16,185,129,0.35)]">
+                  <GeoprocessingRadarMap variant={mapVariant} errorDistanceM={2000} />
+                </div>
+              </div>
+            </div>
             {result === "idle" && (
               <p className="text-xs text-white/45">
-                O vetor técnico acende por partes conforme cada evidência validada.
+                Mapa ilustrativo + radar GPS em tempo real com vetor blueprint.
               </p>
             )}
             {materialAlert && (
@@ -504,13 +528,17 @@ export default function FuelGeographicInsumo() {
             {result === "green" && (
               <AuditLines lines={lines4aOk} active tone="ok" />
             )}
+            {result === "red" && (
+              <AuditLines
+                lines={["> ALERTA: VIOLAÇÃO DE PERÍMETRO GEOGRÁFICO.", ...lines4aRed]}
+                active
+                tone="bad"
+              />
+            )}
             {!materialAlert && !allMaterialValidated && (
               <div className="mt-2 rounded-xl border border-white/10 bg-black/35 p-3 font-mono text-[10px] text-white/70">
-                <p>CAPTURAS:</p>
-                <p>VEDAÇÃO: {materialLabels.seal ?? "pendente"}</p>
-                <p>PLACA: {materialLabels.plate ?? "pendente"}</p>
-                <p>HODÔMETRO: {materialLabels.odometer ?? "pendente"}</p>
                 <p>BOMBA: {materialLabels.pump ?? "pendente"}</p>
+                <p className="mt-1 text-emerald-300/80">CADEIA DE CUSTÓDIA: STREAM ATIVO</p>
               </div>
             )}
           </div>
@@ -520,7 +548,7 @@ export default function FuelGeographicInsumo() {
       <div className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
           <span className="text-[10px] font-mono uppercase tracking-wider text-teal-300/85">
-            PROTOCOLO DE IDENTIFICAÇÃO DE ATIVO: Correlação de Frota e Vínculo Contratual
+            PROTOCOLO DE ABASTECIMENTO EM CONTINGÊNCIA (GALÃO)
           </span>
           <button
             type="button"
@@ -538,7 +566,7 @@ export default function FuelGeographicInsumo() {
         </div>
 
         <div className="rounded-xl border border-emerald-500/25 bg-emerald-950/20 px-3 py-2 text-[10px] leading-snug text-emerald-100/90">
-          Scanner biométrico ativo: linha esmeralda com glow e lock de leitura na placa.
+          Atalhos de apresentação: G = Verde · Y = Amarelo · R = Vermelho.
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
@@ -620,6 +648,12 @@ export default function FuelGeographicInsumo() {
                 Simular placa não cadastrada
               </button>
             </div>
+            <div className="rounded-xl border border-white/10 bg-black/35 p-3 font-mono text-[10px] text-white/75">
+              <p>PILAR 1 OCR: {labelBomba ? "MATCH" : "PENDENTE"}</p>
+              <p>PILAR 2 GALÃO (IA): {result === "green" ? "MATCH" : "PENDENTE"}</p>
+              <p>PILAR 3 GPS LOCK: {result === "red" ? "FALHA" : result === "green" ? "MATCH" : "PENDENTE"}</p>
+              <p>PILAR 4 CADEIA SHA-256: {result === "green" ? "VINCULADA" : "NÃO VINCULADA"}</p>
+            </div>
           </div>
 
           <div className="space-y-3">
@@ -660,8 +694,8 @@ export default function FuelGeographicInsumo() {
   return (
     <Operational6040Workspace
       variant="frota"
-      title="PROTOCOLOS PERICIAIS DE MATERIALIDADE E IDENTIDADE DE ATIVO"
-      subtitle="Botão 1: Reservatório, Vedação e Insumo · Botão 2: Correlação de Frota e Vínculo"
+      title="MÓDULOS 04-A / 04-B · MATERIALIDADE TERRITORIAL E CONTINGÊNCIA"
+      subtitle="Unidade visual pericial com gatilhos Verde/Vermelho para apresentação TCE"
       blueprintCustom={blueprint}
       blueprintBelow={step === "run" ? belowMap : undefined}
       footerSlot={footerSlot}
