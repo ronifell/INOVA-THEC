@@ -438,6 +438,42 @@ body::after {
   padding-bottom: min(14px, 1.6vmin);
 }
 
+/* Milestone 2 detail: caixa principal (néon + título) — fundo totalmente transparente; só contorno + glow */
+.milestone-detail-neon[data-milestone="2"][data-audit-variant="frota"] {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(57, 255, 20, 0.72);
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(57, 255, 20, 0.32),
+    0 0 20px rgba(57, 255, 20, 0.42),
+    0 0 48px rgba(0, 255, 90, 0.18),
+    0 0 88px rgba(57, 255, 20, 0.08);
+}
+
+.milestone-detail-neon[data-milestone="2"][data-audit-variant="patrimonio"] {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(56, 189, 248, 0.68);
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(56, 189, 248, 0.28),
+    0 0 20px rgba(56, 189, 248, 0.4),
+    0 0 52px rgba(56, 189, 248, 0.14),
+    0 0 88px rgba(125, 211, 252, 0.08);
+}
+
+/* Título / chrome do detalhe M2: sem preenchimento de fundo forçado pelo tema néon */
+.milestone-detail-neon[data-milestone="2"] header.milestone-m2-detail-header {
+  background: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
 .milestone-detail-neon[data-audit-variant="frota"] :is(div, section, article, aside)[class*="rounded"]:not(button),
 .milestone-detail-neon[data-audit-variant="frota"] .glass {
   background-color: rgba(0, 14, 6, 0.58) !important;

@@ -323,7 +323,7 @@ export default function Milestone2Client() {
             data-milestone="2"
           >
             <AuditCommandFrame variant={activeMenu}>
-              <header className="shrink-0 border-b border-white/[0.06] px-2 pb-3 pt-1 sm:px-4 sm:pb-4 sm:pt-2">
+              <header className="milestone-m2-detail-header shrink-0 border-b border-white/[0.08] bg-transparent px-2 pb-3 pt-1 sm:px-4 sm:pb-4 sm:pt-2">
                 <div className="flex w-full justify-start">
                   <button
                     type="button"

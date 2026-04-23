@@ -36,54 +36,187 @@ export default function TechnicalBlueprintPanel({
       return customBlueprint;
     }
     if (variant === "frota") {
+      const S = `rgba(${strokeRgb}`;
       return (
         <svg
-          viewBox="0 0 320 240"
-          className="h-full w-full max-h-[min(52vh,420px)]"
+          viewBox="0 0 420 280"
+          className="h-full w-full max-h-[min(54vh,440px)]"
           aria-hidden
         >
           <defs>
-            <linearGradient id="bp-fuel-grid" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor={`rgba(${strokeRgb},0.1)`} />
-              <stop offset="100%" stopColor={`rgba(${strokeRgb},0.22)`} />
+            <pattern id="bp-frota-eng-grid" width="14" height="14" patternUnits="userSpaceOnUse">
+              <path
+                d="M 14 0 L 0 0 0 14"
+                fill="none"
+                stroke={`${S},0.11)`}
+                strokeWidth="0.45"
+              />
+            </pattern>
+            <linearGradient id="bp-frota-tank" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor={`${S},0.38)`} />
+              <stop offset="35%" stopColor={`${S},0.06)`} />
+              <stop offset="70%" stopColor={`${S},0.12)`} />
+              <stop offset="100%" stopColor={`${S},0.34)`} />
             </linearGradient>
+            <linearGradient id="bp-frota-cab" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor={`${S},0.2)`} />
+              <stop offset="100%" stopColor={`${S},0.45)`} />
+            </linearGradient>
+            <linearGradient id="bp-frota-road" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor={`${S},0.25)`} />
+              <stop offset="100%" stopColor={`${S},0.06)`} />
+            </linearGradient>
+            <filter id="bp-frota-glow" x="-8%" y="-8%" width="116%" height="116%">
+              <feGaussianBlur stdDeviation="1.2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
+
+          <rect x="8" y="8" width="404" height="264" rx="14" fill="url(#bp-frota-eng-grid)" opacity="0.9" />
           <rect
-            x="24"
-            y="40"
-            width="272"
-            height="160"
-            rx="12"
-            fill="url(#bp-fuel-grid)"
-            stroke={`rgba(${strokeRgb},0.58)`}
-            strokeWidth="1.2"
-          />
-          {/* Caminhão esquemático */}
-          <rect
-            x="52"
-            y="88"
-            width="168"
-            height="64"
-            rx="6"
+            x="8"
+            y="8"
+            width="404"
+            height="264"
+            rx="14"
             fill="none"
-            stroke={`rgba(${strokeRgb},0.78)`}
-            strokeWidth="2"
+            stroke={`${S},0.45)`}
+            strokeWidth="1.15"
           />
-          <rect
-            x="214"
-            y="96"
-            width="56"
-            height="48"
-            rx="8"
-            fill="none"
-            stroke={`rgba(${strokeRgb},0.65)`}
-            strokeWidth="1.5"
-          />
-          <circle cx="78" cy="168" r="14" fill="none" stroke={`rgba(${strokeRgb},0.72)`} strokeWidth="2" />
-          <circle cx="162" cy="168" r="14" fill="none" stroke={`rgba(${strokeRgb},0.72)`} strokeWidth="2" />
-          <line x1="110" y1="112" x2="140" y2="112" stroke={`rgba(${strokeRgb},0.5)`} strokeWidth="1" strokeDasharray="4 6" />
-          <text x="160" y="62" textAnchor="middle" fill={`rgba(${strokeRgb},0.75)`} fontSize="11" fontFamily="ui-monospace">
+
+          <g filter="url(#bp-frota-glow)">
+            {/* Chassis */}
+            <path
+              d="M 52 198 L 368 198 L 368 206 L 52 206 Z"
+              fill={`${S},0.12)`}
+              stroke={`${S},0.55)`}
+              strokeWidth="1.4"
+            />
+            <path
+              d="M 58 198 L 58 188 M 118 198 L 118 188 M 198 198 L 198 188 M 278 198 L 278 188 M 338 198 L 338 188"
+              stroke={`${S},0.35)`}
+              strokeWidth="1"
+            />
+
+            {/* Cabine */}
+            <path
+              d="M 56 188 L 56 128 L 118 118 L 132 118 L 132 188 Z"
+              fill="url(#bp-frota-cab)"
+              stroke={`${S},0.72)`}
+              strokeWidth="1.6"
+            />
+            <path d="M 66 128 L 122 122" stroke={`${S},0.35)`} strokeWidth="0.9" />
+            <rect x="68" y="134" width="38" height="28" rx="3" fill="none" stroke={`${S},0.5)`} strokeWidth="1" />
+            <path d="M 108 138 L 124 136" stroke={`${S},0.4)`} strokeWidth="1" />
+            <rect x="72" y="168" width="44" height="18" rx="2" fill="none" stroke={`${S},0.42)`} strokeWidth="0.9" />
+
+            {/* Tanque cilíndrico + domos */}
+            <ellipse cx="228" cy="152" rx="92" ry="38" fill="url(#bp-frota-tank)" stroke={`${S},0.65)`} strokeWidth="1.5" />
+            <ellipse cx="142" cy="152" rx="10" ry="36" fill="none" stroke={`${S},0.55)`} strokeWidth="1.2" />
+            <ellipse cx="314" cy="152" rx="10" ry="36" fill="none" stroke={`${S},0.55)`} strokeWidth="1.2" />
+            <path
+              d="M 150 124 L 306 124 M 150 180 L 306 180"
+              stroke={`${S},0.4)`}
+              strokeWidth="0.85"
+              strokeDasharray="5 4"
+            />
+            {/* Anéis de reforço */}
+            <ellipse cx="188" cy="152" rx="4" ry="34" fill="none" stroke={`${S},0.38)`} strokeWidth="0.8" />
+            <ellipse cx="228" cy="152" rx="4" ry="34" fill="none" stroke={`${S},0.38)`} strokeWidth="0.8" />
+            <ellipse cx="268" cy="152" rx="4" ry="34" fill="none" stroke={`${S},0.38)`} strokeWidth="0.8" />
+            {/* Escotilha / bocal */}
+            <rect x="212" y="108" width="36" height="14" rx="3" fill={`${S},0.15)`} stroke={`${S},0.55)`} strokeWidth="1" />
+            <circle cx="230" cy="115" r="4" fill="none" stroke={`${S},0.5)`} strokeWidth="0.9" />
+            {/* Mangueira / braço */}
+            <path
+              d="M 318 140 Q 352 96 378 108 Q 392 114 388 132"
+              fill="none"
+              stroke={`${S},0.5)`}
+              strokeWidth="1.3"
+              strokeLinecap="round"
+            />
+            <circle cx="386" cy="130" r="6" fill={`${S},0.1)`} stroke={`${S},0.55)`} strokeWidth="1" />
+
+            {/* Rodas */}
+            {[
+              [92, 206],
+              [152, 206],
+              [218, 206],
+              [288, 206],
+              [338, 206],
+            ].map(([cx, cy], i) => (
+              <g key={`w-${i}`}>
+                <circle cx={cx} cy={cy} r="19" fill={`${S},0.08)`} stroke={`${S},0.55)`} strokeWidth="1.4" />
+                <circle cx={cx} cy={cy} r="11" fill="none" stroke={`${S},0.35)`} strokeWidth="0.9" />
+                <circle cx={cx} cy={cy} r="4" fill={`${S},0.2)`} stroke={`${S},0.45)`} strokeWidth="0.6" />
+              </g>
+            ))}
+
+            {/* Placa (traseira) */}
+            <rect x="322" y="168" width="72" height="26" rx="4" fill={`${S},0.12)`} stroke={`${S},0.62)`} strokeWidth="1.2" />
+            <text
+              x="358"
+              y="185"
+              textAnchor="middle"
+              fill={`${S},0.85)`}
+              fontSize="11"
+              fontFamily="ui-monospace"
+              fontWeight="600"
+              letterSpacing="0.14em"
+            >
+              ABC-1D34
+            </text>
+            <path d="M 358 158 L 358 148" stroke={`${S},0.45)`} strokeWidth="0.9" />
+            <path d="M 340 148 L 376 148" stroke={`${S},0.45)`} strokeWidth="0.9" />
+
+            {/* Vetor GPS — arco tracejado */}
+            <path
+              d="M 96 72 Q 210 28 340 56"
+              fill="none"
+              stroke={`${S},0.45)`}
+              strokeWidth="1.1"
+              strokeDasharray="6 5"
+              strokeLinecap="round"
+            />
+            <circle cx="340" cy="56" r="5" fill={`${S},0.15)`} stroke={`${S},0.6)`} strokeWidth="1" />
+            <path d="M 336 52 L 344 60 M 344 52 L 336 60" stroke={`${S},0.55)`} strokeWidth="0.8" />
+
+            {/* Cotas */}
+            <path d="M 140 220 L 316 220" stroke={`${S},0.35)`} strokeWidth="0.75" />
+            <path d="M 140 216 L 140 224 M 316 216 L 316 224" stroke={`${S},0.35)`} strokeWidth="0.75" />
+            <text x="228" y="234" textAnchor="middle" fill={`${S},0.5)`} fontSize="9" fontFamily="ui-monospace">
+              eixo tanque · 1760 mm (não escala)
+            </text>
+
+            {/* Pista */}
+            <rect x="24" y="214" width="372" height="22" rx="4" fill="url(#bp-frota-road)" stroke={`${S},0.25)`} strokeWidth="0.8" />
+          </g>
+
+          <text
+            x="210"
+            y="34"
+            textAnchor="middle"
+            fill={`${S},0.88)`}
+            fontSize="12"
+            fontFamily="ui-monospace"
+            fontWeight="600"
+            letterSpacing="0.12em"
+          >
             VETOR · TANQUE · PLACA
+          </text>
+          <text
+            x="210"
+            y="50"
+            textAnchor="middle"
+            fill={`${S},0.45)`}
+            fontSize="8.5"
+            fontFamily="ui-monospace"
+            letterSpacing="0.18em"
+          >
+            AP-04 · VISTA LATERAL ESQUEMÁTICA · AUDITORIA DE COMBUSTÍVEL
           </text>
         </svg>
       );
