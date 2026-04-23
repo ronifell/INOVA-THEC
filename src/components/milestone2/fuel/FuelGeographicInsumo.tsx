@@ -18,6 +18,7 @@ import {
 type Protocol = "4a" | "4b";
 type Step = "pick" | "run";
 type Result = "idle" | "scanning" | "green" | "yellow" | "red";
+type MaterialKey = "seal" | "plate" | "odometer" | "pump";
 
 type Tone = "ok" | "bad" | "warn";
 
@@ -71,19 +72,93 @@ export default function FuelGeographicInsumo() {
   const [result, setResult] = useState<Result>("idle");
   const [hash, setHash] = useState<string | null>(null);
   const [gold, setGold] = useState(false);
-  const [pillars4b, setPillars4b] = useState({
-    ocr: false,
-    recipient: false,
-    gps: false,
-    volume: false,
+  const [materialEvidence, setMaterialEvidence] = useState<Record<MaterialKey, boolean>>({
+    seal: false,
+    plate: false,
+    odometer: false,
+    pump: false,
   });
+  const [materialLabels, setMaterialLabels] = useState<Record<MaterialKey, string | null>>({
+    seal: null,
+    plate: null,
+    odometer: null,
+    pump: null,
+  });
+  const [materialAlert, setMaterialAlert] = useState<string | null>(null);
 
   const refBomba = useRef<HTMLInputElement>(null);
-  const refRecipient = useRef<HTMLInputElement>(null);
+  const refSeal = useRef<HTMLInputElement>(null);
+  const refPlate = useRef<HTMLInputElement>(null);
+  const refOdometer = useRef<HTMLInputElement>(null);
   const [labelBomba, setLabelBomba] = useState<string | null>(null);
-  const [labelRecipient, setLabelRecipient] = useState<string | null>(null);
+  const [assetValidated, setAssetValidated] = useState(false);
+  const [assetDenied, setAssetDenied] = useState(false);
 
   const scanning = result === "scanning";
+  const allMaterialValidated = Object.values(materialEvidence).every(Boolean);
+
+  const assessImageQuality = useCallback(async (file: File) => {
+    const src = URL.createObjectURL(file);
+    try {
+      const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const i = new Image();
+        i.onload = () => resolve(i);
+        i.onerror = () => reject(new Error("Falha ao abrir imagem"));
+        i.src = src;
+      });
+      const canvas = document.createElement("canvas");
+      const width = 140;
+      const height = Math.max(80, Math.round((img.height / img.width) * width));
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return false;
+      ctx.drawImage(img, 0, 0, width, height);
+      const pixels = ctx.getImageData(0, 0, width, height).data;
+      const gray: number[] = [];
+      let sum = 0;
+      for (let i = 0; i < pixels.length; i += 4) {
+        const g = 0.2126 * pixels[i] + 0.7152 * pixels[i + 1] + 0.0722 * pixels[i + 2];
+        gray.push(g);
+        sum += g;
+      }
+      const mean = sum / gray.length;
+      let edgeEnergy = 0;
+      let edgeCount = 0;
+      for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
+          const idx = y * width + x;
+          const lap =
+            4 * gray[idx] - gray[idx - 1] - gray[idx + 1] - gray[idx - width] - gray[idx + width];
+          edgeEnergy += lap * lap;
+          edgeCount += 1;
+        }
+      }
+      const sharpness = edgeEnergy / Math.max(1, edgeCount);
+      return mean > 45 && sharpness > 120;
+    } catch {
+      return false;
+    } finally {
+      URL.revokeObjectURL(src);
+    }
+  }, []);
+
+  const captureMaterialEvidence = useCallback(
+    async (key: MaterialKey, file: File | null | undefined) => {
+      if (!file) return;
+      const approved = await assessImageQuality(file);
+      if (!approved) {
+        setMaterialAlert("Imagem sem nitidez. Repita a captura para validar a Materialidade.");
+        playAlertFail();
+        return;
+      }
+      setMaterialAlert(null);
+      setMaterialEvidence((prev) => ({ ...prev, [key]: true }));
+      setMaterialLabels((prev) => ({ ...prev, [key]: file.name }));
+      playMetallicBeep();
+    },
+    [assessImageQuality]
+  );
 
   const lines4aOk = useMemo(
     () => [
@@ -129,56 +204,45 @@ export default function FuelGeographicInsumo() {
     []
   );
 
-  const run4a = useCallback(
-    async (outcome: Result) => {
-      if (outcome !== "green" && outcome !== "red") return;
-      setResult("scanning");
-      setGold(false);
-      setHash(null);
-      playEnergyCharge();
-      await new Promise((r) => setTimeout(r, 700));
-      playMetallicBeep();
-      await new Promise((r) => setTimeout(r, 350));
-      setResult(outcome);
-      if (outcome === "green") {
-        setHash(await generateSHA256("04A-OK"));
-        playSuccessChime();
-        setGold(true);
-      } else {
-        setHash("ee1111" + generateMockHash().slice(6));
-        playAlertFail();
-      }
-    },
-    []
-  );
+  const run4a = useCallback(async () => {
+    if (!allMaterialValidated) return;
+    setResult("scanning");
+    setGold(false);
+    setHash(null);
+    playEnergyCharge();
+    await new Promise((r) => setTimeout(r, 700));
+    playMetallicBeep();
+    await new Promise((r) => setTimeout(r, 350));
+    setResult("green");
+    setHash(await generateSHA256("04A-MATERIALIDADE-OK"));
+    playSuccessChime();
+    setGold(true);
+  }, [allMaterialValidated]);
 
   const run4b = useCallback(
     async (outcome: Result) => {
       setResult("scanning");
       setGold(false);
       setHash(null);
-      setPillars4b({
-        ocr: false,
-        recipient: false,
-        gps: false,
-        volume: false,
-      });
+      setAssetValidated(false);
+      setAssetDenied(false);
       playEnergyCharge();
       await new Promise((r) => setTimeout(r, 800));
       playMetallicBeep();
       await new Promise((r) => setTimeout(r, 400));
 
       if (outcome === "green") {
-        setPillars4b({ ocr: true, recipient: true, gps: true, volume: true });
-        setHash(await generateSHA256("04B-OK"));
+        setHash(await generateSHA256("04B-IDENTIDADE-OK"));
+        setAssetValidated(true);
         playSuccessChime();
         setResult("green");
         setGold(true);
       } else if (outcome === "yellow") {
         setResult("yellow");
-        setHash(await generateSHA256("04B-WARN"));
+        setHash(await generateSHA256("04B-SCANNING-WARN"));
       } else {
         setResult("red");
+        setAssetDenied(true);
         setHash("bb0000" + generateMockHash().slice(6));
         playAlertFail();
       }
@@ -188,15 +252,16 @@ export default function FuelGeographicInsumo() {
 
   const blueprint = useMemo(() => {
     if (protocol === "4a") {
-      const ok = result === "green";
       return (
         <TruckBlueprintHD
           mode={{
-            kind: "geo",
-            protocolVariant: "4a",
-            nozzleLit: ok,
-            outlineRedPulse: result === "red",
-            bloodRedPulse: result === "red",
+            kind: "materialidade",
+            litZones: [
+              materialEvidence.seal,
+              materialEvidence.plate,
+              materialEvidence.odometer,
+              materialEvidence.pump,
+            ],
           }}
         />
       );
@@ -205,16 +270,9 @@ export default function FuelGeographicInsumo() {
       return (
         <TruckBlueprintHD
           mode={{
-            kind: "geo",
-            protocolVariant: "4b",
-            nozzleLit: result === "scanning",
-            nozzleMuted4b: result === "green",
-            gallonLit: result === "scanning" || result === "idle",
-            gallonLettuce: result === "green",
-            gallonYellowShake: result === "yellow",
-            outlineRedPulse: result === "red",
-            shortCircuit: result === "red",
-            bloodRedPulse: result === "red",
+            kind: "asset",
+            positive: assetValidated,
+            plateErrorPulse: assetDenied || result === "red",
           }}
         />
       );
@@ -227,7 +285,7 @@ export default function FuelGeographicInsumo() {
         }}
       />
     );
-  }, [protocol, result]);
+  }, [assetDenied, assetValidated, materialEvidence, protocol, result]);
 
   const mapVariant =
     result === "green" ? "success" : result === "red" ? "error" : "idle";
@@ -254,20 +312,20 @@ export default function FuelGeographicInsumo() {
   const footerSlot = (
     <div className="space-y-2">
       <p className="text-center text-[9px] font-mono text-white/35">
-        Botão 5 (Nota Fiscal) libera apenas com estado verde integral.
+        Botão de Fé Pública libera apenas com vetor 100% validado.
       </p>
       <button
         type="button"
-        disabled={result !== "green" || !gold}
+        disabled={result !== "green" || !gold || !allMaterialValidated}
         className={`w-full rounded-xl border-2 px-4 py-4 text-[11px] font-mono uppercase tracking-[0.14em] sm:py-5 sm:text-xs ${
-          result === "green" && gold
+          result === "green" && gold && allMaterialValidated
             ? "master-faith-metallic border-amber-400/45"
             : "cursor-not-allowed border-white/10 bg-zinc-900 text-zinc-500"
         }`}
       >
-        {result === "green" && gold
-          ? "Avançar — Botão 5 · Nota Fiscal (liberado)"
-          : "Botão 5 · Nota Fiscal (bloqueado)"}
+        {result === "green" && gold && allMaterialValidated
+          ? "Fé Pública Pericial (liberado)"
+          : "Fé Pública Pericial (bloqueado)"}
       </button>
     </div>
   );
@@ -284,8 +342,7 @@ export default function FuelGeographicInsumo() {
   const pickScreen = (
     <div className="mx-auto w-full max-w-3xl space-y-6 px-1">
       <p className="text-center text-xs leading-relaxed text-white/55">
-        Escolha o protocolo de auditoria física. Cada lastro tem regras distintas de captura e
-        validação.
+        Escolha o protocolo técnico. Cada botão aplica travas de materialidade auditável.
       </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <button
@@ -296,6 +353,9 @@ export default function FuelGeographicInsumo() {
             setResult("idle");
             setGold(false);
             setHash(null);
+            setMaterialAlert(null);
+            setMaterialEvidence({ seal: false, plate: false, odometer: false, pump: false });
+            setMaterialLabels({ seal: null, plate: null, odometer: null, pump: null });
           }}
           className="group rounded-2xl border border-emerald-500/35 bg-gradient-to-br from-emerald-950/80 to-slate-950/90 p-5 text-left shadow-[0_0_28px_rgba(16,185,129,0.12)] transition hover:border-emerald-400/55"
         >
@@ -303,10 +363,10 @@ export default function FuelGeographicInsumo() {
             Botão 4-A
           </p>
           <p className="mt-2 text-sm font-semibold text-white">
-            Protocolo de abastecimento direto (tanque)
+            Botão 1 · Combustível pericial
           </p>
           <p className="mt-2 text-[11px] leading-snug text-white/45">
-            Ênfase no bocal do veículo e vínculo com posto conveniado (500m).
+            Reservatório, vedação, ativo e insumo com validação em 4 zonas do blueprint.
           </p>
         </button>
         <button
@@ -318,7 +378,8 @@ export default function FuelGeographicInsumo() {
             setGold(false);
             setHash(null);
             setLabelBomba(null);
-            setLabelRecipient(null);
+            setAssetDenied(false);
+            setAssetValidated(false);
           }}
           className="group rounded-2xl border border-teal-500/40 bg-gradient-to-br from-teal-950/80 to-slate-950/90 p-5 text-left shadow-[0_0_28px_rgba(45,212,191,0.14)] transition hover:border-teal-400/55"
         >
@@ -326,10 +387,10 @@ export default function FuelGeographicInsumo() {
             Botão 4-B
           </p>
           <p className="mt-2 text-sm font-semibold text-white">
-            Protocolo de abastecimento em contingência (galão)
+            Botão 2 · Identificação de ativo
           </p>
           <p className="mt-2 text-[11px] leading-snug text-white/45">
-            Captura em tempo real, sem galeria — triangulação pericial obrigatória.
+            Correlação de frota e vínculo contratual com scanner técnico.
           </p>
         </button>
       </div>
@@ -343,7 +404,7 @@ export default function FuelGeographicInsumo() {
       <div className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
           <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300/80">
-            4-A · Abastecimento direto (tanque)
+            PROTOCOLO DE MATERIALIDADE PERICIAL: Reservatório, Vedação e Insumo
           </span>
           <button
             type="button"
@@ -362,47 +423,95 @@ export default function FuelGeographicInsumo() {
 
         <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-3">
-            <div
-              className={`relative overflow-hidden rounded-xl border border-white/12 bg-gradient-to-br from-slate-950 to-slate-900 ${
-                scanning ? "ring-2 ring-cyan-400/50" : ""
-              }`}
-            >
-              <div className="flex aspect-[4/3] flex-col items-center justify-center gap-2">
-                <span className="text-4xl">⛽</span>
-                <p className="px-4 text-center text-[11px] text-white/55">
-                  Visor da bomba · litragem e valor (captura ao vivo)
-                </p>
-              </div>
-            </div>
+            <input
+              ref={refSeal}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="sr-only"
+              onChange={(e) => captureMaterialEvidence("seal", e.target.files?.[0])}
+            />
+            <input
+              ref={refPlate}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="sr-only"
+              onChange={(e) => captureMaterialEvidence("plate", e.target.files?.[0])}
+            />
+            <input
+              ref={refOdometer}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="sr-only"
+              onChange={(e) => captureMaterialEvidence("odometer", e.target.files?.[0])}
+            />
+            <input
+              ref={refBomba}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="sr-only"
+              onChange={(e) => captureMaterialEvidence("pump", e.target.files?.[0])}
+            />
             <button
               type="button"
-              onClick={() => run4a("green")}
-              disabled={scanning}
-              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-500/40 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white"
-              style={{ background: "#059669" }}
+              onClick={() => refSeal.current?.click()}
+              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-400/60 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(16,185,129,0.35)]"
             >
-              Validar protocolo 4-A (demonstração verde)
+              Evidência de Vedação (Lacre) {materialEvidence.seal ? "• VALIDADO" : ""}
             </button>
             <button
               type="button"
-              onClick={() => run4a("red")}
-              disabled={scanning}
-              className="w-full rounded-xl border border-red-500/40 bg-red-950/30 py-2.5 text-[11px] font-mono uppercase text-red-200"
+              onClick={() => refPlate.current?.click()}
+              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-400/60 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(16,185,129,0.35)]"
             >
-              Simular glosa (GPS / cadeia)
+              Identificação de Ativo (Placa) {materialEvidence.plate ? "• VALIDADO" : ""}
+            </button>
+            <button
+              type="button"
+              onClick={() => refOdometer.current?.click()}
+              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-400/60 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(16,185,129,0.35)]"
+            >
+              Métrica de Desempenho (Hodômetro) {materialEvidence.odometer ? "• VALIDADO" : ""}
+            </button>
+            <button
+              type="button"
+              onClick={() => refBomba.current?.click()}
+              className="fuel-neon-action-btn w-full rounded-xl border border-emerald-400/60 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_24px_rgba(16,185,129,0.35)]"
+            >
+              Validação de Insumo (Bomba) {materialEvidence.pump ? "• VALIDADO" : ""}
+            </button>
+            <button
+              type="button"
+              onClick={run4a}
+              disabled={!allMaterialValidated || scanning}
+              className="w-full rounded-xl border border-cyan-500/45 bg-cyan-900/40 py-3 text-[11px] font-mono uppercase tracking-wider text-cyan-100 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Consolidar validação pericial
             </button>
           </div>
           <div>
             {result === "idle" && (
               <p className="text-xs text-white/45">
-                Painel aguardando validação do perímetro e do bocal.
+                O vetor técnico acende por partes conforme cada evidência validada.
               </p>
+            )}
+            {materialAlert && (
+              <AuditLines lines={[`> ${materialAlert}`]} active tone="warn" />
             )}
             {result === "green" && (
               <AuditLines lines={lines4aOk} active tone="ok" />
             )}
-            {result === "red" && (
-              <AuditLines lines={lines4aRed} active tone="bad" />
+            {!materialAlert && !allMaterialValidated && (
+              <div className="mt-2 rounded-xl border border-white/10 bg-black/35 p-3 font-mono text-[10px] text-white/70">
+                <p>CAPTURAS:</p>
+                <p>VEDAÇÃO: {materialLabels.seal ?? "pendente"}</p>
+                <p>PLACA: {materialLabels.plate ?? "pendente"}</p>
+                <p>HODÔMETRO: {materialLabels.odometer ?? "pendente"}</p>
+                <p>BOMBA: {materialLabels.pump ?? "pendente"}</p>
+              </div>
             )}
           </div>
         </div>
@@ -411,7 +520,7 @@ export default function FuelGeographicInsumo() {
       <div className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
           <span className="text-[10px] font-mono uppercase tracking-wider text-teal-300/85">
-            4-B · Contingência (galão) · triangulação pericial
+            PROTOCOLO DE IDENTIFICAÇÃO DE ATIVO: Correlação de Frota e Vínculo Contratual
           </span>
           <button
             type="button"
@@ -428,19 +537,18 @@ export default function FuelGeographicInsumo() {
           </button>
         </div>
 
-        <div className="rounded-xl border border-amber-500/25 bg-amber-950/20 px-3 py-2 text-[10px] leading-snug text-amber-100/90">
-          Sem acesso à galeria: use apenas captura em tempo real (câmera). Os pilares OCR, IA, GPS
-          e volumetria são conferidos na validação.
+        <div className="rounded-xl border border-emerald-500/25 bg-emerald-950/20 px-3 py-2 text-[10px] leading-snug text-emerald-100/90">
+          Scanner biométrico ativo: linha esmeralda com glow e lock de leitura na placa.
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
             <div className="rounded-xl border border-white/10 bg-black/30 p-3">
               <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-400/90">
-                FOTO_BOMBA_VALOR
+                CÂMERA DE IDENTIFICAÇÃO · PLACA
               </p>
               <p className="mt-1 text-[11px] text-white/55">
-                Visor da bomba — litragem e preço unitário.
+                Captura em tempo real da placa para OCR e vínculo contratual.
               </p>
               <input
                 ref={refBomba}
@@ -453,41 +561,33 @@ export default function FuelGeographicInsumo() {
                   setLabelBomba(f ? f.name : null);
                 }}
               />
+              <div className="relative mt-3 overflow-hidden rounded-lg border border-emerald-500/40 bg-[#03160b] p-3">
+                <motion.div
+                  className={`pointer-events-none absolute left-2 right-2 h-[2px] ${
+                    assetDenied ? "bg-red-500" : "bg-[#00FF41]"
+                  }`}
+                  style={{
+                    boxShadow: assetDenied
+                      ? "0 0 10px rgba(239,68,68,0.85)"
+                      : "0 0 12px rgba(0,255,65,0.9)",
+                  }}
+                  animate={{ y: assetValidated ? 26 : [0, 52, 0], opacity: [0.9, 1, 0.9] }}
+                  transition={{
+                    duration: assetValidated ? 0.5 : 2.2,
+                    repeat: assetValidated ? 0 : Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+                <p className="text-[10px] font-mono text-emerald-100/80">
+                  {labelBomba ? `ARQUIVO: ${labelBomba}` : "[SCANNING...]"}
+                </p>
+              </div>
               <button
                 type="button"
                 onClick={() => refBomba.current?.click()}
                 className="mt-3 w-full rounded-lg border border-emerald-500/40 bg-emerald-500/10 py-2 text-xs font-mono text-emerald-100"
               >
-                {labelBomba ? `Capturado: ${labelBomba.slice(0, 28)}` : "Abrir câmera — captura ao vivo"}
-              </button>
-            </div>
-
-            <div className="rounded-xl border border-white/10 bg-black/30 p-3">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-cyan-400/90">
-                FOTO_RECIPIENTE_CARGA
-              </p>
-              <p className="mt-1 text-[11px] text-white/55">
-                Bico da bomba inserido no galão / reservatório portátil.
-              </p>
-              <input
-                ref={refRecipient}
-                type="file"
-                accept="image/*"
-                capture="environment"
-                className="sr-only"
-                onChange={(e) => {
-                  const f = e.target.files?.[0];
-                  setLabelRecipient(f ? f.name : null);
-                }}
-              />
-              <button
-                type="button"
-                onClick={() => refRecipient.current?.click()}
-                className="mt-3 w-full rounded-lg border border-cyan-500/40 bg-cyan-500/10 py-2 text-xs font-mono text-cyan-100"
-              >
-                {labelRecipient
-                  ? `Capturado: ${labelRecipient.slice(0, 28)}`
-                  : "Abrir câmera — captura ao vivo"}
+                {labelBomba ? "Recapturar placa" : "Abrir câmera — captura ao vivo"}
               </button>
             </div>
 
@@ -499,7 +599,7 @@ export default function FuelGeographicInsumo() {
               transition={{ duration: 2.4, repeat: Infinity }}
               className="w-full rounded-xl border-2 border-lime-400/45 bg-gradient-to-r from-lime-900/40 to-emerald-900/50 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_22px_rgba(163,230,53,0.25)]"
             >
-              Validar triangulação pericial (demonstração verde)
+              Validar identidade cadastrada
             </motion.button>
 
             <div className="flex flex-wrap gap-2">
@@ -509,7 +609,7 @@ export default function FuelGeographicInsumo() {
                 disabled={scanning}
                 className="rounded-lg border border-amber-500/45 bg-amber-950/40 px-3 py-2 text-[10px] font-mono uppercase text-amber-100"
               >
-                Simular amarelo (ilegível)
+                Simular lock parcial
               </button>
               <button
                 type="button"
@@ -517,42 +617,24 @@ export default function FuelGeographicInsumo() {
                 disabled={scanning}
                 className="rounded-lg border border-red-500/45 bg-red-950/40 px-3 py-2 text-[10px] font-mono uppercase text-red-200"
               >
-                Simular vermelho (fraude / GPS)
+                Simular placa não cadastrada
               </button>
             </div>
-
-            {protocol === "4b" && (result === "green" || scanning) && (
-              <div className="rounded-xl border border-white/10 bg-white/5 p-3 font-mono text-[10px] text-white/70">
-                <p className="mb-2 text-[9px] uppercase tracking-wider text-white/40">
-                  Os 4 pilares de conferência
-                </p>
-                <ul className="space-y-1">
-                  <li>
-                    PILAR 1 · OCR bomba:{" "}
-                    {scanning ? "…" : pillars4b.ocr ? "OK" : "—"}
-                  </li>
-                  <li>
-                    PILAR 2 · Recipiente (IA):{" "}
-                    {scanning ? "…" : pillars4b.recipient ? "OK" : "—"}
-                  </li>
-                  <li>
-                    PILAR 3 · GPS lock 500m:{" "}
-                    {scanning ? "…" : pillars4b.gps ? "OK" : "—"}
-                  </li>
-                  <li>
-                    PILAR 4 · Volumetria:{" "}
-                    {scanning ? "…" : pillars4b.volume ? "OK" : "—"}
-                  </li>
-                </ul>
-              </div>
-            )}
           </div>
 
           <div className="space-y-3">
             {result === "idle" && (
               <p className="text-xs text-white/45">
-                Painel de semântica V-A-V: aguardando triangulação.
+                Painel de inteligência aguardando leitura de placa.
               </p>
+            )}
+            {(result === "scanning" || result === "green" || result === "yellow" || result === "red") && (
+              <div className="rounded-xl border border-white/10 bg-black/40 px-3 py-3 font-mono text-[11px] leading-relaxed text-emerald-200">
+                <p>[SCANNING...]</p>
+                <p>PLACA DETECTADA: {labelBomba ? "ABC-1234" : "---"}</p>
+                <p>VÍNCULO: SECRETARIA DE SAÚDE - LOTE 01</p>
+                <p>STATUS: {result === "green" ? "ATIVO EM CONFORMIDADE" : result === "red" ? "BLOQUEIO CRÍTICO" : "EM PROCESSAMENTO"}</p>
+              </div>
             )}
             {result === "green" && (
               <AuditLines lines={lines4bOk} active tone="ok" />
@@ -561,7 +643,14 @@ export default function FuelGeographicInsumo() {
               <AuditLines lines={lines4bYellow} active tone="warn" />
             )}
             {result === "red" && (
-              <AuditLines lines={lines4bRed} active tone="bad" />
+              <AuditLines
+                lines={[
+                  ...lines4bRed,
+                  "> BLOQUEIO: VEÍCULO NÃO CADASTRADO / TENTATIVA DE DANO AO ERÁRIO",
+                ]}
+                active
+                tone="bad"
+              />
             )}
           </div>
         </div>
@@ -571,8 +660,8 @@ export default function FuelGeographicInsumo() {
   return (
     <Operational6040Workspace
       variant="frota"
-      title="COMPROVAÇÃO DE MATERIALIDADE E LASTRO DE INSUMO"
-      subtitle="Protocolos 4-A (tanque direto) e 4-B (galão contingência)"
+      title="PROTOCOLOS PERICIAIS DE MATERIALIDADE E IDENTIDADE DE ATIVO"
+      subtitle="Botão 1: Reservatório, Vedação e Insumo · Botão 2: Correlação de Frota e Vínculo"
       blueprintCustom={blueprint}
       blueprintBelow={step === "run" ? belowMap : undefined}
       footerSlot={footerSlot}
@@ -594,7 +683,7 @@ export default function FuelGeographicInsumo() {
             animate={{ scale: 1, opacity: 1 }}
             className="mx-auto mt-4 flex min-h-[5rem] min-w-[5rem] items-center justify-center rounded-full border-2 border-amber-400/85 bg-amber-950/55 px-4 text-center text-[10px] font-bold uppercase leading-tight text-amber-100 shadow-[0_0_40px_rgba(251,191,36,0.45)]"
           >
-            INSUMO RASTREADO
+            IDENTIDADE VALIDADA
           </motion.div>
         )}
         {protocol === "4a" && result === "green" && gold && (
@@ -603,7 +692,7 @@ export default function FuelGeographicInsumo() {
             animate={{ scale: 1, opacity: 1 }}
             className="mx-auto mt-4 rounded-full border-2 border-emerald-400/70 bg-emerald-950/40 px-6 py-3 text-center text-[10px] font-bold uppercase tracking-wide text-emerald-100 shadow-[0_0_32px_rgba(16,185,129,0.35)]"
           >
-            Materialidade confirmada — 4-A
+            Materialidade confirmada
           </motion.div>
         )}
       </AnimatePresence>
@@ -616,7 +705,7 @@ export default function FuelGeographicInsumo() {
             className="pointer-events-none fixed inset-0 z-[90] flex items-center justify-center bg-black/45"
           >
             <div className="max-w-lg -rotate-6 rounded border-2 border-red-600 bg-black px-6 py-3 text-center font-mono text-sm font-bold uppercase tracking-[0.2em] text-red-400 shadow-[0_0_40px_rgba(239,68,68,0.5)]">
-              TRANSAÇÃO BLOQUEADA
+              BLOQUEIO: VEÍCULO NÃO CADASTRADO / TENTATIVA DE DANO AO ERÁRIO
             </div>
           </motion.div>
         )}
