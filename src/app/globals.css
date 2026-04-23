@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --base-bg: #0f172a;
-  --theme-color: #0f172a;
-  --theme-rgb: 15, 23, 42;
+  --base-bg: #000000;
+  --theme-color: #000000;
+  --theme-rgb: 0, 0, 0;
   --foreground: #e2e8f0;
 }
 
@@ -63,9 +63,9 @@ body::before {
   pointer-events: none;
   z-index: -2;
   background:
-    radial-gradient(120% 80% at 50% -10%, rgba(34, 211, 238, 0.16), transparent 60%),
-    radial-gradient(90% 60% at 50% 120%, rgba(16, 185, 129, 0.12), transparent 70%),
-    linear-gradient(180deg, rgba(2, 10, 20, 0.92) 0%, rgba(4, 16, 30, 0.9) 45%, rgba(3, 8, 16, 0.95) 100%);
+    radial-gradient(120% 80% at 50% -10%, rgba(16, 185, 129, 0.08), transparent 60%),
+    radial-gradient(90% 60% at 50% 120%, rgba(16, 185, 129, 0.06), transparent 70%),
+    linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0, 1) 100%);
 }
 
 body::after {
@@ -74,10 +74,10 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.48;
+  opacity: 0.2;
   background-image:
-    linear-gradient(rgba(80, 120, 170, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(80, 120, 170, 0.14) 1px, transparent 1px);
+    linear-gradient(rgba(16, 185, 129, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.14) 1px, transparent 1px);
   background-size: 38px 38px, 38px 38px;
 }
 
