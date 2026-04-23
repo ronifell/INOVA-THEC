@@ -53,6 +53,32 @@ body {
   background: var(--base-bg);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(34, 211, 238, 0.16), transparent 60%),
+    radial-gradient(90% 60% at 50% 120%, rgba(16, 185, 129, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(2, 10, 20, 0.92) 0%, rgba(4, 16, 30, 0.9) 45%, rgba(3, 8, 16, 0.95) 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.48;
+  background-image:
+    linear-gradient(rgba(80, 120, 170, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 120, 170, 0.14) 1px, transparent 1px);
+  background-size: 38px 38px, 38px 38px;
 }
 
 /* ===== PULSE ===== */
@@ -515,6 +541,30 @@ body {
   animation: moduleCardBorderBlink 10s linear infinite;
 }
 
+.module-card-metallic-shell {
+  position: relative;
+}
+
+.module-card-metallic-shell::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(206, 222, 245, 0.35) 0%,
+    rgba(90, 115, 150, 0.22) 22%,
+    rgba(220, 236, 255, 0.35) 45%,
+    rgba(85, 112, 142, 0.24) 66%,
+    rgba(208, 226, 248, 0.34) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(210, 228, 248, 0.18),
+    0 0 18px rgba(100, 130, 170, 0.2);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .module-icon-wave-ring {
   position: absolute;
   left: 50%;
@@ -754,6 +804,17 @@ body {
   min-height: min(8.2vmin, 58px);
   white-space: normal;
   word-break: break-word;
+  border: 1px solid rgba(197, 217, 240, 0.24);
+  background: linear-gradient(
+    155deg,
+    rgba(16, 28, 44, 0.88) 0%,
+    rgba(8, 19, 33, 0.86) 56%,
+    rgba(13, 25, 40, 0.9) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(220, 236, 255, 0.08),
+    0 0 18px rgba(86, 171, 227, 0.14),
+    inset 0 0 16px rgba(120, 204, 255, 0.05);
 }
 
 @media (min-width: 1024px) {
@@ -888,8 +949,18 @@ body {
   padding-inline: min(5%, 4.2vmin);
   padding-block: min(4%, 3.4vmin);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 min(0.75vmin, 8px) min(2.6vmin, 26px) rgba(0, 0, 0, 0.32);
+    0 0 0 1px rgba(209, 226, 245, 0.2),
+    0 0 22px rgba(58, 130, 173, 0.18),
+    inset 0 0 32px rgba(125, 213, 255, 0.06);
+  border: 1px solid rgba(208, 226, 245, 0.28);
+  background: linear-gradient(
+    160deg,
+    rgba(17, 30, 48, 0.82) 0%,
+    rgba(11, 22, 37, 0.8) 52%,
+    rgba(14, 28, 44, 0.86) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* Painel central do Monitor — identidade branca + neon branco */
