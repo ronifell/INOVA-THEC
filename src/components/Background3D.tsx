@@ -3,24 +3,10 @@
 import { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useStore } from "@/store/useStore";
-
 const PARTICLE_COUNT = 200;
-const GRID_SEGMENTS_X = 300;
-const GRID_SEGMENTS_Y = 150;
-
-const mouseNDC = new THREE.Vector2(0, 0);
-
-if (typeof window !== "undefined") {
-  window.addEventListener("mousemove", (e) => {
-    mouseNDC.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mouseNDC.y = -(e.clientY / window.innerHeight) * 2 + 1;
-  });
-}
 
 function SnowFrostParticles() {
   const pointsRef = useRef<THREE.Points>(null);
-  const moduleView = useStore((s) => (s.activeModule != null ? 1 : 0));
 
   const [positions, opacities, seeds, sizeMults] = useMemo(() => {
     const pos = new Float32Array(PARTICLE_COUNT * 3);
@@ -59,10 +45,7 @@ function SnowFrostParticles() {
       depthWrite: false,
       blending: THREE.NormalBlending,
       uniforms: {
-        uAccent: { value: new THREE.Color("#22c55e") },
         uTime: { value: 0 },
-        uMouse: { value: new THREE.Vector2(0, 0) },
-        uModuleView: { value: 0 },
       },
       vertexShader: `
         attribute float aOpacity;
@@ -70,23 +53,11 @@ function SnowFrostParticles() {
         attribute float aSizeMult;
         varying float vOpacity;
         varying float vSeed;
-        varying float vDistToMouse;
         varying float vSizeMult;
         uniform float uTime;
-        uniform vec2 uMouse;
-        uniform float uModuleView;
 
         void main() {
           vec3 pos = position;
-
-          vec2 screenPos = pos.xy / vec2(25.0, 15.0);
-          float dist = distance(screenPos, uMouse);
-          vDistToMouse = dist;
-
-          float repulse = max(0.0, 1.0 - dist / 0.6) * 1.5;
-          float repMul = mix(1.0, 0.42, uModuleView);
-          vec2 dir = normalize(screenPos - uMouse + 0.001);
-          pos.xy += dir * repulse * repMul;
 
           pos.x += sin(uTime * 0.55 + aSeed * 0.01 + pos.y * 0.12) * 0.12;
           pos.z += sin(uTime * 0.3 + pos.x * 0.5) * 0.25;
@@ -95,18 +66,14 @@ function SnowFrostParticles() {
           vSeed = aSeed;
           vSizeMult = aSizeMult;
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          float rep = repulse * repMul;
-          float basePx = (2.8 + rep * 3.2) * (110.0 / -mvPosition.z);
+          float basePx = 2.8 * (110.0 / -mvPosition.z);
           gl_PointSize = clamp(basePx * aSizeMult, 1.2, 220.0);
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
       fragmentShader: `
-        uniform vec3 uAccent;
         uniform float uTime;
-        uniform float uModuleView;
         varying float vOpacity;
-        varying float vDistToMouse;
         varying float vSeed;
         varying float vSizeMult;
 
@@ -199,8 +166,6 @@ function SnowFrostParticles() {
 
           if (shape < 0.035) discard;
 
-          float nearMouse = smoothstep(0.75, 0.0, vDistToMouse);
-
           vec3 greenCore = vec3(0.86, 1.0, 0.9);
           vec3 greenBright = vec3(0.45, 0.96, 0.62);
           vec3 greenMid = vec3(0.2, 0.82, 0.42);
@@ -215,10 +180,6 @@ function SnowFrostParticles() {
           vec3 twinkleHue = mix(vec3(0.24, 0.95, 0.46), vec3(0.82, 1.0, 0.88), pow(clamp(sp, 0.0, 1.0), 0.5));
           col += twinkleHue * sp * shape * sparkW * (0.52 + 0.48 * smoothstep(1.5, 16.0, vSizeMult));
 
-          vec3 acc = uAccent;
-          float accNear = mix(0.45, 0.14, uModuleView);
-          col = mix(col, mix(col, acc * 0.42 + vec3(0.58, 0.72, 0.9), 0.28), nearMouse * accNear);
-
           float a = shape * vOpacity;
           a *= 0.42 + 0.38 * shape;
           a += sp * 0.32 * vOpacity * shape;
@@ -231,16 +192,11 @@ function SnowFrostParticles() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    shaderMaterial.uniforms.uModuleView.value = moduleView;
-  }, [moduleView, shaderMaterial]);
-
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
     const t = clock.getElapsedTime();
 
     shaderMaterial.uniforms.uTime.value = t;
-    shaderMaterial.uniforms.uMouse.value.set(mouseNDC.x, mouseNDC.y);
 
     const posAttr = pointsRef.current.geometry.attributes
       .position as THREE.BufferAttribute;
@@ -288,156 +244,6 @@ function SnowFrostParticles() {
   );
 }
 
-function ReactiveGrid() {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const themeColor = useStore((s) => s.themeColor);
-  const moduleView = useStore((s) => (s.activeModule != null ? 1 : 0));
-
-  const { geometry } = useMemo(() => {
-    const geo = new THREE.PlaneGeometry(
-      60,
-      36,
-      GRID_SEGMENTS_X,
-      GRID_SEGMENTS_Y
-    );
-    return { geometry: geo };
-  }, []);
-
-  const gridMaterial = useMemo(() => {
-    return new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      wireframe: true,
-      uniforms: {
-        uColor: { value: new THREE.Color(themeColor) },
-        uMouse: { value: new THREE.Vector2(0, 0) },
-        uTime: { value: 0 },
-        uModuleView: { value: 0 },
-      },
-      vertexShader: `
-        uniform vec2 uMouse;
-        uniform float uTime;
-        uniform float uModuleView;
-        varying float vElevation;
-
-        void main() {
-          vec3 pos = position;
-
-          float wave = sin(pos.x * 0.3 + uTime * 0.5) * 0.38
-                     + sin(pos.y * 0.4 + uTime * 0.3) * 0.28;
-          pos.z += wave;
-          vElevation = wave;
-
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uColor;
-        uniform float uModuleView;
-        varying float vElevation;
-
-        void main() {
-          float baseAlpha = mix(0.07, 0.055, uModuleView);
-          float elevW = mix(0.05, 0.022, uModuleView);
-          float alpha = baseAlpha + vElevation * elevW;
-
-          vec3 bright = mix(uColor * 1.4, uColor * 1.08, uModuleView);
-
-          /* Painel: malha longe do cursor — tom vidro + leve cor do módulo (mais claro que o cartão). */
-          vec3 dashboardFar = uColor * 0.6;
-          vec3 moduleFar = vec3(0.13, 0.15, 0.19) + uColor * 0.44;
-          moduleFar = min(moduleFar, vec3(0.5));
-          vec3 far = mix(dashboardFar, moduleFar, uModuleView);
-
-          vec3 col = mix(far, bright, 0.12);
-          col += vec3(1.0) * vElevation * mix(0.06, 0.02, uModuleView);
-
-          gl_FragColor = vec4(col, alpha);
-        }
-      `,
-    });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    gridMaterial.uniforms.uColor.value.set(themeColor);
-  }, [themeColor, gridMaterial]);
-
-  useEffect(() => {
-    gridMaterial.uniforms.uModuleView.value = moduleView;
-  }, [moduleView, gridMaterial]);
-
-  useFrame(({ clock }) => {
-    gridMaterial.uniforms.uTime.value = clock.getElapsedTime();
-    gridMaterial.uniforms.uMouse.value.set(mouseNDC.x, mouseNDC.y);
-  });
-
-  return (
-    <mesh
-      ref={meshRef}
-      geometry={geometry}
-      material={gridMaterial}
-      rotation={[-0.6, 0, 0]}
-      position={[0, -4, -5]}
-    />
-  );
-}
-
-function HexagonalAccents() {
-  const themeColor = useStore((s) => s.themeColor);
-  const groupRef = useRef<THREE.Group>(null);
-
-  const hexagons = useMemo(() => {
-    const items: { x: number; y: number; z: number; scale: number; speed: number }[] = [];
-    for (let i = 0; i < 8; i++) {
-      items.push({
-        x: (Math.random() - 0.5) * 30,
-        y: (Math.random() - 0.5) * 18,
-        z: -10 - Math.random() * 5,
-        scale: 0.3 + Math.random() * 0.6,
-        speed: 0.2 + Math.random() * 0.5,
-      });
-    }
-    return items;
-  }, []);
-
-  const hexGeo = useMemo(() => new THREE.CircleGeometry(1, 6), []);
-
-  const color = useMemo(() => new THREE.Color(themeColor), [themeColor]);
-
-  useFrame(({ clock }) => {
-    if (!groupRef.current) return;
-    const t = clock.getElapsedTime();
-    groupRef.current.children.forEach((child, i) => {
-      const hex = hexagons[i];
-      child.position.y = hex.y + Math.sin(t * hex.speed + i) * 0.5;
-      child.rotation.z = t * hex.speed * 0.3;
-      const mat = (child as THREE.Mesh).material as THREE.MeshBasicMaterial;
-      mat.opacity = 0.03 + Math.sin(t * hex.speed + i * 2) * 0.02;
-    });
-  });
-
-  return (
-    <group ref={groupRef}>
-      {hexagons.map((hex, i) => (
-        <mesh
-          key={i}
-          geometry={hexGeo}
-          position={[hex.x, hex.y, hex.z]}
-          scale={hex.scale}
-        >
-          <meshBasicMaterial
-            color={color}
-            transparent
-            opacity={0.04}
-            wireframe
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
 function Scene() {
   const { gl } = useThree();
 
@@ -446,13 +252,7 @@ function Scene() {
     gl.setClearColor(new THREE.Color(0, 0, 0), 0);
   }, [gl]);
 
-  return (
-    <>
-      <SnowFrostParticles />
-      <ReactiveGrid />
-      <HexagonalAccents />
-    </>
-  );
+  return <SnowFrostParticles />;
 }
 
 export default function Background3D() {
