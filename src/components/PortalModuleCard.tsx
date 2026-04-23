@@ -103,6 +103,8 @@ export default function PortalModuleCard({
         className={`module-card-band-wrap relative z-[3] h-full min-h-0 w-full p-[4.4%] transition-all duration-500 module-card-float-${index % 3}`}
         style={{ "--card-rgb": colorRgb, "--band-rgb": colorRgb } as CSSProperties}
       >
+        <span className="card-corner-crease card-corner-crease--left" aria-hidden />
+        <span className="card-corner-crease card-corner-crease--right" aria-hidden />
         <div
           className="module-card-band-inner relative flex h-full min-h-0 w-full flex-col p-[5%] text-[100%]"
           style={
