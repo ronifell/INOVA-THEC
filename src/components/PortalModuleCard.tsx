@@ -109,11 +109,11 @@ export default function PortalModuleCard({
             {
               "--card-rgb": colorRgb,
               background:
-                "linear-gradient(160deg, rgba(14,26,42,0.78) 0%, rgba(10,20,32,0.82) 52%, rgba(12,24,38,0.86) 100%)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              border: `1px solid rgba(${colorRgb}, 0.24)`,
-              boxShadow: `inset 0 0 24px rgba(${colorRgb},0.08), 0 0 22px rgba(${colorRgb},0.15)`,
+                "rgba(6,14,24,0.1)",
+              backdropFilter: "blur(10px) saturate(1.02)",
+              WebkitBackdropFilter: "blur(10px) saturate(1.02)",
+              border: `1px solid rgba(${colorRgb}, 0.34)`,
+              boxShadow: `inset 0 0 12px rgba(${colorRgb},0.1), 0 0 10px rgba(${colorRgb},0.14)`,
             } as CSSProperties
           }
         >
@@ -126,7 +126,7 @@ export default function PortalModuleCard({
         <div
           className="absolute inset-0 rounded-[min(1rem,3vmin)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{
-            boxShadow: `inset 0 0 30px rgba(${colorRgb}, 0.1), 0 0 40px rgba(${colorRgb}, 0.15), 0 0 80px rgba(${colorRgb}, 0.05)`,
+            boxShadow: `inset 0 0 12px rgba(${colorRgb}, 0.09), 0 0 16px rgba(${colorRgb}, 0.09)`,
           }}
         />
 
@@ -153,15 +153,15 @@ export default function PortalModuleCard({
           <div
             className="absolute inset-0 rounded-full transition-all duration-500 z-[1]"
             style={{
-              background: `radial-gradient(circle, rgba(${colorRgb}, 0.22) 0%, transparent 70%)`,
-              boxShadow: `0 0 15px rgba(${colorRgb}, 0.2)`,
+              background: `radial-gradient(circle, rgba(${colorRgb}, 0.16) 0%, transparent 70%)`,
+              boxShadow: `0 0 10px rgba(${colorRgb}, 0.14)`,
             }}
           />
           <div
             className="absolute inset-[5%] rounded-full opacity-0 transition-all duration-500 group-hover:opacity-100 z-[1]"
             style={{
-              background: `radial-gradient(circle, rgba(${colorRgb}, 0.4) 0%, transparent 70%)`,
-              boxShadow: `0 0 30px rgba(${colorRgb}, 0.4)`,
+              background: `radial-gradient(circle, rgba(${colorRgb}, 0.26) 0%, transparent 70%)`,
+              boxShadow: `0 0 20px rgba(${colorRgb}, 0.26)`,
             }}
           />
           <motion.span

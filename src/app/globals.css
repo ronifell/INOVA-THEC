@@ -546,18 +546,13 @@ body::after {
   isolation: isolate;
   /* Equal X/Y chamfer => 45deg corner cut */
   --card-corner-cut: 13%;
-  background: linear-gradient(
-    135deg,
-    rgba(82, 88, 100, 0.82) 0%,
-    rgba(171, 144, 92, 0.64) 18%,
-    rgba(218, 200, 160, 0.56) 34%,
-    rgba(96, 102, 114, 0.8) 56%,
-    rgba(180, 150, 92, 0.62) 78%,
-    rgba(84, 90, 102, 0.84) 100%
-  );
+  background: rgba(95, 101, 114, 0.08);
+  backdrop-filter: blur(10px) saturate(1.03);
+  -webkit-backdrop-filter: blur(10px) saturate(1.03);
   box-shadow:
-    0 0 0 1px rgba(195, 171, 120, 0.35),
-    0 0 18px rgba(182, 148, 90, 0.24);
+    0 0 0 1px rgba(208, 185, 136, 0.42),
+    0 0 18px rgba(182, 148, 90, 0.2),
+    inset 0 0 20px rgba(228, 210, 174, 0.08);
   clip-path: polygon(
     var(--card-corner-cut) 0%,
     calc(100% - var(--card-corner-cut)) 0%,
@@ -575,7 +570,8 @@ body::after {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  border: 1px solid rgba(222, 208, 178, 0.42);
+  border: 1px solid rgba(214, 193, 154, 0.26);
+  background: transparent;
   pointer-events: none;
   z-index: 0;
   clip-path: inherit;
@@ -614,6 +610,15 @@ body::after {
 .module-card-band-inner {
   position: relative;
   clip-path: inherit;
+}
+
+.module-card-band-inner::before {
+  content: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  clip-path: inherit;
+  z-index: 0;
 }
 
 .module-card-border-blink {

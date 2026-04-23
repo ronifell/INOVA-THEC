@@ -464,7 +464,7 @@ function Scene() {
 
   return (
     <>
-      <SnowFrostParticles />
+      {/* Removed snow-like particles to keep card glass visually clean */}
       <ReactiveGrid />
       <HexagonalAccents />
     </>
