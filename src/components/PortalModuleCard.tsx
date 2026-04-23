@@ -103,6 +103,7 @@ export default function PortalModuleCard({
         className={`module-card-band-wrap relative z-[3] h-full min-h-0 w-full p-[4.4%] transition-all duration-500 module-card-float-${index % 3}`}
         style={{ "--card-rgb": colorRgb, "--band-rgb": colorRgb } as CSSProperties}
       >
+        <span className="module-card-band-outline" aria-hidden />
         <span className="card-corner-crease card-corner-crease--left" aria-hidden />
         <span className="card-corner-crease card-corner-crease--right" aria-hidden />
         <div
@@ -114,7 +115,7 @@ export default function PortalModuleCard({
                 "rgba(6,14,24,0.1)",
               backdropFilter: "blur(10px) saturate(1.02)",
               WebkitBackdropFilter: "blur(10px) saturate(1.02)",
-              border: `1px solid rgba(${colorRgb}, 0.34)`,
+              border: "4px solid rgba(0,0,0,0.9)",
               boxShadow: `inset 0 0 12px rgba(${colorRgb},0.1), 0 0 10px rgba(${colorRgb},0.14)`,
             } as CSSProperties
           }
