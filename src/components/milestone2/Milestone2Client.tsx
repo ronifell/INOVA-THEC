@@ -52,7 +52,7 @@ const FROTA_MENU_TILES: MilestoneTile[] = [
   },
   {
     id: "pericia",
-    title: "HODÔMETRO — PROTOCOLO DE MOVIMENTAÇÃO AP-04",
+    title: "PROTOCOLO DE MOVIMENTAÇÃO: Auditoria de Hodômetro e Métrica de Desempenho",
     description:
       "Quilometragem, consumo, economicidade e estados de conformidade.",
     icon: "📟",

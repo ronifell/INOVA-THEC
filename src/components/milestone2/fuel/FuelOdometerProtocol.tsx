@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateSHA256, generateMockHash } from "@/lib/crypto";
 import Operational6040Workspace from "@/components/audit/Operational6040Workspace";
@@ -76,6 +76,54 @@ export default function FuelOdometerProtocol() {
   const [state, setState] = useState<OdoState>("idle");
   const [hash, setHash] = useState<string | null>(null);
   const [locked, setLocked] = useState(false);
+  const [capturedName, setCapturedName] = useState<string | null>(null);
+  const refCapture = useRef<HTMLInputElement>(null);
+
+  const assessImageQuality = useCallback(async (file: File) => {
+    const src = URL.createObjectURL(file);
+    try {
+      const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const i = new Image();
+        i.onload = () => resolve(i);
+        i.onerror = () => reject(new Error("image-load-failed"));
+        i.src = src;
+      });
+      const canvas = document.createElement("canvas");
+      const width = 140;
+      const height = Math.max(80, Math.round((img.height / img.width) * width));
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return false;
+      ctx.drawImage(img, 0, 0, width, height);
+      const pixels = ctx.getImageData(0, 0, width, height).data;
+      const gray: number[] = [];
+      let sum = 0;
+      for (let i = 0; i < pixels.length; i += 4) {
+        const g = 0.2126 * pixels[i] + 0.7152 * pixels[i + 1] + 0.0722 * pixels[i + 2];
+        gray.push(g);
+        sum += g;
+      }
+      const mean = sum / gray.length;
+      let edgeEnergy = 0;
+      let edgeCount = 0;
+      for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
+          const idx = y * width + x;
+          const lap =
+            4 * gray[idx] - gray[idx - 1] - gray[idx + 1] - gray[idx - width] - gray[idx + width];
+          edgeEnergy += lap * lap;
+          edgeCount += 1;
+        }
+      }
+      const sharpness = edgeEnergy / Math.max(1, edgeCount);
+      return mean > 45 && sharpness > 120;
+    } catch {
+      return false;
+    } finally {
+      URL.revokeObjectURL(src);
+    }
+  }, []);
 
   useEffect(() => {
     if (state !== "processing") return;
@@ -99,6 +147,22 @@ export default function FuelOdometerProtocol() {
     setLocked(false);
     setHash(null);
   }, []);
+
+  const handleCapture = useCallback(
+    async (file: File | null | undefined) => {
+      if (!file) return;
+      setCapturedName(file.name);
+      const ok = await assessImageQuality(file);
+      if (!ok) {
+        setState("warn");
+        setLocked(false);
+        setHash(staticWarnHash());
+        return;
+      }
+      startProcessing();
+    },
+    [assessImageQuality, startProcessing]
+  );
 
   const linesSuccess = useMemo(
     () => [
@@ -176,8 +240,8 @@ export default function FuelOdometerProtocol() {
   return (
     <Operational6040Workspace
       variant="frota"
-      title="HODÔMETRO — PROTOCOLO DE MOVIMENTAÇÃO AP-04"
-      subtitle="Quilometragem, consumo e economicidade"
+      title="PROTOCOLO DE MOVIMENTAÇÃO: Auditoria de Hodômetro e Métrica de Desempenho"
+      subtitle="Validação da materialidade da rodagem com trilha pericial AP-04"
       blueprintCustom={blueprint}
       footerSlot={footerSlot}
       goldSealActive={state === "success"}
@@ -197,6 +261,23 @@ export default function FuelOdometerProtocol() {
 
       <div className="space-y-4">
         <div className="flex flex-wrap justify-center gap-2">
+          <input
+            ref={(el) => {
+              refCapture.current = el;
+            }}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="sr-only"
+            onChange={(e) => void handleCapture(e.target.files?.[0])}
+          />
+          <button
+            type="button"
+            onClick={() => refCapture.current?.click()}
+            className="rounded-lg border border-emerald-500/45 bg-emerald-500/10 px-3 py-2 text-[11px] font-mono text-emerald-100"
+          >
+            Capturar hodômetro {capturedName ? `· ${capturedName.slice(0, 16)}` : ""}
+          </button>
           <button
             type="button"
             onClick={startProcessing}
@@ -219,6 +300,7 @@ export default function FuelOdometerProtocol() {
             type="button"
             onClick={() => {
               setState("warn");
+              setLocked(false);
               setHash(staticWarnHash());
             }}
             className="rounded-lg border border-amber-500/35 px-3 py-2 text-[11px] font-mono text-amber-100"
@@ -229,6 +311,7 @@ export default function FuelOdometerProtocol() {
             type="button"
             onClick={() => {
               setState("critical");
+              setLocked(false);
               setHash("aa0000" + generateMockHash().slice(8));
             }}
             className="rounded-lg border border-red-500/40 px-3 py-2 text-[11px] font-mono text-red-200"
@@ -248,6 +331,7 @@ export default function FuelOdometerProtocol() {
               {(state === "processing" || state === "success") && (
                 <motion.div
                   className="pointer-events-none absolute inset-x-[10%] top-[15%] h-[12%] bg-emerald-400/35"
+                  style={{ boxShadow: "0 0 16px rgba(0,255,65,0.75)" }}
                   animate={{ top: state === "processing" ? ["15%", "75%", "15%"] : "40%" }}
                   transition={{ duration: state === "processing" ? 2 : 0.4, repeat: state === "processing" ? Infinity : 0 }}
                 />
@@ -274,9 +358,12 @@ export default function FuelOdometerProtocol() {
 
           <div>
             {state === "processing" && (
-              <p className="animate-pulse font-mono text-sm text-emerald-400">
-                &gt; EXECUTANDO PROTOCOLO AP-04…
-              </p>
+              <TypewriterLines
+                key="p"
+                active
+                lines={["> EXECUTANDO PROTOCOLO AP-04..."]}
+                tone="green"
+              />
             )}
             {state === "success" && (
               <TypewriterLines
@@ -323,6 +410,15 @@ export default function FuelOdometerProtocol() {
               className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border-2 border-amber-400/70 bg-amber-900/30 text-center text-[9px] font-bold uppercase leading-tight text-amber-100 shadow-[0_0_32px_rgba(251,191,36,0.35)]"
             >
               Fé pública
+              {[0, 1, 2].map((i) => (
+                <motion.span
+                  key={i}
+                  className="pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-amber-300"
+                  style={{ left: `${30 + i * 18}%`, top: `${18 + i * 8}%` }}
+                  animate={{ opacity: [0, 1, 0], y: [0, -8, -14] }}
+                  transition={{ duration: 1.3, repeat: Infinity, delay: i * 0.2 }}
+                />
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
