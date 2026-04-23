@@ -172,7 +172,7 @@ export default function AuditPanelPrimary() {
             />
             <span className="audit-system-status-pill__label">Sistema operacional</span>
           </div>
-          <div className="audit-card-inner audit-card-inner--monitor audit-card-inner--monitor-white mx-auto w-full shrink-0 space-y-[min(1.6%,1.4vmin)] rounded-md">
+          <div className="audit-card-inner audit-card-inner--monitor audit-card-inner--monitor-white mx-auto w-full shrink-0 space-y-[min(1.6%,1.4vmin)]">
             <div className="grid w-full grid-cols-[minmax(0,1fr)_min(12ch,14rem)] items-center gap-x-[min(4%,3.5vmin)] md:grid-cols-[minmax(0,1fr)_min(13ch,15rem)]">
               <span className="audit-monitor-metric-label min-w-0 text-left font-mono uppercase leading-snug tracking-wide">
                 Processos auditados

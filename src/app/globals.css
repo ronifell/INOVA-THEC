@@ -939,19 +939,28 @@ body::after {
   min-height: min(8.2vmin, 58px);
   white-space: normal;
   word-break: break-word;
-  border: 1px solid rgba(197, 217, 240, 0.24);
-  background: linear-gradient(
-    155deg,
-    rgba(16, 28, 44, 0.88) 0%,
-    rgba(8, 19, 33, 0.86) 56%,
-    rgba(13, 25, 40, 0.9) 100%
+  --btn-cut: 8%;
+  border: 1.6px solid rgba(0, 0, 0, 0.96);
+  border-radius: 0 !important;
+  clip-path: polygon(
+    var(--btn-cut) 0%,
+    calc(100% - var(--btn-cut)) 0%,
+    100% var(--btn-cut),
+    100% calc(100% - var(--btn-cut)),
+    calc(100% - var(--btn-cut)) 100%,
+    var(--btn-cut) 100%,
+    0% calc(100% - var(--btn-cut)),
+    0% var(--btn-cut)
   );
+  background: rgba(6, 14, 24, 0.06);
+  backdrop-filter: blur(6px) saturate(1.01);
+  -webkit-backdrop-filter: blur(6px) saturate(1.01);
   box-shadow:
-    0 0 0 1px rgba(220, 236, 255, 0.08),
-    0 0 18px rgba(86, 171, 227, 0.14),
-    inset 0 0 16px rgba(120, 204, 255, 0.05),
-    inset 2px 0 14px rgba(var(--band-rgb, 52, 211, 153), 0.42),
-    inset -2px 0 14px rgba(var(--band-rgb, 52, 211, 153), 0.42);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(0, 0, 0, 0.68),
+    0 0 0 2px rgba(var(--band-rgb, 52, 211, 153), 0.22),
+    inset 2px 0 12px rgba(var(--band-rgb, 52, 211, 153), 0.38),
+    inset -2px 0 12px rgba(var(--band-rgb, 52, 211, 153), 0.38);
   position: relative;
   isolation: isolate;
   --band-rgb: 52, 211, 153;
@@ -961,30 +970,22 @@ body::after {
 .fuel-neon-action-btn::before {
   content: "";
   position: absolute;
-  inset: -2px;
-  border-radius: inherit;
+  inset: 0;
   pointer-events: none;
   z-index: -1;
-  background: linear-gradient(
-    140deg,
-    rgba(94, 100, 112, 0.68) 0%,
-    rgba(176, 149, 93, 0.56) 20%,
-    rgba(224, 205, 160, 0.52) 44%,
-    rgba(106, 112, 124, 0.64) 66%,
-    rgba(182, 152, 92, 0.54) 84%,
-    rgba(95, 101, 114, 0.66) 100%
-  );
+  background: rgba(95, 101, 114, 0.34);
+  border: 2px solid rgba(236, 221, 190, 0.84);
   box-shadow:
-    0 0 0 1px rgba(198, 173, 120, 0.35),
-    0 0 12px rgba(184, 151, 93, 0.26);
+    0 0 0 1px rgba(150, 126, 86, 0.54),
+    0 0 12px rgba(210, 182, 126, 0.28);
+  clip-path: inherit;
 }
 
 .audit-action-btn::after,
 .fuel-neon-action-btn::after {
   content: "";
   position: absolute;
-  inset: 6px;
-  border-radius: inherit;
+  inset: 2px;
   pointer-events: none;
   background:
     linear-gradient(
@@ -995,7 +996,7 @@ body::after {
       rgba(var(--band-rgb, 52, 211, 153), 0.46) 78%,
       rgba(var(--band-rgb, 52, 211, 153), 0) 100%
     )
-    left center / 3px 86% no-repeat,
+    left center / 4px 62% no-repeat,
     linear-gradient(
       180deg,
       rgba(var(--band-rgb, 52, 211, 153), 0) 0%,
@@ -1004,8 +1005,29 @@ body::after {
       rgba(var(--band-rgb, 52, 211, 153), 0.46) 78%,
       rgba(var(--band-rgb, 52, 211, 153), 0) 100%
     )
-    right center / 3px 86% no-repeat;
-  filter: drop-shadow(0 0 6px rgba(var(--band-rgb, 52, 211, 153), 0.55));
+    right center / 4px 62% no-repeat,
+    linear-gradient(
+      90deg,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 0%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.88) 22%,
+      rgba(var(--band-rgb, 52, 211, 153), 1) 50%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.88) 78%,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 100%
+    )
+    center top / 62% 3px no-repeat,
+    linear-gradient(
+      90deg,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 0%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.88) 22%,
+      rgba(var(--band-rgb, 52, 211, 153), 1) 50%,
+      rgba(var(--band-rgb, 52, 211, 153), 0.88) 78%,
+      rgba(var(--band-rgb, 52, 211, 153), 0) 100%
+    )
+    center bottom / 62% 3px no-repeat;
+  filter:
+    drop-shadow(0 0 9px rgba(var(--band-rgb, 52, 211, 153), 0.88))
+    drop-shadow(0 0 16px rgba(var(--band-rgb, 52, 211, 153), 0.46));
+  clip-path: inherit;
 }
 
 @media (min-width: 1024px) {
@@ -1145,50 +1167,50 @@ body::after {
   padding-inline: min(5%, 4.2vmin);
   padding-block: min(4%, 3.4vmin);
   box-shadow:
-    0 0 0 1px rgba(209, 226, 245, 0.2),
-    0 0 22px rgba(58, 130, 173, 0.18),
-    inset 0 0 32px rgba(125, 213, 255, 0.06);
-  border: 1px solid rgba(208, 226, 245, 0.28);
-  background: linear-gradient(
-    160deg,
-    rgba(17, 30, 48, 0.82) 0%,
-    rgba(11, 22, 37, 0.8) 52%,
-    rgba(14, 28, 44, 0.86) 100%
-  );
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 0 0 1px rgba(0, 0, 0, 0.72),
+    0 0 0 2px rgba(var(--band-rgb, 34, 211, 238), 0.2);
+  border: 1.6px solid rgba(0, 0, 0, 0.98);
+  background: rgba(6, 14, 24, 0.06);
+  backdrop-filter: blur(6px) saturate(1.01);
+  -webkit-backdrop-filter: blur(6px) saturate(1.01);
   position: relative;
   isolation: isolate;
   --band-rgb: 34, 211, 238;
+  --box-cut: 8%;
+  clip-path: polygon(
+    var(--box-cut) 0%,
+    calc(100% - var(--box-cut)) 0%,
+    100% var(--box-cut),
+    100% calc(100% - var(--box-cut)),
+    calc(100% - var(--box-cut)) 100%,
+    var(--box-cut) 100%,
+    0% calc(100% - var(--box-cut)),
+    0% var(--box-cut)
+  );
+  border-radius: 0 !important;
 }
 
 .audit-card-inner::before {
   content: "";
   position: absolute;
-  inset: -2px;
-  border-radius: inherit;
+  inset: 0;
   pointer-events: none;
   z-index: -1;
-  background: linear-gradient(
-    140deg,
-    rgba(94, 100, 112, 0.68) 0%,
-    rgba(176, 149, 93, 0.56) 20%,
-    rgba(224, 205, 160, 0.52) 44%,
-    rgba(106, 112, 124, 0.64) 66%,
-    rgba(182, 152, 92, 0.54) 84%,
-    rgba(95, 101, 114, 0.66) 100%
-  );
+  background: rgba(95, 101, 114, 0.34);
+  border: 2px solid rgba(236, 221, 190, 0.84);
   box-shadow:
-    0 0 0 1px rgba(198, 173, 120, 0.35),
-    0 0 12px rgba(184, 151, 93, 0.24);
+    0 0 0 1px rgba(150, 126, 86, 0.54),
+    0 0 12px rgba(210, 182, 126, 0.28);
+  clip-path: inherit;
 }
 
 .audit-card-inner::after {
   content: "";
   position: absolute;
-  inset: 8px;
-  border-radius: inherit;
+  inset: 2px;
   pointer-events: none;
+  clip-path: inherit;
   background:
     linear-gradient(
       180deg,
@@ -1198,7 +1220,7 @@ body::after {
       rgba(var(--band-rgb, 34, 211, 238), 0.46) 78%,
       rgba(var(--band-rgb, 34, 211, 238), 0) 100%
     )
-    left center / 3px 86% no-repeat,
+    left center / 4px 62% no-repeat,
     linear-gradient(
       180deg,
       rgba(var(--band-rgb, 34, 211, 238), 0) 0%,
@@ -1207,8 +1229,115 @@ body::after {
       rgba(var(--band-rgb, 34, 211, 238), 0.46) 78%,
       rgba(var(--band-rgb, 34, 211, 238), 0) 100%
     )
-    right center / 3px 86% no-repeat;
-  filter: drop-shadow(0 0 6px rgba(var(--band-rgb, 34, 211, 238), 0.55));
+    right center / 4px 62% no-repeat,
+    linear-gradient(
+      90deg,
+      rgba(var(--band-rgb, 34, 211, 238), 0) 0%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.88) 22%,
+      rgba(var(--band-rgb, 34, 211, 238), 1) 50%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.88) 78%,
+      rgba(var(--band-rgb, 34, 211, 238), 0) 100%
+    )
+    center top / 62% 3px no-repeat,
+    linear-gradient(
+      90deg,
+      rgba(var(--band-rgb, 34, 211, 238), 0) 0%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.88) 22%,
+      rgba(var(--band-rgb, 34, 211, 238), 1) 50%,
+      rgba(var(--band-rgb, 34, 211, 238), 0.88) 78%,
+      rgba(var(--band-rgb, 34, 211, 238), 0) 100%
+    )
+    center bottom / 62% 3px no-repeat;
+  filter:
+    drop-shadow(0 0 9px rgba(var(--band-rgb, 34, 211, 238), 0.88))
+    drop-shadow(0 0 16px rgba(var(--band-rgb, 34, 211, 238), 0.46));
+}
+
+.audit-bottom-box-shell {
+  --box-cut: 8%;
+  clip-path: polygon(
+    var(--box-cut) 0%,
+    calc(100% - var(--box-cut)) 0%,
+    100% var(--box-cut),
+    100% calc(100% - var(--box-cut)),
+    calc(100% - var(--box-cut)) 100%,
+    var(--box-cut) 100%,
+    0% calc(100% - var(--box-cut)),
+    0% var(--box-cut)
+  );
+  border-radius: 0 !important;
+  border: 1.6px solid rgba(0, 0, 0, 0.98) !important;
+  background: rgba(6, 14, 24, 0.06) !important;
+  backdrop-filter: blur(6px) saturate(1.01);
+  -webkit-backdrop-filter: blur(6px) saturate(1.01);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 0 0 1px rgba(0, 0, 0, 0.72),
+    0 0 0 2px rgba(34, 211, 238, 0.2);
+  position: relative;
+  isolation: isolate;
+}
+
+.audit-bottom-box-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: rgba(95, 101, 114, 0.34);
+  border: 2px solid rgba(236, 221, 190, 0.84);
+  box-shadow:
+    0 0 0 1px rgba(150, 126, 86, 0.54),
+    0 0 12px rgba(210, 182, 126, 0.28);
+  clip-path: inherit;
+}
+
+.audit-bottom-box-shell::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  pointer-events: none;
+  clip-path: inherit;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(34, 211, 238, 0) 0%,
+      rgba(34, 211, 238, 0.85) 22%,
+      rgba(34, 211, 238, 1) 50%,
+      rgba(34, 211, 238, 0.82) 78%,
+      rgba(34, 211, 238, 0) 100%
+    )
+    left center / 4px 62% no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(34, 211, 238, 0) 0%,
+      rgba(34, 211, 238, 0.85) 22%,
+      rgba(34, 211, 238, 1) 50%,
+      rgba(34, 211, 238, 0.82) 78%,
+      rgba(34, 211, 238, 0) 100%
+    )
+    right center / 4px 62% no-repeat,
+    linear-gradient(
+      90deg,
+      rgba(34, 211, 238, 0) 0%,
+      rgba(34, 211, 238, 0.88) 22%,
+      rgba(34, 211, 238, 1) 50%,
+      rgba(34, 211, 238, 0.88) 78%,
+      rgba(34, 211, 238, 0) 100%
+    )
+    center top / 62% 3px no-repeat,
+    linear-gradient(
+      90deg,
+      rgba(34, 211, 238, 0) 0%,
+      rgba(34, 211, 238, 0.88) 22%,
+      rgba(34, 211, 238, 1) 50%,
+      rgba(34, 211, 238, 0.88) 78%,
+      rgba(34, 211, 238, 0) 100%
+    )
+    center bottom / 62% 3px no-repeat;
+  filter:
+    drop-shadow(0 0 9px rgba(34, 211, 238, 0.88))
+    drop-shadow(0 0 16px rgba(34, 211, 238, 0.46));
 }
 
 /* Painel central do Monitor — identidade branca + neon branco */

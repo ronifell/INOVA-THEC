@@ -88,7 +88,7 @@ export default function AuditPanelExtension() {
           Verificação sequencial dos elos da custódia AP-04.
         </p>
         <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col [gap:min(2%,1.8vmin)]">
-          <div className="min-h-0 flex-1 overflow-hidden rounded-md border border-white/10 bg-white/[0.02]">
+          <div className="audit-bottom-box-shell min-h-0 flex-1 overflow-hidden">
             <div className="flex h-full max-h-full flex-col [gap:min(1.6%,1.4vmin)] [padding:min(2.4%,2vmin)]">
               {chainBlocks.map((b, i) => (
                 <div
@@ -126,7 +126,7 @@ export default function AuditPanelExtension() {
           Carimbo temporal alinhado a UTC e protocolo de auditoria.
         </p>
         <div className="flex flex-col items-center [gap:min(2.5%,2vmin)]">
-          <div className="audit-card-inner audit-card-inner--extension-match rounded-md border border-white/10 bg-white/[0.03] text-left">
+          <div className="audit-card-inner audit-card-inner--extension-match text-left">
             <p className="font-mono uppercase tracking-wider text-white/55 [font-size:min(1.15vmin,0.9vw)] md:[font-size:min(1.22vmin,0.96vw)]">
               Relógio de referência
             </p>
@@ -164,7 +164,7 @@ export default function AuditPanelExtension() {
           Conferência de redundância e integridade das réplicas.
         </p>
         <div className="flex flex-col items-stretch [gap:min(2.5%,2vmin)] lg:items-end">
-          <div className="audit-card-inner audit-card-inner--extension-match w-full rounded-md border border-white/10 bg-white/[0.03] lg:ml-auto">
+          <div className="audit-card-inner audit-card-inner--extension-match w-full lg:ml-auto">
             <div className="flex justify-between font-mono uppercase tracking-wider text-white/65 [font-size:min(1.22vmin,0.95vw)] md:[font-size:min(1.3vmin,1vw)]">
               <span>Verificação</span>
               <span className="tabular-nums text-emerald-200">{backupPct}%</span>
