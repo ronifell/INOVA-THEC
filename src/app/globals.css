@@ -367,6 +367,53 @@ body::after {
   --m1-map-min-height: min(56vh, 520px);
 }
 
+/* Main detail container (Milestone 1/2) tuned to screenshot green panel tone. */
+.milestone-detail-neon {
+  background: #03261c;
+  border: 1px solid rgba(6, 64, 44, 0.95);
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(34, 197, 94, 0.26),
+    0 0 14px rgba(34, 197, 94, 0.22),
+    0 0 28px rgba(16, 185, 129, 0.14);
+}
+
+/* Inner boxes/cards inside the main detail box: darker to match the shell. */
+.milestone-detail-neon :is(div, section, article, aside)[class*="rounded"]:not(button),
+.milestone-detail-neon .glass {
+  background-color: rgba(2, 24, 18, 0.9) !important;
+  background-image: linear-gradient(
+      160deg,
+      rgba(20, 83, 45, 0.16),
+      rgba(2, 24, 18, 0.96)
+    ) !important;
+  border-color: rgba(7, 72, 50, 0.96) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(21, 128, 61, 0.5),
+    0 0 10px rgba(22, 163, 74, 0.34),
+    0 0 18px rgba(34, 197, 94, 0.24),
+    0 0 28px rgba(16, 185, 129, 0.18) !important;
+}
+
+/* Catch utility backgrounds used by cards/tables/modals in detail screens. */
+.milestone-detail-neon [class*="bg-white/"],
+.milestone-detail-neon [class*="bg-slate-"],
+.milestone-detail-neon [class*="bg-[#071330]"],
+.milestone-detail-neon [class*="bg-[#050a14]"] {
+  background-color: rgba(2, 24, 18, 0.9) !important;
+  border-color: rgba(7, 72, 50, 0.92) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(21, 128, 61, 0.44),
+    0 0 10px rgba(22, 163, 74, 0.28),
+    0 0 18px rgba(16, 185, 129, 0.16) !important;
+}
+
+/* Tables/inputs/chips inside details: darker border + phosphorescent edge. */
+.milestone-detail-neon :is(table, thead, tbody, tr, th, td, input, select, textarea) {
+  border-color: rgba(7, 72, 50, 0.9) !important;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.18);
+}
+
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
 @keyframes module-card-float {
   0%,
@@ -1682,4 +1729,85 @@ body::after {
 
 .fuel-glitch-img {
   animation: fuel-glitch-skew 0.4s steps(2) infinite;
+}
+
+/* ===== Milestone neon theme layer (detail pages) ===== */
+.milestone-neon-theme {
+  --milestone-neon-rgb: 16, 185, 129;
+  --milestone-neon: rgb(var(--milestone-neon-rgb));
+}
+
+.milestone-neon-theme--green {
+  --milestone-neon-rgb: 16, 185, 129;
+}
+
+.milestone-neon-theme--blue {
+  --milestone-neon-rgb: 56, 189, 248;
+}
+
+.milestone-neon-theme .glass {
+  border-color: rgba(var(--milestone-neon-rgb), 0.26) !important;
+  box-shadow:
+    0 0 22px rgba(var(--milestone-neon-rgb), 0.15),
+    inset 0 0 20px rgba(var(--milestone-neon-rgb), 0.08) !important;
+}
+
+.milestone-neon-theme button,
+.milestone-neon-theme [role="button"],
+.milestone-neon-theme input,
+.milestone-neon-theme select,
+.milestone-neon-theme textarea {
+  border-color: rgba(var(--milestone-neon-rgb), 0.4);
+  box-shadow: 0 0 10px rgba(var(--milestone-neon-rgb), 0.18);
+}
+
+.milestone-neon-theme svg [stroke],
+.milestone-neon-theme svg line,
+.milestone-neon-theme svg polyline {
+  stroke: rgba(var(--milestone-neon-rgb), 0.85) !important;
+}
+
+.milestone-neon-theme svg [fill] {
+  fill: color-mix(in srgb, var(--milestone-neon) 68%, transparent) !important;
+}
+
+.milestone-neon-theme code,
+.milestone-neon-theme .font-mono {
+  color: rgba(var(--milestone-neon-rgb), 0.9);
+  text-shadow: 0 0 8px rgba(var(--milestone-neon-rgb), 0.35);
+}
+
+.milestone-neon-theme .text-cyan-200,
+.milestone-neon-theme .text-cyan-300,
+.milestone-neon-theme .text-blue-200,
+.milestone-neon-theme .text-blue-300,
+.milestone-neon-theme .text-emerald-200,
+.milestone-neon-theme .text-emerald-300,
+.milestone-neon-theme .text-emerald-400 {
+  color: rgba(var(--milestone-neon-rgb), 0.95) !important;
+  text-shadow: 0 0 12px rgba(var(--milestone-neon-rgb), 0.35);
+}
+
+.milestone-neon-theme .bg-cyan-500\/15,
+.milestone-neon-theme .bg-blue-500\/15,
+.milestone-neon-theme .bg-emerald-500\/15,
+.milestone-neon-theme .bg-cyan-400\/20,
+.milestone-neon-theme .bg-blue-500\/20,
+.milestone-neon-theme .bg-emerald-500\/20 {
+  background-color: rgba(var(--milestone-neon-rgb), 0.16) !important;
+}
+
+.milestone-neon-theme .border-cyan-500\/40,
+.milestone-neon-theme .border-cyan-500\/30,
+.milestone-neon-theme .border-cyan-400\/40,
+.milestone-neon-theme .border-cyan-400\/35,
+.milestone-neon-theme .border-blue-500\/40,
+.milestone-neon-theme .border-blue-500\/30,
+.milestone-neon-theme .border-blue-500\/20,
+.milestone-neon-theme .border-emerald-500\/40,
+.milestone-neon-theme .border-emerald-500\/30,
+.milestone-neon-theme .border-emerald-500\/20,
+.milestone-neon-theme .border-emerald-400\/50,
+.milestone-neon-theme .border-emerald-400\/30 {
+  border-color: rgba(var(--milestone-neon-rgb), 0.45) !important;
 }

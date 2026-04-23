@@ -318,7 +318,7 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
-            className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
+            className="milestone-detail-neon flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
           >
             <AuditCommandFrame variant={activeMenu}>
               <div className="pointer-events-none absolute left-0 right-0 top-0 z-[30] flex justify-start px-2 pt-1 sm:px-4 sm:pt-2">

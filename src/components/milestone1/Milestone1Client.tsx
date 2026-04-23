@@ -877,7 +877,7 @@ export default function Milestone1Client({
       )}
 
       {activeView !== "hub" && (
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <div className="milestone-detail-neon flex min-h-0 flex-1 flex-col overflow-hidden">
           <div className="mx-auto mb-[1vh] flex max-w-[min(96%,72rem)] shrink-0 flex-wrap items-center justify-center gap-4 sm:gap-6">
             <button
               type="button"
