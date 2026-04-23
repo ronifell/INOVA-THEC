@@ -442,7 +442,8 @@ function Scene() {
   const { gl } = useThree();
 
   useEffect(() => {
-    gl.setClearColor(new THREE.Color("#000000"), 1);
+    /* Transparent: black + world map are drawn in GlobalBackgroundStack */
+    gl.setClearColor(new THREE.Color(0, 0, 0), 0);
   }, [gl]);
 
   return (
@@ -456,13 +457,13 @@ function Scene() {
 
 export default function Background3D() {
   return (
-    <div className="fixed inset-0" style={{ zIndex: -1 }}>
+    <div className="absolute inset-0 h-full w-full min-h-0">
       <Canvas
         camera={{ position: [0, 0, 15], fov: 55 }}
         dpr={[1, 2]}
         gl={{
           antialias: true,
-          alpha: false,
+          alpha: true,
           powerPreference: "high-performance",
         }}
       >

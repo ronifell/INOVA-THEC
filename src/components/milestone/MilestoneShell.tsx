@@ -1,12 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import CursorTrail from "@/components/CursorTrail";
 
-const Background3D = dynamic(() => import("@/components/Background3D"), {
-  ssr: false,
-});
 const SKIP_BOOT_ONCE_KEY = "skip-home-boot-once";
 
 type Props = {
@@ -21,9 +17,7 @@ export default function MilestoneShell({
   children,
 }: Props) {
   return (
-    <div className="relative flex h-full min-h-[100dvh] w-full flex-col overflow-hidden">
-      {/* Same stack as the company home: 3D background + cursor trail (no extra opaque layer). */}
-      <Background3D />
+    <div className="relative z-10 flex h-full min-h-[100dvh] w-full flex-col overflow-hidden">
       <div className="pointer-events-none">
         <CursorTrail />
       </div>

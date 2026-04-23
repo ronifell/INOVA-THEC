@@ -21,10 +21,6 @@ const SKIP_BOOT_ONCE_KEY = "skip-home-boot-once";
 const APP_STAGE_WIDTH = 2240;
 const APP_STAGE_BASE_HEIGHT = 1080;
 
-const Background3D = dynamic(() => import("@/components/Background3D"), {
-  ssr: false,
-});
-
 const Milestone2Client = dynamic(
   () => import("@/components/milestone2/Milestone2Client"),
   { ssr: false }
@@ -108,7 +104,7 @@ export default function Home() {
 
   if (!mounted) {
     return (
-      <div className="h-screen bg-[#0F172A] flex items-center justify-center">
+      <div className="flex h-screen items-center justify-center bg-black">
         <div className="text-center">
           <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-emerald-500/20 to-blue-500/20 border border-white/10 flex items-center justify-center">
             <span className="text-white font-bold text-lg">IT</span>
@@ -123,13 +119,9 @@ export default function Home() {
 
   return (
     <div
-      className={`fixed inset-0 overflow-hidden ${isGlitching ? "glitch-active" : ""}`}
+      className={`fixed inset-0 z-10 overflow-hidden ${isGlitching ? "glitch-active" : ""}`}
     >
       <ThemeColorUpdater />
-
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <Background3D />
-      </div>
 
       <div
         className="absolute left-1/2 top-1/2"

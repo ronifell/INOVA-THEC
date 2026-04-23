@@ -56,29 +56,10 @@ body {
   position: relative;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -2;
-  background:
-    radial-gradient(120% 80% at 50% -10%, rgba(16, 185, 129, 0.08), transparent 60%),
-    radial-gradient(90% 60% at 50% 120%, rgba(16, 185, 129, 0.06), transparent 70%),
-    linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 45%, rgba(0, 0, 0, 1) 100%);
-}
-
+/* Black base + world map + 3D layer come from `GlobalBackgroundStack` in root layout. */
+body::before,
 body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.2;
-  background-image:
-    linear-gradient(rgba(16, 185, 129, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.14) 1px, transparent 1px);
-  background-size: 38px 38px, 38px 38px;
+  content: none;
 }
 
 /* ===== PULSE ===== */
@@ -369,32 +350,33 @@ body::after {
 
 /* Main detail container (Milestone 1/2) tuned to screenshot green panel tone. */
 .milestone-detail-neon {
-  background: #03261c;
-  border: 1px solid rgba(4, 44, 31, 0.98);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.52);
   border-radius: 1rem;
+  backdrop-filter: blur(8px) saturate(1.04);
+  -webkit-backdrop-filter: blur(8px) saturate(1.04);
   box-shadow:
-    inset 0 0 0 1px rgba(34, 197, 94, 0.42),
-    0 0 0 1px rgba(8, 78, 55, 0.94),
-    0 0 5px rgba(22, 163, 74, 0.46),
-    0 0 10px rgba(16, 185, 129, 0.28);
+    inset 0 0 0 1px rgba(34, 197, 94, 0.34),
+    0 0 0 1px rgba(8, 78, 55, 0.72),
+    0 0 8px rgba(16, 185, 129, 0.24);
 }
 
 /* Inner boxes/cards inside the main detail box: darker to match the shell. */
 .milestone-detail-neon :is(div, section, article, aside)[class*="rounded"]:not(button),
 .milestone-detail-neon .glass {
-  background-color: rgba(2, 24, 18, 0.9) !important;
+  background-color: rgba(0, 0, 0, 0.18) !important;
   background-image: linear-gradient(
       160deg,
-      rgba(20, 83, 45, 0.16),
-      rgba(2, 24, 18, 0.96)
+      rgba(20, 83, 45, 0.08),
+      rgba(0, 0, 0, 0.18)
     ) !important;
-  border-color: rgba(5, 56, 39, 0.98) !important;
+  border-color: rgba(16, 185, 129, 0.46) !important;
+  backdrop-filter: blur(7px) saturate(1.03);
+  -webkit-backdrop-filter: blur(7px) saturate(1.03);
   box-shadow:
-    inset 0 0 0 1px rgba(22, 163, 74, 0.64),
-    0 0 0 1px rgba(8, 78, 55, 0.95),
-    0 0 3px rgba(22, 163, 74, 0.58),
-    0 0 7px rgba(34, 197, 94, 0.42),
-    0 0 12px rgba(16, 185, 129, 0.3) !important;
+    inset 0 0 0 1px rgba(34, 197, 94, 0.45),
+    0 0 0 1px rgba(8, 78, 55, 0.62),
+    0 0 8px rgba(16, 185, 129, 0.24) !important;
 }
 
 /* Catch utility backgrounds used by cards/tables/modals in detail screens. */
@@ -402,13 +384,12 @@ body::after {
 .milestone-detail-neon [class*="bg-slate-"],
 .milestone-detail-neon [class*="bg-[#071330]"],
 .milestone-detail-neon [class*="bg-[#050a14]"] {
-  background-color: rgba(2, 24, 18, 0.9) !important;
-  border-color: rgba(5, 56, 39, 0.96) !important;
+  background-color: rgba(0, 0, 0, 0.18) !important;
+  border-color: rgba(16, 185, 129, 0.42) !important;
   box-shadow:
-    inset 0 0 0 1px rgba(22, 163, 74, 0.54),
-    0 0 0 1px rgba(8, 78, 55, 0.92),
-    0 0 3px rgba(22, 163, 74, 0.44),
-    0 0 8px rgba(16, 185, 129, 0.24) !important;
+    inset 0 0 0 1px rgba(34, 197, 94, 0.38),
+    0 0 0 1px rgba(8, 78, 55, 0.58),
+    0 0 8px rgba(16, 185, 129, 0.2) !important;
 }
 
 /* Tables/inputs/chips inside details: darker border + phosphorescent edge. */

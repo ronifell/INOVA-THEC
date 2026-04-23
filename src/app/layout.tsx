@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import GlobalBackgroundStack from "@/components/GlobalBackgroundStack";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +46,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${custodySans.variable} h-full overflow-x-hidden overflow-y-hidden antialiased`}
       suppressHydrationWarning
     >
-      <body className="h-full overflow-x-hidden overflow-y-hidden" suppressHydrationWarning>{children}</body>
+      <body className="relative h-full overflow-x-hidden overflow-y-hidden bg-black" suppressHydrationWarning>
+        <GlobalBackgroundStack />
+        {children}
+      </body>
     </html>
   );
 }
