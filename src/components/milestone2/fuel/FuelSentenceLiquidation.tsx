@@ -60,11 +60,11 @@ export default function FuelSentenceLiquidation() {
   const evidences = useMemo<EvidenceCard[]>(
     () => [
       { id: "plate", label: "PLACA", preview: fuel?.previews.placa ?? null },
-      { id: "km", label: "KM", preview: fuel?.previews.odometro ?? null },
+      { id: "km", label: "KM", preview: fuel?.previews.hodometro ?? null },
       { id: "pump", label: "BOMBA", preview: fuel?.previews.bomba ?? null },
       { id: "gallon", label: "GALÃO", preview: fuel?.previews.vedacao ?? null },
     ],
-    [fuel?.previews.bomba, fuel?.previews.odometro, fuel?.previews.placa, fuel?.previews.vedacao]
+    [fuel?.previews.bomba, fuel?.previews.hodometro, fuel?.previews.placa, fuel?.previews.vedacao]
   );
 
   const allValid = analogies.every((a) => a.ok === true);

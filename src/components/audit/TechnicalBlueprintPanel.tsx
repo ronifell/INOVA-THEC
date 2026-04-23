@@ -28,8 +28,8 @@ export default function TechnicalBlueprintPanel({
   belowBlueprint,
 }: Props) {
   const t = AUDIT_THEME[variant];
-  const strokeRgb = goldSeal ? GOLD_SEAL.rgb : t.rgb;
-  const strokeHex = goldSeal ? GOLD_SEAL.hex : t.hex;
+  const strokeRgb = goldSeal ? GOLD_SEAL.rgb : t.glowRgb;
+  const strokeHex = goldSeal ? GOLD_SEAL.hex : t.glowHex;
 
   const blueprint = useMemo(() => {
     if (customBlueprint) {
@@ -44,8 +44,8 @@ export default function TechnicalBlueprintPanel({
         >
           <defs>
             <linearGradient id="bp-fuel-grid" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor={`rgba(${strokeRgb},0.06)`} />
-              <stop offset="100%" stopColor={`rgba(${strokeRgb},0.14)`} />
+              <stop offset="0%" stopColor={`rgba(${strokeRgb},0.1)`} />
+              <stop offset="100%" stopColor={`rgba(${strokeRgb},0.22)`} />
             </linearGradient>
           </defs>
           <rect
@@ -55,7 +55,7 @@ export default function TechnicalBlueprintPanel({
             height="160"
             rx="12"
             fill="url(#bp-fuel-grid)"
-            stroke={`rgba(${strokeRgb},0.35)`}
+            stroke={`rgba(${strokeRgb},0.58)`}
             strokeWidth="1.2"
           />
           {/* Caminhão esquemático */}
@@ -66,7 +66,7 @@ export default function TechnicalBlueprintPanel({
             height="64"
             rx="6"
             fill="none"
-            stroke={`rgba(${strokeRgb},0.55)`}
+            stroke={`rgba(${strokeRgb},0.78)`}
             strokeWidth="2"
           />
           <rect
@@ -76,13 +76,13 @@ export default function TechnicalBlueprintPanel({
             height="48"
             rx="8"
             fill="none"
-            stroke={`rgba(${strokeRgb},0.45)`}
+            stroke={`rgba(${strokeRgb},0.65)`}
             strokeWidth="1.5"
           />
-          <circle cx="78" cy="168" r="14" fill="none" stroke={`rgba(${strokeRgb},0.5)`} strokeWidth="2" />
-          <circle cx="162" cy="168" r="14" fill="none" stroke={`rgba(${strokeRgb},0.5)`} strokeWidth="2" />
-          <line x1="110" y1="112" x2="140" y2="112" stroke={`rgba(${strokeRgb},0.35)`} strokeWidth="1" strokeDasharray="4 6" />
-          <text x="160" y="62" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="11" fontFamily="ui-monospace">
+          <circle cx="78" cy="168" r="14" fill="none" stroke={`rgba(${strokeRgb},0.72)`} strokeWidth="2" />
+          <circle cx="162" cy="168" r="14" fill="none" stroke={`rgba(${strokeRgb},0.72)`} strokeWidth="2" />
+          <line x1="110" y1="112" x2="140" y2="112" stroke={`rgba(${strokeRgb},0.5)`} strokeWidth="1" strokeDasharray="4 6" />
+          <text x="160" y="62" textAnchor="middle" fill={`rgba(${strokeRgb},0.75)`} fontSize="11" fontFamily="ui-monospace">
             VETOR · TANQUE · PLACA
           </text>
         </svg>
@@ -97,8 +97,8 @@ export default function TechnicalBlueprintPanel({
       >
         <defs>
           <linearGradient id="bp-pat-grid" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={`rgba(${strokeRgb},0.08)`} />
-            <stop offset="100%" stopColor={`rgba(${strokeRgb},0.16)`} />
+            <stop offset="0%" stopColor={`rgba(${strokeRgb},0.12)`} />
+            <stop offset="100%" stopColor={`rgba(${strokeRgb},0.24)`} />
           </linearGradient>
         </defs>
         <rect
@@ -108,7 +108,7 @@ export default function TechnicalBlueprintPanel({
           height="168"
           rx="8"
           fill="none"
-          stroke={`rgba(${strokeRgb},0.5)`}
+          stroke={`rgba(${strokeRgb},0.72)`}
           strokeWidth="2"
         />
         <rect
@@ -118,14 +118,14 @@ export default function TechnicalBlueprintPanel({
           height="96"
           rx="6"
           fill="url(#bp-pat-grid)"
-          stroke={`rgba(${strokeRgb},0.4)`}
+          stroke={`rgba(${strokeRgb},0.58)`}
           strokeWidth="1.2"
         />
-        <line x1="56" y1="80" x2="180" y2="80" stroke={`rgba(${strokeRgb},0.25)`} strokeWidth="1" />
-        <line x1="56" y1="112" x2="180" y2="112" stroke={`rgba(${strokeRgb},0.25)`} strokeWidth="1" />
-        <line x1="56" y1="144" x2="180" y2="144" stroke={`rgba(${strokeRgb},0.25)`} strokeWidth="1" />
-        <circle cx="118" cy="178" r="8" fill="none" stroke={`rgba(${strokeRgb},0.45)`} strokeWidth="1.5" />
-        <text x="160" y="28" textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="11" fontFamily="ui-monospace">
+        <line x1="56" y1="80" x2="180" y2="80" stroke={`rgba(${strokeRgb},0.42)`} strokeWidth="1" />
+        <line x1="56" y1="112" x2="180" y2="112" stroke={`rgba(${strokeRgb},0.42)`} strokeWidth="1" />
+        <line x1="56" y1="144" x2="180" y2="144" stroke={`rgba(${strokeRgb},0.42)`} strokeWidth="1" />
+        <circle cx="118" cy="178" r="8" fill="none" stroke={`rgba(${strokeRgb},0.65)`} strokeWidth="1.5" />
+        <text x="160" y="28" textAnchor="middle" fill={`rgba(${strokeRgb},0.78)`} fontSize="11" fontFamily="ui-monospace">
           PLAQUETA · LOCAL · CONSERVAÇÃO
         </text>
       </svg>
@@ -134,22 +134,33 @@ export default function TechnicalBlueprintPanel({
 
   return (
     <div
-      className="relative flex h-full min-h-[260px] w-full max-w-[520px] flex-col items-center overflow-hidden rounded-2xl border border-white/[0.08] bg-[#060d18]/85 p-4 text-center shadow-[inset_0_0_60px_rgba(0,0,0,0.45)] backdrop-blur-md lg:min-h-0 lg:max-w-none lg:self-stretch"
+      className="milestone-detail-blueprint-shell relative flex h-full min-h-[260px] w-full max-w-[520px] flex-col items-center overflow-hidden rounded-2xl border border-white/[0.08] bg-[#030a0c]/92 p-4 text-center shadow-[inset_0_0_60px_rgba(0,0,0,0.55)] backdrop-blur-md lg:min-h-0 lg:max-w-none lg:self-stretch"
       style={{
         boxShadow: goldSeal
           ? `inset 0 0 0 1px rgba(${GOLD_SEAL.rgb},0.35), 0 0 36px rgba(${GOLD_SEAL.rgb},0.18)`
-          : `inset 0 0 0 1px rgba(${t.rgb},0.12)`,
+          : `inset 0 0 0 1px rgba(${t.glowRgb},0.45), 0 0 24px rgba(${t.glowRgb},0.28), 0 0 52px rgba(${t.glowRgb},0.12)`,
       }}
     >
       <div className="mb-2 w-full shrink-0">
-        <p className="text-[10px] font-mono tracking-[0.28em] text-white/40">
+        <p
+          className="text-[10px] font-mono tracking-[0.28em] text-white/55"
+          style={{ textShadow: `0 0 10px rgba(${strokeRgb},0.4)` }}
+        >
           VISUAL TÉCNICO · MARCO 1
         </p>
-        <h3 className="mt-1 text-sm font-semibold tracking-wide text-white/90">
+        <h3
+          className="mt-1 text-sm font-semibold tracking-wide text-white/95"
+          style={{ textShadow: `0 0 14px rgba(${strokeRgb},0.48), 0 0 28px rgba(${strokeRgb},0.2)` }}
+        >
           {title ?? "Desenho reativo"}
         </h3>
         {subtitle && (
-          <p className="mt-0.5 text-xs leading-snug text-white/45">{subtitle}</p>
+          <p
+            className="mt-0.5 text-xs leading-snug text-white/65"
+            style={{ textShadow: `0 0 8px rgba(${strokeRgb},0.28)` }}
+          >
+            {subtitle}
+          </p>
         )}
       </div>
 

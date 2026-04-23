@@ -28,8 +28,8 @@ export default function InovaFlowLogoKnot({
         style={{
           boxShadow: goldSeal
             ? "0 0 28px rgba(212,175,55,0.65), inset 0 0 20px rgba(212,175,55,0.25)"
-            : `0 0 22px rgba(${t.rgb},0.45), inset 0 0 14px rgba(${t.rgb},0.12)`,
-          borderColor: goldSeal ? "rgba(212,175,55,0.55)" : `rgba(${t.rgb},0.35)`,
+            : `0 0 26px rgba(${t.glowRgb},0.55), 0 0 48px rgba(${t.glowRgb},0.2), inset 0 0 16px rgba(${t.glowRgb},0.18)`,
+          borderColor: goldSeal ? "rgba(212,175,55,0.55)" : `rgba(${t.glowRgb},0.5)`,
         }}
         animate={
           goldSeal
@@ -56,7 +56,7 @@ export default function InovaFlowLogoKnot({
           style={{
             background: goldSeal
               ? "radial-gradient(circle, rgba(212,175,55,0.5) 0%, transparent 70%)"
-              : `radial-gradient(circle, rgba(${t.rgb},0.35) 0%, transparent 72%)`,
+              : `radial-gradient(circle, rgba(${t.glowRgb},0.42) 0%, transparent 72%)`,
           }}
         />
       </motion.div>

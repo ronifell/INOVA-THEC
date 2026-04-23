@@ -34,7 +34,7 @@ function FlowRibbonDesktop({
   goldSeal: boolean;
 }) {
   const t = AUDIT_THEME[variant];
-  const strokeRgb = goldSeal ? GOLD_SEAL.rgb : t.rgb;
+  const strokeRgb = goldSeal ? GOLD_SEAL.rgb : t.glowRgb;
 
   return (
     <div
@@ -55,7 +55,7 @@ function FlowRibbonDesktop({
             <stop offset="100%" stopColor={`rgba(${strokeRgb},0.15)`} />
           </linearGradient>
           <filter id={`flow-glow-${variant}`}>
-            <feGaussianBlur stdDeviation="1.2" result="blur" />
+            <feGaussianBlur stdDeviation="1.85" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -80,7 +80,7 @@ function FlowRibbonDesktop({
         />
         {(pulse > 0 || goldSeal) && (
           <g key={`desk-dot-${pulse}-${goldSeal}`}>
-            <circle r="1.35" fill={goldSeal ? GOLD_SEAL.hex : `rgb(${t.rgb})`} opacity={0.88}>
+            <circle r="1.35" fill={goldSeal ? GOLD_SEAL.hex : `rgb(${t.glowRgb})`} opacity={0.92}>
               <animateMotion
                 dur={goldSeal ? "1.15s" : "0.95s"}
                 repeatCount="1"
@@ -105,7 +105,7 @@ function FlowRibbonMobile({
   goldSeal: boolean;
 }) {
   const t = AUDIT_THEME[variant];
-  const strokeRgb = goldSeal ? GOLD_SEAL.rgb : t.rgb;
+  const strokeRgb = goldSeal ? GOLD_SEAL.rgb : t.glowRgb;
 
   return (
     <div
@@ -185,7 +185,7 @@ export default function Operational6040Workspace({
 
   return (
     <div
-      className={`relative flex min-h-0 w-full flex-1 flex-col gap-[min(2.2vmin,2vh)] ${
+      className={`milestone-operational-root relative flex min-h-0 w-full flex-1 flex-col gap-[min(2.2vmin,2vh)] ${
         goldSeal ? "audit-flow-gold-ring" : ""
       }`}
     >
@@ -216,11 +216,11 @@ export default function Operational6040Workspace({
 
         <motion.div
           layout
-          className="relative z-[12] flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#050a14]/45 backdrop-blur-sm lg:order-1"
+          className="milestone-detail-command-panel relative z-[12] flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#040810]/88 backdrop-blur-sm lg:order-1"
           style={{
             boxShadow: goldSeal
               ? `inset 0 0 0 1px rgba(${GOLD_SEAL.rgb},0.35), 0 0 40px rgba(${GOLD_SEAL.rgb},0.12)`
-              : `inset 0 0 0 1px rgba(${t.rgb},0.08)`,
+              : `inset 0 0 0 1px rgba(${t.glowRgb},0.42), 0 0 22px rgba(${t.glowRgb},0.28), 0 0 48px rgba(${t.glowRgb},0.12)`,
           }}
           onPointerDownCapture={triggerPulse}
         >
@@ -231,7 +231,7 @@ export default function Operational6040Workspace({
             </div>
           </div>
 
-          <div className="shrink-0 border-t border-white/[0.07] px-[min(2.6%,2vmin)] py-[min(2.6%,2vmin)] sm:px-[min(3%,2.4vmin)] sm:py-[min(2.4%,2vmin)]">
+          <div className="milestone-detail-command-footer shrink-0 border-t border-white/[0.07] px-[min(2.6%,2vmin)] py-[min(2.6%,2vmin)] sm:px-[min(3%,2.4vmin)] sm:py-[min(2.4%,2vmin)]">
             {footerSlot ?? (
               <button
                 type="button"
@@ -242,14 +242,20 @@ export default function Operational6040Workspace({
                 disabled={goldSeal}
                 className="w-full rounded-xl border px-5 py-4 text-center text-[12px] font-mono uppercase tracking-[0.2em] transition-all disabled:cursor-default sm:text-[13px]"
                 style={{
-                  borderColor: goldSeal ? `rgba(${GOLD_SEAL.rgb},0.55)` : `rgba(${t.rgb},0.35)`,
+                  borderColor: goldSeal ? `rgba(${GOLD_SEAL.rgb},0.55)` : `rgba(${t.glowRgb},0.55)`,
                   background: goldSeal
                     ? `linear-gradient(135deg, rgba(${GOLD_SEAL.rgb},0.22), rgba(212,175,55,0.08))`
-                    : `linear-gradient(135deg, rgba(${t.rgb},0.15), rgba(15,23,42,0.5))`,
-                  color: goldSeal ? "rgba(253,230,138,0.95)" : "rgba(255,255,255,0.88)",
+                    : variant === "patrimonio"
+                      ? `linear-gradient(135deg, rgba(${t.glowRgb},0.24), rgba(4,10,22,0.9))`
+                      : `linear-gradient(135deg, rgba(${t.glowRgb},0.22), rgba(0,8,6,0.88))`,
+                  color: goldSeal
+                    ? "rgba(253,230,138,0.95)"
+                    : variant === "patrimonio"
+                      ? "rgba(224,242,254,0.92)"
+                      : "rgba(220,255,235,0.92)",
                   boxShadow: goldSeal
                     ? `0 0 28px rgba(${GOLD_SEAL.rgb},0.35)`
-                    : `0 0 16px rgba(${t.rgb},0.12)`,
+                    : `0 0 20px rgba(${t.glowRgb},0.35), 0 0 40px rgba(${t.glowRgb},0.15), inset 0 0 0 1px rgba(${t.glowRgb},0.12)`,
                 }}
               >
                 {goldSeal

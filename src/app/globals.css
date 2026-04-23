@@ -348,56 +348,184 @@ body::after {
   --m1-map-min-height: min(56vh, 520px);
 }
 
-/* Main detail container (Milestone 1/2) tuned to screenshot green panel tone. */
-.milestone-detail-neon {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(16, 185, 129, 0.52);
+/* Milestone 1/2 detail — néon “glow in the dark” (verde matrix / ciano patrimônio) */
+.milestone-detail-neon[data-audit-variant="frota"] {
+  background: rgba(0, 10, 4, 0.94);
+  border: 1px solid rgba(57, 255, 20, 0.72);
   border-radius: 1rem;
-  backdrop-filter: blur(8px) saturate(1.04);
-  -webkit-backdrop-filter: blur(8px) saturate(1.04);
+  backdrop-filter: blur(10px) saturate(1.12);
+  -webkit-backdrop-filter: blur(10px) saturate(1.12);
   box-shadow:
-    inset 0 0 0 1px rgba(34, 197, 94, 0.34),
-    0 0 0 1px rgba(8, 78, 55, 0.72),
-    0 0 8px rgba(16, 185, 129, 0.24);
+    inset 0 0 0 1px rgba(57, 255, 20, 0.32),
+    0 0 20px rgba(57, 255, 20, 0.42),
+    0 0 48px rgba(0, 255, 90, 0.18),
+    0 0 88px rgba(57, 255, 20, 0.08);
 }
 
-/* Inner boxes/cards inside the main detail box: darker to match the shell. */
-.milestone-detail-neon :is(div, section, article, aside)[class*="rounded"]:not(button),
-.milestone-detail-neon .glass {
-  background-color: rgba(0, 0, 0, 0.18) !important;
+.milestone-detail-neon[data-audit-variant="patrimonio"] {
+  background: rgba(2, 12, 22, 0.94);
+  border: 1px solid rgba(56, 189, 248, 0.68);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px) saturate(1.12);
+  -webkit-backdrop-filter: blur(10px) saturate(1.12);
+  box-shadow:
+    inset 0 0 0 1px rgba(56, 189, 248, 0.28),
+    0 0 20px rgba(56, 189, 248, 0.4),
+    0 0 52px rgba(56, 189, 248, 0.14),
+    0 0 88px rgba(125, 211, 252, 0.08);
+}
+
+.milestone-detail-neon:not([data-audit-variant]) {
+  background: rgba(0, 10, 4, 0.94);
+  border: 1px solid rgba(57, 255, 20, 0.72);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px) saturate(1.12);
+  -webkit-backdrop-filter: blur(10px) saturate(1.12);
+  box-shadow:
+    inset 0 0 0 1px rgba(57, 255, 20, 0.32),
+    0 0 20px rgba(57, 255, 20, 0.42),
+    0 0 48px rgba(0, 255, 90, 0.18);
+}
+
+.milestone-detail-neon[data-audit-variant="frota"] :where(h1, h2) {
+  color: #c8ffd8 !important;
+  text-shadow:
+    0 0 12px rgba(57, 255, 20, 0.72),
+    0 0 28px rgba(57, 255, 20, 0.38),
+    0 0 48px rgba(0, 255, 90, 0.15);
+}
+
+.milestone-detail-neon[data-audit-variant="patrimonio"] :where(h1, h2) {
+  color: #bae6fd !important;
+  text-shadow:
+    0 0 12px rgba(56, 189, 248, 0.68),
+    0 0 28px rgba(56, 189, 248, 0.35),
+    0 0 48px rgba(125, 211, 252, 0.14);
+}
+
+.milestone-detail-neon[data-audit-variant="frota"] header p {
+  color: rgba(170, 235, 195, 0.9) !important;
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.35);
+}
+
+.milestone-detail-neon[data-audit-variant="patrimonio"] header p {
+  color: rgba(186, 230, 253, 0.9) !important;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.32);
+}
+
+.milestone-detail-neon[data-audit-variant="frota"] .milestone-detail-command-panel,
+.milestone-detail-neon[data-audit-variant="frota"] .milestone-detail-blueprint-shell {
+  border-color: rgba(57, 255, 20, 0.48) !important;
+}
+
+.milestone-detail-neon[data-audit-variant="patrimonio"] .milestone-detail-command-panel,
+.milestone-detail-neon[data-audit-variant="patrimonio"] .milestone-detail-blueprint-shell {
+  border-color: rgba(56, 189, 248, 0.48) !important;
+}
+
+.milestone-detail-neon[data-audit-variant="frota"] .milestone-detail-command-footer {
+  border-color: rgba(57, 255, 20, 0.28) !important;
+  box-shadow: inset 0 1px 0 rgba(57, 255, 20, 0.12);
+}
+
+.milestone-detail-neon[data-audit-variant="patrimonio"] .milestone-detail-command-footer {
+  border-color: rgba(56, 189, 248, 0.28) !important;
+  box-shadow: inset 0 1px 0 rgba(56, 189, 248, 0.12);
+}
+
+.milestone-detail-neon[data-audit-variant="frota"] :is(div, section, article, aside)[class*="rounded"]:not(button),
+.milestone-detail-neon[data-audit-variant="frota"] .glass {
+  background-color: rgba(0, 14, 6, 0.58) !important;
   background-image: linear-gradient(
-      160deg,
-      rgba(20, 83, 45, 0.08),
-      rgba(0, 0, 0, 0.18)
+      165deg,
+      rgba(57, 255, 20, 0.1),
+      rgba(0, 0, 0, 0.42)
     ) !important;
-  border-color: rgba(16, 185, 129, 0.46) !important;
-  backdrop-filter: blur(7px) saturate(1.03);
-  -webkit-backdrop-filter: blur(7px) saturate(1.03);
+  border-color: rgba(57, 255, 20, 0.55) !important;
+  backdrop-filter: blur(8px) saturate(1.08);
+  -webkit-backdrop-filter: blur(8px) saturate(1.08);
   box-shadow:
-    inset 0 0 0 1px rgba(34, 197, 94, 0.45),
-    0 0 0 1px rgba(8, 78, 55, 0.62),
-    0 0 8px rgba(16, 185, 129, 0.24) !important;
+    inset 0 0 0 1px rgba(57, 255, 20, 0.38),
+    0 0 14px rgba(57, 255, 20, 0.22),
+    0 0 32px rgba(0, 255, 90, 0.1) !important;
 }
 
-/* Catch utility backgrounds used by cards/tables/modals in detail screens. */
-.milestone-detail-neon [class*="bg-white/"],
-.milestone-detail-neon [class*="bg-slate-"],
-.milestone-detail-neon [class*="bg-[#071330]"],
-.milestone-detail-neon [class*="bg-[#050a14]"] {
-  background-color: rgba(0, 0, 0, 0.18) !important;
-  border-color: rgba(16, 185, 129, 0.42) !important;
+.milestone-detail-neon[data-audit-variant="patrimonio"] :is(div, section, article, aside)[class*="rounded"]:not(button),
+.milestone-detail-neon[data-audit-variant="patrimonio"] .glass {
+  background-color: rgba(4, 14, 26, 0.58) !important;
+  background-image: linear-gradient(
+      165deg,
+      rgba(56, 189, 248, 0.1),
+      rgba(0, 0, 0, 0.42)
+    ) !important;
+  border-color: rgba(56, 189, 248, 0.52) !important;
+  backdrop-filter: blur(8px) saturate(1.08);
+  -webkit-backdrop-filter: blur(8px) saturate(1.08);
   box-shadow:
-    inset 0 0 0 1px rgba(34, 197, 94, 0.38),
-    0 0 0 1px rgba(8, 78, 55, 0.58),
-    0 0 8px rgba(16, 185, 129, 0.2) !important;
+    inset 0 0 0 1px rgba(56, 189, 248, 0.34),
+    0 0 14px rgba(56, 189, 248, 0.22),
+    0 0 32px rgba(125, 211, 252, 0.1) !important;
 }
 
-/* Tables/inputs/chips inside details: darker border + phosphorescent edge. */
-.milestone-detail-neon :is(table, thead, tbody, tr, th, td, input, select, textarea) {
-  border-color: rgba(5, 56, 39, 0.96) !important;
+.milestone-detail-neon:not([data-audit-variant]) :is(div, section, article, aside)[class*="rounded"]:not(button),
+.milestone-detail-neon:not([data-audit-variant]) .glass {
+  background-color: rgba(0, 14, 6, 0.58) !important;
+  background-image: linear-gradient(
+      165deg,
+      rgba(57, 255, 20, 0.1),
+      rgba(0, 0, 0, 0.42)
+    ) !important;
+  border-color: rgba(57, 255, 20, 0.55) !important;
   box-shadow:
-    inset 0 0 0 1px rgba(22, 163, 74, 0.42),
-    0 0 3px rgba(22, 163, 74, 0.36);
+    inset 0 0 0 1px rgba(57, 255, 20, 0.38),
+    0 0 14px rgba(57, 255, 20, 0.22) !important;
+}
+
+.milestone-detail-neon[data-audit-variant="frota"] [class*="bg-white/"],
+.milestone-detail-neon[data-audit-variant="frota"] [class*="bg-slate-"],
+.milestone-detail-neon[data-audit-variant="frota"] [class*="bg-[#071330]"],
+.milestone-detail-neon[data-audit-variant="frota"] [class*="bg-[#050a14]"] {
+  background-color: rgba(0, 14, 6, 0.55) !important;
+  border-color: rgba(57, 255, 20, 0.48) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(57, 255, 20, 0.32),
+    0 0 12px rgba(57, 255, 20, 0.18) !important;
+}
+
+.milestone-detail-neon[data-audit-variant="patrimonio"] [class*="bg-white/"],
+.milestone-detail-neon[data-audit-variant="patrimonio"] [class*="bg-slate-"],
+.milestone-detail-neon[data-audit-variant="patrimonio"] [class*="bg-[#071330]"],
+.milestone-detail-neon[data-audit-variant="patrimonio"] [class*="bg-[#050a14]"] {
+  background-color: rgba(4, 14, 26, 0.55) !important;
+  border-color: rgba(56, 189, 248, 0.46) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(56, 189, 248, 0.3),
+    0 0 12px rgba(56, 189, 248, 0.18) !important;
+}
+
+.milestone-detail-neon[data-audit-variant="frota"] :is(table, thead, tbody, tr, th, td, input, select, textarea) {
+  border-color: rgba(12, 46, 22, 0.98) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(57, 255, 20, 0.45),
+    0 0 6px rgba(57, 255, 20, 0.35);
+}
+
+.milestone-detail-neon[data-audit-variant="patrimonio"] :is(table, thead, tbody, tr, th, td, input, select, textarea) {
+  border-color: rgba(8, 36, 56, 0.98) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(56, 189, 248, 0.42),
+    0 0 6px rgba(56, 189, 248, 0.32);
+}
+
+.milestone-detail-neon[data-audit-variant="frota"] [class*="border-emerald"] {
+  border-color: rgba(57, 255, 20, 0.52) !important;
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.18);
+}
+
+.milestone-detail-neon[data-audit-variant="patrimonio"] [class*="border-blue"],
+.milestone-detail-neon[data-audit-variant="patrimonio"] [class*="border-cyan"] {
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.16);
 }
 
 /* ===== MODULE CARDS: levitação Y (triade 2s / 2,5s / 3s) ===== */
