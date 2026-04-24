@@ -883,41 +883,42 @@ export default function Milestone1Client({
           data-milestone="1"
           data-audit-variant={isFuelModuleView ? "frota" : "patrimonio"}
         >
-          <div className="milestone-m1-detail-chrome mx-auto mb-[1vh] flex max-w-[min(96%,72rem)] shrink-0 flex-wrap items-center justify-center gap-4 sm:gap-6">
-            <button
-              type="button"
-              onClick={goToHub}
-              className="glass inline-flex items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[var(--m1-text-ui)] font-mono tracking-[0.12em] text-white/80 hover:border-emerald-500/40"
+          <header className="milestone-m1-detail-header mx-auto w-full max-w-[min(96%,72rem)] shrink-0 border-b border-white/[0.08] bg-transparent px-2 pb-3 pt-1 text-center sm:px-4 sm:pb-4 sm:pt-2">
+            <div className="milestone-m1-detail-chrome flex w-full flex-wrap items-center justify-center gap-3 sm:gap-4">
+              <button
+                type="button"
+                onClick={goToHub}
+                className="glass inline-flex items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[10px] font-mono tracking-wider text-white/80 hover:border-emerald-500/40 sm:px-4 sm:py-2 sm:text-[11px]"
+              >
+                ← Menu principal
+              </button>
+              <button
+                type="button"
+                onClick={() => setDarkMode((d) => !d)}
+                className="glass rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[10px] font-mono text-white/70 sm:px-4 sm:py-2 sm:text-[11px]"
+              >
+                {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
+              </button>
+            </div>
+            <motion.div
+              className="mt-3 sm:mt-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              ← Menu principal
-            </button>
-            <button
-              type="button"
-              onClick={() => setDarkMode((d) => !d)}
-              className="glass rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[var(--m1-text-ui)] font-mono text-white/70"
-            >
-              {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
-            </button>
-          </div>
-
-          <header className="milestone-m1-detail-header mx-auto mb-[1vh] max-w-[min(96%,72rem)] shrink-0 bg-transparent text-center">
-            <p className="text-[var(--m1-text-mono-tight)] font-mono tracking-[0.18em] text-white/50">
-              {isFuelModuleView
-                ? "SIG-FROTA — GESTÃO DE COMBUSTÍVEL"
-                : "SIG-PATRIMÔNIO — GESTÃO DE ATIVOS"}
-            </p>
-            <h1 className="mt-[0.4vh] text-[var(--m1-text-title)] font-bold tracking-wide text-white/95">
-              {moduleTitleLine(activeView)}
-            </h1>
-            <p className="mx-auto mt-[0.5vh] max-w-[min(96%,42rem)] text-[var(--m1-text-body)] leading-snug text-white/60">
-              {moduleSubtitle(
-                activeView,
-                isFuelModuleView,
-                isAssetsModuleView
-              )}
-            </p>
+              <h2 className="text-2xl font-bold tracking-wider text-white/90 md:text-3xl">
+                {moduleTitleLine(activeView)}
+              </h2>
+              <p className="mt-2 text-xs font-mono tracking-[0.25em] text-white/25 uppercase">
+                {isFuelModuleView
+                  ? "SIG-FROTA — GESTÃO DE COMBUSTÍVEL"
+                  : "SIG-PATRIMÔNIO — GESTÃO DE ATIVOS"}{" "}
+                · tela operacional
+              </p>
+            </motion.div>
           </header>
 
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           <Operational6040Workspace
             variant={isFuelModuleView ? "frota" : "patrimonio"}
             title={moduleTitleLine(activeView)}
@@ -1522,6 +1523,7 @@ export default function Milestone1Client({
             </div>
           )}
           </Operational6040Workspace>
+          </div>
         </div>
       )}
 

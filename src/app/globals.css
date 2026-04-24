@@ -510,6 +510,28 @@ body::after {
   box-shadow: none !important;
 }
 
+/* M1/M2 detalhe: grelha 60/40 ~95% da altura útil + margem lateral para não colar ao néon exterior */
+.milestone-detail-neon[data-milestone="1"] .milestone-operational-root,
+.milestone-detail-neon[data-milestone="2"] .milestone-operational-root {
+  box-sizing: border-box;
+  padding-left: min(1.35vmin, 12px);
+  padding-right: min(1.35vmin, 12px);
+  min-height: 0;
+}
+
+.milestone-detail-neon[data-milestone="1"] .milestone-detail-operational-grid,
+.milestone-detail-neon[data-milestone="2"] .milestone-detail-operational-grid {
+  box-sizing: border-box;
+  /* ~0.95 da altura da área flexível; sobrepõe o flex-1 utilitário */
+  flex: 0.95 1 0% !important;
+  max-height: 95% !important;
+  min-height: 0 !important;
+  width: 100%;
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .milestone-detail-neon[data-audit-variant="frota"] :is(div, section, article, aside)[class*="rounded"]:not(button),
 .milestone-detail-neon[data-audit-variant="frota"] .glass {
   background-color: rgba(0, 14, 6, 0.58) !important;

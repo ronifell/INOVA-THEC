@@ -210,7 +210,7 @@ export default function Operational6040Workspace({
         )}
       </AnimatePresence>
 
-      <div className="relative grid min-h-0 flex-1 grid-cols-1 gap-[min(2.2vmin,2vh)] lg:grid-cols-[minmax(0,3fr)_minmax(3.2%,4.2%)_minmax(0,2fr)] lg:gap-x-[min(1.4vmin,1.2vh)] lg:gap-y-0">
+      <div className="milestone-detail-operational-grid relative grid min-h-0 flex-1 grid-cols-1 gap-[min(2.2vmin,2vh)] lg:grid-cols-[minmax(0,3fr)_minmax(3.2%,4.2%)_minmax(0,2fr)] lg:gap-x-[min(1.4vmin,1.2vh)] lg:gap-y-0">
         <FlowRibbonDesktop variant={variant} pulse={pulse} goldSeal={goldSeal} />
         <FlowRibbonMobile variant={variant} pulse={pulse} goldSeal={goldSeal} />
 
