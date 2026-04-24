@@ -316,6 +316,13 @@ body::after {
     inset 0 0 56px rgba(212, 175, 55, 0.06);
 }
 
+/* Gold-seal state: prevent stacked backdrop blurs from washing out content. */
+.audit-flow-gold-ring :is(div, section, article, aside)[class*="rounded"]:not(button),
+.audit-flow-gold-ring .glass {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 /* Faixa das 7 cartas — respiro para halos (box-shadow até ~96px) + float sem clip dos pais */
 .module-cards-glow-gutter {
   box-sizing: border-box;
@@ -578,8 +585,8 @@ body::after {
       rgba(0, 0, 0, 0.42)
     ) !important;
   border-color: rgba(57, 255, 20, 0.55) !important;
-  backdrop-filter: blur(8px) saturate(1.08);
-  -webkit-backdrop-filter: blur(8px) saturate(1.08);
+  backdrop-filter: saturate(1.08);
+  -webkit-backdrop-filter: saturate(1.08);
   box-shadow:
     inset 0 0 0 1px rgba(57, 255, 20, 0.38),
     0 0 14px rgba(57, 255, 20, 0.22),
@@ -595,8 +602,8 @@ body::after {
       rgba(0, 0, 0, 0.42)
     ) !important;
   border-color: rgba(56, 189, 248, 0.52) !important;
-  backdrop-filter: blur(8px) saturate(1.08);
-  -webkit-backdrop-filter: blur(8px) saturate(1.08);
+  backdrop-filter: saturate(1.08);
+  -webkit-backdrop-filter: saturate(1.08);
   box-shadow:
     inset 0 0 0 1px rgba(56, 189, 248, 0.34),
     0 0 14px rgba(56, 189, 248, 0.22),

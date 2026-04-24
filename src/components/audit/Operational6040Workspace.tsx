@@ -215,7 +215,7 @@ export default function Operational6040Workspace({
         <FlowRibbonMobile variant={variant} pulse={pulse} goldSeal={goldSeal} />
 
         <motion.div
-          className={`milestone-detail-command-panel relative z-[12] flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border bg-slate-800/90 backdrop-blur-md lg:order-1 ${
+          className={`milestone-detail-command-panel relative z-[12] flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border bg-slate-800/90 lg:order-1 ${
             variant === "patrimonio" ? "border-sky-400/25" : "border-emerald-500/20"
           }`}
           style={{
