@@ -33,6 +33,7 @@ import PortalModuleCard from "@/components/PortalModuleCard";
 import { MODULES } from "@/lib/modules";
 import { useStore } from "@/store/useStore";
 import { openFuelAuditPdf, openPatrimonyPdf } from "./milestone1Pdf";
+import GreenScanSweep from "@/components/GreenScanSweep";
 
 const Milestone1Map = dynamic(() => import("./Milestone1Map"), {
   ssr: false,
@@ -839,28 +840,31 @@ export default function Milestone1Client({
                 contentFullWidth
                 className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
               >
-                <div className="grid h-full min-h-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
-                  {MILESTONE1_HUB_SEVEN.map(({ item }, i) => (
-                    <div
-                      key={item.hubKey}
-                      className="relative z-[1] h-full w-[90%] justify-self-center"
-                    >
-                      <PortalModuleCard
-                        index={i}
-                        color={M1_FROTA.color}
-                        colorRgb={M1_FROTA.colorRgb}
-                        icon={item.icon}
-                        title={item.title}
-                        description={item.description}
-                        isFullModule
-                        voiceText={item.voiceText}
-                        onClick={() => {
-                          triggerHashValidation();
-                          setView(item.view);
-                        }}
-                      />
-                    </div>
-                  ))}
+                <div className="relative h-full min-h-0 w-full flex-1 overflow-visible">
+                  <GreenScanSweep />
+                  <div className="grid h-full min-h-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                    {MILESTONE1_HUB_SEVEN.map(({ item }, i) => (
+                      <div
+                        key={item.hubKey}
+                        className="relative z-[1] h-full w-[90%] justify-self-center"
+                      >
+                        <PortalModuleCard
+                          index={i}
+                          color={M1_FROTA.color}
+                          colorRgb={M1_FROTA.colorRgb}
+                          icon={item.icon}
+                          title={item.title}
+                          description={item.description}
+                          isFullModule
+                          voiceText={item.voiceText}
+                          onClick={() => {
+                            triggerHashValidation();
+                            setView(item.view);
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </AuditCommandFrame>
 

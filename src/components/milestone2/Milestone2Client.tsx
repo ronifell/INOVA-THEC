@@ -19,6 +19,7 @@ import FuelGeographicInsumo from "@/components/milestone2/fuel/FuelGeographicIns
 import FuelSentenceLiquidation from "@/components/milestone2/fuel/FuelSentenceLiquidation";
 import FuelEconomicidadePanel from "@/components/milestone2/fuel/FuelEconomicidadePanel";
 import FuelAuditExitReports from "@/components/milestone2/fuel/FuelAuditExitReports";
+import GreenScanSweep from "@/components/GreenScanSweep";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -200,6 +201,7 @@ export default function Milestone2Client() {
     activeMenu === "frota"
       ? "SIG-FROTA — GESTÃO DE COMBUSTÍVEL"
       : "SIG-PATRIMÔNIO — GESTÃO DE ATIVOS";
+
   const firstFuel = demoData?.resultados_motor_glosa?.[0];
   const patrimonyAssets = demoData?.bens_patrimonio ?? [];
   const totalPatrimony = demoData?.resumo_patrimonio?.valor_patrimonial_total ?? 0;
@@ -671,25 +673,28 @@ export default function Milestone2Client() {
                     >
                       ← Portal Milestone 2
                     </button>
-                    <div className="grid h-full min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] pt-[min(7.4vmin,6.6vh)] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
-                      {submenuTiles.map((tile, i) => (
-                        <div
-                          key={tile.id}
-                          className="relative z-[1] h-full w-[90%] justify-self-center"
-                        >
-                          <PortalModuleCard
-                            index={i}
-                            color={menuTheme.color}
-                            colorRgb={menuTheme.colorRgb}
-                            icon={tile.icon}
-                            title={tile.title}
-                            description={tile.description}
-                            isFullModule
-                            voiceText={`${menuTitle}. ${tile.title}. ${tile.description}`}
-                            onClick={() => openTile(tile)}
-                          />
-                        </div>
-                      ))}
+                    <div className="relative h-full min-h-0 min-w-0 w-full flex-1 overflow-visible pt-[min(7.4vmin,6.6vh)]">
+                      <GreenScanSweep />
+                      <div className="grid h-full min-h-0 min-w-0 w-full auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                        {submenuTiles.map((tile, i) => (
+                          <div
+                            key={tile.id}
+                            className="relative z-[1] h-full w-[90%] justify-self-center"
+                          >
+                            <PortalModuleCard
+                              index={i}
+                              color={menuTheme.color}
+                              colorRgb={menuTheme.colorRgb}
+                              icon={tile.icon}
+                              title={tile.title}
+                              description={tile.description}
+                              isFullModule
+                              voiceText={`${menuTitle}. ${tile.title}. ${tile.description}`}
+                              onClick={() => openTile(tile)}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </AuditCommandFrame>
