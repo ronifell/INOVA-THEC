@@ -210,7 +210,7 @@ export default function FuelAssetIdentification() {
               }`}
             >
               <div className="relative z-[1] flex w-full flex-col items-center justify-center gap-2 sm:flex-row sm:gap-4">
-                <PlateScannerFaceIllustration className="h-[min(26vmin,6.5rem)] w-[min(26vmin,6.5rem)] shrink-0 opacity-[0.97]" />
+                <PlateScannerFaceIllustration className="h-[min(32vmin,8.25rem)] w-[min(32vmin,8.25rem)] max-w-[min(92%,11rem)] shrink-0 opacity-[0.98]" />
                 <p className="shrink-0 font-mono text-[clamp(0.65rem,2.2vmin,0.875rem)] tracking-[0.35em] text-white/90">
                   {scenario === "fail" ? "XYZ-9999" : "ABC-1234"}
                 </p>

@@ -18,10 +18,12 @@ export const BOOT_EXIT_TOTAL_S =
     BOOT_TANK_FADE_DELAY_S + BOOT_TANK_FADE_S
   ) + 0.1;
 
-/** Duração total da interstitial de hashes (pós-100%). */
-export const POST100_HASH_TOTAL_MS = 9000;
-/** A partir daqui a home começa a surgir (fade ~HOME_SHELL_FADE_IN_S). Hashes seguem visíveis por cima. */
-export const POST100_HOME_REVEAL_MS = 7000;
+/**
+ * Pós-100% do tanque: tempo até encerrar o overlay (sem interstitial de hashes em scroll).
+ * A home é montada após POST100_HOME_REVEAL_MS; deepen segue POST100_HASH_TOTAL_MS.
+ */
+export const POST100_HASH_TOTAL_MS = 720;
+export const POST100_HOME_REVEAL_MS = 200;
 /** Fade-in do painel da home durante o cruzamento com os hashes (7–9 s). */
 export const HOME_SHELL_FADE_IN_S = 2;
 

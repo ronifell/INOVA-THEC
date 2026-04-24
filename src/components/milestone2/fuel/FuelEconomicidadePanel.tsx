@@ -12,6 +12,8 @@ export default function FuelEconomicidadePanel() {
   const [alertDev, setAlertDev] = useState(false);
   const [generated, setGenerated] = useState(false);
 
+  const lockedHash = useMemo(() => generateMockHash(), []);
+
   const efficiency = useMemo(() => {
     let base = 74;
     if (crossKmLiters) base += 8;
@@ -30,7 +32,7 @@ export default function FuelEconomicidadePanel() {
     <button
       type="button"
       disabled={!generated}
-      className={`w-full rounded-xl border-2 px-4 py-4 text-[11px] font-mono uppercase tracking-[0.16em] ${
+      className={`w-full rounded-lg border-2 px-3 py-2.5 text-[10px] font-mono uppercase tracking-[0.14em] sm:py-3 sm:text-[11px] ${
         generated
           ? "master-faith-metallic border-amber-400/45"
           : "cursor-not-allowed border-slate-500/35 bg-slate-600/45 text-slate-200/75"
@@ -50,94 +52,109 @@ export default function FuelEconomicidadePanel() {
     >
       <AuditPresentationHeader
         hashState={generated ? "locked" : "spinning"}
-        lockedHash={generateMockHash()}
+        lockedHash={generated ? lockedHash : undefined}
         custodyFirstCheck={generated}
         accentRgb="16, 185, 129"
       />
 
-      <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="space-y-3">
+      <div className="flex min-h-0 flex-col gap-2">
+        <div className="grid grid-cols-2 gap-1.5">
           <button
             type="button"
             onClick={() => setCrossKmLiters((v) => !v)}
-            className={`w-full rounded-lg border px-3 py-2 text-left text-xs font-mono ${
+            className={`rounded-lg border px-2 py-1.5 text-left text-[9px] font-mono leading-snug sm:py-2 sm:text-[10px] ${
               crossKmLiters
                 ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-100"
                 : "border-white/15 bg-white/5 text-white/70"
             }`}
           >
-            KM percorrido vs. Litros consumidos
+            KM vs. litros
           </button>
           <button
             type="button"
             onClick={() => setCrossMonth((v) => !v)}
-            className={`w-full rounded-lg border px-3 py-2 text-left text-xs font-mono ${
+            className={`rounded-lg border px-2 py-1.5 text-left text-[9px] font-mono leading-snug sm:py-2 sm:text-[10px] ${
               crossMonth
                 ? "border-cyan-500/40 bg-cyan-500/15 text-cyan-100"
                 : "border-white/15 bg-white/5 text-white/70"
             }`}
           >
-            Gasto atual vs. média do mês anterior
+            Gasto vs. mês ant.
           </button>
           <button
             type="button"
             onClick={() => setAlertDev((v) => !v)}
-            className={`w-full rounded-lg border px-3 py-2 text-left text-xs font-mono ${
+            className={`rounded-lg border px-2 py-1.5 text-left text-[9px] font-mono leading-snug sm:py-2 sm:text-[10px] ${
               alertDev
-                ? "border-red-500/55 bg-red-950/55 text-red-200"
+                ? "border-red-500/55 bg-red-900/40 text-red-200"
                 : "border-white/15 bg-white/5 text-white/70"
             }`}
           >
-            Desvio de consumo
+            Desvio consumo
           </button>
           <button
             type="button"
             onClick={() => setGenerated(true)}
-            className="fuel-neon-action-btn w-full rounded-xl border border-emerald-500/45 bg-emerald-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white"
+            className="fuel-neon-action-btn rounded-lg border border-emerald-500/45 bg-emerald-600 px-2 py-1.5 text-[9px] font-bold uppercase tracking-wide text-white sm:py-2 sm:text-[10px]"
           >
-            Gerar gráfico de economicidade
+            Gerar gráfico
           </button>
         </div>
 
-        <div className="space-y-3">
-          <div className="rounded-xl border border-white/10 bg-slate-700/45 p-3">
-            <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
-              Velocímetro de eficiência da frota
+        <div className="grid grid-cols-2 gap-1.5">
+          <div className="rounded-lg border border-white/15 bg-slate-700/45 p-2">
+            <p className="text-[8px] font-mono uppercase tracking-wider text-white/50 sm:text-[9px]">
+              Eficiência
             </p>
-            <div className="mt-3 h-[24%] min-h-[18vh]">
+            <div className="mt-1 h-16 w-full sm:h-[4.25rem]">
               <svg viewBox="0 0 240 120" className="h-full w-full" aria-hidden>
-                <path d="M 20 110 A 100 100 0 0 1 220 110" fill="none" stroke="rgba(148,163,184,0.35)" strokeWidth="8" />
-                <path d="M 20 110 A 100 100 0 0 1 220 110" fill="none" stroke={efficiency >= 65 ? "#10b981" : "#ef4444"} strokeWidth="8" strokeDasharray={`${(efficiency / 100) * 314} 400`} />
+                <path
+                  d="M 20 110 A 100 100 0 0 1 220 110"
+                  fill="none"
+                  stroke="rgba(148,163,184,0.35)"
+                  strokeWidth="7"
+                />
+                <path
+                  d="M 20 110 A 100 100 0 0 1 220 110"
+                  fill="none"
+                  stroke={efficiency >= 65 ? "#10b981" : "#ef4444"}
+                  strokeWidth="7"
+                  strokeDasharray={`${(efficiency / 100) * 314} 400`}
+                />
                 <motion.line
                   x1="120"
                   y1="110"
-                  x2={120 + 74 * Math.cos(Math.PI * (1 - efficiency / 100))}
-                  y2={110 - 74 * Math.sin(Math.PI * (1 - efficiency / 100))}
+                  x2={120 + 70 * Math.cos(Math.PI * (1 - efficiency / 100))}
+                  y2={110 - 70 * Math.sin(Math.PI * (1 - efficiency / 100))}
                   stroke="#e2e8f0"
-                  strokeWidth="3"
+                  strokeWidth="2.5"
                 />
               </svg>
             </div>
           </div>
-          <div className="rounded-xl border border-white/10 bg-slate-700/45 p-3">
-            <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
-              Painel de economia (R$)
+          <div className="rounded-lg border border-white/15 bg-slate-700/45 p-2">
+            <p className="text-[8px] font-mono uppercase tracking-wider text-white/50 sm:text-[9px]">
+              Economia (R$)
             </p>
-            <p className="mt-2 font-mono text-[min(3.2vmin,3.2vw)] text-emerald-300">
+            <p className="mt-2 font-mono text-sm text-emerald-300 sm:text-base">
               R$ {savings.toLocaleString("pt-BR")}
             </p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-slate-700/45 p-3">
-            <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
-              Tendência de despesas
+          <div className="col-span-2 rounded-lg border border-white/15 bg-slate-700/45 p-2">
+            <p className="text-[8px] font-mono uppercase tracking-wider text-white/50 sm:text-[9px]">
+              Tendência
             </p>
-            <svg className="mt-2 h-[16%] min-h-[12vh] w-full" viewBox="0 0 300 120" preserveAspectRatio="none">
+            <svg className="mt-1 h-10 w-full sm:h-11" viewBox="0 0 300 120" preserveAspectRatio="none">
               <motion.polyline
                 fill="none"
                 stroke={alertDev ? "#ef4444" : "#10b981"}
-                strokeWidth="3"
-                points={alertDev ? "0,36 55,38 110,52 165,58 220,63 300,78" : "0,72 55,65 110,58 165,52 220,45 300,38"}
-                animate={{ opacity: [0.7, 1, 0.7] }}
+                strokeWidth="2.5"
+                points={
+                  alertDev
+                    ? "0,36 55,38 110,52 165,58 220,63 300,78"
+                    : "0,72 55,65 110,58 165,52 220,45 300,38"
+                }
+                animate={{ opacity: [0.75, 1, 0.75] }}
                 transition={{ duration: 6, repeat: Infinity }}
               />
             </svg>
@@ -147,4 +164,3 @@ export default function FuelEconomicidadePanel() {
     </Operational6040Workspace>
   );
 }
-

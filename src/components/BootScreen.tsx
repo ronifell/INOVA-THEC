@@ -6,11 +6,9 @@ import { motion } from "framer-motion";
 import {
   BOOT_BACKDROP_FADE_S,
   BOOT_EXIT_TOTAL_S,
-  HOME_SHELL_FADE_IN_S,
   POST100_HASH_TOTAL_MS,
   POST100_HOME_REVEAL_MS,
 } from "@/lib/bootTransition";
-import Post100HashStorm from "@/components/Post100HashStorm";
 
 /** Fração do tanque por segundo (3x do ritmo anterior). */
 const FILL_RATE = 0.4;
@@ -228,11 +226,8 @@ export default function BootScreen({
   const [phase, setPhase] = useState<BootPhase>("idle");
   const [burstBubbles, setBurstBubbles] = useState<BurstBubbleSpec[]>([]);
   const [sprayElapsed, setSprayElapsed] = useState(0);
-  /** Ao atingir 100%: fundo da home (mesh + flocos); o painel da home só entra após o hold dos hashes. */
+  /** Ao atingir 100%: fundo da home; o painel da home entra após POST100_HOME_REVEAL_MS. */
   const [post100View, setPost100View] = useState(false);
-  /** Hashes ativos durante POST100_HASH_TOTAL_MS; home surge ~POST100_HOME_REVEAL_MS. */
-  const [hashStormActive, setHashStormActive] = useState(false);
-  const [hashInterstitialMs, setHashInterstitialMs] = useState(0);
   const tankRef = useRef<HTMLDivElement>(null);
   const rafFillRef = useRef<number>(0);
   const rafWaveRef = useRef<number>(0);
@@ -292,7 +287,6 @@ export default function BootScreen({
         fillRef.current = 1;
         flushSync(() => {
           setPost100View(true);
-          setHashStormActive(true);
         });
       }
     };
@@ -347,48 +341,24 @@ export default function BootScreen({
     setBurstBubbles(genBurstBubbles(r, maxDist));
   }, [phase, burstBubbles.length]);
 
-  /**
-   * 0–7 s: só hashes + fundo; 7 s: monta a home (fade na página);
-   * 7–9 s: hashes por cima esmaecem; 9 s: encerra interstitial e inicia saída do overlay.
-   */
+  /** Após 100%: revela a home e, em seguida, encerra a interstitial (sem faixa de hashes em scroll). */
   useEffect(() => {
-    if (!hashStormActive) return;
+    if (!post100View) return;
     homeRevealFiredRef.current = false;
-    const t0 = Date.now();
-    const tickMs = 32;
-    const id = window.setInterval(() => {
-      const ms = Date.now() - t0;
-      setHashInterstitialMs(ms);
-
-      if (!homeRevealFiredRef.current && ms >= POST100_HOME_REVEAL_MS) {
+    const revealId = window.setTimeout(() => {
+      if (!homeRevealFiredRef.current) {
         homeRevealFiredRef.current = true;
         onRevealRef.current();
       }
-
-      if (ms >= POST100_HASH_TOTAL_MS) {
-        window.clearInterval(id);
-        setHashStormActive(false);
-        setHashInterstitialMs(0);
-        setPhase("deepen");
-      }
-    }, tickMs);
-    return () => window.clearInterval(id);
-  }, [hashStormActive]);
-
-  const hashContentOpacity = (() => {
-    if (!hashStormActive) return 0;
-    if (hashInterstitialMs < POST100_HOME_REVEAL_MS) return 1;
-    const u = Math.min(
-      1,
-      Math.max(
-        0,
-        (hashInterstitialMs - POST100_HOME_REVEAL_MS) /
-          (POST100_HASH_TOTAL_MS - POST100_HOME_REVEAL_MS)
-      )
-    );
-    const smooth = u * u * (3 - 2 * u);
-    return Math.max(0, 1 - smooth);
-  })();
+    }, POST100_HOME_REVEAL_MS);
+    const deepenId = window.setTimeout(() => {
+      setPhase("deepen");
+    }, POST100_HASH_TOTAL_MS);
+    return () => {
+      window.clearTimeout(revealId);
+      window.clearTimeout(deepenId);
+    };
+  }, [post100View]);
 
   /* Transparência gradual do overlay assim que termina o spray (sem pausa escura). */
   useEffect(() => {
@@ -498,11 +468,6 @@ export default function BootScreen({
           background:
             "radial-gradient(ellipse 95% 80% at 50% 38%, rgba(4, 120, 87, 0.22) 0%, rgba(2, 24, 20, 0.55) 42%, rgba(6, 12, 22, 0.75) 100%)",
         }}
-      />
-
-      <Post100HashStorm
-        visible={hashStormActive}
-        contentOpacity={hashContentOpacity}
       />
 
       {/* Bolhas — somem com o fundo; o tanque permanece visível um pouco mais */}

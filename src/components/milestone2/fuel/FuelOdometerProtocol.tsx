@@ -53,7 +53,7 @@ function TypewriterLines({
 
   return (
     <div
-      className={`min-h-[140px] rounded-xl border border-white/15 bg-slate-700/45 px-3 py-3 font-mono text-[11px] leading-relaxed sm:text-xs ${cls}`}
+      className={`max-h-[5.5rem] min-h-0 overflow-hidden rounded-lg border border-white/15 bg-slate-700/45 px-2 py-1.5 font-mono text-[9px] leading-snug sm:max-h-[6rem] sm:text-[10px] ${cls}`}
     >
       {shown.map((line, i) => (
         <p
@@ -225,7 +225,7 @@ export default function FuelOdometerProtocol() {
     <button
       type="button"
       disabled={state !== "success"}
-      className={`w-full rounded-xl border-2 px-4 py-4 text-[11px] font-mono uppercase tracking-[0.18em] sm:py-5 sm:text-xs ${
+      className={`w-full rounded-lg border-2 px-3 py-2.5 text-[10px] font-mono uppercase tracking-[0.14em] sm:py-3 sm:text-[11px] ${
         state === "success"
           ? "master-faith-metallic border-amber-400/45"
           : "cursor-not-allowed border-slate-500/35 bg-slate-600/45 text-slate-200/75"
@@ -259,31 +259,32 @@ export default function FuelOdometerProtocol() {
         accentRgb="16, 185, 129"
       />
 
-      <div className="space-y-4">
-        <div className="flex flex-wrap justify-center gap-2">
-          <input
-            ref={(el) => {
-              refCapture.current = el;
-            }}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            className="sr-only"
-            onChange={(e) => void handleCapture(e.target.files?.[0])}
-          />
+      <div className="flex min-h-0 flex-col gap-2">
+        <input
+          ref={(el) => {
+            refCapture.current = el;
+          }}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="sr-only"
+          onChange={(e) => void handleCapture(e.target.files?.[0])}
+        />
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
           <button
             type="button"
             onClick={() => refCapture.current?.click()}
-            className="rounded-lg border border-emerald-500/45 bg-emerald-500/10 px-3 py-2 text-[11px] font-mono text-emerald-100"
+            className="col-span-2 rounded-lg border border-emerald-500/45 bg-emerald-500/10 px-2 py-1.5 text-left text-[9px] font-mono leading-tight text-emerald-100 sm:col-span-3 sm:py-2 sm:text-[10px]"
           >
-            Capturar hodômetro {capturedName ? `· ${capturedName.slice(0, 16)}` : ""}
+            Capturar hodômetro
+            {capturedName ? ` · ${capturedName.slice(0, 14)}` : ""}
           </button>
           <button
             type="button"
             onClick={startProcessing}
-            className="rounded-lg border border-cyan-500/35 bg-cyan-500/10 px-3 py-2 text-[11px] font-mono text-cyan-100"
+            className="rounded-lg border border-cyan-500/35 bg-cyan-500/10 px-2 py-1.5 text-[9px] font-mono leading-tight text-cyan-100 sm:text-[10px]"
           >
-            1 · Processar captura (2s)
+            1 · Processar (2s)
           </button>
           <button
             type="button"
@@ -292,9 +293,9 @@ export default function FuelOdometerProtocol() {
               setLocked(true);
               void (async () => setHash(await generateSHA256("OK")))();
             }}
-            className="rounded-lg border border-emerald-500/35 px-3 py-2 text-[11px] font-mono text-emerald-200"
+            className="rounded-lg border border-emerald-500/35 px-2 py-1.5 text-[9px] font-mono text-emerald-200 sm:text-[10px]"
           >
-            2 · Verde (sucesso)
+            2 · Verde
           </button>
           <button
             type="button"
@@ -303,9 +304,9 @@ export default function FuelOdometerProtocol() {
               setLocked(false);
               setHash(staticWarnHash());
             }}
-            className="rounded-lg border border-amber-500/35 px-3 py-2 text-[11px] font-mono text-amber-100"
+            className="rounded-lg border border-amber-500/35 px-2 py-1.5 text-[9px] font-mono text-amber-100 sm:text-[10px]"
           >
-            3 · Amarelo (nitidez)
+            3 · Amarelo
           </button>
           <button
             type="button"
@@ -314,20 +315,20 @@ export default function FuelOdometerProtocol() {
               setLocked(false);
               setHash("aa0000" + generateMockHash().slice(8));
             }}
-            className="rounded-lg border border-red-500/40 px-3 py-2 text-[11px] font-mono text-red-200"
+            className="rounded-lg border border-red-500/40 px-2 py-1.5 text-[9px] font-mono text-red-200 sm:text-[10px]"
           >
-            4 · Vermelho (fraude)
+            4 · Vermelho
           </button>
         </div>
 
-        <div className="grid min-h-0 gap-[clamp(0.5rem,2vh,1rem)] lg:grid-cols-2 lg:items-stretch">
+        <div className="grid min-h-0 grid-cols-1 gap-2 lg:grid-cols-2 lg:items-stretch">
           <div
-            className={`relative flex min-h-0 flex-col overflow-hidden rounded-xl border border-white/15 bg-slate-700/50 ${
+            className={`relative flex max-h-[9.5rem] min-h-0 flex-col overflow-hidden rounded-lg border border-white/15 bg-slate-700/50 sm:max-h-[10.5rem] ${
               state === "critical" ? "fuel-glitch-img" : ""
             }`}
           >
-            <div className="relative flex min-h-0 w-full flex-1 flex-col items-center justify-center bg-gradient-to-br from-slate-700/95 to-slate-800/95 p-[clamp(0.5rem,3%,1rem)]">
-              <span className="font-mono text-3xl text-emerald-400/90">48372</span>
+            <div className="relative flex min-h-0 w-full flex-1 flex-col items-center justify-center bg-gradient-to-br from-slate-700/95 to-slate-800/95 p-2 sm:p-2.5">
+              <span className="font-mono text-2xl text-emerald-400/90 sm:text-3xl">48372</span>
               {(state === "processing" || state === "success") && (
                 <motion.div
                   className="pointer-events-none absolute inset-x-[10%] top-[15%] h-[12%] bg-emerald-400/35"
@@ -345,10 +346,10 @@ export default function FuelOdometerProtocol() {
               )}
               {state === "warn" && (
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                  <div className="rounded-full border-2 border-amber-400/60 bg-slate-700/60 p-4 text-4xl">
+                  <div className="rounded-full border-2 border-amber-400/60 bg-slate-700/60 p-3 text-3xl sm:p-4 sm:text-4xl">
                     📷
                   </div>
-                  <span className="absolute bottom-6 text-[10px] font-mono text-amber-200">
+                  <span className="absolute bottom-3 text-[9px] font-mono text-amber-200">
                     ↻ Repetir captura
                   </span>
                 </div>
@@ -380,18 +381,18 @@ export default function FuelOdometerProtocol() {
               <TypewriterLines key="c" active lines={linesCrit} tone="red" />
             )}
             {state === "idle" && (
-              <p className="text-center text-xs text-white/45">
-                Selecione um estado de demonstração acima.
+              <p className="text-center text-[10px] leading-snug text-white/50">
+                Selecione um cenário nos botões acima.
               </p>
             )}
           </div>
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-          <p className="text-[10px] font-mono uppercase tracking-wider text-white/40">
+        <div className="rounded-lg border border-white/15 bg-white/5 p-2">
+          <p className="text-[9px] font-mono uppercase tracking-wider text-white/45">
             Curva de consumo observado
           </p>
-          <svg className="mt-2 h-24 w-full" viewBox="0 0 400 200" preserveAspectRatio="none">
+          <svg className="mt-1 h-12 w-full sm:h-14" viewBox="0 0 400 200" preserveAspectRatio="none">
             <polyline
               fill="rgba(16,185,129,0.12)"
               stroke={state === "critical" ? "#ef4444" : "#10b981"}
@@ -407,7 +408,7 @@ export default function FuelOdometerProtocol() {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border-2 border-amber-400/70 bg-amber-900/30 text-center text-[9px] font-bold uppercase leading-tight text-amber-100 shadow-[0_0_32px_rgba(251,191,36,0.35)]"
+              className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-2 border-amber-400/70 bg-amber-900/30 text-center text-[8px] font-bold uppercase leading-tight text-amber-100 shadow-[0_0_24px_rgba(251,191,36,0.35)] sm:h-[4.5rem] sm:w-[4.5rem] sm:text-[9px]"
             >
               Fé pública
               {[0, 1, 2].map((i) => (
