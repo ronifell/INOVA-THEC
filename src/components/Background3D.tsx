@@ -170,20 +170,21 @@ function SnowFrostParticles() {
           vec3 greenBright = vec3(0.38, 0.98, 0.58);
           vec3 greenMid = vec3(0.08, 0.82, 0.32);
           vec3 greenDeep = vec3(0.01, 0.34, 0.12);
-          vec3 col = mix(greenDeep, greenMid, pow(shape, 0.85));
-          col = mix(col, greenBright, pow(shape, 0.45));
-          col = mix(col, greenCore, pow(shape, 2.2) * 0.85);
+          vec3 col = mix(greenDeep, greenMid, pow(shape, 0.8));
+          col = mix(col, greenBright, pow(shape, 0.42));
+          col = mix(col, greenCore, pow(shape, 2.1) * 0.96);
 
           float spark = randomSparkle(gl_PointCoord, vSeed, uTime);
           float sp = min(spark, 2.4);
           float sparkW = 0.42 + 0.55 * smoothstep(0.12, 1.2, sp);
           vec3 twinkleHue = mix(vec3(0.18, 0.96, 0.41), vec3(0.86, 1.0, 0.9), pow(clamp(sp, 0.0, 1.0), 0.5));
-          col += twinkleHue * sp * shape * sparkW * (0.7 + 0.62 * smoothstep(1.5, 16.0, vSizeMult));
-          col += greenBright * pow(shape, 1.5) * 0.22;
+          col += twinkleHue * sp * shape * sparkW * (0.92 + 0.86 * smoothstep(1.5, 16.0, vSizeMult));
+          col += greenBright * pow(shape, 1.35) * 0.36;
+          col += greenCore * pow(shape, 2.6) * 0.2;
 
           float a = shape * vOpacity;
-          a *= 0.52 + 0.48 * shape;
-          a += sp * 0.4 * vOpacity * shape;
+          a *= 0.62 + 0.58 * shape;
+          a += sp * 0.5 * vOpacity * shape;
           a *= 0.94 + 0.06 * hash11(floor(uTime * 11.0 + vSeed * 0.03));
           a = clamp(a, 0.0, 1.0);
 
