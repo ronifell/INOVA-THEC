@@ -879,10 +879,11 @@ export default function Milestone1Client({
 
       {activeView !== "hub" && (
         <div
-          className="milestone-detail-neon flex min-h-0 flex-1 flex-col overflow-hidden"
+          className="milestone-detail-neon flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden !bg-transparent [background-color:transparent!important] [background-image:none!important] [backdrop-filter:none!important]"
+          data-milestone="1"
           data-audit-variant={isFuelModuleView ? "frota" : "patrimonio"}
         >
-          <div className="mx-auto mb-[1vh] flex max-w-[min(96%,72rem)] shrink-0 flex-wrap items-center justify-center gap-4 sm:gap-6">
+          <div className="milestone-m1-detail-chrome mx-auto mb-[1vh] flex max-w-[min(96%,72rem)] shrink-0 flex-wrap items-center justify-center gap-4 sm:gap-6">
             <button
               type="button"
               onClick={goToHub}
@@ -899,7 +900,7 @@ export default function Milestone1Client({
             </button>
           </div>
 
-          <header className="mx-auto mb-[1vh] max-w-[min(96%,72rem)] shrink-0 text-center">
+          <header className="milestone-m1-detail-header mx-auto mb-[1vh] max-w-[min(96%,72rem)] shrink-0 bg-transparent text-center">
             <p className="text-[var(--m1-text-mono-tight)] font-mono tracking-[0.18em] text-white/50">
               {isFuelModuleView
                 ? "SIG-FROTA — GESTÃO DE COMBUSTÍVEL"

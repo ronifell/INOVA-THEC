@@ -348,8 +348,8 @@ body::after {
   --m1-map-min-height: min(56vh, 520px);
 }
 
-/* Milestone 1/2 detail — néon “glow in the dark” (verde matrix / ciano patrimônio) */
-.milestone-detail-neon[data-audit-variant="frota"] {
+/* Milestone 1/2 detail — néon “glow in the dark” (só quando NÃO é detalhe M1/M2: esses usam fundo transparente) */
+.milestone-detail-neon[data-audit-variant="frota"]:not([data-milestone="1"]):not([data-milestone="2"]) {
   background: rgba(0, 10, 4, 0.94);
   border: 1px solid rgba(57, 255, 20, 0.72);
   border-radius: 1rem;
@@ -362,7 +362,7 @@ body::after {
     0 0 88px rgba(57, 255, 20, 0.08);
 }
 
-.milestone-detail-neon[data-audit-variant="patrimonio"] {
+.milestone-detail-neon[data-audit-variant="patrimonio"]:not([data-milestone="1"]):not([data-milestone="2"]) {
   background: rgba(2, 12, 22, 0.94);
   border: 1px solid rgba(56, 189, 248, 0.68);
   border-radius: 1rem;
@@ -375,7 +375,7 @@ body::after {
     0 0 88px rgba(125, 211, 252, 0.08);
 }
 
-.milestone-detail-neon:not([data-audit-variant]) {
+.milestone-detail-neon:not([data-audit-variant]):not([data-milestone="1"]):not([data-milestone="2"]) {
   background: rgba(0, 10, 4, 0.94);
   border: 1px solid rgba(57, 255, 20, 0.72);
   border-radius: 1rem;
@@ -467,6 +467,42 @@ body::after {
 
 /* Título / chrome do detalhe M2: sem preenchimento de fundo forçado pelo tema néon */
 .milestone-detail-neon[data-milestone="2"] header.milestone-m2-detail-header {
+  background: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Milestone 1 detail: caixa principal transparente (como M2) */
+.milestone-detail-neon[data-milestone="1"][data-audit-variant="frota"] {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(57, 255, 20, 0.72);
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(57, 255, 20, 0.32),
+    0 0 20px rgba(57, 255, 20, 0.42),
+    0 0 48px rgba(0, 255, 90, 0.18),
+    0 0 88px rgba(57, 255, 20, 0.08);
+}
+
+.milestone-detail-neon[data-milestone="1"][data-audit-variant="patrimonio"] {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(56, 189, 248, 0.68);
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(56, 189, 248, 0.28),
+    0 0 20px rgba(56, 189, 248, 0.4),
+    0 0 52px rgba(56, 189, 248, 0.14),
+    0 0 88px rgba(125, 211, 252, 0.08);
+}
+
+.milestone-detail-neon[data-milestone="1"] .milestone-m1-detail-chrome,
+.milestone-detail-neon[data-milestone="1"] header.milestone-m1-detail-header {
   background: transparent !important;
   background-image: none !important;
   backdrop-filter: none !important;

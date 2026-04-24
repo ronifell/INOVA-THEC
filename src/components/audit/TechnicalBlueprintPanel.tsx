@@ -101,17 +101,54 @@ export default function TechnicalBlueprintPanel({
               strokeWidth="1"
             />
 
-            {/* Cabine */}
+            {/* Cabine — perfil lateral moderno (defletor, vidros, espelho, grelha) */}
             <path
-              d="M 56 188 L 56 128 L 118 118 L 132 118 L 132 188 Z"
+              d="M 56 188 L 56 134 L 62 122 L 72 114 L 92 108 L 118 106 L 132 108 L 132 188 Z"
               fill="url(#bp-frota-cab)"
               stroke={`${S},0.72)`}
               strokeWidth="1.6"
             />
-            <path d="M 66 128 L 122 122" stroke={`${S},0.35)`} strokeWidth="0.9" />
-            <rect x="68" y="134" width="38" height="28" rx="3" fill="none" stroke={`${S},0.5)`} strokeWidth="1" />
-            <path d="M 108 138 L 124 136" stroke={`${S},0.4)`} strokeWidth="1" />
-            <rect x="72" y="168" width="44" height="18" rx="2" fill="none" stroke={`${S},0.42)`} strokeWidth="0.9" />
+            {/* Defletor aerodinâmico / spoiler de teto */}
+            <path
+              d="M 70 112 L 118 104 L 128 108 L 128 114 L 74 120 Z"
+              fill={`${S},0.12)`}
+              stroke={`${S},0.4)`}
+              strokeWidth="0.85"
+            />
+            {/* Para-brisa + coluna A */}
+            <path
+              d="M 60 128 L 60 148 Q 62 168 78 176 L 118 182"
+              fill="none"
+              stroke={`${S},0.45)`}
+              strokeWidth="1"
+            />
+            <path
+              d="M 60 128 L 88 118 L 118 114 L 118 168 L 72 162 Q 60 154 60 140 Z"
+              fill={`${S},0.06)`}
+              stroke={`${S},0.5)`}
+              strokeWidth="0.9"
+            />
+            <path d="M 78 124 L 78 166" stroke={`${S},0.28)`} strokeWidth="0.65" strokeDasharray="3 2" />
+            {/* Janela lateral + vão de porta */}
+            <rect x="88" y="132" width="34" height="26" rx="2.5" fill={`${S},0.05)`} stroke={`${S},0.48)`} strokeWidth="0.95" />
+            <path d="M 105 132 L 105 158" stroke={`${S},0.3)`} strokeWidth="0.55" />
+            {/* Espelho retrovisor */}
+            <path d="M 128 138 L 142 132" stroke={`${S},0.5)`} strokeWidth="1" />
+            <ellipse cx="146" cy="130" rx="5" ry="3.5" fill={`${S},0.08)`} stroke={`${S},0.55)`} strokeWidth="0.85" transform="rotate(-18 146 130)" />
+            {/* Grelha frontal + faróis */}
+            <path d="M 58 172 L 58 184 M 62 174 L 62 186" stroke={`${S},0.35)`} strokeWidth="0.7" />
+            <path
+              d="M 56 176 L 72 174 L 72 188 L 56 188 Z"
+              fill={`${S},0.08)`}
+              stroke={`${S},0.42)`}
+              strokeWidth="0.8"
+            />
+            <circle cx="64" cy="180" r="2.2" fill={`${S},0.25)`} stroke={`${S},0.55)`} strokeWidth="0.5" />
+            <circle cx="64" cy="186" r="2.2" fill={`${S},0.25)`} stroke={`${S},0.55)`} strokeWidth="0.5" />
+            {/* Degrau + para-choque */}
+            <path d="M 72 188 L 128 188 L 128 194 L 70 194 Z" fill={`${S},0.1)`} stroke={`${S},0.38)`} strokeWidth="0.75" />
+            <path d="M 68 194 L 132 194" stroke={`${S},0.35)`} strokeWidth="1.1" />
+            <rect x="72" y="168" width="48" height="14" rx="2" fill="none" stroke={`${S},0.38)`} strokeWidth="0.75" />
 
             {/* Tanque cilíndrico + domos */}
             <ellipse cx="228" cy="152" rx="92" ry="38" fill="url(#bp-frota-tank)" stroke={`${S},0.65)`} strokeWidth="1.5" />
@@ -222,44 +259,166 @@ export default function TechnicalBlueprintPanel({
       );
     }
 
+    const P = `rgba(${strokeRgb}`;
     return (
       <svg
-        viewBox="0 0 320 240"
-        className="h-full w-full max-h-[min(52vh,420px)]"
+        viewBox="0 0 420 280"
+        className="h-full w-full max-h-[min(54vh,440px)]"
         aria-hidden
       >
         <defs>
-          <linearGradient id="bp-pat-grid" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={`rgba(${strokeRgb},0.12)`} />
-            <stop offset="100%" stopColor={`rgba(${strokeRgb},0.24)`} />
+          <pattern id="bp-pat-eng-grid" width="12" height="12" patternUnits="userSpaceOnUse">
+            <path d="M 12 0 L 0 0 0 12" fill="none" stroke={`${P},0.1)`} strokeWidth="0.4" />
+          </pattern>
+          <linearGradient id="bp-pat-plaque" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={`${P},0.22)`} />
+            <stop offset="50%" stopColor={`${P},0.06)`} />
+            <stop offset="100%" stopColor={`${P},0.2)`} />
           </linearGradient>
+          <linearGradient id="bp-pat-map" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={`${P},0.14)`} />
+            <stop offset="100%" stopColor={`${P},0.05)`} />
+          </linearGradient>
+          <filter id="bp-pat-soft" x="-6%" y="-6%" width="112%" height="112%">
+            <feGaussianBlur stdDeviation="0.9" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <marker id="bp-pat-arr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+            <path d="M 0 0 L 5 2.5 L 0 5 Z" fill={`${P},0.45)`} />
+          </marker>
         </defs>
-        <rect
-          x="48"
-          y="36"
-          width="140"
-          height="168"
-          rx="8"
-          fill="none"
-          stroke={`rgba(${strokeRgb},0.72)`}
-          strokeWidth="2"
-        />
-        <rect
-          x="200"
-          y="72"
-          width="72"
-          height="96"
-          rx="6"
-          fill="url(#bp-pat-grid)"
-          stroke={`rgba(${strokeRgb},0.58)`}
-          strokeWidth="1.2"
-        />
-        <line x1="56" y1="80" x2="180" y2="80" stroke={`rgba(${strokeRgb},0.42)`} strokeWidth="1" />
-        <line x1="56" y1="112" x2="180" y2="112" stroke={`rgba(${strokeRgb},0.42)`} strokeWidth="1" />
-        <line x1="56" y1="144" x2="180" y2="144" stroke={`rgba(${strokeRgb},0.42)`} strokeWidth="1" />
-        <circle cx="118" cy="178" r="8" fill="none" stroke={`rgba(${strokeRgb},0.65)`} strokeWidth="1.5" />
-        <text x="160" y="28" textAnchor="middle" fill={`rgba(${strokeRgb},0.78)`} fontSize="11" fontFamily="ui-monospace">
+
+        <rect x="10" y="10" width="400" height="260" rx="14" fill="url(#bp-pat-eng-grid)" opacity="0.92" />
+        <rect x="10" y="10" width="400" height="260" rx="14" fill="none" stroke={`${P},0.42)`} strokeWidth="1.1" />
+
+        <g filter="url(#bp-pat-soft)">
+          {/* — PLAQUETA: chapa metálica + rebites + QR + código de barras */}
+          <rect x="28" y="58" width="118" height="168" rx="10" fill="url(#bp-pat-plaque)" stroke={`${P},0.62)`} strokeWidth="1.35" />
+          <circle cx="40" cy="72" r="2.2" fill="none" stroke={`${P},0.45)`} strokeWidth="0.7" />
+          <circle cx="134" cy="72" r="2.2" fill="none" stroke={`${P},0.45)`} strokeWidth="0.7" />
+          <circle cx="40" cy="210" r="2.2" fill="none" stroke={`${P},0.45)`} strokeWidth="0.7" />
+          <circle cx="134" cy="210" r="2.2" fill="none" stroke={`${P},0.45)`} strokeWidth="0.7" />
+          <rect x="44" y="78" width="86" height="22" rx="3" fill={`${P},0.08)`} stroke={`${P},0.4)`} strokeWidth="0.75" />
+          <text x="87" y="93" textAnchor="middle" fill={`${P},0.75)`} fontSize="9" fontFamily="ui-monospace" fontWeight="600" letterSpacing="0.14em">
+            SIG-PAT / SHA-256
+          </text>
+          <rect x="48" y="108" width="34" height="34" rx="3" fill={`${P},0.06)`} stroke={`${P},0.48)`} strokeWidth="0.85" />
+          {[0, 1, 2, 3, 4].flatMap((row) =>
+            [0, 1, 2, 3, 4].map((col) => (
+              <rect
+                key={`qr-${row}-${col}`}
+                x={50 + col * 6}
+                y={110 + row * 6}
+                width="4"
+                height="4"
+                rx="0.5"
+                fill={((row + col) % 3 === 0) || (row === 2 && col === 2) ? `${P},0.35)` : `${P},0.08)`}
+              />
+            ))
+          )}
+          <rect x="90" y="108" width="48" height="34" rx="2" fill={`${P},0.05)`} stroke={`${P},0.35)`} strokeWidth="0.65" />
+          {Array.from({ length: 18 }).map((_, i) => (
+            <line
+              key={`bar-${i}`}
+              x1={92 + i * 2.5}
+              y1="114"
+              x2={92 + i * 2.5}
+              y2={118 + (i % 5) * 3.2}
+              stroke={`${P},0.55)`}
+              strokeWidth="1.1"
+            />
+          ))}
+          <path d="M 44 152 L 130 152" stroke={`${P},0.35)`} strokeWidth="0.6" strokeDasharray="4 3" />
+          <text x="87" y="172" textAnchor="middle" fill={`${P},0.5)`} fontSize="7.5" fontFamily="ui-monospace">
+            TOMBO · INPI · CADEIA
+          </text>
+          <rect x="44" y="182" width="86" height="36" rx="4" fill={`${P},0.06)`} stroke={`${P},0.38)`} strokeWidth="0.7" />
+          <path d="M 52 198 L 122 198 M 52 204 L 108 204 M 52 210 L 116 210" stroke={`${P},0.32)`} strokeWidth="0.8" />
+
+          {/* — LOCAL: grelha WGS + alfinete + cerca */}
+          <rect x="162" y="58" width="118" height="168" rx="10" fill="url(#bp-pat-map)" stroke={`${P},0.55)`} strokeWidth="1.2" />
+          <path d="M 170 88 L 272 88 M 170 118 L 272 118 M 170 148 L 272 148 M 170 178 L 272 178" stroke={`${P},0.22)`} strokeWidth="0.55" />
+          <path d="M 188 70 L 188 210 M 218 70 L 218 210 M 248 70 L 248 210" stroke={`${P},0.22)`} strokeWidth="0.55" />
+          <circle cx="221" cy="138" r="34" fill="none" stroke={`${P},0.28)`} strokeWidth="0.85" strokeDasharray="5 4" />
+          <path
+            d="M 221 118 L 228 132 L 242 134 L 232 144 L 235 158 L 221 150 L 207 158 L 210 144 L 200 134 L 214 132 Z"
+            fill={`${P},0.12)`}
+            stroke={`${P},0.65)`}
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+          />
+          <circle cx="221" cy="138" r="4" fill={`${P},0.25)`} stroke={`${P},0.55)`} strokeWidth="0.8" />
+          <text x="221" y="196" textAnchor="middle" fill={`${P},0.48)`} fontSize="7.5" fontFamily="ui-monospace">
+            SIRGAS2000 · UTM 22S
+          </text>
+
+          {/* — CONSERVAÇÃO: indicador semicircular */}
+          <rect x="296" y="58" width="96" height="168" rx="10" fill={`${P},0.06)`} stroke={`${P},0.52)`} strokeWidth="1.15" />
+          <path
+            d="M 318 198 A 46 46 0 1 1 370 198"
+            fill="none"
+            stroke={`${P},0.35)`}
+            strokeWidth="1.1"
+          />
+          <path
+            d="M 318 198 A 46 46 0 0 1 352 142"
+            fill="none"
+            stroke={`${P},0.55)`}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          {[0, 30, 60, 90, 120].map((deg) => {
+            const rad = ((deg - 90) * Math.PI) / 180;
+            const cx = 344 + Math.cos(rad) * 40;
+            const cy = 198 + Math.sin(rad) * 40;
+            return (
+              <line
+                key={deg}
+                x1={344 + Math.cos(rad) * 34}
+                y1={198 + Math.sin(rad) * 34}
+                x2={cx}
+                y2={cy}
+                stroke={`${P},0.4)`}
+                strokeWidth="0.7"
+              />
+            );
+          })}
+          <line x1="344" y1="198" x2="368" y2="160" stroke={`${P},0.65)`} strokeWidth="1.8" strokeLinecap="round" />
+          <circle cx="344" cy="198" r="5" fill={`${P},0.15)`} stroke={`${P},0.55)`} strokeWidth="1" />
+          <text x="344" y="228" textAnchor="middle" fill={`${P},0.52)`} fontSize="8" fontFamily="ui-monospace">
+            índice 87%
+          </text>
+
+          {/* Ligações entre blocos */}
+          <path d="M 146 142 L 162 142" fill="none" stroke={`${P},0.35)`} strokeWidth="0.9" markerEnd="url(#bp-pat-arr)" />
+          <path d="M 280 142 L 296 142" fill="none" stroke={`${P},0.35)`} strokeWidth="0.9" markerEnd="url(#bp-pat-arr)" />
+        </g>
+
+        <text
+          x="210"
+          y="34"
+          textAnchor="middle"
+          fill={`${P},0.88)`}
+          fontSize="12"
+          fontFamily="ui-monospace"
+          fontWeight="600"
+          letterSpacing="0.1em"
+        >
           PLAQUETA · LOCAL · CONSERVAÇÃO
+        </text>
+        <text
+          x="210"
+          y="50"
+          textAnchor="middle"
+          fill={`${P},0.42)`}
+          fontSize="8.5"
+          fontFamily="ui-monospace"
+          letterSpacing="0.16em"
+        >
+          TRÍADE PATRIMONIAL · CADASTRO · GEO · ESTADO DO BEM
         </text>
       </svg>
     );

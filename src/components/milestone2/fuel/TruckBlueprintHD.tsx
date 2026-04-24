@@ -158,6 +158,32 @@ export default function TruckBlueprintHD({ mode, className = "" }: Props) {
           strokeWidth={z1 || assetPositive || plateErr ? 2.4 : 1.3}
           filter={z1 || assetPositive ? "url(#neon-glow-a)" : plateErr ? "url(#red-glow)" : undefined}
         />
+        {/* Cabine — detalhe moderno (vidros, espelho, grelha, defletor) — por cima do preenchimento base */}
+        <g pointerEvents="none" fill="none" stroke="rgba(100,116,139,0.5)" strokeWidth="0.75">
+          <path
+            d="M 62 76 Q 112 70 166 78"
+            stroke="rgba(52,211,153,0.28)"
+            strokeWidth="1"
+          />
+          <path
+            d="M 60 88 L 100 80 L 158 84 L 168 92 L 168 104 L 60 104 Z"
+            fill="rgba(2,6,23,0.42)"
+            stroke="rgba(100,116,139,0.55)"
+            strokeWidth="0.85"
+          />
+          <path d="M 92 82 L 92 102" stroke="rgba(52,211,153,0.22)" strokeWidth="0.65" />
+          <path d="M 118 81 L 118 103" stroke="rgba(52,211,153,0.18)" strokeWidth="0.55" strokeDasharray="2 3" />
+          <rect x="102" y="86" width="38" height="22" rx="2" fill="rgba(2,8,23,0.38)" stroke="rgba(100,116,139,0.45)" strokeWidth="0.7" />
+          <path d="M 121 86 L 121 108" stroke="rgba(100,116,139,0.35)" strokeWidth="0.5" />
+          <path d="M 168 90 L 182 84" stroke="rgba(100,116,139,0.55)" strokeWidth="0.9" />
+          <ellipse cx="188" cy="82" rx="6" ry="4" fill="rgba(15,23,42,0.5)" stroke="rgba(100,116,139,0.55)" strokeWidth="0.75" transform="rotate(-12 188 82)" />
+          <path d="M 58 108 L 72 106 L 72 118 L 58 120 Z" fill="rgba(15,23,42,0.55)" stroke="rgba(100,116,139,0.5)" strokeWidth="0.7" />
+          <path d="M 60 112 L 70 111 M 60 116 L 70 115 M 60 120 L 70 119" stroke="rgba(52,211,153,0.2)" strokeWidth="0.55" />
+          <circle cx="66" cy="114" r="2.2" fill="rgba(52,211,153,0.15)" stroke="rgba(52,211,153,0.35)" strokeWidth="0.45" />
+          <circle cx="66" cy="120" r="2.2" fill="rgba(52,211,153,0.15)" stroke="rgba(52,211,153,0.35)" strokeWidth="0.45" />
+          <path d="M 74 124 L 164 122" stroke="rgba(100,116,139,0.4)" strokeWidth="0.65" />
+          <path d="M 76 126 L 162 126" stroke="rgba(52,211,153,0.15)" strokeWidth="0.5" strokeDasharray="4 3" />
+        </g>
         {/* Placa */}
         <rect
           x="88"
