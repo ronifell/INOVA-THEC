@@ -320,13 +320,13 @@ export default function FuelOdometerProtocol() {
           </button>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid min-h-0 gap-[clamp(0.5rem,2vh,1rem)] lg:grid-cols-2 lg:items-stretch">
           <div
-            className={`relative overflow-hidden rounded-xl border border-white/10 bg-black/50 ${
+            className={`relative flex min-h-0 flex-col overflow-hidden rounded-xl border border-white/10 bg-black/50 ${
               state === "critical" ? "fuel-glitch-img" : ""
             }`}
           >
-            <div className="relative flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-slate-900 to-black">
+            <div className="relative flex min-h-0 w-full flex-1 flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-black p-[clamp(0.5rem,3%,1rem)]">
               <span className="font-mono text-3xl text-emerald-400/90">48372</span>
               {(state === "processing" || state === "success") && (
                 <motion.div
@@ -356,7 +356,7 @@ export default function FuelOdometerProtocol() {
             </div>
           </div>
 
-          <div>
+          <div className="flex min-h-0 min-w-0 flex-col">
             {state === "processing" && (
               <TypewriterLines
                 key="p"

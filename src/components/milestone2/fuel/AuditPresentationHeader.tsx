@@ -55,7 +55,7 @@ export default function AuditPresentationHeader({
 
   return (
     <div
-      className="mb-5 w-full rounded-xl border border-white/[0.08] bg-black/25 px-4 py-3.5 backdrop-blur-sm sm:px-5"
+      className="mb-5 w-full shrink-0 rounded-xl border border-white/[0.08] bg-black/25 px-4 py-3.5 backdrop-blur-sm sm:px-5"
       style={{
         boxShadow: `0 0 20px rgba(${accentRgb},0.08)`,
       }}

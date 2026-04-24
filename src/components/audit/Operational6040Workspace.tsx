@@ -224,8 +224,8 @@ export default function Operational6040Workspace({
           onPointerDownCapture={triggerPulse}
         >
           {/* Centra blocos operacionais no “meio” dos 60%, sem colar à esquerda */}
-          <div className="flex min-h-0 flex-1 justify-center overflow-hidden px-[min(2.2%,1.6vmin)] pb-[min(1.8%,1.4vmin)] pt-[min(2.4%,1.8vmin)] sm:px-[min(2.8%,2.2vmin)] sm:pb-[min(2.2%,1.8vmin)] sm:pt-[min(3%,2.4vmin)]">
-            <div className="flex h-full w-full max-w-[99%] flex-col items-center gap-y-[min(3.2%,2.8vmin)] [&>*]:w-full">
+          <div className="flex min-h-0 flex-1 justify-center overflow-x-hidden overflow-y-auto px-[min(2.2%,1.6vmin)] pb-[min(1.8%,1.4vmin)] pt-[min(2.4%,1.8vmin)] sm:px-[min(2.8%,2.2vmin)] sm:pb-[min(2.2%,1.8vmin)] sm:pt-[min(3%,2.4vmin)]">
+            <div className="flex min-h-0 w-full max-w-[99%] flex-col items-center gap-y-[min(3.2%,2.8vmin)] [&>*]:min-h-0 [&>*]:w-full">
               {children}
             </div>
           </div>

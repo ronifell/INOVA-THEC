@@ -624,17 +624,17 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
-            className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-visible"
+            className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-visible"
           >
             {/* Mesma proporção 1.22 : 0.96 que `HomeShellLayout` (largura já vem de `AppMainWithFooter` max-w-[98%]) */}
-            <div className="flex min-h-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
-              <div className="relative z-[12] flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
+            <div className="flex h-full min-h-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
+              <div className="relative z-[12] flex h-full min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
                 <AuditCommandFrame
                   variant={activeMenu}
                   contentFullWidth
                   className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
                 >
-                  <div className="relative flex min-h-0 w-full flex-1 flex-col gap-[min(1.6vmin,1.4vh)]">
+                  <div className="relative flex h-full min-h-0 w-full flex-1 flex-col gap-[min(1.6vmin,1.4vh)]">
                     <div className="shrink-0 border-b border-white/[0.06] px-[min(1.25vmin,1.1vw)] pb-[min(1.4vmin,1.2vh)] pt-[min(0.8vmin,0.7vh)]">
                       <div className="flex w-full justify-start">
                         <button
@@ -649,7 +649,7 @@ export default function Milestone2Client() {
                         {menuTitle}
                       </p>
                     </div>
-                    <div className="grid min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                    <div className="grid h-full min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                       {submenuTiles.map((tile, i) => (
                         <div
                           key={tile.id}

@@ -456,8 +456,8 @@ export default function FuelGeographicInsumo() {
           Atalhos de apresentação: <span className="text-lime-300">G = Cenário Verde</span> ·{" "}
           <span className="text-red-300">R = Cenário Vermelho</span>
         </div>
-        <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-          <div className="space-y-3">
+        <div className="grid min-h-0 gap-[clamp(0.5rem,2vh,1rem)] lg:grid-cols-[1.5fr_1fr] lg:items-stretch">
+          <div className="flex min-h-0 min-w-0 flex-col gap-3">
             <input
               ref={refBomba}
               type="file"
@@ -466,8 +466,8 @@ export default function FuelGeographicInsumo() {
               className="sr-only"
               onChange={(e) => captureMaterialEvidence("pump", e.target.files?.[0])}
             />
-            <div className={`relative overflow-hidden rounded-xl border border-white/12 bg-gradient-to-br from-slate-950 to-slate-900 ${result === "red" ? "fuel-glitch-img" : ""}`}>
-              <div className="flex aspect-[4/3] flex-col items-center justify-center gap-2">
+            <div className={`relative flex min-h-0 flex-col overflow-hidden rounded-xl border border-white/12 bg-gradient-to-br from-slate-950 to-slate-900 ${result === "red" ? "fuel-glitch-img" : ""}`}>
+              <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-[clamp(0.35rem,2%,0.65rem)] p-[clamp(0.5rem,3%,1rem)]">
                 <span className="text-4xl">⛽</span>
                 <p className="px-4 text-center text-[11px] text-white/55">
                   Câmera ativa no bocal do tanque (área de materialidade)
@@ -508,8 +508,8 @@ export default function FuelGeographicInsumo() {
               Consolidar validação pericial
             </button>
           </div>
-          <div className="space-y-3">
-            <div className="relative overflow-hidden rounded-xl border border-emerald-500/25 bg-[#03160b] p-2">
+          <div className="flex min-h-0 min-w-0 flex-col gap-3">
+            <div className="relative min-h-0 overflow-hidden rounded-xl border border-emerald-500/25 bg-[#03160b] p-2">
               <GeoprocessingRadarMap variant="idle" />
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-emerald-400/55 bg-black/70 p-1 shadow-[0_0_22px_rgba(16,185,129,0.35)]">

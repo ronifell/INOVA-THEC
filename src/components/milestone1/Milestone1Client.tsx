@@ -803,7 +803,7 @@ export default function Milestone1Client({
   return (
     <div className={`milestone1-app ${shellClass}`}>
       {activeView === "hub" && (
-        <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-visible">
+        <div className="flex h-full min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-visible">
           {!embeddedInAppShell && (
             <header className="shrink-0 text-center">
               <div className="inline-flex flex-col items-center">
@@ -822,7 +822,7 @@ export default function Milestone1Client({
 
           {/* Mesma repartição vertical que `HomeShellLayout` (1.22 cartões : 0.96 faixa inferior) para altura idêntica à Home */}
           <div
-            className={`flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)] ${
+            className={`flex h-full min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)] ${
               embeddedInAppShell ? "mt-0" : "mt-[1vh]"
             }`}
           >
@@ -832,13 +832,13 @@ export default function Milestone1Client({
               </h2>
             )}
 
-            <div className="relative z-[12] flex min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
+            <div className="relative z-[12] flex h-full min-h-0 min-w-0 w-full flex-1 flex-col gap-[min(3.2vmin,2.8vh)]">
               <AuditCommandFrame
                 variant="frota"
                 contentFullWidth
                 className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
               >
-                <div className="grid min-h-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                <div className="grid h-full min-h-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                   {MILESTONE1_HUB_SEVEN.map(({ item }, i) => (
                     <div
                       key={item.hubKey}

@@ -48,7 +48,7 @@ function TypewriterBlock({
 
   return (
     <div
-      className={`min-h-[120px] rounded-xl border border-white/10 bg-black/30 px-3 py-3 font-mono text-[11px] leading-relaxed sm:text-xs ${className ?? ""}`}
+      className={`min-h-0 max-h-[min(50dvh,100%)] overflow-y-auto rounded-xl border border-white/10 bg-black/30 px-[clamp(0.5rem,2.5%,0.85rem)] py-[clamp(0.5rem,2.5%,0.85rem)] font-mono text-[clamp(10px,2.2vmin,12px)] leading-relaxed ${className ?? ""}`}
     >
       {text.map((line, i) => (
         <p key={i} className={i > 0 ? "mt-2" : ""}>
@@ -176,8 +176,8 @@ export default function FuelAssetIdentification() {
         accentRgb="16, 185, 129"
       />
 
-      <div className="space-y-4">
-        <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex min-h-0 w-full flex-1 flex-col gap-[clamp(0.5rem,2vh,1rem)]">
+        <div className="flex shrink-0 flex-wrap justify-center gap-2">
           <button
             type="button"
             onClick={runSuccess}
@@ -201,14 +201,14 @@ export default function FuelAssetIdentification() {
           </button>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-2">
-          <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/40">
+        <div className="grid min-h-0 w-full flex-1 grid-cols-1 gap-[clamp(0.5rem,2vh,1.25rem)] lg:grid-cols-2 lg:items-stretch lg:gap-[clamp(0.5rem,1.5vw,1.25rem)]">
+          <div className="flex h-full min-h-0 min-w-0 w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/40">
             <div
-              className={`relative flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 ${
+              className={`relative flex min-h-0 w-full flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 p-[clamp(0.5rem,3%,1rem)] ${
                 scenario === "fail" ? "ring-2 ring-red-500/60" : ""
               }`}
             >
-              <p className="font-mono text-sm tracking-[0.4em] text-white/80">
+              <p className="font-mono text-[clamp(0.65rem,2.2vmin,0.875rem)] tracking-[0.35em] text-white/80">
                 {scenario === "fail" ? "XYZ-9999" : "ABC-1234"}
               </p>
               <motion.div
@@ -233,12 +233,12 @@ export default function FuelAssetIdentification() {
                 />
               )}
             </div>
-            <p className="px-2 py-2 text-center text-[10px] font-mono text-white/45">
+            <p className="shrink-0 border-t border-white/5 px-[clamp(0.35rem,2%,0.5rem)] py-[clamp(0.35rem,1.8%,0.65rem)] text-center text-[clamp(9px,1.8vmin,10px)] font-mono text-white/45">
               Scanner neon · linha sobre a placa
             </p>
           </div>
 
-          <div className="space-y-3">
+          <div className="flex min-h-0 min-w-0 flex-col gap-[clamp(0.5rem,1.5vh,0.75rem)]">
             {scenario === "success" && (
               <TypewriterBlock
                 key="pos"
@@ -256,7 +256,7 @@ export default function FuelAssetIdentification() {
               />
             )}
             {scenario === "idle" && (
-              <p className="rounded-xl border border-white/10 bg-white/5 p-4 text-center text-xs text-white/50">
+              <p className="rounded-xl border border-white/10 bg-white/5 p-[clamp(0.75rem,3%,1rem)] text-center text-[clamp(11px,2.2vmin,14px)] text-white/50">
                 Escolha um cenário de demonstração.
               </p>
             )}
@@ -268,7 +268,7 @@ export default function FuelAssetIdentification() {
             <motion.div
               initial={{ scale: 0.6, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border-4 border-amber-400/80 bg-gradient-to-br from-amber-700/40 to-amber-950/60 text-center text-[10px] font-bold uppercase leading-tight text-amber-100 shadow-[0_0_40px_rgba(212,175,55,0.45)]"
+              className="mx-auto flex h-[clamp(5.5rem,16vmin,7rem)] w-[clamp(5.5rem,16vmin,7rem)] shrink-0 items-center justify-center rounded-full border-4 border-amber-400/80 bg-gradient-to-br from-amber-700/40 to-amber-950/60 text-center text-[clamp(8px,1.6vmin,10px)] font-bold uppercase leading-tight text-amber-100 shadow-[0_0_40px_rgba(212,175,55,0.45)]"
             >
               INTEGRIDADE VEICULAR VALIDADA
             </motion.div>
@@ -277,7 +277,7 @@ export default function FuelAssetIdentification() {
             <motion.div
               initial={{ scale: 1.1, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="mx-auto rounded-lg border border-red-500/50 bg-red-950/60 px-6 py-3 text-center text-sm font-bold uppercase tracking-wider text-red-200"
+              className="mx-auto shrink-0 rounded-lg border border-red-500/50 bg-red-950/60 px-[clamp(1rem,4%,1.5rem)] py-[clamp(0.5rem,2%,0.75rem)] text-center text-[clamp(0.7rem,2.4vmin,0.875rem)] font-bold uppercase tracking-wider text-red-200"
             >
               REJEITADO · AUDITORIA NECESSÁRIA
             </motion.div>
