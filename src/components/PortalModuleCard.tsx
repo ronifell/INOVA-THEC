@@ -3,7 +3,6 @@
 import { useCallback, useRef, type CSSProperties } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useVoice } from "@/hooks/useVoice";
-import CardBottomSoundWave from "@/components/CardBottomSoundWave";
 
 export type PortalModuleCardProps = {
   /** Theme: hex e.g. #10B981 */
@@ -28,8 +27,6 @@ export type PortalModuleCardProps = {
   type?: "button" | "submit";
   disabled?: boolean;
   className?: string;
-  /** Oscilograma animado na base do cartão (hubs / portal) */
-  bottomSoundWave?: boolean;
 };
 
 /**
@@ -51,7 +48,6 @@ export default function PortalModuleCard({
   type = "button",
   disabled = false,
   className = "",
-  bottomSoundWave = false,
 }: PortalModuleCardProps) {
   const { speak } = useVoice();
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -210,11 +206,6 @@ export default function PortalModuleCard({
             {isFullModule ? "OPERACIONAL" : "HOMOLOGAÇÃO"}
           </span>
         </div>
-        {bottomSoundWave && (
-          <div className="mt-auto w-full shrink-0">
-            <CardBottomSoundWave colorRgb={colorRgb} />
-          </div>
-        )}
       </div>
       </div>
     </>

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import PortalModuleCard from "@/components/PortalModuleCard";
+import PageBottomSoundWave from "@/components/PageBottomSoundWave";
 import { MODULES } from "@/lib/modules";
 import { useStore } from "@/store/useStore";
 import { buildIntegrityRows, fetchDemoMotor } from "@/lib/milestone1/data";
@@ -240,7 +241,7 @@ export default function Milestone2Client() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: easeOut }}
-            className="mx-auto w-full max-w-7xl px-4 pb-16 pt-4 md:px-6"
+            className="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col px-4 pb-8 pt-4 md:px-6"
           >
             <motion.div
               className="mb-10 text-center"
@@ -266,7 +267,7 @@ export default function Milestone2Client() {
 
             <section
               aria-labelledby="m2-portal-hub-heading"
-              className="w-full overflow-visible"
+              className="flex min-h-0 w-full flex-1 flex-col overflow-visible"
             >
               <h2
                 id="m2-portal-hub-heading"
@@ -289,7 +290,6 @@ export default function Milestone2Client() {
                     description="Monitoramento, vetoração e trilha de auditoria do combustível estadual."
                     isFullModule
                     voiceText="Gestão e perícia de combustível. Protocolo SIG-FROTA operacional."
-                    bottomSoundWave
                     onClick={() => openMenu("frota")}
                   />
                 </div>
@@ -306,12 +306,15 @@ export default function Milestone2Client() {
                     description="Custódia digital, inventário e fiscalização patrimonial com fé pública."
                     isFullModule
                     voiceText="Imutabilidade e rastreabilidade de ativos. SIG-PATRIMÔNIO ativo."
-                    bottomSoundWave
                     onClick={() => openMenu("patrimonio")}
                   />
                 </div>
               </div>
             </section>
+            <PageBottomSoundWave
+              variant="frota"
+              className="absolute inset-x-0 bottom-[clamp(4rem,7vh,6rem)] z-[25]"
+            />
           </motion.div>
         ) : activeTile ? (
           <motion.div
@@ -666,7 +669,6 @@ export default function Milestone2Client() {
                             description={tile.description}
                             isFullModule
                             voiceText={`${menuTitle}. ${tile.title}. ${tile.description}`}
-                            bottomSoundWave
                             onClick={() => openTile(tile)}
                           />
                         </div>
@@ -685,6 +687,10 @@ export default function Milestone2Client() {
                     ☾ Modo escuro
                   </button>
                 </div>
+                <PageBottomSoundWave
+                  variant={activeMenu === "patrimonio" ? "patrimonio" : "frota"}
+                  className="absolute inset-x-0 bottom-[clamp(4rem,7vh,6rem)] z-[25]"
+                />
               </div>
             </div>
           </motion.div>

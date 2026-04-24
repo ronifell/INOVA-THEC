@@ -28,6 +28,7 @@ import {
 } from "@/lib/milestone1/data";
 import AuditCommandFrame from "@/components/audit/AuditCommandFrame";
 import Operational6040Workspace from "@/components/audit/Operational6040Workspace";
+import PageBottomSoundWave from "@/components/PageBottomSoundWave";
 import PortalModuleCard from "@/components/PortalModuleCard";
 import { MODULES } from "@/lib/modules";
 import { useStore } from "@/store/useStore";
@@ -853,7 +854,6 @@ export default function Milestone1Client({
                         description={item.description}
                         isFullModule
                         voiceText={item.voiceText}
-                        bottomSoundWave
                         onClick={() => {
                           triggerHashValidation();
                           setView(item.view);
@@ -873,6 +873,10 @@ export default function Milestone1Client({
                   {darkMode ? "☀ Modo claro" : "☾ Modo escuro"}
                 </button>
               </div>
+              <PageBottomSoundWave
+                variant="frota"
+                className="absolute inset-x-0 bottom-[clamp(4rem,7vh,6rem)] z-[25]"
+              />
             </div>
           </div>
         </div>
@@ -1044,8 +1048,8 @@ export default function Milestone1Client({
           )}
 
           {(isFuelGeoView || activeView === "assets-map") && (
-            <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[1fr_min(400px,40vw)]">
-              <div className="glass rounded-2xl border border-white/10 p-5">
+            <div className="mx-auto grid min-h-0 max-w-6xl gap-5 lg:grid-cols-[1fr_min(400px,40vw)]">
+              <div className="glass flex min-h-0 flex-col rounded-2xl border border-white/10 p-5">
                 <h4 className="text-[var(--m1-text-ui)] font-mono tracking-wider text-white/55">
                   {activeView === "assets-map"
                     ? "Vistoria e Censo (Fé Pública)"
@@ -1064,7 +1068,7 @@ export default function Milestone1Client({
                       acionada
                     </div>
                   )}
-                <div className="relative mt-3">
+                <div className="relative mt-3 flex min-h-0 flex-1">
                   {activeView === "assets-map" && assetsMapSkeleton && (
                     <div className="absolute inset-0 z-[400] animate-pulse rounded-xl bg-slate-900/60" />
                   )}

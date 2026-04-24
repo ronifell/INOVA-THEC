@@ -176,7 +176,7 @@ export default function Milestone1Map({
   return (
     <div
       ref={containerRef}
-      className="m1-leaflet-root h-[var(--m1-map-min-height)] w-full rounded-xl overflow-hidden border border-white/10"
+      className="m1-leaflet-root h-full min-h-0 w-full rounded-xl overflow-hidden border border-white/10"
     />
   );
 }
