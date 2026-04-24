@@ -101,13 +101,13 @@ export default function FuelEconomicidadePanel() {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-1.5">
-          <div className="rounded-lg border border-white/15 bg-slate-700/45 p-2">
-            <p className="text-[8px] font-mono uppercase tracking-wider text-white/50 sm:text-[9px]">
-              Eficiência
+        <div className="grid min-h-0 grid-cols-1 gap-1.5 sm:grid-cols-2 sm:items-stretch">
+          <div className="flex min-h-0 flex-col rounded-lg border border-white/15 bg-slate-700/45 p-2">
+            <p className="shrink-0 text-[8px] font-mono uppercase tracking-wider text-white/50 sm:text-[9px]">
+              Eficiência (velocímetro)
             </p>
-            <div className="mt-1 h-16 w-full sm:h-[4.25rem]">
-              <svg viewBox="0 0 240 120" className="h-full w-full" aria-hidden>
+            <div className="mt-1 min-h-0 flex-1 sm:min-h-[4.25rem]">
+              <svg viewBox="0 0 240 120" className="h-full w-full min-h-[3.5rem]" aria-hidden preserveAspectRatio="xMidYMid meet">
                 <path
                   d="M 20 110 A 100 100 0 0 1 220 110"
                   fill="none"
@@ -132,32 +132,34 @@ export default function FuelEconomicidadePanel() {
               </svg>
             </div>
           </div>
-          <div className="rounded-lg border border-white/15 bg-slate-700/45 p-2">
+          <div className="flex min-h-0 flex-col rounded-lg border border-white/15 bg-slate-700/45 p-2">
+            <p className="shrink-0 text-[8px] font-mono uppercase tracking-wider text-white/50 sm:text-[9px]">
+              Tendência de despesas
+            </p>
+            <div className="mt-1 min-h-0 flex-1 sm:min-h-[4.25rem]">
+              <svg className="h-full w-full min-h-[3.5rem]" viewBox="0 0 300 120" preserveAspectRatio="none">
+                <motion.polyline
+                  fill="none"
+                  stroke={alertDev ? "#ef4444" : "#10b981"}
+                  strokeWidth="2.5"
+                  points={
+                    alertDev
+                      ? "0,36 55,38 110,52 165,58 220,63 300,78"
+                      : "0,72 55,65 110,58 165,52 220,45 300,38"
+                  }
+                  animate={{ opacity: [0.75, 1, 0.75] }}
+                  transition={{ duration: 6, repeat: Infinity }}
+                />
+              </svg>
+            </div>
+          </div>
+          <div className="rounded-lg border border-white/15 bg-slate-700/45 p-2 sm:col-span-2">
             <p className="text-[8px] font-mono uppercase tracking-wider text-white/50 sm:text-[9px]">
               Economia (R$)
             </p>
-            <p className="mt-2 font-mono text-sm text-emerald-300 sm:text-base">
+            <p className="mt-1 font-mono text-sm leading-tight text-emerald-300 sm:text-base">
               R$ {savings.toLocaleString("pt-BR")}
             </p>
-          </div>
-          <div className="col-span-2 rounded-lg border border-white/15 bg-slate-700/45 p-2">
-            <p className="text-[8px] font-mono uppercase tracking-wider text-white/50 sm:text-[9px]">
-              Tendência
-            </p>
-            <svg className="mt-1 h-10 w-full sm:h-11" viewBox="0 0 300 120" preserveAspectRatio="none">
-              <motion.polyline
-                fill="none"
-                stroke={alertDev ? "#ef4444" : "#10b981"}
-                strokeWidth="2.5"
-                points={
-                  alertDev
-                    ? "0,36 55,38 110,52 165,58 220,63 300,78"
-                    : "0,72 55,65 110,58 165,52 220,45 300,38"
-                }
-                animate={{ opacity: [0.75, 1, 0.75] }}
-                transition={{ duration: 6, repeat: Infinity }}
-              />
-            </svg>
           </div>
         </div>
       </div>

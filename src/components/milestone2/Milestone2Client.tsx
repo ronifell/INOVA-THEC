@@ -289,6 +289,7 @@ export default function Milestone2Client() {
                     description="Monitoramento, vetoração e trilha de auditoria do combustível estadual."
                     isFullModule
                     voiceText="Gestão e perícia de combustível. Protocolo SIG-FROTA operacional."
+                    bottomSoundWave
                     onClick={() => openMenu("frota")}
                   />
                 </div>
@@ -305,6 +306,7 @@ export default function Milestone2Client() {
                     description="Custódia digital, inventário e fiscalização patrimonial com fé pública."
                     isFullModule
                     voiceText="Imutabilidade e rastreabilidade de ativos. SIG-PATRIMÔNIO ativo."
+                    bottomSoundWave
                     onClick={() => openMenu("patrimonio")}
                   />
                 </div>
@@ -664,6 +666,7 @@ export default function Milestone2Client() {
                             description={tile.description}
                             isFullModule
                             voiceText={`${menuTitle}. ${tile.title}. ${tile.description}`}
+                            bottomSoundWave
                             onClick={() => openTile(tile)}
                           />
                         </div>

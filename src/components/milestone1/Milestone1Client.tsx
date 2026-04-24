@@ -853,6 +853,7 @@ export default function Milestone1Client({
                         description={item.description}
                         isFullModule
                         voiceText={item.voiceText}
+                        bottomSoundWave
                         onClick={() => {
                           triggerHashValidation();
                           setView(item.view);

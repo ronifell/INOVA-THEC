@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateSHA256 } from "@/lib/crypto";
 import Operational6040Workspace from "@/components/audit/Operational6040Workspace";
 import AuditPresentationHeader from "./AuditPresentationHeader";
 import TruckBlueprintHD from "./TruckBlueprintHD";
-import PlateScannerFaceIllustration from "./PlateScannerFaceIllustration";
 import { playAlertFail } from "@/lib/sfx";
 
 type Scenario = "idle" | "success" | "fail";
@@ -49,10 +49,10 @@ function TypewriterBlock({
 
   return (
     <div
-      className={`min-h-0 max-h-[min(32dvh,100%)] overflow-y-auto rounded-xl border border-white/15 bg-slate-700/40 px-[clamp(0.5rem,2.5%,0.85rem)] py-[clamp(0.5rem,2.5%,0.85rem)] font-mono text-[clamp(10px,2.2vmin,12px)] leading-relaxed ${className ?? ""}`}
+      className={`flex h-full min-h-0 flex-col overflow-hidden rounded-sm border border-white/15 bg-slate-700/40 px-[clamp(0.45rem,2.2%,0.75rem)] py-[clamp(0.45rem,2.2%,0.75rem)] font-mono text-[clamp(9px,2vmin,11px)] leading-snug ${className ?? ""}`}
     >
       {text.map((line, i) => (
-        <p key={i} className={i > 0 ? "mt-2" : ""}>
+        <p key={i} className={i > 0 ? "mt-1.5" : ""}>
           {line}
           {i === text.length - 1 && char < (lines[idx]?.length ?? 0) && (
             <span className="ml-0.5 inline-block h-[1em] w-1.5 animate-pulse bg-current align-[-0.15em] opacity-70" />
@@ -159,6 +159,9 @@ export default function FuelAssetIdentification() {
     </button>
   );
 
+  const scanCellClass =
+    "relative aspect-square w-full min-h-0 max-w-[min(100%,22rem)] justify-self-center overflow-hidden rounded-sm border border-emerald-500/35 bg-slate-900/50 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.12)] lg:max-w-none";
+
   return (
     <Operational6040Workspace
       variant="frota"
@@ -177,7 +180,7 @@ export default function FuelAssetIdentification() {
         accentRgb="16, 185, 129"
       />
 
-      <div className="flex min-h-0 w-full flex-1 flex-col gap-[clamp(0.5rem,2vh,1rem)]">
+      <div className="flex min-h-0 w-full flex-1 flex-col gap-[clamp(0.45rem,1.6vh,0.75rem)]">
         <div className="flex shrink-0 flex-wrap justify-center gap-2">
           <button
             type="button"
@@ -202,53 +205,56 @@ export default function FuelAssetIdentification() {
           </button>
         </div>
 
-        <div className="grid min-h-0 w-full flex-1 grid-cols-1 gap-[clamp(0.5rem,2vh,1.25rem)] lg:grid-cols-2 lg:items-stretch lg:gap-[clamp(0.5rem,1.5vw,1.25rem)]">
-          <div className="flex h-full min-h-0 min-w-0 w-full flex-col overflow-hidden rounded-xl border border-white/15 bg-slate-700/45">
-            <div
-              className={`relative flex min-h-0 w-full flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-600/95 to-slate-700/95 p-[clamp(0.4rem,2.5%,0.85rem)] ${
-                scenario === "fail" ? "ring-2 ring-red-500/60" : ""
-              }`}
-            >
-              <div className="relative z-[1] flex w-full flex-col items-center justify-center gap-2 sm:flex-row sm:gap-4">
-                <PlateScannerFaceIllustration className="h-[min(32vmin,8.25rem)] w-[min(32vmin,8.25rem)] max-w-[min(92%,11rem)] shrink-0 opacity-[0.98]" />
-                <p className="shrink-0 font-mono text-[clamp(0.65rem,2.2vmin,0.875rem)] tracking-[0.35em] text-white/90">
-                  {scenario === "fail" ? "XYZ-9999" : "ABC-1234"}
-                </p>
-              </div>
-              <motion.div
-                className={`fuel-scanner-line pointer-events-none absolute inset-x-0 top-0 h-[28%] bg-gradient-to-b from-emerald-400/25 via-emerald-300/50 to-transparent ${scannerColor}`}
-                animate={
-                  scenario === "fail"
-                    ? { top: ["0%", "72%", "72%"], opacity: [1, 1, 0.85] }
-                    : { top: ["0%", "100%", "0%"] }
-                }
-                transition={
-                  scenario === "fail"
-                    ? { duration: 2.4, times: [0, 0.7, 1], repeat: Infinity }
-                    : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
-                }
-                style={{ mixBlendMode: "screen" }}
+        <div className="grid min-h-0 w-full flex-1 grid-cols-1 items-stretch gap-2 sm:gap-3 lg:grid-cols-2">
+          <div
+            className={`${scanCellClass} ${scenario === "fail" ? "ring-2 ring-red-500/55" : ""}`}
+          >
+            <Image
+              src="/images/biometric-scan-face.png"
+              alt="Varredura biométrica facial em rede"
+              fill
+              className="object-cover object-[center_22%]"
+              sizes="(max-width: 1024px) 90vw, 28vw"
+              priority
+            />
+            {scenario === "fail" && (
+              <div
+                className="pointer-events-none absolute inset-0 z-[2] bg-red-600/25 mix-blend-overlay"
+                aria-hidden
               />
-              {scenario === "fail" && (
-                <motion.div
-                  className="pointer-events-none absolute inset-x-[18%] bottom-[22%] top-[52%] rounded border-2 border-red-500"
-                  animate={{ opacity: [1, 0.2, 1] }}
-                  transition={{ duration: 0.28, repeat: Infinity }}
-                />
-              )}
-            </div>
-            <p className="shrink-0 border-t border-white/5 px-[clamp(0.35rem,2%,0.5rem)] py-[clamp(0.35rem,1.8%,0.65rem)] text-center text-[clamp(9px,1.8vmin,10px)] font-mono text-white/45">
-              Scanner neon · linha sobre a placa
-            </p>
+            )}
+            <motion.div
+              className={`pointer-events-none absolute inset-x-0 top-0 z-[3] h-[26%] bg-gradient-to-b from-emerald-400/30 via-emerald-300/45 to-transparent ${scannerColor}`}
+              animate={
+                scenario === "fail"
+                  ? { top: ["0%", "68%", "68%"], opacity: [1, 1, 0.85] }
+                  : { top: ["0%", "100%", "0%"] }
+              }
+              transition={
+                scenario === "fail"
+                  ? { duration: 2.4, times: [0, 0.7, 1], repeat: Infinity }
+                  : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
+              }
+              style={{ mixBlendMode: "screen" }}
+            />
+            {scenario === "fail" && (
+              <motion.div
+                className="pointer-events-none absolute inset-x-[18%] bottom-[20%] top-[50%] z-[3] rounded border-2 border-red-500"
+                animate={{ opacity: [1, 0.25, 1] }}
+                transition={{ duration: 0.28, repeat: Infinity }}
+              />
+            )}
           </div>
 
-          <div className="flex min-h-0 min-w-0 flex-col gap-[clamp(0.5rem,1.5vh,0.75rem)]">
+          <div
+            className={`flex aspect-square w-full min-h-0 max-w-[min(100%,22rem)] flex-col justify-self-center overflow-hidden rounded-sm border border-white/15 bg-slate-700/35 p-[clamp(0.5rem,2.5%,0.85rem)] lg:max-w-none`}
+          >
             {scenario === "success" && (
               <TypewriterBlock
                 key="pos"
                 active
                 lines={linesPos}
-                className="text-emerald-200"
+                className="min-h-0 flex-1 text-emerald-200"
               />
             )}
             {scenario === "fail" && (
@@ -256,13 +262,15 @@ export default function FuelAssetIdentification() {
                 key="neg"
                 active
                 lines={linesNeg}
-                className="text-red-300"
+                className="min-h-0 flex-1 text-red-300"
               />
             )}
             {scenario === "idle" && (
-              <p className="rounded-xl border border-white/10 bg-white/5 p-[clamp(0.75rem,3%,1rem)] text-center text-[clamp(11px,2.2vmin,14px)] text-white/50">
-                Escolha um cenário de demonstração.
-              </p>
+              <div className="flex h-full min-h-0 flex-1 items-center justify-center text-center">
+                <p className="text-[clamp(10px,2.2vmin,12px)] leading-snug text-white/55">
+                  Escolha um cenário de demonstração.
+                </p>
+              </div>
             )}
           </div>
         </div>
