@@ -29,7 +29,7 @@ export default function GeoprocessingRadarMap({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-xl border border-emerald-500/25 bg-[#021208]/90 ${className}`}
+      className={`relative overflow-hidden rounded-xl border border-emerald-400/30 bg-emerald-950/40 ${className}`}
       style={{
         boxShadow:
           variant === "success"

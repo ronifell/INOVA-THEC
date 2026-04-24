@@ -328,7 +328,7 @@ export default function Milestone2Client() {
                   <button
                     type="button"
                     onClick={goBackToMenu}
-                    className="inline-flex w-fit items-center gap-2 rounded-full border border-white/18 bg-black/35 px-3 py-1.5 text-[10px] font-mono tracking-wider text-white/80 transition-colors hover:border-emerald-500/45 hover:text-white sm:px-4 sm:py-2 sm:text-[11px]"
+                    className="inline-flex w-fit items-center gap-2 rounded-full border border-white/18 bg-slate-700/50 px-3 py-1.5 text-[10px] font-mono tracking-wider text-white/85 transition-colors hover:border-emerald-500/45 hover:text-white sm:px-4 sm:py-2 sm:text-[11px]"
                   >
                     ← Voltar ao cardápio
                   </button>

@@ -6,6 +6,7 @@ import { generateSHA256 } from "@/lib/crypto";
 import Operational6040Workspace from "@/components/audit/Operational6040Workspace";
 import AuditPresentationHeader from "./AuditPresentationHeader";
 import TruckBlueprintHD from "./TruckBlueprintHD";
+import PlateScannerFaceIllustration from "./PlateScannerFaceIllustration";
 import { playAlertFail } from "@/lib/sfx";
 
 type Scenario = "idle" | "success" | "fail";
@@ -48,7 +49,7 @@ function TypewriterBlock({
 
   return (
     <div
-      className={`min-h-0 max-h-[min(50dvh,100%)] overflow-y-auto rounded-xl border border-white/10 bg-black/30 px-[clamp(0.5rem,2.5%,0.85rem)] py-[clamp(0.5rem,2.5%,0.85rem)] font-mono text-[clamp(10px,2.2vmin,12px)] leading-relaxed ${className ?? ""}`}
+      className={`min-h-0 max-h-[min(32dvh,100%)] overflow-y-auto rounded-xl border border-white/15 bg-slate-700/40 px-[clamp(0.5rem,2.5%,0.85rem)] py-[clamp(0.5rem,2.5%,0.85rem)] font-mono text-[clamp(10px,2.2vmin,12px)] leading-relaxed ${className ?? ""}`}
     >
       {text.map((line, i) => (
         <p key={i} className={i > 0 ? "mt-2" : ""}>
@@ -147,7 +148,7 @@ export default function FuelAssetIdentification() {
       className={`w-full rounded-xl border-2 px-4 py-4 text-center text-[11px] font-mono uppercase tracking-[0.18em] sm:py-5 sm:text-xs ${
         scenario === "success" && goldSeal
           ? "master-faith-metallic border-amber-400/40"
-          : "cursor-not-allowed border-white/10 bg-zinc-900 text-zinc-500"
+          : "cursor-not-allowed border-slate-500/35 bg-slate-600/45 text-slate-200/75"
       }`}
     >
       {scenario === "fail"
@@ -202,15 +203,18 @@ export default function FuelAssetIdentification() {
         </div>
 
         <div className="grid min-h-0 w-full flex-1 grid-cols-1 gap-[clamp(0.5rem,2vh,1.25rem)] lg:grid-cols-2 lg:items-stretch lg:gap-[clamp(0.5rem,1.5vw,1.25rem)]">
-          <div className="flex h-full min-h-0 min-w-0 w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/40">
+          <div className="flex h-full min-h-0 min-w-0 w-full flex-col overflow-hidden rounded-xl border border-white/15 bg-slate-700/45">
             <div
-              className={`relative flex min-h-0 w-full flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 p-[clamp(0.5rem,3%,1rem)] ${
+              className={`relative flex min-h-0 w-full flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-600/95 to-slate-700/95 p-[clamp(0.4rem,2.5%,0.85rem)] ${
                 scenario === "fail" ? "ring-2 ring-red-500/60" : ""
               }`}
             >
-              <p className="font-mono text-[clamp(0.65rem,2.2vmin,0.875rem)] tracking-[0.35em] text-white/80">
-                {scenario === "fail" ? "XYZ-9999" : "ABC-1234"}
-              </p>
+              <div className="relative z-[1] flex w-full flex-col items-center justify-center gap-2 sm:flex-row sm:gap-4">
+                <PlateScannerFaceIllustration className="h-[min(26vmin,6.5rem)] w-[min(26vmin,6.5rem)] shrink-0 opacity-[0.97]" />
+                <p className="shrink-0 font-mono text-[clamp(0.65rem,2.2vmin,0.875rem)] tracking-[0.35em] text-white/90">
+                  {scenario === "fail" ? "XYZ-9999" : "ABC-1234"}
+                </p>
+              </div>
               <motion.div
                 className={`fuel-scanner-line pointer-events-none absolute inset-x-0 top-0 h-[28%] bg-gradient-to-b from-emerald-400/25 via-emerald-300/50 to-transparent ${scannerColor}`}
                 animate={

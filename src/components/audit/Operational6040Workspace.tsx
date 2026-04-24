@@ -215,7 +215,9 @@ export default function Operational6040Workspace({
         <FlowRibbonMobile variant={variant} pulse={pulse} goldSeal={goldSeal} />
 
         <motion.div
-          className="milestone-detail-command-panel relative z-[12] flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#040810]/88 backdrop-blur-sm lg:order-1"
+          className={`milestone-detail-command-panel relative z-[12] flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border bg-slate-800/90 backdrop-blur-md lg:order-1 ${
+            variant === "patrimonio" ? "border-sky-400/25" : "border-emerald-500/20"
+          }`}
           style={{
             boxShadow: goldSeal
               ? `inset 0 0 0 1px rgba(${GOLD_SEAL.rgb},0.35), 0 0 40px rgba(${GOLD_SEAL.rgb},0.12)`
@@ -225,7 +227,7 @@ export default function Operational6040Workspace({
         >
           {/* Centra blocos operacionais no “meio” dos 60%, sem colar à esquerda */}
           <div className="flex min-h-0 flex-1 justify-center overflow-x-hidden overflow-y-auto px-[min(2.2%,1.6vmin)] pb-[min(1.8%,1.4vmin)] pt-[min(2.4%,1.8vmin)] sm:px-[min(2.8%,2.2vmin)] sm:pb-[min(2.2%,1.8vmin)] sm:pt-[min(3%,2.4vmin)]">
-            <div className="flex min-h-0 w-full max-w-[99%] flex-col items-center gap-y-[min(3.2%,2.8vmin)] [&>*]:min-h-0 [&>*]:w-full">
+            <div className="flex min-h-0 w-full max-w-[99%] flex-col items-center gap-y-[min(1.4%,1.2vmin)] [&>*]:min-h-0 [&>*]:w-full">
               {children}
             </div>
           </div>
@@ -245,8 +247,8 @@ export default function Operational6040Workspace({
                   background: goldSeal
                     ? `linear-gradient(135deg, rgba(${GOLD_SEAL.rgb},0.22), rgba(212,175,55,0.08))`
                     : variant === "patrimonio"
-                      ? `linear-gradient(135deg, rgba(${t.glowRgb},0.24), rgba(4,10,22,0.9))`
-                      : `linear-gradient(135deg, rgba(${t.glowRgb},0.22), rgba(0,8,6,0.88))`,
+                      ? `linear-gradient(135deg, rgba(${t.glowRgb},0.32), rgba(30,58,88,0.88))`
+                      : `linear-gradient(135deg, rgba(${t.glowRgb},0.34), rgba(22,58,48,0.9))`,
                   color: goldSeal
                     ? "rgba(253,230,138,0.95)"
                     : variant === "patrimonio"

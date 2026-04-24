@@ -33,7 +33,7 @@ export default function FuelEconomicidadePanel() {
       className={`w-full rounded-xl border-2 px-4 py-4 text-[11px] font-mono uppercase tracking-[0.16em] ${
         generated
           ? "master-faith-metallic border-amber-400/45"
-          : "cursor-not-allowed border-white/10 bg-zinc-900 text-zinc-500"
+          : "cursor-not-allowed border-slate-500/35 bg-slate-600/45 text-slate-200/75"
       }`}
     >
       {generated ? "Relatório de economicidade consolidado" : "Aguardando geração"}
@@ -100,7 +100,7 @@ export default function FuelEconomicidadePanel() {
         </div>
 
         <div className="space-y-3">
-          <div className="rounded-xl border border-white/10 bg-black/35 p-3">
+          <div className="rounded-xl border border-white/10 bg-slate-700/45 p-3">
             <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
               Velocímetro de eficiência da frota
             </p>
@@ -119,7 +119,7 @@ export default function FuelEconomicidadePanel() {
               </svg>
             </div>
           </div>
-          <div className="rounded-xl border border-white/10 bg-black/35 p-3">
+          <div className="rounded-xl border border-white/10 bg-slate-700/45 p-3">
             <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
               Painel de economia (R$)
             </p>
@@ -127,7 +127,7 @@ export default function FuelEconomicidadePanel() {
               R$ {savings.toLocaleString("pt-BR")}
             </p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-black/35 p-3">
+          <div className="rounded-xl border border-white/10 bg-slate-700/45 p-3">
             <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
               Tendência de despesas
             </p>

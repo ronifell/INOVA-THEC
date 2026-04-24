@@ -99,12 +99,12 @@ export default function FuelProtocolMaterialidade() {
         type="button"
         disabled={!allLit || faithSeal}
         onClick={commitFaith}
-        className={`relative w-full rounded-xl border-2 px-4 py-4 text-center text-[11px] font-mono uppercase tracking-[0.18em] transition-all sm:py-5 sm:text-xs ${
+        className={`relative w-full rounded-xl border-2 px-3 py-3 text-center text-[10px] font-mono uppercase tracking-[0.16em] transition-all sm:px-4 sm:py-3.5 sm:text-[11px] ${
           faithSeal
             ? "cursor-default border-amber-400/50 bg-amber-500/15 text-amber-100"
             : allLit
               ? "master-faith-metallic border-amber-300/40"
-              : "cursor-not-allowed border-white/10 bg-zinc-900/80 text-zinc-500"
+              : "cursor-not-allowed border-slate-500/35 bg-slate-600/45 text-slate-200/80"
         }`}
       >
         {faithSeal
@@ -131,15 +131,15 @@ export default function FuelProtocolMaterialidade() {
         accentRgb="16, 185, 129"
       />
 
-      <div className="space-y-4">
-        <p className="text-center text-[11px] leading-relaxed text-white/55">
+      <div className="flex w-full flex-col gap-2">
+        <p className="text-center text-[10px] leading-snug text-white/65 sm:text-[11px]">
           Quatro capturas obrigatórias. Sem nitidez, sem transação e sem iluminação do reservatório
           auditável.
         </p>
 
-        <div className="mx-auto flex w-full max-w-md flex-col gap-3">
+        <div className="mx-auto grid w-full max-w-2xl grid-cols-2 gap-2 sm:gap-2.5">
           {SLOTS.map((s, i) => (
-            <div key={s.id} className="relative">
+            <div key={s.id} className="relative min-w-0">
               <input
                 ref={(el) => {
                   inputsRef.current[s.id] = el;
@@ -153,15 +153,15 @@ export default function FuelProtocolMaterialidade() {
               <button
                 type="button"
                 onClick={() => inputsRef.current[s.id]?.click()}
-                className={`fuel-neon-action-btn w-full rounded-xl border border-emerald-400/30 px-4 py-3 text-left text-xs font-semibold text-white shadow-lg transition hover:brightness-110 sm:text-sm ${
+                className={`fuel-neon-action-btn flex min-h-[4.25rem] w-full flex-col justify-center rounded-lg border border-emerald-400/35 px-2.5 py-2 text-left text-[10px] font-semibold leading-snug text-white shadow-md transition hover:brightness-110 sm:min-h-[4.5rem] sm:px-3 sm:py-2.5 sm:text-[11px] ${
                   lit[i] ? "ring-2 ring-emerald-300/80" : ""
                 }`}
                 style={{ background: "#059669" }}
               >
-                <span className="block text-[10px] font-mono uppercase tracking-wider text-white/90">
+                <span className="block font-mono text-[9px] uppercase tracking-wider text-white/95 sm:text-[10px]">
                   {s.short}
                 </span>
-                <span className="mt-0.5 block leading-snug">{s.label}</span>
+                <span className="mt-0.5 block line-clamp-2 text-[9px] sm:text-[10px]">{s.label}</span>
               </button>
             </div>
           ))}

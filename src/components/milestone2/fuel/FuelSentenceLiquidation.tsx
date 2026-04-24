@@ -208,7 +208,7 @@ export default function FuelSentenceLiquidation() {
             className={`rounded-xl px-4 py-3 text-xs font-bold uppercase tracking-wide ${
               allValid
                 ? "fuel-neon-action-btn border border-emerald-400/45 bg-emerald-600 text-white shadow-[0_0_28px_rgba(16,185,129,0.45)]"
-                : "cursor-not-allowed border border-white/10 bg-zinc-900 text-zinc-500"
+                : "cursor-not-allowed border border-slate-500/35 bg-slate-600/45 text-slate-200/75"
             }`}
           >
             ✅ AUTORIZAR E LIQUIDAR
@@ -234,7 +234,7 @@ export default function FuelSentenceLiquidation() {
       />
 
       <div className="space-y-4">
-        <div className="rounded-xl border border-white/10 bg-black/35 p-3">
+        <div className="rounded-xl border border-white/15 bg-slate-700/45 p-3">
           <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
             Scanner de conferência pericial
           </p>
@@ -252,7 +252,7 @@ export default function FuelSentenceLiquidation() {
                     className="h-14 w-full rounded object-cover opacity-85"
                   />
                 ) : (
-                  <div className="flex h-14 items-center justify-center rounded bg-black/40 text-[10px] text-white/40">
+                  <div className="flex h-14 items-center justify-center rounded bg-slate-700/50 text-[10px] text-white/50">
                     SEM MINIATURA
                   </div>
                 )}

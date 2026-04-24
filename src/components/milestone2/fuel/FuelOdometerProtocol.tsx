@@ -53,7 +53,7 @@ function TypewriterLines({
 
   return (
     <div
-      className={`min-h-[140px] rounded-xl border border-white/10 bg-black/35 px-3 py-3 font-mono text-[11px] leading-relaxed sm:text-xs ${cls}`}
+      className={`min-h-[140px] rounded-xl border border-white/15 bg-slate-700/45 px-3 py-3 font-mono text-[11px] leading-relaxed sm:text-xs ${cls}`}
     >
       {shown.map((line, i) => (
         <p
@@ -228,7 +228,7 @@ export default function FuelOdometerProtocol() {
       className={`w-full rounded-xl border-2 px-4 py-4 text-[11px] font-mono uppercase tracking-[0.18em] sm:py-5 sm:text-xs ${
         state === "success"
           ? "master-faith-metallic border-amber-400/45"
-          : "cursor-not-allowed border-white/10 bg-zinc-900 text-zinc-500"
+          : "cursor-not-allowed border-slate-500/35 bg-slate-600/45 text-slate-200/75"
       }`}
     >
       {state === "critical"
@@ -322,11 +322,11 @@ export default function FuelOdometerProtocol() {
 
         <div className="grid min-h-0 gap-[clamp(0.5rem,2vh,1rem)] lg:grid-cols-2 lg:items-stretch">
           <div
-            className={`relative flex min-h-0 flex-col overflow-hidden rounded-xl border border-white/10 bg-black/50 ${
+            className={`relative flex min-h-0 flex-col overflow-hidden rounded-xl border border-white/15 bg-slate-700/50 ${
               state === "critical" ? "fuel-glitch-img" : ""
             }`}
           >
-            <div className="relative flex min-h-0 w-full flex-1 flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-black p-[clamp(0.5rem,3%,1rem)]">
+            <div className="relative flex min-h-0 w-full flex-1 flex-col items-center justify-center bg-gradient-to-br from-slate-700/95 to-slate-800/95 p-[clamp(0.5rem,3%,1rem)]">
               <span className="font-mono text-3xl text-emerald-400/90">48372</span>
               {(state === "processing" || state === "success") && (
                 <motion.div
@@ -345,7 +345,7 @@ export default function FuelOdometerProtocol() {
               )}
               {state === "warn" && (
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                  <div className="rounded-full border-2 border-amber-400/60 bg-black/50 p-4 text-4xl">
+                  <div className="rounded-full border-2 border-amber-400/60 bg-slate-700/60 p-4 text-4xl">
                     📷
                   </div>
                   <span className="absolute bottom-6 text-[10px] font-mono text-amber-200">
@@ -428,9 +428,9 @@ export default function FuelOdometerProtocol() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="pointer-events-none fixed inset-0 z-[100] flex items-center justify-center bg-black/55"
+              className="pointer-events-none fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/55"
             >
-              <div className="-rotate-12 rounded border-2 border-red-600 bg-black px-8 py-3 font-mono text-sm font-bold uppercase tracking-[0.3em] text-red-400 shadow-[0_0_30px_rgba(239,68,68,0.5)]">
+              <div className="-rotate-12 rounded border-2 border-red-600 bg-red-950/80 px-8 py-3 font-mono text-sm font-bold uppercase tracking-[0.3em] text-red-200 shadow-[0_0_30px_rgba(239,68,68,0.5)]">
                 [ ACESSO BLOQUEADO - AUDITORIA REQUERIDA ]
               </div>
             </motion.div>

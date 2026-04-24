@@ -42,7 +42,7 @@ function AuditLines({
 
   return (
     <div
-      className={`min-h-[100px] rounded-xl border border-white/10 bg-black/40 px-3 py-3 font-mono text-[11px] leading-relaxed sm:text-xs ${cls}`}
+      className={`min-h-[100px] rounded-xl border border-white/15 bg-slate-700/45 px-3 py-3 font-mono text-[11px] leading-relaxed sm:text-xs ${cls}`}
     >
       {lines.map((line, i) => (
         <p
@@ -332,7 +332,7 @@ export default function FuelGeographicInsumo() {
             alt="Referência protocolo inicial"
             className="h-24 w-full object-cover opacity-90"
           />
-          <span className="absolute bottom-1 left-1 rounded bg-black/60 px-1.5 py-0.5 text-[9px] font-mono text-white/80">
+          <span className="absolute bottom-1 left-1 rounded bg-slate-700/85 px-1.5 py-0.5 text-[9px] font-mono text-white/85">
             Lastro Botão 01
           </span>
         </div>
@@ -351,7 +351,7 @@ export default function FuelGeographicInsumo() {
         className={`w-full rounded-xl border-2 px-4 py-4 text-[11px] font-mono uppercase tracking-[0.14em] sm:py-5 sm:text-xs ${
           result === "green" && gold && (protocol === "4a" ? true : allMaterialValidated)
             ? "master-faith-metallic border-amber-400/45"
-            : "cursor-not-allowed border-white/10 bg-zinc-900 text-zinc-500"
+            : "cursor-not-allowed border-slate-500/35 bg-slate-600/45 text-slate-200/75"
         }`}
       >
         {result === "green" && gold && (protocol === "4a" ? true : allMaterialValidated)
@@ -432,8 +432,8 @@ export default function FuelGeographicInsumo() {
     step === "pick" ? (
       pickScreen
     ) : protocol === "4a" ? (
-      <div className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+      <div className="flex min-h-0 flex-col gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
           <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300/80">
             MÓDULO 04-A: PROTOCOLO DE MATERIALIDADE TERRITORIAL
           </span>
@@ -452,12 +452,12 @@ export default function FuelGeographicInsumo() {
           </button>
         </div>
 
-        <div className="rounded-lg border border-emerald-500/30 bg-emerald-950/20 px-3 py-2 text-[10px] font-mono text-emerald-100/85">
+        <div className="rounded-lg border border-emerald-400/35 bg-emerald-800/25 px-2.5 py-1.5 text-[9px] font-mono text-emerald-100/90 sm:text-[10px]">
           Atalhos de apresentação: <span className="text-lime-300">G = Cenário Verde</span> ·{" "}
           <span className="text-red-300">R = Cenário Vermelho</span>
         </div>
-        <div className="grid min-h-0 gap-[clamp(0.5rem,2vh,1rem)] lg:grid-cols-[1.5fr_1fr] lg:items-stretch">
-          <div className="flex min-h-0 min-w-0 flex-col gap-3">
+        <div className="grid min-h-0 gap-2 lg:grid-cols-[1.5fr_1fr] lg:items-stretch lg:gap-3">
+          <div className="flex min-h-0 min-w-0 flex-col gap-2">
             <input
               ref={refBomba}
               type="file"
@@ -466,10 +466,10 @@ export default function FuelGeographicInsumo() {
               className="sr-only"
               onChange={(e) => captureMaterialEvidence("pump", e.target.files?.[0])}
             />
-            <div className={`relative flex min-h-0 flex-col overflow-hidden rounded-xl border border-white/12 bg-gradient-to-br from-slate-950 to-slate-900 ${result === "red" ? "fuel-glitch-img" : ""}`}>
-              <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-[clamp(0.35rem,2%,0.65rem)] p-[clamp(0.5rem,3%,1rem)]">
-                <span className="text-4xl">⛽</span>
-                <p className="px-4 text-center text-[11px] text-white/55">
+            <div className={`relative flex min-h-0 flex-col overflow-hidden rounded-xl border border-white/15 bg-gradient-to-br from-slate-700/95 to-slate-600/90 ${result === "red" ? "fuel-glitch-img" : ""}`}>
+              <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-1.5 p-2 sm:gap-2 sm:p-3">
+                <span className="text-3xl sm:text-4xl">⛽</span>
+                <p className="px-2 text-center text-[10px] text-white/65 sm:text-[11px]">
                   Câmera ativa no bocal do tanque (área de materialidade)
                 </p>
                 <button
@@ -486,7 +486,7 @@ export default function FuelGeographicInsumo() {
                 type="button"
                 onClick={() => void run4aScenario("green")}
                 disabled={scanning}
-                className="rounded-lg border border-lime-400/55 bg-lime-900/35 py-2 text-[10px] font-mono uppercase text-lime-100"
+                className="rounded-lg border border-lime-400/55 bg-lime-800/40 py-1.5 text-[9px] font-mono uppercase text-lime-100 sm:py-2 sm:text-[10px]"
               >
                 Cenário A · Verde
               </button>
@@ -494,7 +494,7 @@ export default function FuelGeographicInsumo() {
                 type="button"
                 onClick={() => void run4aScenario("red")}
                 disabled={scanning}
-                className="rounded-lg border border-red-500/55 bg-red-950/45 py-2 text-[10px] font-mono uppercase text-red-100"
+                className="rounded-lg border border-red-500/55 bg-red-900/40 py-1.5 text-[9px] font-mono uppercase text-red-100 sm:py-2 sm:text-[10px]"
               >
                 Cenário B · Vermelho
               </button>
@@ -503,16 +503,16 @@ export default function FuelGeographicInsumo() {
               type="button"
               onClick={run4a}
               disabled={!allMaterialValidated || scanning}
-              className="w-full rounded-xl border border-cyan-500/45 bg-cyan-900/40 py-3 text-[11px] font-mono uppercase tracking-wider text-cyan-100 disabled:cursor-not-allowed disabled:opacity-40"
+              className="w-full rounded-lg border border-cyan-500/45 bg-cyan-800/35 py-2 text-[10px] font-mono uppercase tracking-wider text-cyan-100 disabled:cursor-not-allowed disabled:opacity-40 sm:py-2.5 sm:text-[11px]"
             >
               Consolidar validação pericial
             </button>
           </div>
-          <div className="flex min-h-0 min-w-0 flex-col gap-3">
-            <div className="relative min-h-0 overflow-hidden rounded-xl border border-emerald-500/25 bg-[#03160b] p-2">
+          <div className="flex min-h-0 min-w-0 flex-col gap-2">
+            <div className="relative min-h-0 overflow-hidden rounded-xl border border-emerald-400/30 bg-emerald-950/35 p-1.5 sm:p-2">
               <GeoprocessingRadarMap variant="idle" />
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-emerald-400/55 bg-black/70 p-1 shadow-[0_0_22px_rgba(16,185,129,0.35)]">
+                <div className="h-24 w-24 overflow-hidden rounded-full border-2 border-emerald-400/55 bg-slate-700/75 p-1 shadow-[0_0_22px_rgba(16,185,129,0.35)] sm:h-28 sm:w-28">
                   <GeoprocessingRadarMap variant={mapVariant} errorDistanceM={2000} />
                 </div>
               </div>
@@ -536,7 +536,7 @@ export default function FuelGeographicInsumo() {
               />
             )}
             {!materialAlert && !allMaterialValidated && (
-              <div className="mt-2 rounded-xl border border-white/10 bg-black/35 p-3 font-mono text-[10px] text-white/70">
+              <div className="mt-1 rounded-lg border border-white/15 bg-slate-700/40 p-2 font-mono text-[9px] text-white/75 sm:p-2.5 sm:text-[10px]">
                 <p>BOMBA: {materialLabels.pump ?? "pendente"}</p>
                 <p className="mt-1 text-emerald-300/80">CADEIA DE CUSTÓDIA: STREAM ATIVO</p>
               </div>
@@ -545,8 +545,8 @@ export default function FuelGeographicInsumo() {
         </div>
       </div>
     ) : (
-      <div className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+      <div className="flex min-h-0 flex-col gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
           <span className="text-[10px] font-mono uppercase tracking-wider text-teal-300/85">
             PROTOCOLO DE ABASTECIMENTO EM CONTINGÊNCIA (GALÃO)
           </span>
@@ -565,13 +565,13 @@ export default function FuelGeographicInsumo() {
           </button>
         </div>
 
-        <div className="rounded-xl border border-emerald-500/25 bg-emerald-950/20 px-3 py-2 text-[10px] leading-snug text-emerald-100/90">
+        <div className="rounded-lg border border-emerald-400/35 bg-emerald-800/25 px-2.5 py-1.5 text-[9px] leading-snug text-emerald-100/90 sm:text-[10px]">
           Atalhos de apresentação: G = Verde · Y = Amarelo · R = Vermelho.
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-4">
-            <div className="rounded-xl border border-white/10 bg-black/30 p-3">
+        <div className="grid gap-2 lg:grid-cols-[1.1fr_0.9fr] lg:gap-3">
+          <div className="flex flex-col gap-2">
+            <div className="rounded-lg border border-white/15 bg-slate-700/40 p-2 sm:p-2.5">
               <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-400/90">
                 CÂMERA DE IDENTIFICAÇÃO · PLACA
               </p>
@@ -589,7 +589,7 @@ export default function FuelGeographicInsumo() {
                   setLabelBomba(f ? f.name : null);
                 }}
               />
-              <div className="relative mt-3 overflow-hidden rounded-lg border border-emerald-500/40 bg-[#03160b] p-3">
+              <div className="relative mt-2 overflow-hidden rounded-lg border border-emerald-400/40 bg-emerald-950/35 p-2 sm:p-2.5">
                 <motion.div
                   className={`pointer-events-none absolute left-2 right-2 h-[2px] ${
                     assetDenied ? "bg-red-500" : "bg-[#00FF41]"
@@ -613,7 +613,7 @@ export default function FuelGeographicInsumo() {
               <button
                 type="button"
                 onClick={() => refBomba.current?.click()}
-                className="mt-3 w-full rounded-lg border border-emerald-500/40 bg-emerald-500/10 py-2 text-xs font-mono text-emerald-100"
+                className="mt-2 w-full rounded-lg border border-emerald-500/40 bg-emerald-600/20 py-1.5 text-[11px] font-mono text-emerald-100 sm:py-2 sm:text-xs"
               >
                 {labelBomba ? "Recapturar placa" : "Abrir câmera — captura ao vivo"}
               </button>
@@ -625,17 +625,17 @@ export default function FuelGeographicInsumo() {
               disabled={scanning}
               animate={{ opacity: [0.9, 1, 0.9] }}
               transition={{ duration: 2.4, repeat: Infinity }}
-              className="w-full rounded-xl border-2 border-lime-400/45 bg-gradient-to-r from-lime-900/40 to-emerald-900/50 py-3 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_22px_rgba(163,230,53,0.25)]"
+              className="w-full rounded-lg border-2 border-lime-400/45 bg-gradient-to-r from-lime-800/45 to-emerald-800/45 py-2 text-[10px] font-bold uppercase tracking-wide text-white shadow-[0_0_22px_rgba(163,230,53,0.25)] sm:py-2.5 sm:text-xs"
             >
               Validar identidade cadastrada
             </motion.button>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => run4b("yellow")}
                 disabled={scanning}
-                className="rounded-lg border border-amber-500/45 bg-amber-950/40 px-3 py-2 text-[10px] font-mono uppercase text-amber-100"
+                className="rounded-lg border border-amber-500/45 bg-amber-900/35 px-2 py-1.5 text-[9px] font-mono uppercase text-amber-100 sm:py-2 sm:text-[10px]"
               >
                 Simular lock parcial
               </button>
@@ -643,12 +643,12 @@ export default function FuelGeographicInsumo() {
                 type="button"
                 onClick={() => run4b("red")}
                 disabled={scanning}
-                className="rounded-lg border border-red-500/45 bg-red-950/40 px-3 py-2 text-[10px] font-mono uppercase text-red-200"
+                className="rounded-lg border border-red-500/45 bg-red-900/40 px-2 py-1.5 text-[9px] font-mono uppercase text-red-200 sm:py-2 sm:text-[10px]"
               >
                 Simular placa não cadastrada
               </button>
             </div>
-            <div className="rounded-xl border border-white/10 bg-black/35 p-3 font-mono text-[10px] text-white/75">
+            <div className="rounded-lg border border-white/15 bg-slate-700/40 p-2 font-mono text-[9px] text-white/80 sm:p-2.5 sm:text-[10px]">
               <p>PILAR 1 OCR: {labelBomba ? "MATCH" : "PENDENTE"}</p>
               <p>PILAR 2 GALÃO (IA): {result === "green" ? "MATCH" : "PENDENTE"}</p>
               <p>PILAR 3 GPS LOCK: {result === "red" ? "FALHA" : result === "green" ? "MATCH" : "PENDENTE"}</p>
@@ -656,14 +656,14 @@ export default function FuelGeographicInsumo() {
             </div>
           </div>
 
-          <div className="space-y-3">
+          <div className="flex flex-col gap-2">
             {result === "idle" && (
-              <p className="text-xs text-white/45">
+              <p className="text-[10px] text-white/50 sm:text-xs">
                 Painel de inteligência aguardando leitura de placa.
               </p>
             )}
             {(result === "scanning" || result === "green" || result === "yellow" || result === "red") && (
-              <div className="rounded-xl border border-white/10 bg-black/40 px-3 py-3 font-mono text-[11px] leading-relaxed text-emerald-200">
+              <div className="rounded-lg border border-white/15 bg-slate-700/45 px-2.5 py-2 font-mono text-[10px] leading-relaxed text-emerald-200 sm:px-3 sm:py-2.5 sm:text-[11px]">
                 <p>[SCANNING...]</p>
                 <p>PLACA DETECTADA: {labelBomba ? "ABC-1234" : "---"}</p>
                 <p>VÍNCULO: SECRETARIA DE SAÚDE - LOTE 01</p>
@@ -736,9 +736,9 @@ export default function FuelGeographicInsumo() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="pointer-events-none fixed inset-0 z-[90] flex items-center justify-center bg-black/45"
+            className="pointer-events-none fixed inset-0 z-[90] flex items-center justify-center bg-slate-900/55"
           >
-            <div className="max-w-lg -rotate-6 rounded border-2 border-red-600 bg-black px-6 py-3 text-center font-mono text-sm font-bold uppercase tracking-[0.2em] text-red-400 shadow-[0_0_40px_rgba(239,68,68,0.5)]">
+            <div className="max-w-lg -rotate-6 rounded border-2 border-red-600 bg-red-950/85 px-6 py-3 text-center font-mono text-sm font-bold uppercase tracking-[0.2em] text-red-200 shadow-[0_0_40px_rgba(239,68,68,0.5)]">
               BLOQUEIO: VEÍCULO NÃO CADASTRADO / TENTATIVA DE DANO AO ERÁRIO
             </div>
           </motion.div>

@@ -75,7 +75,7 @@ export default function FuelAuditExitReports() {
         </div>
 
         <div className="space-y-3">
-          <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/40 p-3">
+          <div className="relative overflow-hidden rounded-xl border border-white/15 bg-slate-700/50 p-3">
             <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
               Segurança ativa
             </p>
@@ -99,7 +99,7 @@ export default function FuelAuditExitReports() {
             />
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-black/35 p-3">
+          <div className="rounded-xl border border-white/15 bg-slate-700/45 p-3">
             <p className="text-[10px] font-mono uppercase tracking-wider text-white/45">
               Pré-visualização oficial
             </p>
