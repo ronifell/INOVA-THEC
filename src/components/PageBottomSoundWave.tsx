@@ -78,7 +78,7 @@ export default function PageBottomSoundWave({
       const H = hCss;
       const mid = H * 0.5;
       const maxHalf = (H * 0.42) | 0;
-      const t = now * 0.001 * 0.045;
+      const t = now * 0.001 * 0.3;
 
       const heights = heightsRef.current;
       const targets = targetsRef.current;
@@ -89,7 +89,7 @@ export default function PageBottomSoundWave({
       }
 
       const pitch = W / n;
-      const barW = Math.max(0.84, pitch * 1.02);
+      const barW = Math.max(0.28, pitch * 0.34);
 
       for (let i = 0; i < n; i++) {
         const u = i / Math.max(1, n - 1);
@@ -98,14 +98,14 @@ export default function PageBottomSoundWave({
           0.14 +
           0.86 *
             Math.pow(
-              Math.abs(Math.sin(u * Math.PI * 0.51 - t * 1.55 + Math.sin(t * 0.35) * 0.4)),
+              Math.abs(Math.sin(u * Math.PI * 1.53 - t * 1.55 + Math.sin(t * 0.35) * 0.4)),
               0.58,
             );
         const subRipple =
-          0.55 + 0.45 * Math.abs(Math.sin(u * Math.PI * 1.22 + t * 3.1));
+          0.55 + 0.45 * Math.abs(Math.sin(u * Math.PI * 3.67 + t * 3.1));
         const burst =
           0.32 +
-          0.68 * Math.abs(Math.sin(t * 15 + u * 4.89 + Math.sin(u * 2.11)));
+          0.68 * Math.abs(Math.sin(t * 15 + u * 14.67 + Math.sin(u * 6.33)));
         const micro = 0.48 + 0.52 * Math.sin(BAR_JITTER * t + i * 1.91);
         const rnd = Math.pow(Math.random(), 0.5);
         const amp =
@@ -115,9 +115,7 @@ export default function PageBottomSoundWave({
           (0.42 + 0.58 * micro) *
           (0.22 + 0.78 * rnd) *
           (0.28 + 0.72 * edgeFade);
-        const shaped = Math.pow(amp, 1.75);
-        const randomScale = 0.3 + 0.7 * Math.pow(Math.random(), 1.35);
-        targets[i] = Math.max(1.2, Math.min(maxHalf, shaped * maxHalf * 9 * randomScale));
+        targets[i] = Math.max(1.2, Math.min(maxHalf, amp * maxHalf * 10));
       }
 
       for (let i = 0; i < n; i++) {

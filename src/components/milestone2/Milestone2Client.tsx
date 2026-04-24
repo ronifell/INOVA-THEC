@@ -640,19 +640,19 @@ export default function Milestone2Client() {
                   className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
                 >
                   <div className="relative flex h-full min-h-0 w-full flex-1 flex-col">
-                    <div className="pointer-events-none absolute inset-x-0 top-0 z-[6] flex items-start justify-between px-[min(1.25vmin,1.1vw)] pt-[min(0.8vmin,0.7vh)]">
-                      <button
-                        type="button"
-                        onClick={goPortal}
-                        className="pointer-events-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-slate-900/55 px-[1vw] py-[0.4vh] text-[10px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
-                      >
-                        ← Portal Milestone 2
-                      </button>
-                      <p className="hidden text-[9px] font-mono uppercase tracking-[0.18em] text-white/35 sm:block">
+                    <div className="pointer-events-none absolute inset-x-0 top-[min(0.95vmin,0.85vh)] z-[5] flex justify-center px-[min(1.25vmin,1.1vw)]">
+                      <p className="rounded-full border border-white/12 bg-[#061020]/65 px-[min(1.1vmin,0.9vw)] py-[min(0.4vmin,0.38vh)] text-center text-[10px] font-mono uppercase tracking-[0.22em] text-white/45 backdrop-blur-sm">
                         {menuTitle}
                       </p>
                     </div>
-                    <div className="grid h-full min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] pt-[min(4.2vmin,3.6vh)] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                    <button
+                      type="button"
+                      onClick={goPortal}
+                      className="absolute left-[min(1.6vmin,1.4vw)] top-[min(1.1vmin,1vh)] z-[6] inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-[#061020]/55 px-[1vw] py-[0.6vh] text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+                    >
+                      ← Portal Milestone 2
+                    </button>
+                    <div className="grid h-full min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                       {submenuTiles.map((tile, i) => (
                         <div
                           key={tile.id}
