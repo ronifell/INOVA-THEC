@@ -219,9 +219,17 @@ export default function Operational6040Workspace({
             variant === "patrimonio" ? "border-sky-400/25" : "border-emerald-500/20"
           }`}
           style={{
+            background:
+              variant === "patrimonio"
+                ? "linear-gradient(168deg, rgba(7,31,58,0.9) 0%, rgba(7,22,42,0.9) 44%, rgba(2,12,26,0.95) 100%)"
+                : "linear-gradient(168deg, rgba(3,24,16,0.88) 0%, rgba(4,18,13,0.9) 48%, rgba(2,12,10,0.95) 100%)",
+            backgroundImage:
+              variant === "patrimonio"
+                ? "linear-gradient(168deg, rgba(7,31,58,0.9) 0%, rgba(7,22,42,0.9) 44%, rgba(2,12,26,0.95) 100%), repeating-linear-gradient(0deg, rgba(125,211,252,0.08) 0px, rgba(125,211,252,0.08) 1px, transparent 1px, transparent 24px), repeating-linear-gradient(90deg, rgba(125,211,252,0.06) 0px, rgba(125,211,252,0.06) 1px, transparent 1px, transparent 26px)"
+                : "linear-gradient(168deg, rgba(3,24,16,0.88) 0%, rgba(4,18,13,0.9) 48%, rgba(2,12,10,0.95) 100%), repeating-linear-gradient(0deg, rgba(16,185,129,0.08) 0px, rgba(16,185,129,0.08) 1px, transparent 1px, transparent 24px), repeating-linear-gradient(90deg, rgba(16,185,129,0.05) 0px, rgba(16,185,129,0.05) 1px, transparent 1px, transparent 26px)",
             boxShadow: goldSeal
               ? `inset 0 0 0 1px rgba(${GOLD_SEAL.rgb},0.35), 0 0 40px rgba(${GOLD_SEAL.rgb},0.12)`
-              : `inset 0 0 0 1px rgba(${t.glowRgb},0.42), 0 0 22px rgba(${t.glowRgb},0.28), 0 0 48px rgba(${t.glowRgb},0.12)`,
+              : `inset 0 0 0 1px rgba(${t.glowRgb},0.42), inset 0 0 42px rgba(${t.glowRgb},0.08), 0 0 22px rgba(${t.glowRgb},0.28), 0 0 48px rgba(${t.glowRgb},0.12)`,
           }}
           onPointerDownCapture={triggerPulse}
         >

@@ -342,8 +342,8 @@ body::after {
   position: absolute;
   border-radius: 9999px;
   opacity: 0;
-  background: radial-gradient(circle, rgba(222, 255, 238, 1) 0%, rgba(150, 255, 204, 0.88) 38%, rgba(58, 179, 114, 0.34) 62%, rgba(58, 179, 114, 0) 100%);
-  filter: drop-shadow(0 0 7px rgba(106, 255, 176, 0.9));
+  background: radial-gradient(circle, rgba(234, 255, 244, 1) 0%, rgba(166, 255, 214, 0.96) 36%, rgba(74, 222, 154, 0.62) 60%, rgba(74, 222, 154, 0) 100%);
+  filter: drop-shadow(0 0 10px rgba(106, 255, 176, 0.95));
   animation-name: map-starlight-twinkle;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
@@ -357,16 +357,16 @@ body::after {
     transform: scale(0.75);
   }
   76% {
-    opacity: 0.42;
+    opacity: 0.5;
     transform: scale(1);
   }
   79% {
     opacity: 1;
-    transform: scale(1.8);
+    transform: scale(2.3);
   }
   82% {
-    opacity: 0.34;
-    transform: scale(1.1);
+    opacity: 0.45;
+    transform: scale(1.35);
   }
 }
 

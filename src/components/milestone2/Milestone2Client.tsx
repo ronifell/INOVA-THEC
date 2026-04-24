@@ -360,21 +360,40 @@ export default function Milestone2Client() {
                 subtitle={activeTile.description}
               >
                 {!fuelProtocolTile && (
-                  <div className="mb-6 flex items-center gap-3">
-                    <div
-                      className="flex h-11 w-11 items-center justify-center rounded-xl text-2xl"
-                      style={{
-                        backgroundColor: `rgba(${menuTheme.colorRgb}, 0.14)`,
-                      }}
-                      aria-hidden
-                    >
-                      {activeTile.icon}
+                  <div
+                    className="milestone-m2-command-intro mb-6 rounded-2xl border border-white/12 p-4 sm:p-5"
+                    style={{
+                      background: `linear-gradient(135deg, rgba(${menuTheme.colorRgb},0.18), rgba(6,16,32,0.78) 46%, rgba(6,16,32,0.94))`,
+                      boxShadow: `inset 0 0 0 1px rgba(${menuTheme.colorRgb},0.22), 0 0 26px rgba(${menuTheme.colorRgb},0.2)`,
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="flex h-11 w-11 items-center justify-center rounded-xl text-2xl ring-1 ring-white/20"
+                        style={{
+                          backgroundColor: `rgba(${menuTheme.colorRgb}, 0.18)`,
+                        }}
+                        aria-hidden
+                      >
+                        {activeTile.icon}
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold tracking-wide text-white/90">
+                          {activeTile.title}
+                        </p>
+                        <p className="text-xs text-white/65">{activeTile.description}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold tracking-wide text-white/90">
-                        {activeTile.title}
-                      </p>
-                      <p className="text-xs text-white/55">{activeTile.description}</p>
+                    <div className="mt-3 grid gap-2 text-[10px] font-mono uppercase tracking-[0.14em] text-white/70 sm:grid-cols-3">
+                      <div className="rounded-lg border border-white/12 bg-black/20 px-2.5 py-1.5">
+                        trilha pericial ativa
+                      </div>
+                      <div className="rounded-lg border border-white/12 bg-black/20 px-2.5 py-1.5">
+                        validação SHA-256
+                      </div>
+                      <div className="rounded-lg border border-white/12 bg-black/20 px-2.5 py-1.5">
+                        auditoria contínua
+                      </div>
                     </div>
                   </div>
                 )}
@@ -652,7 +671,7 @@ export default function Milestone2Client() {
                     >
                       ← Portal Milestone 2
                     </button>
-                    <div className="grid h-full min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                    <div className="grid h-full min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] pt-[min(7.4vmin,6.6vh)] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                       {submenuTiles.map((tile, i) => (
                         <div
                           key={tile.id}
