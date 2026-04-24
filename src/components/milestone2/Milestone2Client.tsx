@@ -639,22 +639,20 @@ export default function Milestone2Client() {
                   contentFullWidth
                   className="module-cards-glow-gutter module-cards-glow-gutter--hub min-h-0 w-full min-w-0 flex-[1.22]"
                 >
-                  <div className="relative flex h-full min-h-0 w-full flex-1 flex-col gap-[min(1.6vmin,1.4vh)]">
-                    <div className="shrink-0 border-b border-white/[0.06] px-[min(1.25vmin,1.1vw)] pb-[min(1.4vmin,1.2vh)] pt-[min(0.8vmin,0.7vh)]">
-                      <div className="flex w-full justify-start">
-                        <button
-                          type="button"
-                          onClick={goPortal}
-                          className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 px-[1vw] py-[0.6vh] text-[11px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
-                        >
-                          ← Portal Milestone 2
-                        </button>
-                      </div>
-                      <p className="mt-1.5 text-center text-[10px] font-mono uppercase tracking-[0.22em] text-white/35">
+                  <div className="relative flex h-full min-h-0 w-full flex-1 flex-col">
+                    <div className="pointer-events-none absolute inset-x-0 top-0 z-[6] flex items-start justify-between px-[min(1.25vmin,1.1vw)] pt-[min(0.8vmin,0.7vh)]">
+                      <button
+                        type="button"
+                        onClick={goPortal}
+                        className="pointer-events-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-slate-900/55 px-[1vw] py-[0.4vh] text-[10px] font-mono tracking-wider text-white/75 transition-colors hover:border-emerald-500/40 hover:text-white"
+                      >
+                        ← Portal Milestone 2
+                      </button>
+                      <p className="hidden text-[9px] font-mono uppercase tracking-[0.18em] text-white/35 sm:block">
                         {menuTitle}
                       </p>
                     </div>
-                    <div className="grid h-full min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                    <div className="grid h-full min-h-0 min-w-0 w-full flex-1 auto-rows-fr grid-cols-2 items-stretch gap-[1vh] pt-[min(4.2vmin,3.6vh)] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                       {submenuTiles.map((tile, i) => (
                         <div
                           key={tile.id}
